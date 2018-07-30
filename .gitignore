@@ -1,0 +1,22 @@
+*.pyc
+.cache
+
+.DS_Store
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+selenium-debug.log
+dist
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*security-sgps.py
+*security_backend.py
+
+app/config_transmission.py
