@@ -1,7 +1,7 @@
 <template lang="pug">
   nav.navbar.is-transparent
     .navbar-brand
-      a.navbar-item(href='https://bulma.io')
+      router-link.navbar-item(to='/')
         img#logo(
           src='../assets/logo.png',
           height='23'
@@ -37,10 +37,10 @@ export default {
 </script>
 
 <style scoped>
- #logo {
-    margin-right: 2.5rem;
- }
- .is-active {
-   font-weight: 600;
- }
+  #logo {
+     margin-right: 2.5rem;
+  }
+  .is-active {
+    font-weight: 600;
+  }
 </style>
