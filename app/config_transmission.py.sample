@@ -1,0 +1,16 @@
+import os
+
+_bool_repr_map = {
+    'True': True,
+    'False': False,
+    'true': True,
+    'false': False,
+}
+
+HOST = os.environ.get('TRANSMISSION_HOST', 'localhost')
+PORT = int(os.environ.get('TRANSMISSION_PORT', 80))
+USERNAME = os.environ.get('TRANSMISSION_USERNAME', '')
+PASSWORD = os.environ.get('TRANSMISSION_PASSWORD', '')
+SSL = _bool_repr_map[os.environ.get('TRANSMISSION_USE_SSL', 'false')]
+
+DIRECTORY = '/downloads/complete/beets'
