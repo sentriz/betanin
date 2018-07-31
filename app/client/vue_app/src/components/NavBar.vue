@@ -1,5 +1,5 @@
 <template lang="pug">
-  nav.navbar.is-transparent
+  nav.navbar
     .navbar-brand
       router-link.navbar-item(to='/')
         img#logo(
