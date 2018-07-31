@@ -18,6 +18,9 @@ def filter_torrents_in(torrents):
 def clean_torrents_out(torrents):
     for torrent in torrents:
         del torrent['downloadDir']
+        torrent['percentDone'] *= 100
+        torrent['isFinished'] = torrent['percentDone'] == 100
+        torrent['startDate'] = torrent['startDate'].isoformat()
         yield torrent
 
 
@@ -34,11 +37,14 @@ class TransmissionResource(BaseResource):
         )
 
     def get(self):
-        all_torrents = self.session('torrent-get', 
+        all_torrents = self.session('torrent-get',
                                     fields=[
                                         'name',
                                         'downloadDir', 
                                         'isFinished',
+                                        'id',
+                                        'percentDone',
+                                        'startDate',
                                     ])
         music_torrents = filter_torrents_in(all_torrents['torrents'])
         response = clean_torrents_out(music_torrents)
