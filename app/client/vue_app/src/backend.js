@@ -29,12 +29,8 @@ $axios.interceptors.response.use(
 )
 
 export default {
-  fetchResource () {
-    return $axios.get(`resource/xxx`)
-      .then(response => response.data)
-  },
-  fetchSecureResource () {
-    return $axios.get(`secure-resource/zzz`)
+  fetchResource (route) {
+    return $axios.get(route)
       .then(response => response.data)
   }
 }

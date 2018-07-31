@@ -14,6 +14,9 @@ export default {
   name: 'activity',
   components: {
     NavBar
+  },
+  mounted () {
+    this.$store.dispatch('getDownloads')
   }
 }
 </script>
