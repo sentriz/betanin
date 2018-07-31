@@ -29,5 +29,4 @@ export default {
   $link-focus-border: $primary;
 
   @import "~bulma";
-  @import "~buefy/src/scss/buefy";
 </style>
