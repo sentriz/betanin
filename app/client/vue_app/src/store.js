@@ -7,23 +7,30 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     downloads: [],
-    downloadsDone: false
+    haveDownloads: false
   },
   getters: {
     downloads: state => state.downloads,
-    downloadsDone: state => state.downloadsDone
+    haveDownloads: state => state.haveDownloads
   },
   mutations: {
     setDownloads (state, downloads) {
       state.downloads = downloads
-      state.downloadsDone = true
+    },
+    setHaveDownloads (state, have) {
+      state.haveDownloads = have
     }
   },
   actions: {
     getDownloads ({ commit }) {
-      backend.fetchResource('transmission').then(result =>
-        commit('setDownloads', result)
-      )
+      backend.fetchResource('transmission')
+        .then(result => {
+          commit('setDownloads', result)
+          commit('setHaveDownloads', true)
+        })
+        .catch(() => {
+          commit('setHaveDownloads', true)
+        })
     }
   }
 })
