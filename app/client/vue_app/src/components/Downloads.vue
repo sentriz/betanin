@@ -1,7 +1,7 @@
 <template lang="pug">
   b-table(
     :data='downloads'
-    :loading='!downloadsDone'
+    :loading='!haveDownloads'
     :opened-detailed='openedDetails'
     detailed
     detail-key='id'
@@ -9,7 +9,10 @@
   )
     template(slot-scope='props')
       b-table-column(label='name') {{ props.row.name }}
-      b-table-column(label='progress')
+      b-table-column(
+        label='progress'
+        width='200'
+      )
         progress.progress(
           :value='props.row.percentDone'
           max='100'
@@ -21,8 +24,10 @@
         XMark(
           v-else
         )
-    <!-- template(slot-scope='props', slot='detail') -->
-      <!-- p samsn -->
+    template(slot-scope='props', slot='detail')
+      p
+        strong downloaded
+        |  {{ props.row.percentDone }}%
 </template>
 
 <script>
@@ -32,7 +37,7 @@ import { mapGetters } from 'vuex'
 export default {
   computed: mapGetters([
     'downloads',
-    'downloadsDone'
+    'haveDownloads'
   ]),
   components: {
     CheckMark,
@@ -50,3 +55,6 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+</style>
