@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Toast } from 'buefy'
 
 const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 const API_URL = IS_PRODUCTION ? '/api/' : 'http://localhost:5000/api/'
@@ -9,21 +10,20 @@ let $axios = axios.create({
   headers: {'Content-Type': 'application/json'}
 })
 
-// Request Interceptor
-$axios.interceptors.request.use(
-  function (config) {
-    config.headers['Authorization'] = 'Fake Token'
-    return config
-  }
-)
+// request intercept
+// $axios.interceptors.request.use(
+// )
 
-// Response Interceptor to handle and log errors
+// response intercept
 $axios.interceptors.response.use(
   function (response) {
     return response
   },
   function (error) {
-    console.log(error)
+    Toast.open({
+      message: error.message,
+      type: 'is-danger'
+    })
     return Promise.reject(error)
   }
 )
