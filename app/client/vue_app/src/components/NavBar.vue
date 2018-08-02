@@ -4,7 +4,7 @@
       router-link.navbar-item(to='/')
         img#logo(
           src='../assets/logo.png',
-          height='23'
+          height='100%'
         )
       a.navbar-burger(
         role='button',
