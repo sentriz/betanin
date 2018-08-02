@@ -6,19 +6,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    downloads: [],
-    haveDownloads: false
+    downloads: []
   },
   getters: {
-    downloads: state => state.downloads,
-    haveDownloads: state => state.haveDownloads
+    downloads: state =>
+      state.downloads,
+    haveDownloads: state =>
+      state.downloads.length !== 0
   },
   mutations: {
     setDownloads (state, downloads) {
       state.downloads = downloads
-    },
-    setHaveDownloads (state, have) {
-      state.haveDownloads = have
     }
   },
   actions: {
@@ -26,10 +24,6 @@ export default new Vuex.Store({
       backend.fetchResource('transmission')
         .then(result => {
           commit('setDownloads', result)
-          commit('setHaveDownloads', true)
-        })
-        .catch(() => {
-          commit('setHaveDownloads', true)
         })
     }
   }
