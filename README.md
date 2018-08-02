@@ -1,6 +1,6 @@
 ### todo
-  - [ ] backend storage
-  - [ ] backend state
+  - [x] backend storage
+  - [x] backend state
   - [ ] ui display state 
   - [ ] backend events
   - [ ] backend external command steam
