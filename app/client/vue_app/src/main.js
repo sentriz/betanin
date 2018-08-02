@@ -15,8 +15,9 @@ Vue.use(Buefy, {
 })
 Vue.config.productionTip = false
 
-new Vue({
+const view = new Vue({
   router,
   store,
   render: h => h(App)
-}).$mount('#app')
+})
+view.$mount('#app')
