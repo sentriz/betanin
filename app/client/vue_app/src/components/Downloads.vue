@@ -1,21 +1,24 @@
 <template lang="pug">
   b-table(
     :data='downloads'
-    :loading='!haveDownloads'
     :opened-detailed='openedDetails'
     detailed
-    detail-key='id'
+    detail-key='hashString'
     :has-detailed-visible='rowHasDetail'
+    v-if='haveDownloads'
   )
-    template(slot-scope='props')
-      b-table-column(label='name') {{ props.row.name }}
+    template(
+      slot-scope='props'
+    )
+      b-table-column(
+        label='name'
+      ) {{ props.row.name }}
       b-table-column(
         label='progress'
-        width='200'
       )
-        progress.progress(
+        progress(
           :value='props.row.percentDone'
-          max='100'
+          max="100"
         )
       b-table-column(label='finished')
         CheckMark(
@@ -28,6 +31,9 @@
       p
         strong downloaded
         |  {{ props.row.percentDone }}%
+  h3.title.is-5(
+    v-else
+  ) no downloads yet
 </template>
 
 <script>
@@ -57,4 +63,22 @@ export default {
 </script>
 
 <style scoped>
+  progress {
+    display: inline-block;
+    border: none;
+    background: #d1536a;
+    color: #d1536a;
+  }
+  progress::-webkit-progress-value {
+    background: #d1536a;
+  }
+  progress::-moz-progress-bar {
+    background: #d1536a;
+  }
+  progress::-webkit-progress-value {
+    background: #d1536a;
+  }
+  progress::-webkit-progress-bar {
+    background: #d1536a;
+  }
 </style>
