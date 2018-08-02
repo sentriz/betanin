@@ -18,7 +18,6 @@ def _bash(cmd, **kwargs):
     return subprocess.call(cmd, env=os.environ, shell=True, **kwargs)
 
 
-
 @cli.command(help='server api dev server')
 def serve_api():
     '''serve api dev server'''
