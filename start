@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+import click
+import subprocess
+import os
+
+
+_cwd = os.getcwd()
+CLIENT_DIR = os.path.join(_cwd, 'app', 'client', 'vue_app')
+
+
+@click.group()
+def cli():
+    pass
+
+
+def _bash(cmd, **kwargs):
+    click.echo('>>> {}'.format(cmd))
+    return subprocess.call(cmd, env=os.environ, shell=True, **kwargs)
+
+
+@cli.command(help='server api dev server',
+             name='serving-dev-api')
+def serve_dev_api():
+    '''serve api dev server'''
+    from app import app
+    app.run(host='localhost', port=5000)
+
+
+@cli.command(help='server client dev server',
+             name='serving-dev-client')
+def serve_dev_client():
+    '''serve client dev server'''
+    _bash('npm run serve',
+          cwd=CLIENT_DIR)
+
+
+@cli.command(help='build client',
+             name='building-client')
+def build_client():
+    '''build client'''
+    _bash('npm run build',
+          cwd=CLIENT_DIR)
+
+
+if __name__ == '__main__':
+    cli()
