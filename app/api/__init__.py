@@ -5,6 +5,7 @@ from flask_restplus import Api
 from app.api import beet_queue
 from app.api import torrent_scheduler
 
+
 api_bp = Blueprint('api_bp',
                    __name__,
                    template_folder='templates',
@@ -22,6 +23,7 @@ def add_header(response):
     return response
 
 
+from app.api.rest import namespaces
 from app.api.rest import resources
 
 
