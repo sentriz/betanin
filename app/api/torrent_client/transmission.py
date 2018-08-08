@@ -36,6 +36,7 @@ def _torrent_to_object(torrent):
         id=torrent['hashString'],
         progress=torrent['percentDone'] * 100,
         path=torrent['downloadDir'],
+        name=torrent['name'],
     )
 
 
