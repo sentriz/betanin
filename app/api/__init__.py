@@ -2,6 +2,9 @@ import os
 from flask import Flask, Blueprint, session, current_app
 from flask_restplus import Api
 
+from app.api import beet_queue
+from app.api import torrent_scheduler
+
 api_bp = Blueprint('api_bp',
                    __name__,
                    template_folder='templates',
@@ -20,3 +23,7 @@ def add_header(response):
 
 
 from app.api.rest import resources
+
+
+beet_queue.start_worker()
+torrent_scheduler.start_worker()

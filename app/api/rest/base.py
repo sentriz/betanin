@@ -20,5 +20,6 @@ class BaseResource(Resource):
     def delete(self, *args, **kwargs):
         abort(405)
 
+
 class SecureResource(BaseResource):
     method_decorators = [require_auth]
