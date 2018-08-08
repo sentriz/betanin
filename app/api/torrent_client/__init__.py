@@ -6,6 +6,7 @@ from app.api import torrent_client
 
 
 _remote = 'transmission'
+# TODO: not this
 get_torrents = importlib.import_module('app.api.torrent_client.' + _remote).get_torrents
 
 
@@ -23,10 +24,11 @@ Status = Enum('TorrentStatus', [
 
 @dataclass
 class Torrent:
-    status: Status
     id: str
-    progress: int
+    name: str
     path: str
+    progress: int
+    status: Status
 
     @property
     def is_downloaded(self):
