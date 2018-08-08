@@ -21,7 +21,7 @@ export default new Vuex.Store({
   },
   actions: {
     getDownloads ({ commit }) {
-      backend.fetchResource('transmission')
+      backend.fetchResource('torrents/all')
         .then(result => {
           commit('setDownloads', result)
         })

@@ -3,7 +3,7 @@
     :data='downloads'
     :opened-detailed='openedDetails'
     detailed
-    detail-key='hashString'
+    detail-key='id'
     :has-detailed-visible='rowHasDetail'
     v-if='haveDownloads'
   )
@@ -17,7 +17,7 @@
         label='progress'
       )
         progress(
-          :value='props.row.percentDone'
+          :value='props.row.progress'
           max="100"
         )
       b-table-column(label='finished')
