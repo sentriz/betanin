@@ -1,13 +1,13 @@
 <template lang="pug">
   .content.has-text-centered(
-    v-bind:class="connected ? 'green' : 'red' "
+    :class="connected ? 'green' : 'red'"
   )
     p(
       v-if='connected'
     ) connected to backend
     p(
       v-else
-    ) lost connection to backend
+    ) not connected to backend
 </template>
 
 <script>
