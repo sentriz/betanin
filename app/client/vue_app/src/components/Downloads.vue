@@ -30,7 +30,7 @@
     template(slot-scope='props', slot='detail')
       p
         strong downloaded
-        |  {{ props.row.percentDone }}%
+        |  {{ props.row.progress }}%
   h3.title.is-5(
     v-else
   ) no downloads yet
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     rowHasDetail (row) {
-      return row.isFinished === true
+      return true
     }
   },
   data () {
