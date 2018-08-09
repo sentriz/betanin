@@ -5,6 +5,7 @@ from app import api
 from app.api import torrent_client
 from app.api import state
 from app.api import beet_queue
+from app.api import events
 
 import requests
 
@@ -27,6 +28,7 @@ def _worker():
         api.torrents = list(torrent_client.get_torrents())
         for torrent in api.torrents:
             _process(torrent)
+        events.torrents_grabbed()
         time.sleep(INTERVAL)
 
 
