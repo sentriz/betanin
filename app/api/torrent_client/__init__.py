@@ -2,13 +2,10 @@ from dataclasses import dataclass
 from enum import Enum
 import importlib
 
-from app.api import torrent_client
-
 
 _remote = 'transmission'
 # TODO: not this
 get_torrents = importlib.import_module('app.api.torrent_client.' + _remote).get_torrents
-
 
 
 Status = Enum('TorrentStatus', [
