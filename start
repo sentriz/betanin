@@ -23,7 +23,11 @@ def _bash(cmd, **kwargs):
              name='serving-dev-api')
 def serve_dev_api():
     from app import app
-    app.run(host='localhost', port=5000)
+    app.run(
+        host='localhost', 
+        port=5000,
+        use_reloader=False,
+    )
 
 
 @cli.command(help='serve client dev server',
@@ -35,9 +39,17 @@ def serve_dev_client():
 
 @cli.command(help='serve mock transmission',
              name='serving-mock-transmission')
-def serve_dev_client():
+@click.option('--percent', default=1)
+@click.option('--period', default=1)
+def serve_dev_client(**kwargs):
     from mock_transmission_server import app
-    app.run(host='localhost', port=5001)
+    from mock_transmission_server import start_inc_worker
+    start_inc_worker(**kwargs)
+    app.run(
+        host='localhost', 
+        port=5001,
+        use_reloader=False,
+    )
 
 
 @cli.command(help='build client',
