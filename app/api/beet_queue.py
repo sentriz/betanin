@@ -9,13 +9,15 @@ CV = Condition()
 
 
 def _consume():
+    print("starting queue worker")
     while True:
         with CV:
-            CV.wait_for(_are_tasks)
-            print('have', _get_task())
+            CV.wait_for(_are_torrents)
+            t = _get_task()
+            print('have', t)
 
 
-def _are_tasks():
+def _are_torrents():
     return bool(QUEUE)
 
 
@@ -23,9 +25,9 @@ def _get_task():
     return QUEUE.popleft()
 
 
-def add_task():
+def add_torrent(torrent):
     with CV:
-        QUEUE.append(item)
+        QUEUE.append(torrent)
         CV.notify()
 
 
