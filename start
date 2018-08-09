@@ -19,26 +19,30 @@ def _bash(cmd, **kwargs):
     return subprocess.call(cmd, env=os.environ, shell=True, **kwargs)
 
 
-@cli.command(help='server api dev server',
+@cli.command(help='serve api dev server',
              name='serving-dev-api')
 def serve_dev_api():
-    '''serve api dev server'''
     from app import app
     app.run(host='localhost', port=5000)
 
 
-@cli.command(help='server client dev server',
+@cli.command(help='serve client dev server',
              name='serving-dev-client')
 def serve_dev_client():
-    '''serve client dev server'''
     _bash('npm run serve',
           cwd=CLIENT_DIR)
+
+
+@cli.command(help='serve mock transmission',
+             name='serving-mock-transmission')
+def serve_dev_client():
+    from mock_transmission_server import app
+    app.run(host='localhost', port=5001)
 
 
 @cli.command(help='build client',
              name='building-client')
 def build_client():
-    '''build client'''
     _bash('npm run build',
           cwd=CLIENT_DIR)
 
