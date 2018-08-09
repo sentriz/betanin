@@ -1,6 +1,7 @@
 import time
 from threading import Thread
 
+from app import api
 from app.api import torrent_client
 from app.api import state
 from app.api import beet_queue
@@ -23,7 +24,8 @@ def _process(torrent):
 def _worker():
     print("starting torrent worker")
     while True:
-        for torrent in torrent_client.get_torrents():
+        api.torrents = list(torrent_client.get_torrents())
+        for torrent in api.torrents:
             _process(torrent)
         time.sleep(INTERVAL)
 

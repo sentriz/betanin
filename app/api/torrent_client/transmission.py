@@ -50,6 +50,7 @@ def _should_process(torrent):
 
 
 def get_torrents():
+    print('fetching torrents from client')
     raw_torrents = _session(
         'torrent-get',
         fields=[
