@@ -31,6 +31,7 @@ export default new Vuex.Store({
         .then(result => {
           commit('setDownloads', result)
         })
+      console.log('fetched downloads')
     },
     socket_grabbed: ({ commit, dispatch }) => {
       dispatch('getDownloads')
