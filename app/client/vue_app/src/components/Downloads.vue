@@ -66,19 +66,14 @@ export default {
   progress {
     display: inline-block;
     border: none;
-    background: #d1536a;
-    color: #d1536a;
+    -webkit-appearance: none;
   }
-  progress::-webkit-progress-value {
-    background: #d1536a;
-  }
-  progress::-moz-progress-bar {
-    background: #d1536a;
-  }
-  progress::-webkit-progress-value {
-    background: #d1536a;
-  }
+  /* background */
   progress::-webkit-progress-bar {
+    background: #eeeeee;
+  }
+  /* foreground */
+  progress::-webkit-progress-value {
     background: #d1536a;
   }
 </style>
