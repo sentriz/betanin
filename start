@@ -23,7 +23,9 @@ def _bash(cmd, **kwargs):
              name='serving-dev-api')
 def serve_dev_api():
     from app import app
-    app.run(
+    from app import socketio
+    socketio.run(
+        app,
         host='localhost', 
         port=5000,
         use_reloader=False,
