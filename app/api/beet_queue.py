@@ -1,14 +1,14 @@
 from collections import deque
-from threading import Thread
 from threading import Condition
 import time
+import eventlet
 
 
 QUEUE = deque()
 CV = Condition()
 
 
-def _consume():
+def _worker():
     print("starting queue worker")
     while True:
         with CV:
@@ -32,5 +32,4 @@ def add_torrent(torrent):
 
 
 def start_worker():
-    thread = Thread(target=_consume)
-    thread.start()
+    eventlet.spawn(_worker)
