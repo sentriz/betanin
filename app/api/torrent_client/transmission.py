@@ -48,17 +48,19 @@ def _should_process(torrent):
 
 
 def get_torrents():
-    raw_torrents = _session('torrent-get',
-                            fields=[
-                                'name',
-                                'downloadDir', 
-                                'isFinished',
-                                'id',
-                                'hashString',
-                                'percentDone',
-                                'startDate',
-                                'leftUntilDone',
-                            ])
+    raw_torrents = _session(
+        'torrent-get',
+        fields=[
+            'name',
+            'downloadDir', 
+            'isFinished',
+            'id',
+            'hashString',
+            'percentDone',
+            'startDate',
+            'leftUntilDone',
+        ]
+    )
     torrents = raw_torrents['torrents']
     yield from map(_torrent_to_object, 
                    filter(_should_process, torrents))
