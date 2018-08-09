@@ -28,6 +28,8 @@ def _torrent_is_music(torrent):
 def _torrent_status_to_object(torrent):
     if _torrent_is_done(torrent):
         return torrent_client.Status.REMOTE_COMPLETED
+    else:
+        return torrent_client.Status.REMOTE_DOWNLOADING
 
 
 def _torrent_to_object(torrent):
@@ -54,7 +56,6 @@ def get_torrents():
             'name',
             'downloadDir', 
             'isFinished',
-            'id',
             'hashString',
             'percentDone',
             'startDate',
