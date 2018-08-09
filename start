@@ -26,7 +26,7 @@ def serve_dev_api():
     from app import socketio
     socketio.run(
         app,
-        host='localhost', 
+        host='127.0.0.1',
         port=5000,
         use_reloader=False,
     )
