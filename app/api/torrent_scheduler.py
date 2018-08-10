@@ -10,16 +10,21 @@ import requests
 import eventlet
 
 
-INTERVAL = 5
+INTERVAL = 2
 
 
 def _process(torrent):
+    # 'torrent seen' -> on the last iteration, the torrent was downloading
+    # and betanin indented to process it when it finishes 
+    if not state.was_seen(torrent.id) and torrent.is_downloaded:
+        return
+    # torrent is new and (downloading or downloaded)
     if torrent.is_downloaded:
-        if state.was_seen(torrent.id):
-            beet_queue.add_torrent(torrent)
-            state.forget(torrent.id)
-    else:
-        state.see(torrent.id)
+        beet_queue.add(torrent)
+        state.mark_imported(torrent.id)
+    else: # torrent is downloading
+        state.is_downloading(torrent.id)
+
 
 
 def _worker():

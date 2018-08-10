@@ -1,16 +1,21 @@
 from app.api import torrent_client
 from app.api.rest.namespaces import torrents_ns
 from flask_restplus import fields
+from functools import reduce
 
 
-class _EnumField(fields.String):
+class _EnumsField(fields.String):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        enum_obj = kwargs.pop('enum', None)
-        self.enum = enum_obj._member_names_
-
-    def format(self, enum):
-        return enum.name
+        enums = kwargs.pop('enums', None)
+        self.enum = reduce(
+            lambda total, e: [
+                *total, 
+                *[f'{e.__name__}.{f.name}' for f in e]
+            ],
+            enums, 
+            []
+        )
 
 
 torrent = torrents_ns.model('Torrent', {
@@ -27,10 +32,10 @@ torrent = torrents_ns.model('Torrent', {
         example=34.76,
         decimals=2,
     ),
-    'status': _EnumField(
+    'status': _EnumsField(
         description='the current status of the torrent',
-        enum=torrent_client.Status,
-        example=torrent_client.Status._member_names_[0],
+        enums=(torrent_client.RemoteStatus, torrent_client.BetaStatus),
+        example='RemoteStatus.COMPLETED'
     ),
     'name': fields.String(
         description='the name of the torrent',

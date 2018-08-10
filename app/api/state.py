@@ -10,22 +10,27 @@ def _write_pickle(torrents, pickle_path=paths.PICKLE_PATH):
 
 def _read_pickle(pickle_path=paths.PICKLE_PATH):
     if not os.path.isfile(pickle_path):
-        return set()
+        return {
+            'downloading': set(), 
+            'imported': set()
+        }
     with open(pickle_path, 'rb') as handle:
         return pickle.load(handle)
 
 
-def see(torrent_id):
+def is_downloading(torrent_id):
     hashes = _read_pickle()
-    hashes.add(torrent_id)
+    hashes['downloading'].add(torrent_id)
     _write_pickle(hashes)
 
 
-def forget(torrent_id):
+def mark_imported(torrent_id):
     hashes = _read_pickle()
-    hashes.remove(torrent_id)
+    hashes['downloading'].remove(torrent_id)
+    hashes['imported'].add(torrent_id)
     _write_pickle(hashes)
 
 
 def was_seen(torrent_id):
-    return torrent_id in _read_pickle()
+    pickle = _read_pickle()
+    return torrent_id in pickle['imported'] | pickle['downloading']
