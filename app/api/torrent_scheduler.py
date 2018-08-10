@@ -23,7 +23,6 @@ def _process(torrent):
 
 
 def _worker():
-    print("starting torrent worker")
     while True:
         api.torrents = list(torrent_client.get_torrents())
         for torrent in api.torrents:
@@ -33,4 +32,5 @@ def _worker():
 
 
 def start_worker():
+    print("starting client worker")
     eventlet.spawn(_worker)

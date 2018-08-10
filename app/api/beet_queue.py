@@ -9,7 +9,6 @@ CV = Condition()
 
 
 def _worker():
-    print("starting queue worker")
     while True:
         with CV:
             CV.wait_for(_are_torrents)
@@ -32,4 +31,5 @@ def add_torrent(torrent):
 
 
 def start_worker():
+    print("starting beets worker")
     eventlet.spawn(_worker)
