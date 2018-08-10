@@ -24,19 +24,3 @@ BetaStatus = Enum('BetaStatus', [
     'FAILED',
     'COMPLETED', 
 ])
-
-
-@dataclass
-class Torrent:
-    id: str
-    name: str
-    path: str
-    progress: int
-    status: object
-
-    def __repr__(self):
-        return f'Torrent(id={self.id})'
-
-    @property
-    def is_downloaded(self):
-        return self.status == RemoteStatus.COMPLETED
