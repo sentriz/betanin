@@ -5,7 +5,7 @@
     detailed
     detail-key='id'
     :has-detailed-visible='rowHasDetail'
-    v-if='haveDownloads'
+    :loading='!haveDownloads'
   )
     template(
       slot-scope='props'
@@ -20,6 +20,7 @@
           :value='props.row.progress'
           max="100"
         )
+        | &nbsp; {{ props.row.progress | round }}%
       b-table-column(label='finished')
         CheckMark(
           v-if='props.row.isFinished === true'
@@ -31,9 +32,6 @@
       p
         strong downloaded
         |  {{ props.row.progress }}%
-  h3.title.is-5(
-    v-else
-  ) no downloads yet
 </template>
 
 <script>
@@ -52,6 +50,11 @@ export default {
   methods: {
     rowHasDetail (row) {
       return true
+    }
+  },
+  filters: {
+    round (value) {
+      return Math.round(value)
     }
   },
   data () {
