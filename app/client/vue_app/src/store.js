@@ -33,14 +33,14 @@ export default new Vuex.Store({
         })
       console.log('fetched downloads')
     },
-    socket_grabbed: ({ commit, dispatch }) => {
+    socket_grabbed: ({ dispatch }) => {
       dispatch('getDownloads')
     },
     socket_connect: ({ commit, dispatch }) => {
       commit('setConnected', true)
       dispatch('getDownloads')
     },
-    socket_disconnect: ({ commit, dispatch }) => {
+    socket_disconnect: ({ commit }) => {
       commit('setConnected', false)
     }
   }
