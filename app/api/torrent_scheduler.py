@@ -16,7 +16,7 @@ INTERVAL = 5
 def _process(torrent):
     if torrent.is_downloaded:
         if state.was_seen(torrent.id):
-            beet_queue.add_task(torrent)
+            beet_queue.add_torrent(torrent)
             state.forget(torrent.id)
     else:
         state.see(torrent.id)
