@@ -1,10 +1,13 @@
 import os
-from app import app
+import app
+from app import paths
 
 
 class Config(object):
     DEBUG = False
     TESTING = False
+    SQLALCHEMY_DATABASE_URI = f'sqlite:///{paths.DB_PATH}'
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
 
 class Development(Config):
@@ -17,8 +20,3 @@ class Production(Config):
     DEBUG = False
     PRODUCTION = True
     SECRET_KEY = os.environ.get('SECRET_KEY', 'UnsafeSecret')
-
-
-# Set `FLASK_CONFIG` env to 'Production' or 'Development' to set Config
-flask_config = os.environ.get('FLASK_CONFIG', 'Development')
-app.config.from_object('app.config.{}'.format(flask_config))
