@@ -1,4 +1,5 @@
-__import__('eventlet').monkey_patch()
+from gevent import monkey
+monkey.patch_all()
 
 import os
 
@@ -28,5 +29,5 @@ socketio = SocketIO(
     app,
     # engineio_logger=True,
     # logger=True,
-    async_mode='eventlet',
+    async_mode='gevent',
 )
