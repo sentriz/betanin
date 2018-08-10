@@ -1,7 +1,7 @@
 """ pytests for Flask """
 
 import pytest
-from app import app
+from betanin import betanin
 
 @pytest.fixture(scope="module")
 def client():
