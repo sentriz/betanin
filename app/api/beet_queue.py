@@ -2,6 +2,8 @@ from collections import deque
 from threading import Condition
 import time
 import eventlet
+from app.api.torrent_client import RemoteStatus
+from app.api.torrent_client import BetaStatus
 
 
 QUEUE = deque()
@@ -12,8 +14,11 @@ def _worker():
     while True:
         with CV:
             CV.wait_for(_are_torrents)
-            t = _get_task()
-            print('have', t)
+            torrent = _get_task()
+            torrent.status = BetaStatus.PROCESSING
+            print('have', torrent)
+            eventlet.sleep(10)
+            torrent.status = BetaStatus.COMPLETED
 
 
 def _are_torrents():
@@ -24,9 +29,10 @@ def _get_task():
     return QUEUE.popleft()
 
 
-def add_torrent(torrent):
+def add(torrent):
     with CV:
         QUEUE.append(torrent)
+        torrent.status = BetaStatus.ENQUEUED
         CV.notify()
 
 

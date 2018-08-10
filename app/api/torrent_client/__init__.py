@@ -3,19 +3,26 @@ from enum import Enum
 import importlib
 
 
+# TODO: not have Status and Torrent in here
+
+
 _remote = 'transmission'
 # TODO: not this
 get_torrents = importlib.import_module('app.api.torrent_client.' + _remote).get_torrents
 
 
-Status = Enum('TorrentStatus', [
-    'REMOTE_COMPLETED', 
-    'REMOTE_DOWNLOADING',
-    'REMOTE_INACTIVE',
+RemoteStatus = Enum('RemoteStatus', [
     'COMPLETED', 
-    'FAILED',
-    'NEEDS_INPUT',
+    'DOWNLOADING',
+    'INACTIVE',
+])
+
+BetaStatus = Enum('BetaStatus', [
+    'ENQUEUED',
     'PROCESSING',
+    'NEEDS_INPUT',
+    'FAILED',
+    'COMPLETED', 
 ])
 
 
@@ -25,11 +32,11 @@ class Torrent:
     name: str
     path: str
     progress: int
-    status: Status
-
-    @property
-    def is_downloaded(self):
-        return self.status == Status.REMOTE_COMPLETED
+    status: object
 
     def __repr__(self):
         return f'Torrent(id={self.id})'
+
+    @property
+    def is_downloaded(self):
+        return self.status == RemoteStatus.COMPLETED
