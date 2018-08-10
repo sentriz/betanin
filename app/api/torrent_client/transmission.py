@@ -4,16 +4,16 @@ from flask import request
 from flask_restplus import Api
 from transmission import Transmission
 
-from app import app_config
+from app import bet_config
 from app.api import torrent_client 
 
 
 _session = Transmission(
-    host=app_config.TRANSMISSION['host'],
-    port=app_config.TRANSMISSION['port'],
-    username=app_config.TRANSMISSION['username'],
-    password=app_config.TRANSMISSION['password'],
-    ssl=app_config.TRANSMISSION['ssl'],
+    host=bet_config.TRANSMISSION['host'],
+    port=bet_config.TRANSMISSION['port'],
+    username=bet_config.TRANSMISSION['username'],
+    password=bet_config.TRANSMISSION['password'],
+    ssl=bet_config.TRANSMISSION['ssl'],
 )
 
 
@@ -22,7 +22,7 @@ def _torrent_is_done(torrent):
 
 
 def _torrent_is_music(torrent):
-    return torrent['downloadDir'] == app_config.DIRECTORY
+    return torrent['downloadDir'] == bet_config.DIRECTORY
 
 
 def _torrent_status_to_object(torrent):

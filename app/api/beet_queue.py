@@ -2,8 +2,8 @@ from collections import deque
 from threading import Condition
 import time
 import eventlet
-from app.api.torrent_client import RemoteStatus
-from app.api.torrent_client import BetaStatus
+from app.api.torrent import RemoteStatus
+from app.api.torrent import BetaStatus
 
 
 QUEUE = deque()

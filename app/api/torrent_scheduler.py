@@ -13,7 +13,7 @@ INTERVAL = 5
 
 
 def _process(torrent):
-    print(torrent['doneDate'])
+    pass
     # # 'torrent seen' -> on the last iteration, the torrent was downloading
     # # and betanin indented to process it when it finishes 
     # if not state.was_seen(torrent.id) and torrent.is_downloaded:
@@ -26,9 +26,15 @@ def _process(torrent):
     #     state.is_downloading(torrent.id)
 
 
+def _update_torrents():
+    new_torrents = list(torrent_client.get_torrents())
+    for torrents in new_torrents():
+        print(torrent)
+
 
 def _worker():
     while True:
+        # _update_torrents()
         # for key, value in list(torrent_client.get_torrents())
             
         # for torrent in api.torrents:
