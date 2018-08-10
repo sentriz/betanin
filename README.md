@@ -1,3 +1,3 @@
 ### todo
-  - [ ] not to that thing in `torrent_client`
+  - [ ] not do that thing in `torrent_client`
   - [ ] socket stuff
