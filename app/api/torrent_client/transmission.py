@@ -4,16 +4,16 @@ from flask import request
 from flask_restplus import Api
 from transmission import Transmission
 
-from app.api.paths import config
+from app import app_config
 from app.api import torrent_client 
 
 
 _session = Transmission(
-    host=config.TRANSMISSION['host'],
-    port=config.TRANSMISSION['port'],
-    username=config.TRANSMISSION['username'],
-    password=config.TRANSMISSION['password'],
-    ssl=config.TRANSMISSION['ssl'],
+    host=app_config.TRANSMISSION['host'],
+    port=app_config.TRANSMISSION['port'],
+    username=app_config.TRANSMISSION['username'],
+    password=app_config.TRANSMISSION['password'],
+    ssl=app_config.TRANSMISSION['ssl'],
 )
 
 
@@ -22,7 +22,7 @@ def _torrent_is_done(torrent):
 
 
 def _torrent_is_music(torrent):
-    return torrent['downloadDir'] == config.DIRECTORY
+    return torrent['downloadDir'] == app_config.DIRECTORY
 
 
 def _torrent_status_to_object(torrent):
@@ -33,13 +33,14 @@ def _torrent_status_to_object(torrent):
 
 
 def _torrent_to_object(torrent):
-    return torrent_client.Torrent(
-        status=_torrent_status_to_object(torrent),
-        id=torrent['hashString'],
-        progress=torrent['percentDone'] * 100,
-        path=torrent['downloadDir'],
-        name=torrent['name'],
-    )
+    return {
+        'remote_status': _torrent_status_to_object(torrent),
+        'id':            torrent['hashString'],
+        'progress':      torrent['percentDone'] * 100,
+        'path':          torrent['downloadDir'],
+        'name':          torrent['name'],
+        'done_date':     torrent['doneDate']
+    }
 
 
 def _should_process(torrent):
