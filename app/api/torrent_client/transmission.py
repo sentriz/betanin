@@ -27,9 +27,9 @@ def _torrent_is_music(torrent):
 
 def _torrent_status_to_object(torrent):
     if _torrent_is_done(torrent):
-        return torrent_client.Status.REMOTE_COMPLETED
+        return torrent_client.RemoteStatus.COMPLETED
     else:
-        return torrent_client.Status.REMOTE_DOWNLOADING
+        return torrent_client.RemoteStatus.DOWNLOADING
 
 
 def _torrent_to_object(torrent):

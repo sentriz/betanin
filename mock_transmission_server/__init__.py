@@ -7,12 +7,11 @@ import time
 
 
 app = Flask(__name__)
-MOVING_ID = '4b1b6d93996119e1097753dff8b06ca31994c9c5' # dave clarke
 
 
-def _inc_torrent(torrent_id, amount):
+def _inc_torrent(amount):
     for torrent in response.ARGUMENTS['torrents']:
-        if torrent['hashString'] != torrent_id:
+        if not ('__moving' in torrent and torrent['__moving']):
             continue
         torrent['percentDone'] += amount/100 # +amount%
         torrent['leftUntilDone'] -= amount
@@ -20,8 +19,8 @@ def _inc_torrent(torrent_id, amount):
             torrent['percentDone'] = 1
         if torrent['leftUntilDone'] < 0:
             torrent['leftUntilDone'] = 0
-        print(f'torrent {torrent_id:.5} is {torrent["percentDone"]} done')
-        print(f'torrent {torrent_id:.5} is {torrent["leftUntilDone"]} left')
+        print(f'torrent is {torrent["percentDone"]} done')
+        print(f'torrent is {torrent["leftUntilDone"]} left')
 
 
 @app.route("/transmission/rpc", methods=['POST'])
@@ -39,7 +38,7 @@ def main():
 
 def _inc_worker(percent, period):
     while True:
-        _inc_torrent(MOVING_ID, percent)
+        _inc_torrent(percent)
         time.sleep(period)
 
 

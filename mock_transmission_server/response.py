@@ -5,20 +5,22 @@ ARGUMENTS = {
             'hashString': '4b1b6d93996119e1097753dff8b06ca31994c9c5',
             'id': 1,
             'isFinished': False,
-            'leftUntilDone': 66,
+            'startDate': 0,
             'name': "Dave Clarke - Devil's Advocate [2003 - MP3V0]",
+            'leftUntilDone': 66,
             'percentDone': 0.34,
-            'startDate': 0
+            '__moving': True
         },
         {
             'downloadDir': '/downloads/complete/beets',
             'hashString': '08c301c7637bb0274b412581929c4d69fc488922',
             'id': 2,
             'isFinished': False,
-            'leftUntilDone': 0,
             'name': 'Kevin Ayers and the Whole World - Shooting at the Moon (1970) [FLAC]',
-            'percentDone': 1,
-            'startDate': 1532267669
+            'startDate': 1532267669,
+            'leftUntilDone': 52,
+            'percentDone': 0.48,
+            '__moving': True
         },
         {
             'downloadDir': '/downloads/complete',
