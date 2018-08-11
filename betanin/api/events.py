@@ -1,5 +1,5 @@
 from flask_socketio import emit
-import app
+import betanin
 
 
 def torrents_grabbed():

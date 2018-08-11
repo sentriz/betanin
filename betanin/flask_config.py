@@ -1,6 +1,6 @@
 import os
-import app
-from app import paths
+import betanin
+from betanin import paths
 
 
 class Config(object):
