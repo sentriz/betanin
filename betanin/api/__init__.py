@@ -9,10 +9,11 @@ from betanin.api import beet_queue
 from betanin.api import torrent_scheduler
 
 
-api_bp = Blueprint('api_bp',
-                   __name__,
-                   template_folder='templates',
-                   url_prefix='/api')
+api_bp = Blueprint(
+    'api_bp',
+    __name__,
+    template_folder='templates',
+    url_prefix='/api')
 api_rest = Api(api_bp)
 
 
