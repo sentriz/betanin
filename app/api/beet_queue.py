@@ -1,9 +1,8 @@
 from collections import deque
 from threading import Condition
 import time
-import eventlet
-from app.api.torrent import RemoteStatus
-from app.api.torrent import BetaStatus
+import gevent
+from app.api.status import BetaStatus
 
 
 QUEUE = deque()
@@ -17,7 +16,7 @@ def _worker():
             torrent = _get_task()
             torrent.status = BetaStatus.PROCESSING
             print('have', torrent)
-            eventlet.sleep(10)
+            gevent.sleep(10)
             torrent.status = BetaStatus.COMPLETED
 
 
@@ -38,4 +37,4 @@ def add(torrent):
 
 def start_worker():
     print("starting beets worker")
-    eventlet.spawn(_worker)
+    gevent.spawn(_worker)
