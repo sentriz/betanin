@@ -1,9 +1,9 @@
 from betanin import api
-from betanin.api import api_rest
 from betanin.api import torrent_client
 from betanin.api.rest import response_models
 from betanin.api.rest.base import BaseResource
 from betanin.api.rest.namespaces import torrents_ns
+from betanin.extensions import rest
 
 
 @torrents_ns.route('/all')

@@ -1,9 +1,8 @@
 import os
-from flask import Flask
+
 from flask import Blueprint
-from flask import session
+from flask import Flask
 from flask import current_app
-from flask_restplus import Api
 
 from betanin.api import beet_queue
 from betanin.api import torrent_scheduler
@@ -13,8 +12,8 @@ api_bp = Blueprint(
     'api_bp',
     __name__,
     template_folder='templates',
-    url_prefix='/api')
-api_rest = Api(api_bp)
+    url_prefix='/api'
+)
 
 
 @api_bp.after_request

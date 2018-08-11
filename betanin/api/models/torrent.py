@@ -1,5 +1,4 @@
-from betanin.api.torrent_client import RemoteStatus
-from betanin.api.torrent_client import BetaStatus
+from betanin.api.models import db
 
 
 class Torrent(db.Model):
