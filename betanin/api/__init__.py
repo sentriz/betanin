@@ -5,8 +5,8 @@ from flask import session
 from flask import current_app
 from flask_restplus import Api
 
-from app.api import beet_queue
-from app.api import torrent_scheduler
+from betanin.api import beet_queue
+from betanin.api import torrent_scheduler
 
 
 api_bp = Blueprint('api_bp',
@@ -26,8 +26,8 @@ def add_header(response):
     return response
 
 
-from app.api.rest import namespaces
-from app.api.rest import resources
+from betanin.api.rest import namespaces
+from betanin.api.rest import resources
 
 
 beet_queue.start_worker()

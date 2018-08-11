@@ -1,4 +1,4 @@
-from app.api import api_rest
+from betanin.api import api_rest
 
 
 api_rest.namespaces.clear()

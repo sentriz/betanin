@@ -1,5 +1,5 @@
 import sys
-from app import paths
+from betanin import paths
 
 
 # config dir has 'config.py'

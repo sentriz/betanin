@@ -22,10 +22,9 @@ def _bash(cmd, **kwargs):
 @cli.command(help='serve api dev server',
              name='serving-dev-api')
 def serve_dev_api():
-    from app import app
-    from app import socketio
-    socketio.run(
-        app,
+    from betanin import context
+    context.socketio.run(
+        context.app,
         host='127.0.0.1',
         port=5000,
         use_reloader=False,
