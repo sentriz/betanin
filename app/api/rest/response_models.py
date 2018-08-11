@@ -1,7 +1,11 @@
-from app.api import torrent
-from app.api.rest.namespaces import torrents_ns
-from flask_restplus import fields
 from functools import reduce
+
+from app.api.rest.namespaces import torrents_ns
+from app.api.status import BetaStatus
+from app.api.status import RemoteStatus
+
+from flask_restplus import fields
+
 
 
 class _EnumsField(fields.String):
@@ -34,7 +38,7 @@ torrent = torrents_ns.model('Torrent', {
     ),
     'status': _EnumsField(
         description='the current status of the torrent',
-        enums=(torrent.RemoteStatus, torrent.BetaStatus),
+        enums=(RemoteStatus, BetaStatus),
         example='RemoteStatus.COMPLETED'
     ),
     'name': fields.String(

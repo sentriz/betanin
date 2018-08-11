@@ -5,7 +5,7 @@ from flask_restplus import Api
 from transmission import Transmission
 
 from app import bet_config
-from app.api import torrent_client 
+from app.api import status
 
 
 _session = Transmission(
@@ -27,9 +27,9 @@ def _torrent_is_music(torrent):
 
 def _torrent_status_to_object(torrent):
     if _torrent_is_done(torrent):
-        return torrent_client.RemoteStatus.COMPLETED
+        return status.RemoteStatus.COMPLETED
     else:
-        return torrent_client.RemoteStatus.DOWNLOADING
+        return status.RemoteStatus.DOWNLOADING
 
 
 def _torrent_to_object(torrent):
@@ -39,7 +39,6 @@ def _torrent_to_object(torrent):
         'progress':      torrent['percentDone'] * 100,
         'path':          torrent['downloadDir'],
         'name':          torrent['name'],
-        'done_date':     torrent['doneDate']
     }
 
 

@@ -44,8 +44,8 @@ def serve_dev_client():
 @click.option('--percent', default=1)
 @click.option('--period', default=1)
 def serve_dev_client(**kwargs):
-    from mock_transmission_server import app
-    from mock_transmission_server import start_inc_worker
+    from utilities.mock_transmission_server import app
+    from utilities.mock_transmission_server import start_inc_worker
     start_inc_worker(**kwargs)
     app.run(
         host='localhost', 
@@ -59,6 +59,13 @@ def serve_dev_client(**kwargs):
 def build_client():
     _bash('npm run build',
           cwd=CLIENT_DIR)
+
+
+@cli.command(help='build database',
+             name='building-db')
+def build_client():
+    from app import db
+    db.create_all()
 
 
 if __name__ == '__main__':
