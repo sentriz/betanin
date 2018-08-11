@@ -1,15 +1,15 @@
 import time
 
-from app import api
+import app
 from app.api import torrent_client
 from app.api import beet_queue
 from app.api import events
 
 import requests
-import eventlet
+import gevent
 
 
-INTERVAL = 5
+INTERVAL = 2
 
 
 def _process(torrent):
@@ -27,22 +27,23 @@ def _process(torrent):
 
 
 def _update_torrents():
+    print(app.db)
     new_torrents = list(torrent_client.get_torrents())
-    for torrents in new_torrents():
-        print(torrent)
+
+
 
 
 def _worker():
     while True:
-        # _update_torrents()
+        _update_torrents()
         # for key, value in list(torrent_client.get_torrents())
             
         # for torrent in api.torrents:
         #     _process(torrent)
         # events.torrents_grabbed()
-        eventlet.sleep(INTERVAL)
+        gevent.sleep(INTERVAL)
 
 
 def start_worker():
     print("starting client worker")
-    eventlet.spawn(_worker)
+    gevent.spawn(_worker)
