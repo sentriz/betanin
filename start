@@ -63,8 +63,9 @@ def build_client():
 @cli.command(help='build database',
              name='building-db')
 def build_client():
-    from app import db
-    db.create_all()
+    from betanin import minimal_context
+    import betanin.api.models
+    minimal_context.db.create_all()
 
 
 if __name__ == '__main__':
