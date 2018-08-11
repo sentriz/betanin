@@ -1,8 +1,8 @@
 from functools import reduce
 
-from app.api.rest.namespaces import torrents_ns
-from app.api.status import BetaStatus
-from app.api.status import RemoteStatus
+from betanin.api.rest.namespaces import torrents_ns
+from betanin.api.status import BetaStatus
+from betanin.api.status import RemoteStatus
 
 from flask_restplus import fields
 

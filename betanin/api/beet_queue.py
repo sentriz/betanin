@@ -2,7 +2,7 @@ from collections import deque
 from threading import Condition
 import time
 import gevent
-from app.api.status import BetaStatus
+from betanin.api.status import BetaStatus
 
 
 QUEUE = deque()

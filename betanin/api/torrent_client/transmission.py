@@ -4,8 +4,8 @@ from flask import request
 from flask_restplus import Api
 from transmission import Transmission
 
-from app import bet_config
-from app.api import status
+from betanin import bet_config
+from betanin.api import status
 
 
 _session = Transmission(
