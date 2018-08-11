@@ -1,11 +1,10 @@
 import time
 
-from betanin import context
 from betanin.api import torrent_client
 from betanin.api import beet_queue
 from betanin.api import events
+from betanin.extensions import db
 
-import requests
 import gevent
 
 
@@ -27,7 +26,7 @@ def _process(torrent):
 
 
 def _update_torrents():
-    print(context.db)
+    print(db)
     new_torrents = list(torrent_client.get_torrents())
 
 
