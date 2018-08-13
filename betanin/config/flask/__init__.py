@@ -1,9 +1,13 @@
 from betanin import paths
 
+from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
+
+
+_sql_url = f'sqlite:///{paths.DB_PATH}'
+
 
 class BaseConfig(object):
-    TESTING = False
-    SQLALCHEMY_DATABASE_URI = f'sqlite:///{paths.DB_PATH}'
+    SQLALCHEMY_DATABASE_URI = _sql_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = "SAMufsdf"
     CORS_ORIGIN_WHITELIST = [
@@ -11,6 +15,27 @@ class BaseConfig(object):
         'http://localhost:5000',
         'http://0.0.0.0:8081',
         'http://localhost:8081',
+    ]
+    SCHEDULER_JOBSTORES = {
+        'default': SQLAlchemyJobStore(url=_sql_url)
+    }
+    SCHEDULER_API_ENABLED = True
+    JOBS = [
+        {
+            'id': 'fetch_torrents',
+            'func': 'betanin.api.jobs.fetch_torrents:start',
+            'trigger': 'interval',
+            'seconds': 2,
+            'replace_existing': True,
+
+        },
+        {
+            'id': 'process_torrents',
+            'func': 'betanin.api.jobs.process_torrents:start',
+            'replace_existing': True,
+            'trigger': 'date',
+
+        }
     ]
 
 
