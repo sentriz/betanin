@@ -1,8 +1,10 @@
 from collections import deque
 from threading import Condition
 import time
-import gevent
+
 from betanin.api.status import BetaStatus
+
+import gevent
 
 
 QUEUE = deque()
