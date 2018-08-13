@@ -1,17 +1,21 @@
-class Base(object):
+from betanin import paths
+
+
+class BaseConfig(object):
     TESTING = False
     SQLALCHEMY_DATABASE_URI = f'sqlite:///{paths.DB_PATH}'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    SECRET_KEY = "SAMufsdf"
 
 
-from betanin.config.flask.development import Development
-from betanin.config.flask.production import Production
+from betanin.config.flask.development import DevelopmentConfig
+from betanin.config.flask.production import ProductionConfig
 
 
-_default = Development
+_default = DevelopmentConfig
 _config_map = {
-    'development': Development,
-    'production': Production,
+    'development': DevelopmentConfig,
+    'production': ProductionConfig,
 }
 
 

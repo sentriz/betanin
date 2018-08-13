@@ -4,16 +4,16 @@ from flask import request
 from flask_restplus import Api
 from transmission import Transmission
 
-from betanin import bet_config
+from betanin.config import client
 from betanin.api import status
 
 
 _session = Transmission(
-    host=bet_config.TRANSMISSION['host'],
-    port=bet_config.TRANSMISSION['port'],
-    username=bet_config.TRANSMISSION['username'],
-    password=bet_config.TRANSMISSION['password'],
-    ssl=bet_config.TRANSMISSION['ssl'],
+    host=client.TRANSMISSION['host'],
+    port=client.TRANSMISSION['port'],
+    username=client.TRANSMISSION['username'],
+    password=client.TRANSMISSION['password'],
+    ssl=client.TRANSMISSION['ssl'],
 )
 
 
@@ -22,7 +22,7 @@ def _torrent_is_done(torrent):
 
 
 def _torrent_is_music(torrent):
-    return torrent['downloadDir'] == bet_config.DIRECTORY
+    return torrent['downloadDir'] == client.DIRECTORY
 
 
 def _torrent_status_to_object(torrent):

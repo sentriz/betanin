@@ -10,4 +10,4 @@ from betanin.extensions import rest
 class TorrentsResource(BaseResource):
     @torrents_ns.marshal_list_with(response_models.torrent)
     def get(self):
-        return api.torrents
+        return []
