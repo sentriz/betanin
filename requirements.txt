@@ -1,4 +1,0 @@
-click
-flask-restplus
-flask
-git+https://github.com/edavis/transmission-fluid.git
