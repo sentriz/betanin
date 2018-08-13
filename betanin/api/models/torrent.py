@@ -1,4 +1,6 @@
-from betanin.api.models import db
+from betanin.extensions import db
+from betanin.api.status import RemoteStatus
+from betanin.api.status import BetaStatus
 
 
 class Torrent(db.Model):
