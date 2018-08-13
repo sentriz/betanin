@@ -1,0 +1,6 @@
+#!/bin/sh
+
+export PYTHONWARNINGS='ignore:Unverified HTTPS request'
+export FLASK_APP='betanin.app:create_app()'
+
+flask "$@"
