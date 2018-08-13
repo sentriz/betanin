@@ -1,6 +1,6 @@
-from betanin.config.flask import Base
+from betanin.config.flask import BaseConfig
 
 
-class Development(Base):
-    DEBUG = True
+class DevelopmentConfig(BaseConfig):
+    DEBUG = False
     PRODUCTION = False

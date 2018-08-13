@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Buefy from 'buefy'
-import VueSocketio from 'vue-socket.io-extended';
-import IO from 'socket.io-client';
+import VueSocketio from 'vue-socket.io-extended'
+import IO from 'socket.io-client'
 
 import App from './App.vue'
 import router from './router'
