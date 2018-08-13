@@ -9,9 +9,10 @@ from betanin.extensions import rest
 from betanin.extensions import socketio
 
 
-def create_app(environment):
+def create_app():
     app = Flask(__name__)
-    app.config.from_object(f'betanin.flask_config.{environment}')
+    _config_env = os.environ.get('FLASK_CONFIG', 'Development')
+    app.config.from_object(f'betanin.flask_config.{_config_env}')
     db.init_app(app)
     rest.init_app(app)
     socketio.init_app(app)
