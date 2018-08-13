@@ -1,5 +1,5 @@
-from gevent import monkey
-monkey.patch_all()
+# from gevent import monkey
+# monkey.patch_all()
 
 
 from flask import Flask
@@ -12,6 +12,7 @@ from betanin.extensions import db
 from betanin.extensions import rest
 from betanin.extensions import socketio
 from betanin.extensions import cors
+from betanin.extensions import migrate
 
 
 def create_app(config_name="development"):
@@ -19,14 +20,15 @@ def create_app(config_name="development"):
     app.url_map.strict_slashes = False
     config_obj = config_from_string(config_name)
     app.config.from_object(config_obj)
-    register_blueprints(app)
     register_extensions(app)
+    register_blueprints(app)
     register_commands(app)
     return app
 
 
 def register_extensions(app):
     db.init_app(app)
+    migrate.init_app(app, db)
     socketio.init_app(app)
 
 
