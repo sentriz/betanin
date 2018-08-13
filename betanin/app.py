@@ -11,6 +11,7 @@ from betanin.config.flask import config_from_string
 from betanin.extensions import db
 from betanin.extensions import rest
 from betanin.extensions import socketio
+from betanin.extensions import cors
 
 
 def create_app(config_name="development"):
@@ -30,10 +31,13 @@ def register_extensions(app):
 
 
 def register_blueprints(app):
-    # api blueprint & extensions (first)
+    # blueprint extensions (before register)
     rest.init_app(api.blueprint)
+    _origins = app.config.get('CORS_ORIGIN_WHITELIST', '*')
+    cors.init_app(api.blueprint, origins=_origins)
+    cors.init_app(api.blueprint, origins=_origins)
+    # blueprints
     app.register_blueprint(api.blueprint)
-    # client "
     app.register_blueprint(client.blueprint)
 
 
