@@ -26,7 +26,6 @@ def _process(torrent):
 
 
 def _update_torrents():
-    print(db)
     new_torrents = list(torrent_client.get_torrents())
 
 

@@ -8,7 +8,7 @@ from betanin.api import beet_queue
 from betanin.api import torrent_scheduler
 
 
-api_bp = Blueprint(
+blueprint = Blueprint(
     'api_bp',
     __name__,
     template_folder='templates',
@@ -16,7 +16,8 @@ api_bp = Blueprint(
 )
 
 
-@api_bp.after_request
+# TODO: use flask cors
+@blueprint.after_request
 def add_header(response):
     response.headers['Access-Control-Allow-Headers'] = 'Content-Type,Authorization'
     # required for webpack dev application to make requests to flask api

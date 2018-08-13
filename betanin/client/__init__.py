@@ -1,7 +1,7 @@
 import os
 from flask import Blueprint, render_template
 
-client_bp = Blueprint(
+blueprint = Blueprint(
     'client_app',
     __name__,
     url_prefix='',
@@ -11,6 +11,6 @@ client_bp = Blueprint(
 )
 
 
-@client_bp.route('/')
+@blueprint.route('/')
 def index():
     return render_template('index.html')
