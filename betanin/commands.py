@@ -3,7 +3,6 @@ from glob import glob
 from subprocess import call
 
 import click
-from flask import current_app
 from flask.cli import with_appcontext
 from werkzeug.exceptions import MethodNotAllowed
 from werkzeug.exceptions import NotFound
@@ -55,3 +54,12 @@ def clean():
             full_pathname = os.path.join(dirpath, filename)
             click.echo('Removing {}'.format(full_pathname))
             os.remove(full_pathname)
+
+
+@click.command()
+def create_db():
+    """create the needed tables with sqlalchemy"""
+    from betanin.extensions import db
+    from betanin.api.models.torrent import Torrent
+    db.drop_all()
+    db.create_all()
