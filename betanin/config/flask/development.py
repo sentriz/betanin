@@ -2,5 +2,6 @@ from betanin.config.flask import BaseConfig
 
 
 class DevelopmentConfig(BaseConfig):
-    DEBUG = False
+    ENV = 'development'
+    DEBUG = True
     PRODUCTION = False
