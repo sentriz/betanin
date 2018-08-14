@@ -9,7 +9,7 @@ _sql_url = f'sqlite:///{paths.DB_PATH}'
 class BaseConfig(object):
     SQLALCHEMY_DATABASE_URI = _sql_url
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SECRET_KEY = "SAMufsdf"
+    SECRET_KEY = "GUYSILOVEIT"
     CORS_ORIGIN_WHITELIST = [
         'http://0.0.0.0:5000',
         'http://localhost:5000',

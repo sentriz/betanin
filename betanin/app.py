@@ -11,7 +11,7 @@ from betanin import commands
 from betanin.config.flask import config_from_string
 from betanin.extensions import cors
 from betanin.extensions import db
-from betanin.extensions import migrate
+# from betanin.extensions import migrate
 from betanin.extensions import rest
 from betanin.extensions import scheduler
 from betanin.extensions import socketio
@@ -32,7 +32,7 @@ def create_app(config_name="development"):
 def register_extensions(app):
     db.init_app(app)
     scheduler.init_app(app)
-    migrate.init_app(app, db)
+    # migrate.init_app(app, db)
     socketio.init_app(app)
 
 
