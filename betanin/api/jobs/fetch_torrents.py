@@ -2,9 +2,9 @@ import time
 import random
 
 from betanin.api.models.torrent import Torrent
+from betanin.api.torrent_client import get_torrents
 from betanin.extensions import scheduler
 from betanin.extensions import db
-from flask import current_app
 
 
 def _process(torrent):
@@ -23,6 +23,8 @@ def _process(torrent):
 
 def start():
     scheduler.app.app_context().push()
-    # db.session.add(Torrent(id=random.randint(20, 400), name="san", path="sam"))
-    # db.session.commit()
+    print("SAM")
+    for torrent in list(get_torrents()):
+        db.session.add(Torrent.from_dict(torrent))
+    db.session.commit()
     print(Torrent.query.all())
