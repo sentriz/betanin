@@ -11,3 +11,8 @@ class Torrent(db.Model):
     path          = db.Column(db.String)
     remote_status = db.Column(db.Enum(RemoteStatus))
     beta_status   = db.Column(db.Enum(BetaStatus))
+    progress      = db.Column(db.Float)
+
+    @classmethod
+    def from_dict(cls, torrent_dict):
+        return cls(**torrent_dict)
