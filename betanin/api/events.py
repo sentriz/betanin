@@ -1,6 +1,6 @@
 from flask_socketio import emit
-import betanin
+from betanin.extensions import socketio
 
 
 def torrents_grabbed():
-    app.socketio.emit('grabbed')
+    socketio.emit('grabbed')
