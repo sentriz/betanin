@@ -4,6 +4,7 @@ from subprocess import call
 
 import click
 from flask.cli import with_appcontext
+from flask import current_app
 from werkzeug.exceptions import MethodNotAllowed
 from werkzeug.exceptions import NotFound
 
@@ -15,7 +16,7 @@ TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
 
 @click.command()
 def test():
-    """run the tests"""
+    '''run the tests'''
     import pytest
     rv = pytest.main([TEST_PATH, '--verbose'])
     exit(rv)
@@ -25,7 +26,7 @@ def test():
 @click.option('-f', '--fix-imports', default=False, is_flag=True,
               help='Fix imports using isort, before linting')
 def lint(fix_imports):
-    """lint and check code style with flake8 and isort"""
+    '''lint and check code style with flake8 and isort'''
     skip = ['requirements']
     root_files = glob('*.py')
     root_directories = [
@@ -33,7 +34,7 @@ def lint(fix_imports):
     files_and_directories = [
         arg for arg in root_files + root_directories if arg not in skip]
     def execute_tool(description, *args):
-        """execute a checking tool with it's arguments"""
+        '''execute a checking tool with it's arguments'''
         command_line = list(args) + files_and_directories
         click.echo('{}: {}'.format(description, ' '.join(command_line)))
         rv = call(command_line)
@@ -46,7 +47,7 @@ def lint(fix_imports):
 
 @click.command()
 def clean():
-    """remove *.pyc and *.pyo files recursively starting at current directory"""
+    '''remove *.pyc and *.pyo files recursively starting at current directory'''
     for dirpath, _, filenames in os.walk('.'):
         for filename in filenames:
             if not (filename.endswith('.pyc') or filename.endswith('.pyo')):
@@ -56,10 +57,13 @@ def clean():
             os.remove(full_pathname)
 
 
-@click.command()
+@click.command(name='create-db')
+@with_appcontext
 def create_db():
-    """create the needed tables with sqlalchemy"""
+    '''create the needed tables with sqlalchemy'''
     from betanin.extensions import db
     from betanin.api.models.torrent import Torrent
-    db.drop_all()
-    db.create_all()
+    with current_app.app_context():
+        db.drop_all()
+        db.create_all()
+        print("done")

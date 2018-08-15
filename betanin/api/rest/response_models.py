@@ -7,19 +7,14 @@ from betanin.api.status import RemoteStatus
 from flask_restplus import fields
 
 
-
-class _EnumsField(fields.String):
+class _EnumField(fields.String):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        enums = kwargs.pop('enums', None)
-        self.enum = reduce(
-            lambda total, e: [
-                *total, 
-                *[f'{e.__name__}.{f.name}' for f in e]
-            ],
-            enums, 
-            []
-        )
+        enum_obj = kwargs.pop('enum', None)
+        self.enum = enum_obj._member_names_
+
+    def format(self, enum):
+        return enum.name
 
 
 torrent = torrents_ns.model('Torrent', {
@@ -36,10 +31,15 @@ torrent = torrents_ns.model('Torrent', {
         example=34.76,
         decimals=2,
     ),
-    'status': _EnumsField(
+    'remote_status': _EnumField(
         description='the current status of the torrent',
-        enums=(RemoteStatus, BetaStatus),
-        example='RemoteStatus.COMPLETED'
+        enum=RemoteStatus,
+        example='COMPLETED'
+    ),
+    'beta_status': _EnumField(
+        description='the current status of the torrent',
+        enum=BetaStatus,
+        example='COMPLETED',
     ),
     'name': fields.String(
         description='the name of the torrent',
