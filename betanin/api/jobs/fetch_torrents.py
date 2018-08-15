@@ -1,10 +1,11 @@
 import time
 import random
 
+from betanin.api import events
 from betanin.api.models.torrent import Torrent
 from betanin.api.torrent_client import get_torrents
-from betanin.extensions import scheduler
 from betanin.extensions import db
+from betanin.extensions import scheduler
 
 
 def _process(torrent):
@@ -28,5 +29,7 @@ def start():
         torrent = Torrent.update_or_create(torrent_dict)
         # update beta status (while processing)
         _process(torrent)
+        # tell client to get the latest torrent list
         db.session.add(torrent)
+    events.torrents_grabbed()
     db.session.commit()
