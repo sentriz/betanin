@@ -58,7 +58,9 @@ const betaStatusMap = {
   'NEEDS_INPUT': appearToMap('needs input', 'exclamation-circle', 'hsl(48,  98%,  52%)'), // yellow-orange
   'FAILED':      appearToMap('failed',      'times',              'hsl(349, 58%,  57%)'), // angry red
   'COMPLETED':   appearToMap('completed',   'check',              'hsl(141, 71%,  48%)'), // green
-  'UNKNOWN':     appearToMap('unknown',     'exclamation-circle', 'hsl(0,   0%,  86%)')   // light grey
+  'WAITING':     appearToMap('waiting',     'clock-o',            'hsl(0,   0%,  86%)'),  // light grey
+  'UNKNOWN':     appearToMap('unknown',     'exclamation-circle', 'hsl(0,   0%,  86%)'),  // light grey
+  'IGNORED':     appearToMap('ignored',     'times',              'hsl(36,  99%,  65%)')  // orange
 }
 export default {
   computed: mapGetters([
