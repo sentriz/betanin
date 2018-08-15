@@ -1,12 +1,12 @@
+from threading import Thread
+import time
+import os
+
+from utilities.mock_transmission_server import response
+
 from flask import Flask
 from flask import jsonify
 from flask import request
-from mock_transmission_server import response
-from threading import Thread
-import time
-
-
-app = Flask(__name__)
 
 
 def _inc_torrent(amount):
@@ -23,8 +23,7 @@ def _inc_torrent(amount):
         print(f'torrent is {torrent["leftUntilDone"]} left')
 
 
-@app.route("/transmission/rpc", methods=['POST'])
-def main():
+def _main_view():
     req = request.get_json(force=True)
     if 'tag' in req:
         print('request had tag', req['tag'])
@@ -36,12 +35,27 @@ def main():
     )
 
 
-def _inc_worker(percent, period):
+def _inc_worker(amount, period):
     while True:
-        _inc_torrent(percent)
+        _inc_torrent(amount)
         time.sleep(period)
 
 
 def start_inc_worker(**kwargs):
     Thread(target=_inc_worker, 
            kwargs=kwargs).start()
+
+
+def create_app():
+    app = Flask(__name__)
+    app.add_url_rule(
+        '/transmission/rpc',
+        '_main_view',
+        _main_view,
+        methods=['POST']
+    )
+    start_inc_worker(
+        amount=int(os.environ.get("MOCK_TRANS_AMOUNT", 2)),
+        period=int(os.environ.get("MOCK_TRANS_PERIOD", 100)),
+    )
+    return app
