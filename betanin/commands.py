@@ -26,7 +26,7 @@ def test():
 @click.option('-f', '--fix-imports', default=False, is_flag=True,
               help='Fix imports using isort, before linting')
 def lint(fix_imports):
-    '''lint and check code style with flake8 and isort'''
+    '''Lints and checks code style with flake8 and isort.'''
     skip = ['requirements']
     root_files = glob('*.py')
     root_directories = [
@@ -47,7 +47,7 @@ def lint(fix_imports):
 
 @click.command()
 def clean():
-    '''remove *.pyc and *.pyo files recursively starting at current directory'''
+    '''Removes *.pyc and *.pyo files recursively starting at current directory.'''
     for dirpath, _, filenames in os.walk('.'):
         for filename in filenames:
             if not (filename.endswith('.pyc') or filename.endswith('.pyo')):
@@ -60,10 +60,10 @@ def clean():
 @click.command(name='create-db')
 @with_appcontext
 def create_db():
-    '''create the needed tables with sqlalchemy'''
+    '''Creates the needed tables with sqlalchemy.'''
     from betanin.extensions import db
     from betanin.api.models.torrent import Torrent
     with current_app.app_context():
-        db.drop_all()
         db.create_all()
+        db.drop_all()
         print("done")
