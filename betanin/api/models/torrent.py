@@ -16,3 +16,17 @@ class Torrent(db.Model):
     @classmethod
     def from_dict(cls, torrent_dict):
         return cls(**torrent_dict)
+
+    @classmethod
+    def update_or_create(cls, torrent_dict):
+        torrent_id = torrent_dict['id']
+        existing = cls.query.filter_by(id=torrent_id)
+        assert existing.count() in (0, 1)
+        if existing.count() == 1:
+            existing.update(torrent_dict)
+            return existing.first()
+        else:
+            return cls.from_dict(torrent_dict)
+
+
+

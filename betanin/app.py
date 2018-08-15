@@ -1,6 +1,7 @@
 from gevent import monkey
 monkey.patch_all()
 
+import os
 
 from flask import Flask
 import atexit
@@ -22,10 +23,10 @@ def create_app(config_name="development"):
     app.url_map.strict_slashes = False
     config_obj = config_from_string(config_name)
     app.config.from_object(config_obj)
+    register_commands(app)
     register_extensions(app)
     register_blueprints(app)
-    register_commands(app)
-    start_scheduler()
+    register_meta(app)
     return app
 
 
@@ -51,9 +52,11 @@ def register_commands(app):
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
+    app.cli.add_command(commands.create_db)
 
 
-def start_scheduler():
-    print('starting scheduler')
+def register_meta(app):
+    # if os.environ['FLASK_RUN_FROM_CLI'] == 'true':
+    #     return
     scheduler.start()
     atexit.register(lambda: scheduler.shutdown())

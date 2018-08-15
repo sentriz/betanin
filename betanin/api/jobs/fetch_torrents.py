@@ -8,7 +8,7 @@ from betanin.extensions import db
 
 
 def _process(torrent):
-    pass
+    return
     # # 'torrent seen' -> on the last iteration, the torrent was downloading
     # # and betanin indented to process it when it finishes 
     # if not state.was_seen(torrent.id) and torrent.is_downloaded:
@@ -23,8 +23,10 @@ def _process(torrent):
 
 def start():
     scheduler.app.app_context().push()
-    print("SAM")
-    for torrent in list(get_torrents()):
-        db.session.add(Torrent.from_dict(torrent))
+    for torrent_dict in list(get_torrents()):
+        # update remote status
+        torrent = Torrent.update_or_create(torrent_dict)
+        # update beta status (while processing)
+        _process(torrent)
+        db.session.add(torrent)
     db.session.commit()
-    print(Torrent.query.all())
