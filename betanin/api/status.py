@@ -5,6 +5,7 @@ RemoteStatus = Enum('RemoteStatus', [
     'COMPLETED', 
     'DOWNLOADING',
     'INACTIVE',
+    'UNKNOWN',
 ])
 
 
@@ -14,4 +15,5 @@ BetaStatus = Enum('BetaStatus', [
     'NEEDS_INPUT',
     'FAILED',
     'COMPLETED', 
+    'UNKNOWN',
 ])
