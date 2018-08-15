@@ -9,8 +9,10 @@ class Torrent(db.Model):
                               primary_key=True)
     name          = db.Column(db.String)
     path          = db.Column(db.String)
-    remote_status = db.Column(db.Enum(RemoteStatus))
-    beta_status   = db.Column(db.Enum(BetaStatus))
+    remote_status = db.Column(db.Enum(RemoteStatus,
+                              default=RemoteStatus.UNKNOWN))
+    beta_status   = db.Column(db.Enum(BetaStatus),
+                              default=BetaStatus.UNKNOWN)
     progress      = db.Column(db.Float)
 
     @classmethod
