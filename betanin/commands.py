@@ -55,15 +55,3 @@ def clean():
             full_pathname = os.path.join(dirpath, filename)
             click.echo('Removing {}'.format(full_pathname))
             os.remove(full_pathname)
-
-
-@click.command(name='create-db')
-@with_appcontext
-def create_db():
-    '''Creates the needed tables with sqlalchemy.'''
-    from betanin.extensions import db
-    from betanin.api.models.torrent import Torrent
-    with current_app.app_context():
-        db.create_all()
-        db.drop_all()
-        print("done")
