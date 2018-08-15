@@ -24,6 +24,7 @@ def _process(torrent):
 
 def start():
     scheduler.app.app_context().push()
+    print("SAM")
     for torrent_dict in list(get_torrents()):
         # update remote status
         torrent = Torrent.update_or_create(torrent_dict)
