@@ -12,7 +12,7 @@ from betanin import commands
 from betanin.config.flask import config_from_string
 from betanin.extensions import cors
 from betanin.extensions import db
-# from betanin.extensions import migrate
+from betanin.extensions import migrate
 from betanin.extensions import rest
 from betanin.extensions import scheduler
 from betanin.extensions import socketio
@@ -33,7 +33,8 @@ def create_app(config_name="development"):
 def register_extensions(app):
     db.init_app(app)
     scheduler.init_app(app)
-    # migrate.init_app(app, db)
+    from betanin.api.models.torrent import Torrent
+    migrate.init_app(app, db)
     socketio.init_app(app)
 
 
@@ -42,7 +43,7 @@ def register_blueprints(app):
     rest.init_app(api.blueprint)
     _origins = app.config.get('CORS_ORIGIN_WHITELIST', '*')
     cors.init_app(api.blueprint, origins=_origins)
-    cors.init_app(api.blueprint, origins=_origins)
+    cors.init_app(client.blueprint, origins=_origins)
     # blueprints
     app.register_blueprint(api.blueprint)
     app.register_blueprint(client.blueprint)
@@ -52,7 +53,6 @@ def register_commands(app):
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
-    app.cli.add_command(commands.create_db)
 
 
 def register_meta(app):
