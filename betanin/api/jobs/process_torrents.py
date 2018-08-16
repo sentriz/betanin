@@ -1,38 +1,34 @@
-from collections import deque
-from threading import Condition
+from queue import Queue
+import gevent
 import time
+
+from betanin.extensions import scheduler
+from betanin.api.status import BetaStatus
+
 import gevent
 
-from betanin.api.status import BetaStatus
-from betanin.extensions import scheduler
-from betanin.extensions import db
 
-QUEUE = deque()
-CV = Condition()
+QUEUE = Queue()
 
 
-def _are_torrents():
-    return bool(QUEUE)
-
-
-def _get_task():
-    return QUEUE.popleft()
+def _print_wait(time):
+    for n in range(time):
+        print('||| prog', n)
+        gevent.sleep(1)
 
 
 def add(torrent):
-    with CV:
-        QUEUE.append(torrent)
-        torrent.status = BetaStatus.ENQUEUED
-        CV.notify()
+    QUEUE.put(torrent)
+    torrent.beta_status = BetaStatus.ENQUEUED
 
 
 def start():
     scheduler.app.app_context().push()
     while True:
-        with CV:
-            CV.wait_for(_are_torrents)
-            torrent = _get_task()
-            print(f'HAVE HAVE TORRENT {torrent.id}')
-            torrent.remote_status = BetaStatus.PROCESSING
-            gevent.sleep(12)
-            torrent.remote_status = BetaStatus.COMPLETED
+        torrent = QUEUE.get()
+        torrent.beta_status = BetaStatus.PROCESSING
+        print(f'/// have torrent {torrent.id}')
+        _print_wait(10)
+        torrent.beta_status = BetaStatus.COMPLETED
+        print(f'\\\\ finished torrent {torrent.id}')
+        QUEUE.task_done()
