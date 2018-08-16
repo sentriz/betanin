@@ -10,10 +10,12 @@ RemoteStatus = Enum('RemoteStatus', [
 
 
 BetaStatus = Enum('BetaStatus', [
-    'ENQUEUED',
-    'PROCESSING',
-    'NEEDS_INPUT',
-    'FAILED',
     'COMPLETED', 
+    'ENQUEUED',
+    'FAILED',
+    'IGNORED',
+    'NEEDS_INPUT',
+    'PROCESSING',
     'UNKNOWN',
+    'WAITING',
 ])
