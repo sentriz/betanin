@@ -24,9 +24,12 @@ def _process(torrent):
     if torrent.remote_status == RemoteStatus.COMPLETED \
             and torrent.should_process:
         # sets extra remote_status 
+        print("+++ adding", torrent)
+        torrent.should_process = False
         process_torrents.add(torrent)
         return
-    torrent.beta_status = BetaStatus.IGNORED
+    if torrent.beta_status == BetaStatus.UNKNOWN:
+        torrent.beta_status = BetaStatus.IGNORED
 
 
 def start():

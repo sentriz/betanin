@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: e36a28bcd63e
+Revision ID: 2ab7c6795dea
 Revises: 
-Create Date: 2018-08-15 23:02:39.860254
+Create Date: 2018-08-16 19:01:29.151601
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'e36a28bcd63e'
+revision = '2ab7c6795dea'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('path', sa.String(), nullable=True),
     sa.Column('remote_status', sa.Enum('COMPLETED', 'DOWNLOADING', 'INACTIVE', 'UNKNOWN', name='remotestatus'), nullable=True),
-    sa.Column('beta_status', sa.Enum('COMPLETED', 'ENQUEUED', 'FAILED', 'IGNORED', 'NEEDS_INPUT', 'PROCESSING', 'WAITING', name='betastatus'), nullable=True),
+    sa.Column('beta_status', sa.Enum('COMPLETED', 'ENQUEUED', 'FAILED', 'IGNORED', 'NEEDS_INPUT', 'PROCESSING', 'UNKNOWN', 'WAITING', name='betastatus'), nullable=True),
     sa.Column('progress', sa.Float(), nullable=True),
     sa.Column('should_process', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
