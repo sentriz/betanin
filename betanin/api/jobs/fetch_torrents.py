@@ -26,7 +26,8 @@ def _process(torrent):
         # sets extra remote_status 
         print("+++ adding", torrent)
         torrent.should_process = False
-        process_torrents.add(torrent)
+        process_torrents.add(torrent.id)
+        torrent.beta_status = BetaStatus.ENQUEUED
         return
     if torrent.beta_status == BetaStatus.UNKNOWN:
         torrent.beta_status = BetaStatus.IGNORED

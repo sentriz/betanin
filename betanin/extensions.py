@@ -10,6 +10,8 @@ from flask_sqlalchemy import SQLAlchemy
 cors = CORS()
 db = SQLAlchemy(session_options={
     'autocommit': True,
+    'autoflush': True,
+
 })
 migrate = Migrate()
 rest = Api()
