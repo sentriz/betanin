@@ -3,7 +3,7 @@ import Buefy from 'buefy'
 import VueSocketio from 'vue-socket.io-extended'
 import IO from 'socket.io-client'
 
-import App from './App.vue'
+import App from './views/App.vue'
 import router from './router'
 import store from './store'
 import { SOCKET_URL } from './backend'
