@@ -3,6 +3,10 @@ from betanin.api.status import RemoteStatus
 from betanin.api.status import BetaStatus
 
 
+def _enum_value_from_string(enum, string):
+    return getattr(enum, string.upper())
+
+
 class Torrent(db.Model):
     __tablename__ = 'torrents'
     id             = db.Column(db.String,
@@ -25,3 +29,11 @@ class Torrent(db.Model):
             return existing.first()
         else:
             return cls(id=torrent_id)
+
+    def set_beta_status(self, status):
+        self.beta_status = _enum_value_from_string(BetaStatus, status)
+
+    def set_remote_status(self, status):
+        self.remote_status = _enum_value_from_string(RemoteStatus, status)
+
+
