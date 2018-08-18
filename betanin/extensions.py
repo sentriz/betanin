@@ -8,11 +8,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 
 cors = CORS()
-db = SQLAlchemy(session_options={
-    'autocommit': True,
-    'autoflush': True,
-
-})
+db = SQLAlchemy()
 migrate = Migrate()
 rest = Api()
 scheduler = APScheduler(

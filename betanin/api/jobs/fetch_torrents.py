@@ -18,7 +18,7 @@ def _update_basics(torrent, torrent_dict):
 
 def _process(torrent):
     if torrent.remote_status == RemoteStatus.DOWNLOADING:
-        torrent.beta_status = BetaStatus.WAITING
+        torrent.set_beta_status("waiting")
         torrent.should_process = True
         return
     if torrent.remote_status == RemoteStatus.COMPLETED \
@@ -27,27 +27,28 @@ def _process(torrent):
         print("+++ adding", torrent)
         torrent.should_process = False
         process_torrents.add(torrent.id)
-        torrent.beta_status = BetaStatus.ENQUEUED
+        torrent.set_beta_status("enqueued")
         return
     if torrent.beta_status == BetaStatus.UNKNOWN:
-        torrent.beta_status = BetaStatus.IGNORED
+        torrent.set_beta_status("ignored")
 
 
 def start():
-    scheduler.app.app_context().push()
-    try:
-        torrents = list(get_torrents())
-    except Exception as exc:
-        print(f'problem with remote: {exc}')
-        return
-    for torrent_dict in torrents:
-        torrent_id = torrent_dict['id']
-        torrent = Torrent.get_or_create(torrent_id)
-        # update info from the remote
-        _update_basics(torrent, torrent_dict)
-        # add to queue if should
-        # (queue worker will update beta status
-        _process(torrent)
-        db.session.add(torrent)
-    # tell client to get the latest torrent list
-    events.torrents_grabbed()
+    with scheduler.app.app_context():
+        try:
+            torrents = list(get_torrents())
+        except Exception as exc:
+            print(f'problem with remote: {exc}')
+            return
+        for torrent_dict in torrents:
+            torrent_id = torrent_dict['id']
+            torrent = Torrent.get_or_create(torrent_id)
+            # update info from the remote
+            _update_basics(torrent, torrent_dict)
+            # add to queue if should
+            # (queue worker will update beta status
+            db.session.add(torrent)
+            _process(torrent)
+        # tell client to get the latest torrent list
+        db.session.commit()
+        events.torrents_grabbed()
