@@ -24,13 +24,12 @@ export default {
 </script>
 
 <style lang="scss">
-  @import "~bulma/sass/utilities/_all";
+  @import "~bulma";
   $primary:           #d1536a;
   $primary-invert:    findColorInvert($primary);
   $link-focus-border: $primary;
   $link-invert:       $primary-invert;
   $link:              $primary;
-  @import "~bulma";
   #app {
     display: flex;
     min-height: 100vh;
