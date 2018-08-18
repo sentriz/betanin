@@ -22,9 +22,11 @@
         )
         | &nbsp; {{ props.row.progress | round }}%
       b-table-column(label='status')
-        Icon(
-          :appearance='betAppear(props.row.beta_status)'
-        )
+        b-tooltip(label='torrent finished before betanin saw it')
+          Icon(
+            :appearance='betAppear(props.row.beta_status)'
+            data-tooltip="Tooltip Text"
+          )
     template(slot-scope='props', slot='detail')
       p
         strong remote status
@@ -58,7 +60,7 @@ const betaStatusMap = {
   'NEEDS_INPUT': appearToMap('needs input', 'exclamation-circle', 'hsl(48,  98%,  52%)'), // yellow-orange
   'FAILED':      appearToMap('failed',      'times',              'hsl(349, 58%,  57%)'), // angry red
   'COMPLETED':   appearToMap('completed',   'check',              'hsl(141, 71%,  48%)'), // green
-  'WAITING':     appearToMap('waiting',     'clock-o',            'hsl(0,   0%,  86%)'),  // light grey
+  'WAITING':     appearToMap('waiting',     'bed',                'hsl(0,   0%,  86%)'),  // light grey
   'UNKNOWN':     appearToMap('unknown',     'exclamation-circle', 'hsl(0,   0%,  86%)'),  // light grey
   'IGNORED':     appearToMap('ignored',     'times',              'hsl(36,  99%,  65%)')  // orange
 }
