@@ -24,26 +24,19 @@ def add(torrent):
 
 
 def _torrent_from_id(torrent_id):
-    return Torrent.query.filter_by(id=torrent_id)
+    return db.session.query(Torrent).get(torrent_id)
 
 
 def start():
-    scheduler.app.app_context().push()
-    while True:
-        torrent_id = QUEUE.get()
-        torrent = _torrent_from_id(torrent_id)
-        # db.session.query(Torrent).filter_by(id=torrent_id).update(
-        #     {
-        #         'beta_status': BetaStatus.PROCESSING
-        #     }
-        # )
-        torrent.update({
-            'beta_status': BetaStatus.PROCESSING
-        })
-        print(f'/// have torrent')
-        _print_wait(10)
-        torrent.update({
-            'beta_status': BetaStatus.COMPLETED
-        })
-        print(f'\\\\ finished torrent')
-        QUEUE.task_done()
+    with scheduler.app.app_context():
+        while True:
+            torrent_id = QUEUE.get()
+            torrent = _torrent_from_id(torrent_id)
+            torrent.set_beta_status("processing")
+            db.session.commit()
+            print(f'/// have torrent')
+            _print_wait(10)
+            print(f'\\\\ finished torrent')
+            torrent.set_beta_status("completed")
+            db.session.commit()
+            QUEUE.task_done()
