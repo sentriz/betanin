@@ -22,10 +22,13 @@
         )
         | &nbsp; {{ props.row.progress | round }}%
       b-table-column(label='status')
-        b-tooltip(label='torrent finished before betanin saw it')
+        BTooltip(
+          :active='props.row.tooltip'
+          :label='props.row.tooltip'
+          multiline
+        )
           Icon(
             :appearance='betAppear(props.row.beta_status)'
-            data-tooltip="Tooltip Text"
           )
     template(slot-scope='props', slot='detail')
       p
