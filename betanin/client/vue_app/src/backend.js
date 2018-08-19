@@ -16,7 +16,9 @@ export const API_URL = IS_PRODUCTION
 let $axios = axios.create({
   baseURL: API_URL,
   timeout: 5000,
-  headers: {'Content-Type': 'application/json'}
+  headers: {
+    'Content-Type': 'application/json'
+  }
 })
 
 // request intercept

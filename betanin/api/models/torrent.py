@@ -20,6 +20,7 @@ class Torrent(db.Model):
     progress       = db.Column(db.Float)
     should_process = db.Column(db.Boolean,
                                default=False)
+    tooltip        = db.Column(db.String)
 
     @classmethod
     def get_or_create(cls, torrent_id):
@@ -30,10 +31,9 @@ class Torrent(db.Model):
         else:
             return cls(id=torrent_id)
 
-    def set_beta_status(self, status):
+    def set_beta_status(self, status, reason=None):
         self.beta_status = _enum_value_from_string(BetaStatus, status)
+        self.tooltip = reason
 
     def set_remote_status(self, status):
         self.remote_status = _enum_value_from_string(RemoteStatus, status)
-
-
