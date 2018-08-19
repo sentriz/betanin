@@ -1,6 +1,6 @@
 from queue import Queue
-import gevent
 import time
+import subprocess
 
 from betanin.extensions import scheduler
 from betanin.extensions import db
@@ -23,6 +23,22 @@ def add(torrent):
     QUEUE.put(torrent)
 
 
+def import_torrent(torrent):
+    torrent.delete_lines()
+    p = subprocess.Popen(
+        "/home/senan/dev/repos/betanin/scripts/mock_beets",
+        stdout=subprocess.PIPE,
+        bufsize=1,
+    )
+    for i, raw_line in enumerate(iter(p.stdout.readline, b'')):
+        line = raw_line.decode('utf-8')
+        torrent.add_line(i, line)
+        db.session.commit()
+        print(line)
+    p.stdout.close()
+    p.wait()
+
+
 def _torrent_from_id(torrent_id):
     return db.session.query(Torrent).get(torrent_id)
 
@@ -34,9 +50,7 @@ def start():
             torrent = _torrent_from_id(torrent_id)
             torrent.set_beta_status("processing")
             db.session.commit()
-            print(f'/// have torrent')
-            _print_wait(10)
-            print(f'\\\\ finished torrent')
+            import_torrent(torrent)
             torrent.set_beta_status("completed")
             db.session.commit()
             QUEUE.task_done()

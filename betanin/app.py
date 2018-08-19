@@ -32,6 +32,7 @@ def register_extensions(app):
     db.init_app(app)
     scheduler.init_app(app)
     from betanin.api.models.torrent import Torrent
+    from betanin.api.models.line import Line
     migrate.init_app(app, db)
     socketio.init_app(app)
 

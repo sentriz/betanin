@@ -23,7 +23,7 @@
         | &nbsp; {{ props.row.progress | round }}%
       b-table-column(label='status')
         BTooltip(
-          :active='props.row.tooltip'
+          :active='props.row.tooltip !== null'
           :label='props.row.tooltip'
           multiline
         )
@@ -40,21 +40,21 @@
       p
         strong downloaded
         |  {{ props.row.progress }}%
+      Console(
+        :lines='props.row.lines'
+        v-show='props.row.lines.length !== 0'
+      )
 </template>
 
 <script>
+// imports
 import Icon from '@/components/Icon.vue'
+import Console from '@/components/Console.vue'
 import { mapGetters } from 'vuex'
+// help
 const appearToMap = (text, icon, colour) => ({
   text, icon, colour
 })
-// const remoteStatusMap = {
-//   /* eslint-disable no-multi-spaces, key-spacing */
-//   //                         text shown     fa47 icon  colour of text and icon
-//   'COMPLETED':   appearToMap('downloaded',  'check',   'hsl(178, 92%, 29%)'), // green
-//   'DOWNLOADING': appearToMap('downloading', 'clock-o', 'hsl(228, 99%, 66%)'), // blue
-//   'INACTIVE':    appearToMap('paused',      'times',   'hsl(0,   0%,  86%)')  // light grey
-// }
 const betaStatusMap = {
   /* eslint-disable no-multi-spaces, key-spacing */
   //                         text shown     fa47 icon             colour of text and icon
@@ -67,13 +67,15 @@ const betaStatusMap = {
   'UNKNOWN':     appearToMap('unknown',     'exclamation-circle', 'hsl(0,   0%,  86%)'),  // light grey
   'IGNORED':     appearToMap('ignored',     'times',              'hsl(36,  99%,  65%)')  // orange
 }
+// export
 export default {
   computed: mapGetters([
     'downloads',
     'haveDownloads'
   ]),
   components: {
-    Icon
+    Icon,
+    Console
   },
   methods: {
     rowHasDetail (row) {

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 2ab7c6795dea
+Revision ID: 373cfc3a43e5
 Revises: 
-Create Date: 2018-08-16 19:01:29.151601
+Create Date: 2018-08-19 21:54:29.157422
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '2ab7c6795dea'
+revision = '373cfc3a43e5'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -26,6 +26,15 @@ def upgrade():
     sa.Column('beta_status', sa.Enum('COMPLETED', 'ENQUEUED', 'FAILED', 'IGNORED', 'NEEDS_INPUT', 'PROCESSING', 'UNKNOWN', 'WAITING', name='betastatus'), nullable=True),
     sa.Column('progress', sa.Float(), nullable=True),
     sa.Column('should_process', sa.Boolean(), nullable=True),
+    sa.Column('tooltip', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('lines',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('index', sa.Integer(), nullable=True),
+    sa.Column('data', sa.String(), nullable=True),
+    sa.Column('torrent_id', sa.String(), nullable=True),
+    sa.ForeignKeyConstraint(['torrent_id'], ['torrents.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.drop_index('ix_apscheduler_jobs_next_run_time', table_name='apscheduler_jobs')
@@ -42,5 +51,6 @@ def downgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index('ix_apscheduler_jobs_next_run_time', 'apscheduler_jobs', ['next_run_time'], unique=False)
+    op.drop_table('lines')
     op.drop_table('torrents')
     # ### end Alembic commands ###
