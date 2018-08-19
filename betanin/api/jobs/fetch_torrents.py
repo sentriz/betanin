@@ -18,19 +18,20 @@ def _update_basics(torrent, torrent_dict):
 
 def _process(torrent):
     if torrent.remote_status == RemoteStatus.DOWNLOADING:
-        torrent.set_beta_status("waiting")
+        torrent.set_beta_status('waiting')
         torrent.should_process = True
         return
     if torrent.remote_status == RemoteStatus.COMPLETED \
             and torrent.should_process:
         # sets extra remote_status 
-        print("+++ adding", torrent)
+        print('+++ adding', torrent)
         torrent.should_process = False
         process_torrents.add(torrent.id)
-        torrent.set_beta_status("enqueued")
+        torrent.set_beta_status('enqueued')
         return
     if torrent.beta_status == BetaStatus.UNKNOWN:
-        torrent.set_beta_status("ignored")
+        torrent.set_beta_status('ignored',
+            'the torrent existed before betanin did')
 
 
 def start():
