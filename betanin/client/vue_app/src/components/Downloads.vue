@@ -6,6 +6,7 @@
     detail-key='id'
     :has-detailed-visible='rowHasDetail'
     :loading='!haveDownloads'
+    @details-open='onDetails'
   )
     template(
       slot-scope='props'
@@ -26,6 +27,7 @@
           :active='props.row.tooltip !== null'
           :label='props.row.tooltip'
           multiline
+          dashed
         )
           Icon(
             :appearance='betAppear(props.row.beta_status)'
@@ -41,16 +43,15 @@
         strong downloaded
         |  {{ props.row.progress }}%
       Console(
-        :lines='props.row.lines'
-        v-show='props.row.lines.length !== 0'
+        :lines='lines(props.row.id)'
       )
 </template>
 
 <script>
 // imports
-import Icon from '@/components/Icon.vue'
 import Console from '@/components/Console.vue'
-import { mapGetters } from 'vuex'
+import Icon from '@/components/Icon.vue'
+import { mapGetters, mapActions } from 'vuex'
 // help
 const appearToMap = (text, icon, colour) => ({
   text, icon, colour
@@ -71,18 +72,28 @@ const betaStatusMap = {
 export default {
   computed: mapGetters([
     'downloads',
-    'haveDownloads'
+    'lines',
+    'haveDownloads',
+    'areLines'
   ]),
   components: {
     Icon,
     Console
   },
   methods: {
+    ...mapActions([
+      'getLines'
+    ]),
     rowHasDetail (row) {
       return true
     },
     betAppear (status) {
       return betaStatusMap[status]
+    },
+    onDetails (row) {
+      if (!this.areLines(row.id)) {
+        this.getLines(row.id)
+      }
     }
   },
   filters: {
