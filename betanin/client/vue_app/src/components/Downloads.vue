@@ -42,10 +42,13 @@
       p
         strong downloaded
         |  {{ props.row.progress }}%
-      Console(
-        :lines='lines(props.row.id)'
-      )
+      div
+        p(v-for='line in lines(props.row.id)') {{ line }}
 </template>
+
+      <!-- Console( -->
+      <!--   :lines='lines(props.row.id)' -->
+      <!-- ) -->
 
 <script>
 // imports
