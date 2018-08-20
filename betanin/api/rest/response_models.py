@@ -17,6 +17,18 @@ class _EnumField(fields.String):
         return enum.name
 
 
+lines = torrents_ns.model('Line', {
+    'index': fields.String(
+        description='the index of the line',
+        example='4',
+    ),
+    'data': fields.String(
+        description='the line itself',
+        example='dfksjhfshdfdfksdhfj',
+    ),
+})
+
+
 torrent = torrents_ns.model('Torrent', {
     'id': fields.String(
         description='the id of the torrent',
@@ -48,5 +60,8 @@ torrent = torrents_ns.model('Torrent', {
     'tooltip': fields.String(
         description='the explained status of the torrent',
         example='torrent existed before betanin saw it',
+    ),
+    'lines': fields.List(
+        fields.Nested(lines)
     ),
 })
