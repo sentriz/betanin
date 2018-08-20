@@ -1,6 +1,7 @@
-from betanin.extensions import db
-from betanin.api.status import RemoteStatus
+from betanin.api.models.line import Line
 from betanin.api.status import BetaStatus
+from betanin.api.status import RemoteStatus
+from betanin.extensions import db
 
 
 def _enum_value_from_string(enum, string):
@@ -21,6 +22,7 @@ class Torrent(db.Model):
     should_process = db.Column(db.Boolean,
                                default=False)
     tooltip        = db.Column(db.String)
+    lines          = db.relationship("Line")
 
     @classmethod
     def get_or_create(cls, torrent_id):
@@ -37,3 +39,12 @@ class Torrent(db.Model):
 
     def set_remote_status(self, status):
         self.remote_status = _enum_value_from_string(RemoteStatus, status)
+
+    def delete_lines(self):
+        Line.query.filter_by(torrent_id=self.id).delete()
+
+    def add_line(self, index, data):
+        self.lines.append(Line(
+            index=index,
+            data=data,
+        ))
