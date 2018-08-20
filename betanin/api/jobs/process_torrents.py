@@ -2,10 +2,11 @@ from queue import Queue
 import time
 import subprocess
 
-from betanin.extensions import scheduler
-from betanin.extensions import db
-from betanin.api.status import BetaStatus
+from betanin.api import events
 from betanin.api.models.torrent import Torrent
+from betanin.api.status import BetaStatus
+from betanin.extensions import db
+from betanin.extensions import scheduler
 
 import gevent
 
@@ -31,8 +32,9 @@ def import_torrent(torrent):
         bufsize=1,
     )
     for i, raw_line in enumerate(iter(p.stdout.readline, b'')):
-        line = raw_line.decode('utf-8')
+        line = raw_line.decode('utf-8').lstrip()
         torrent.add_line(i, line)
+        events.line_read(torrent.id, i, line)
         db.session.commit()
         print(line)
     p.stdout.close()

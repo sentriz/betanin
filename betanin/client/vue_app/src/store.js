@@ -30,6 +30,13 @@ export default new Vuex.Store({
       Vue.set(state.lines, torrentID, lines)
       console.log('set', lines.length, 'lines')
     },
+    appendLine (state, {torrentID, line}) {
+      const lines = torrentID in state.lines
+        ? state.lines[torrentID]
+        : []
+      lines.push(line)
+      Vue.set(state.lines, torrentID, lines)
+    },
     setConnected (state, connected) {
       state.connected = connected
     }
@@ -51,6 +58,9 @@ export default new Vuex.Store({
     },
     socket_grabbed: ({ dispatch }) => {
       dispatch('getDownloads')
+    },
+    socket_read: ({ commit }, {torrentID, index, line}) => {
+      commit('appendLine', {torrentID, line})
     },
     socket_connect: ({ commit, dispatch }) => {
       commit('setConnected', true)
