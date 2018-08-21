@@ -7,6 +7,9 @@ const filters = {
   },
   lower (string) {
     return string.toLowerCase()
+  },
+  round (value) {
+    return Math.round(value)
   }
 }
 

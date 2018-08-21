@@ -33,18 +33,24 @@
             :appearance='betAppear(props.row.beta_status)'
           )
     template(slot-scope='props', slot='detail')
-      p
-        strong remote status
-        |  {{ props.row.remote_status | lower }}
-      p
-        strong betanin status
-        |  {{ props.row.beta_status | lower }}
-      p
-        strong downloaded
-        |  {{ props.row.progress }}%
-      p(
-        v-for='line in lines(props.row.id)'
-      ) {{ line.index }} - {{ line.data }}
+      .columns
+        .column
+          Console(
+            :isPreview='true'
+            :lines='lines(props.row.id)'
+            v-show='lines(props.row.id).length !== 0'
+          )
+        .column
+          .is-pulled-right
+            p
+              strong remote status
+              |  {{ props.row.remote_status | lower }}
+            p
+              strong betanin status
+              |  {{ props.row.beta_status | lower }}
+            p
+              strong downloaded
+              |  {{ props.row.progress }}%
 </template>
 
 <script>
@@ -97,11 +103,6 @@ export default {
       }
       this.getLines(row.id)
       this.doneAJAX.push(row.id)
-    }
-  },
-  filters: {
-    round (value) {
-      return Math.round(value)
     }
   },
   data () {

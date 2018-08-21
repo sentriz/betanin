@@ -4,8 +4,8 @@ import Vue from 'vue'
 const binaryInsert = (array, item, startVal, endVal) => {
   const value  = Number(item.index)
   const length = array.length
-  const start  = typeof startVal !== "undefined" ? startVal : 0
-  const end    = typeof endVal   !== "undefined" ? endVal   : length - 1
+  const start  = typeof startVal !== 'undefined' ? startVal : 0
+  const end    = typeof endVal   !== 'undefined' ? endVal   : length - 1
   const middle = start + Math.floor((end - start) / 2)
   if      (length === 0)                array.push(item)
   else if (value > array[end].index)    array.splice(end + 1, 0, item)
