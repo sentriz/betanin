@@ -3,10 +3,6 @@ from glob import glob
 from subprocess import call
 
 import click
-from flask.cli import with_appcontext
-from flask import current_app
-from werkzeug.exceptions import MethodNotAllowed
-from werkzeug.exceptions import NotFound
 
 
 HERE = os.path.abspath(os.path.dirname(__file__))

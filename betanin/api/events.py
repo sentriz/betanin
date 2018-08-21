@@ -1,4 +1,3 @@
-from flask_socketio import emit
 from betanin.extensions import socketio
 
 
