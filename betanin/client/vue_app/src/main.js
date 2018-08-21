@@ -5,7 +5,7 @@ import IO from 'socket.io-client'
 
 import App from './views/App.vue'
 import router from './router'
-import store from './store'
+import store from './store/store'
 import { SOCKET_URL } from './backend'
 import './filters'
 

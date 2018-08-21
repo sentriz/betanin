@@ -32,11 +32,11 @@ def import_torrent(torrent):
         bufsize=1,
     )
     for i, raw_line in enumerate(iter(p.stdout.readline, b'')):
-        line = raw_line.decode('utf-8').lstrip()
-        torrent.add_line(i, line)
-        events.line_read(torrent.id, i, line)
+        data = raw_line.decode('utf-8').rstrip()
+        torrent.add_line(i, data)
+        events.line_read(torrent.id, i, data)
         db.session.commit()
-        print(line)
+        print(data)
     p.stdout.close()
     p.wait()
 
