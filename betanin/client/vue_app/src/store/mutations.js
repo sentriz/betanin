@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-/* eslint-disable no-multi-spaces, key-spacing */
+/* eslint-disable no-multi-spaces, key-spacing, complexity */
 const binaryInsert = (array, item, startVal, endVal) => {
   const value  = Number(item.index)
   const length = array.length
