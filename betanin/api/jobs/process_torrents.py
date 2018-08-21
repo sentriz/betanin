@@ -1,10 +1,8 @@
 from queue import Queue
-import time
 import subprocess
 
 from betanin.api import events
 from betanin.api.models.torrent import Torrent
-from betanin.api.status import BetaStatus
 from betanin.extensions import db
 from betanin.extensions import scheduler
 

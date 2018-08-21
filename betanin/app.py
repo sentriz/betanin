@@ -1,5 +1,4 @@
 from gevent import monkey; monkey.patch_all()
-import os
 
 from flask import Flask
 import atexit
@@ -58,4 +57,4 @@ def register_meta(app):
     # if os.environ['FLASK_RUN_FROM_CLI'] == 'true':
     #     return
     scheduler.start()
-    atexit.register(lambda: scheduler.shutdown())
+    atexit.register(scheduler.shutdown)

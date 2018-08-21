@@ -1,6 +1,5 @@
-""" API Backend - Base Resource Models """
+from flask_restplus import Resource
 
-from flask_restplus import Resource, abort
 from betanin.api.security import require_auth
 
 
