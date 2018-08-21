@@ -7,5 +7,5 @@ class Line(db.Model):
                               primary_key=True)
     index         = db.Column(db.Integer)
     data          = db.Column(db.String)
-    torrent_id    = db.Column(db.String, 
+    torrent_id    = db.Column(db.String,
                               db.ForeignKey('torrents.id'))

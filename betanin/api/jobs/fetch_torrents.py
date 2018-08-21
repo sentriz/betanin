@@ -1,6 +1,3 @@
-import time
-import random
-
 from betanin.api import events
 from betanin.api.models.torrent import Torrent
 from betanin.api.torrent_client import get_torrents
@@ -23,7 +20,7 @@ def _process(torrent):
         return
     if torrent.remote_status == RemoteStatus.COMPLETED \
             and torrent.should_process:
-        # sets extra remote_status 
+        # sets extra remote_status
         print('+++ adding', torrent)
         torrent.should_process = False
         process_torrents.add(torrent.id)

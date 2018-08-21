@@ -1,8 +1,8 @@
-from enum import Enum 
+from enum import Enum
 
 
 RemoteStatus = Enum('RemoteStatus', [
-    'COMPLETED', 
+    'COMPLETED',
     'DOWNLOADING',
     'INACTIVE',
     'UNKNOWN',
@@ -10,7 +10,7 @@ RemoteStatus = Enum('RemoteStatus', [
 
 
 BetaStatus = Enum('BetaStatus', [
-    'COMPLETED', 
+    'COMPLETED',
     'ENQUEUED',
     'FAILED',
     'IGNORED',
