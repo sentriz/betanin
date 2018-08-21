@@ -1,5 +1,3 @@
-from functools import reduce
-
 from betanin.api.rest.namespaces import torrents_ns
 from betanin.api.status import BetaStatus
 from betanin.api.status import RemoteStatus

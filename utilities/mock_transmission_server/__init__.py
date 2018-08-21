@@ -42,7 +42,7 @@ def _inc_worker(amount, period):
 
 
 def start_inc_worker(**kwargs):
-    Thread(target=_inc_worker, 
+    Thread(target=_inc_worker,
            kwargs=kwargs).start()
 
 

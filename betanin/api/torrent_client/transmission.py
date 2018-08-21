@@ -1,11 +1,7 @@
-from datetime import datetime
-
-from flask import request
-from flask_restplus import Api
-from transmission import Transmission
-
 from betanin.config import client
 from betanin.api import status
+
+from transmission import Transmission
 
 
 _session = Transmission(
@@ -55,7 +51,7 @@ def get_torrents():
         'torrent-get',
         fields=[
             'name',
-            'downloadDir', 
+            'downloadDir',
             'isFinished',
             'hashString',
             'percentDone',
@@ -64,5 +60,5 @@ def get_torrents():
         ]
     )
     torrents = raw_torrents['torrents']
-    yield from map(_torrent_to_object, 
+    yield from map(_torrent_to_object,
                    filter(_should_process, torrents))
