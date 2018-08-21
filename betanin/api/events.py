@@ -6,11 +6,12 @@ def torrents_grabbed():
     socketio.emit('grabbed')
 
 
-def line_read(torrent_id, index, line):
-    payload = {
+def line_read(torrent_id, index, data):
+    socketio.emit('read', {
         # js case
         'torrentID': torrent_id,
-        'index': index,
-        'line': line,
-    }
-    socketio.emit('read', payload)
+        'line': {
+            'index': index,
+            'data': data,
+        }
+    })
