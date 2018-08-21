@@ -42,13 +42,10 @@
       p
         strong downloaded
         |  {{ props.row.progress }}%
-      div
-        p(v-for='line in lines(props.row.id)') {{ line }}
+      p(
+        v-for='line in lines(props.row.id)'
+      ) {{ line.index }} - {{ line.data }}
 </template>
-
-      <!-- Console( -->
-      <!--   :lines='lines(props.row.id)' -->
-      <!-- ) -->
 
 <script>
 // imports
@@ -73,12 +70,13 @@ const betaStatusMap = {
 }
 // export
 export default {
-  computed: mapGetters([
-    'downloads',
-    'lines',
-    'haveDownloads',
-    'areLines'
-  ]),
+  computed: {
+    ...mapGetters([
+      'downloads',
+      'lines',
+      'haveDownloads'
+    ])
+  },
   components: {
     Icon,
     Console
@@ -94,9 +92,11 @@ export default {
       return betaStatusMap[status]
     },
     onDetails (row) {
-      if (!this.areLines(row.id)) {
-        this.getLines(row.id)
+      if (this.doneAJAX.includes(row.id)) {
+        return
       }
+      this.getLines(row.id)
+      this.doneAJAX.push(row.id)
     }
   },
   filters: {
@@ -106,7 +106,8 @@ export default {
   },
   data () {
     return {
-      openedDetails: []
+      openedDetails: [],
+      doneAJAX: []
     }
   }
 }
