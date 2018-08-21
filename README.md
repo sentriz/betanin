@@ -11,5 +11,6 @@
   - [x] not do that thing in `torrent_client`
   - [x] socket stuff
   - [x] only add the torrent's ID to the process queue
+  - [x] start beets stuff
   - [ ] start sheduler based on if flask command was `run`
-  - [ ] start beets stuff
+  - [ ] make codacy fixes
