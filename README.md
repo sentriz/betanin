@@ -1,3 +1,12 @@
+<p align="center">
+  <img width="300" src="https://github.com/sentriz/betanin/blob/master/betanin/client/vue_app/src/assets/logo.png?raw=true">
+</p>
+<h4 align="center">beets based man-in-the-middle of your torrent client and music player </h2>
+<p align="center">
+  <a class="badge-align" href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sentriz/betanin&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/2265971a5ec24013a961b3d601eb4ef9"/></a>
+</p>
+
+
 ### todo
   - [x] not do that thing in `torrent_client`
   - [x] socket stuff
