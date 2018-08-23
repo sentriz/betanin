@@ -20,3 +20,9 @@ export default {
   ])
 }
 </script>
+
+<style scoped>
+  pre {
+    background-color: initial;
+  }
+</style>
