@@ -1,5 +1,5 @@
 <template lang="pug">
-  Downloads
+  downloads
 </template>
 
 <script>
