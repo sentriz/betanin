@@ -1,61 +1,71 @@
 <template lang="pug">
-  b-table(
-    :data='downloads'
-    :opened-detailed='openedDetails'
-    detailed
-    detail-key='id'
-    :has-detailed-visible='rowHasDetail'
-    :loading='!haveDownloads'
-    @details-open='onDetails'
-  )
-    template(
-      slot-scope='props'
+  div
+    b-table(
+      :data='downloads'
+      :opened-detailed='openedDetails'
+      detailed
+      detail-key='id'
+      :has-detailed-visible='rowHasDetail'
+      :loading='!haveDownloads'
+      @details-open='onDetails'
     )
-      b-table-column(
-        label='name'
-      ) {{ props.row.name }}
-      b-table-column(
-        label='progress'
+      template(
+        slot-scope='props'
       )
-        progress(
-          :value='props.row.progress'
-          max="100"
+        b-table-column(
+          label='name'
+        ) {{ props.row.name }}
+        b-table-column(
+          label='progress'
         )
-        | &nbsp; {{ props.row.progress | round }}%
-      b-table-column(label='status')
-        BTooltip(
-          :active='props.row.tooltip !== null'
-          :label='props.row.tooltip'
-          multiline
-          dashed
-        )
-          Icon(
-            :appearance='betAppear(props.row.beta_status)'
+          progress(
+            :value='props.row.progress'
+            max="100"
           )
-    template(slot-scope='props', slot='detail')
-      .columns
-        .column
-          Console(
-            :isPreview='true'
-            :lines='lines(props.row.id)'
-            v-show='lines(props.row.id).length !== 0'
+          | &nbsp; {{ props.row.progress | round }}%
+        b-table-column(label='status')
+          BTooltip(
+            :active='props.row.tooltip !== null'
+            :label='props.row.tooltip'
+            multiline
+            dashed
           )
-        .column
-          .is-pulled-right
-            p
-              strong remote status
-              |  {{ props.row.remote_status | lower }}
-            p
-              strong betanin status
-              |  {{ props.row.beta_status | lower }}
-            p
-              strong downloaded
-              |  {{ props.row.progress }}%
+            Icon(
+              :appearance='betAppear(props.row.beta_status)'
+            )
+      template(slot-scope='props', slot='detail')
+        .columns
+          .column
+            PreviewConsole(
+              :isPreview='true'
+              :lines='lines(props.row.id)'
+              :showModal='showModal(props.row.id)'
+              v-show='lines(props.row.id).length !== 0'
+            )
+          .column
+            .is-pulled-right
+              p
+                strong remote status
+                |  {{ props.row.remote_status | lower }}
+              p
+                strong betanin status
+                |  {{ props.row.beta_status | lower }}
+              p
+                strong downloaded
+                |  {{ props.row.progress }}%
+    b-modal(
+      :active.sync='modalIsOpen'
+      has-modal-card
+    )
+      full-console(
+        v-bind='modalProps'
+      )
 </template>
 
 <script>
 // imports
-import Console from '@/components/Console.vue'
+import PreviewConsole from '@/components/console/PreviewConsole.vue'
+import FullConsole from '@/components/console/FullConsole.vue'
 import Icon from '@/components/Icon.vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
@@ -85,7 +95,8 @@ export default {
   },
   components: {
     Icon,
-    Console
+    PreviewConsole,
+    FullConsole
   },
   methods: {
     ...mapActions([
@@ -103,12 +114,23 @@ export default {
       }
       this.getLines(row.id)
       this.doneAJAX.push(row.id)
+    },
+    showModal (torrentID) {
+      return () => {
+        this.modalIsOpen = true
+        this.modalProps = {
+          lines: this.lines(torrentID)
+        }
+      }
     }
   },
   data () {
     return {
       openedDetails: [],
-      doneAJAX: []
+      doneAJAX: [],
+      modalIsOpen: false,
+      modalProps: {
+      }
     }
   }
 }
