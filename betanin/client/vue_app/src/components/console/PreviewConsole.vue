@@ -17,8 +17,7 @@ export default {
 </script>
 
 <style scoped>
-#lines * {
-    background-color: #fafafa;
+  #lines * {
     padding: 0;
     width: 100%;
     -webkit-mask-image: -webkit-gradient(
