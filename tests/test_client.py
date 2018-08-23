@@ -1,5 +1,4 @@
 import pytest
-from betanin import betanin
 
 
 @pytest.fixture(scope="module")
