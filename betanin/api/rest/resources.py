@@ -6,14 +6,16 @@ from betanin.api.rest.namespaces import torrents_ns
 
 @torrents_ns.route('/')
 class TorrentsResource(BaseResource):
+    @staticmethod
     @torrents_ns.marshal_list_with(response_models.torrent)
-    def get(self):
+    def get():
         return Torrent.query.all()
 
 
 @torrents_ns.route('/<string:torrent_id>/console')
 class LinesResource(BaseResource):
+    @staticmethod
     @torrents_ns.marshal_list_with(response_models.line)
-    def get(self, torrent_id):
+    def get(torrent_id):
         matches = Torrent.query.filter_by(id=torrent_id)
         return matches.first_or_404().lines
