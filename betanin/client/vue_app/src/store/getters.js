@@ -1,8 +1,15 @@
+const lastN = (list, n) =>
+  typeof n === 'undefined'
+    ? list
+    : list.slice(-n)
+
 export default {
   downloads: state =>
     state.downloads,
-  lines: state => torrentID =>
-    state.lines[torrentID] || [],
+  lines: state => (torrentID, lineLimit) =>
+    lastN(state.lines[torrentID] || [], lineLimit),
+  areLines: state => torrentID =>
+    Boolean(state.lines[torrentID]),
   connected: state =>
     state.connected,
   haveDownloads: state =>

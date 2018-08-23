@@ -3,12 +3,12 @@
     #content
       .section
         .container
-          NavBar
+          nav-bar
       .section
         .container
           router-view
     #footer
-      ConnectionBanner
+      connection-banner
 </template>
 
 <script>

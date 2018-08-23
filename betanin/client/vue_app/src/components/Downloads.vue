@@ -24,24 +24,26 @@
           )
           | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status')
-          BTooltip(
+          b-tooltip(
             :active='props.row.tooltip !== null'
             :label='props.row.tooltip'
             multiline
             dashed
           )
-            Icon(
+            icon(
               :appearance='betAppear(props.row.beta_status)'
             )
       template(slot-scope='props', slot='detail')
         .columns
           .column
-            PreviewConsole(
-              :isPreview='true'
-              :lines='lines(props.row.id)'
+            preview-console(
               :showModal='showModal(props.row.id)'
-              v-show='lines(props.row.id).length !== 0'
+              v-show='areLines(props.row.id)'
             )
+              base-console(
+                :lineLimit='10'
+                :torrentID='props.row.id'
+              )
           .column
             .is-pulled-right
               p
@@ -57,15 +59,17 @@
       :active.sync='modalIsOpen'
       has-modal-card
     )
-      full-console(
-        v-bind='modalProps'
-      )
+      full-console
+        base-console(
+          :torrentID='modalTorrentID'
+        )
 </template>
 
 <script>
 // imports
 import PreviewConsole from '@/components/console/PreviewConsole.vue'
 import FullConsole from '@/components/console/FullConsole.vue'
+import BaseConsole from '@/components/console/BaseConsole.vue'
 import Icon from '@/components/Icon.vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
@@ -90,13 +94,15 @@ export default {
     ...mapGetters([
       'downloads',
       'lines',
-      'haveDownloads'
+      'haveDownloads',
+      'areLines'
     ])
   },
   components: {
     Icon,
     PreviewConsole,
-    FullConsole
+    FullConsole,
+    BaseConsole
   },
   methods: {
     ...mapActions([
@@ -117,10 +123,8 @@ export default {
     },
     showModal (torrentID) {
       return () => {
+        this.modalTorrentID = torrentID
         this.modalIsOpen = true
-        this.modalProps = {
-          lines: this.lines(torrentID)
-        }
       }
     }
   },
@@ -129,8 +133,7 @@ export default {
       openedDetails: [],
       doneAJAX: [],
       modalIsOpen: false,
-      modalProps: {
-      }
+      modalTorrentID: null
     }
   }
 }
