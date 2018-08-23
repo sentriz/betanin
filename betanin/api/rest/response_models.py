@@ -11,7 +11,8 @@ class _EnumField(fields.String):
         enum_obj = kwargs.pop('enum', None)
         self.enum = enum_obj._member_names_
 
-    def format(self, enum):
+    @staticmethod
+    def format(enum):
         return enum.name
 
 
