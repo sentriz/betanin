@@ -24,20 +24,20 @@
           )
           | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status')
-          b-tooltip(
+          BTooltip(
             :active='props.row.tooltip !== null'
             :label='props.row.tooltip'
             multiline
             dashed
           )
-            icon(
+            Icon(
               :appearance='betAppear(props.row.beta_status)'
             )
       template(slot-scope='props', slot='detail')
         .columns
           .column
             preview-console(
-              :showModal='showModal(props.row.id)'
+              :showModal='showModal(props.row.id, props.row.name)'
               v-show='areLines(props.row.id)'
             )
               base-console(
@@ -59,7 +59,9 @@
       :active.sync='modalIsOpen'
       has-modal-card
     )
-      full-console
+      full-console(
+        :header='modalTorrentName'
+      )
         base-console(
           :torrentID='modalTorrentID'
         )
@@ -121,9 +123,10 @@ export default {
       this.getLines(row.id)
       this.doneAJAX.push(row.id)
     },
-    showModal (torrentID) {
+    showModal (torrentID, torrentName) {
       return () => {
         this.modalTorrentID = torrentID
+        this.modalTorrentName = torrentName
         this.modalIsOpen = true
       }
     }
@@ -133,7 +136,8 @@ export default {
       openedDetails: [],
       doneAJAX: [],
       modalIsOpen: false,
-      modalTorrentID: null
+      modalTorrentID: null,
+      modalTorrentName: null
     }
   }
 }
