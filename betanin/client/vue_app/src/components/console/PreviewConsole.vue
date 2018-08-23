@@ -1,9 +1,7 @@
 <template lang="pug">
   #container
-    pre#lines
-      p(
-        v-for='line in this.isPreview ? lastN(lines, 10) : lines'
-      ) {{ line.index }}: {{ line.data }}
+    #lines
+      slot
     #footer
       a(
         @click="showModal"
@@ -13,20 +11,13 @@
 <script>
 export default {
   props: [
-    'lines',
-    'showModal',
-    'isPreview'
-  ],
-  methods: {
-    lastN (list, n) {
-      return list.slice(-n)
-    }
-  }
+    'showModal'
+  ]
 }
 </script>
 
 <style scoped>
-  #lines {
+#lines * {
     background-color: #fafafa;
     padding: 0;
     width: 100%;
