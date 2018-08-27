@@ -1,18 +1,40 @@
 <template lang="pug">
   #container
     #lines
-      slot
+      base-console(
+        :lineLimit='10'
+        :torrentID='torrentID'
+      )
     #footer
       a(
-        @click="showModal"
+        @click='openModal'
       ) click to see full console
 </template>
 
 <script>
+// imports
+import BaseConsole from '@/components/console/BaseConsole.vue'
+import ModalConsole from '@/components/console/ModalConsole.vue'
+// export
 export default {
+  components: {
+    BaseConsole
+  },
   props: [
-    'showModal'
-  ]
+    'torrentID'
+  ],
+  methods: {
+    openModal () {
+      this.$modal.open({
+        parent: this,
+        component: ModalConsole,
+        props: {
+          torrentID: this.torrentID
+        },
+        hasModalCard: true
+      })
+    }
+  }
 }
 </script>
 
