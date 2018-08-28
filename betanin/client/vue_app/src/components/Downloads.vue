@@ -24,7 +24,7 @@
           )
           | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status')
-          BTooltip(
+          b-tooltip(
             :active='props.row.tooltip !== null'
             :label='props.row.tooltip'
             multiline
@@ -37,13 +37,9 @@
         .columns
           .column
             preview-console(
-              :showModal='showModal(props.row.id, props.row.name)'
               v-show='areLines(props.row.id)'
+              :torrentID='props.row.id'
             )
-              base-console(
-                :lineLimit='10'
-                :torrentID='props.row.id'
-              )
           .column
             .is-pulled-right
               p
@@ -55,24 +51,12 @@
               p
                 strong downloaded
                 |  {{ props.row.progress }}%
-    b-modal(
-      :active.sync='modalIsOpen'
-      has-modal-card
-    )
-      full-console(
-        :header='modalTorrentName'
-      )
-        base-console(
-          :torrentID='modalTorrentID'
-        )
 </template>
 
 <script>
 // imports
-import PreviewConsole from '@/components/console/PreviewConsole.vue'
-import FullConsole from '@/components/console/FullConsole.vue'
-import BaseConsole from '@/components/console/BaseConsole.vue'
 import Icon from '@/components/Icon.vue'
+import PreviewConsole from '@/components/console/PreviewConsole.vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
 const appearToMap = (text, icon, colour) => ({
@@ -97,47 +81,36 @@ export default {
       'downloads',
       'lines',
       'haveDownloads',
-      'areLines'
+      'areLines',
+      'activeModal'
     ])
   },
   components: {
     Icon,
-    PreviewConsole,
-    FullConsole,
-    BaseConsole
+    PreviewConsole
   },
   methods: {
     ...mapActions([
       'getLines'
     ]),
-    rowHasDetail (row) {
-      return true
+    rowHasDetail (torrent) {
+      return torrent.beta_status !== 'IGNORED'
+    },
+    onDetails (torrent) {
+      if (this.doneAJAX.includes(torrent.id)) {
+        return
+      }
+      this.getLines(torrent.id)
+      this.doneAJAX.push(torrent.id)
     },
     betAppear (status) {
       return betaStatusMap[status]
-    },
-    onDetails (row) {
-      if (this.doneAJAX.includes(row.id)) {
-        return
-      }
-      this.getLines(row.id)
-      this.doneAJAX.push(row.id)
-    },
-    showModal (torrentID, torrentName) {
-      return () => {
-        this.modalTorrentID = torrentID
-        this.modalTorrentName = torrentName
-        this.modalIsOpen = true
-      }
     }
   },
   data () {
     return {
       openedDetails: [],
-      doneAJAX: [],
-      modalIsOpen: false,
-      modalTorrentID: null,
-      modalTorrentName: null
+      doneAJAX: []
     }
   }
 }
