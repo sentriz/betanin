@@ -12,8 +12,8 @@ import { mapGetters } from 'vuex'
 // export
 export default {
   props: [
-    'torrentID',
-    'lineLimit'
+    'lineLimit',
+    'torrentID'
   ],
   computed: mapGetters([
     'lines'
