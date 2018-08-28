@@ -13,5 +13,9 @@ export default {
   connected: state =>
     state.connected,
   haveDownloads: state =>
-    state.downloads.length !== 0
+    state.downloads.length !== 0,
+  torrent: state => torrentID =>
+    state.downloads.find(download =>
+      download.id === torrentID
+    )
 }
