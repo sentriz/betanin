@@ -32,7 +32,7 @@ $axios.interceptors.response.use(
   },
   function (error) {
     Toast.open({
-      message: error.message,
+      message: 'network error',
       type: 'is-danger'
     })
     return Promise.reject(error)
@@ -43,5 +43,8 @@ export default {
   fetchResource (route) {
     return $axios.get(route)
       .then(response => response.data)
+  },
+  postResource (route, data) {
+    $axios.post(route, data)
   }
 }

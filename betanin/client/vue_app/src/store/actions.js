@@ -6,12 +6,10 @@ export default {
       .then(result => {
         commit('setDownloads', result)
       })
-    console.log('fetched downloads')
   },
   // last lines from ajax
   getLines ({ commit }, torrentID) {
-    console.log('got ajax lines')
-    const fetchUrl = 'torrents/' + torrentID + '/console'
+    const fetchUrl = 'torrents/' + torrentID + '/console/stdout'
     backend.fetchResource(fetchUrl)
       .then(lines => {
         lines.forEach(line => {
@@ -24,7 +22,6 @@ export default {
   },
   // one line from socket
   socket_read: ({ commit }, {torrentID, line}) => {
-    console.log('got socket line')
     commit('appendLine', {torrentID, line})
   },
   socket_connect: ({ commit, dispatch }) => {
