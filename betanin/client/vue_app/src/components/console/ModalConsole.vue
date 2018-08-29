@@ -9,6 +9,7 @@
     .box#footer
       input.input(
         type='text'
+        @keyup.enter='sendStdin'
         v-bind='getInputProps()'
       )
 </template>
@@ -16,6 +17,7 @@
 <script>
 // imports
 import BaseConsole from '@/components/console/BaseConsole.vue'
+import backend from '@/backend'
 import { mapGetters } from 'vuex'
 // help
 const inputPropMap = [
@@ -48,6 +50,13 @@ export default {
     'torrent'
   ]),
   methods: {
+    sendStdin (event) {
+      const postUrl = 'torrents/' + this.torrentID + '/console/stdin'
+      const payload = {
+        text: event.target.value
+      }
+      backend.postResource(postUrl, payload)
+    },
     getInputProps () {
       const status = this.torrent(this.torrentID).beta_status
       for (let i = 0; i < inputPropMap.length; i++) {
