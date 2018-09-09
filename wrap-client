@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cd 'betanin/client/vue_app'
+cd 'betanin/client'
 npm "$@"
