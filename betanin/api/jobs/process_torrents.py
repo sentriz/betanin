@@ -10,6 +10,7 @@ import gevent
 
 
 QUEUE = Queue()
+PROCESSES = {}
 
 
 def _print_wait(time):
@@ -24,19 +25,21 @@ def add(torrent):
 
 def import_torrent(torrent):
     torrent.delete_lines()
-    p = subprocess.Popen(
+    proc = subprocess.Popen(
         "/home/senan/dev/repos/betanin/scripts/mock_beets",
         stdout=subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        universal_newlines=True,
         bufsize=1,
     )
+    PROCESSES[torrent.id] = proc
     for i, raw_line in enumerate(iter(p.stdout.readline, b'')):
-        data = raw_line.decode('utf-8').rstrip()
+        data = raw_line.rstrip()
         torrent.add_line(i, data)
         events.line_read(torrent.id, i, data)
         db.session.commit()
-        print(data)
-    p.stdout.close()
-    p.wait()
+    proc.stdout.close()
+    proc.wait()
 
 
 def _torrent_from_id(torrent_id):
