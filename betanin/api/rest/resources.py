@@ -5,6 +5,7 @@ from betanin.api.rest.models import response as response_models
 from betanin.api.rest.models import request as request_models
 from betanin.api.rest.base import BaseResource
 from betanin.api.rest.namespaces import torrents_ns
+from betanin.api.jobs.process_torrents import PROCESSES
 
 
 @torrents_ns.route('/')
@@ -32,4 +33,6 @@ class StdinResource(BaseResource):
         matches = Torrent.query.filter_by(id=torrent_id)
         torrent = matches.first_or_404()
         content = request.get_json(silent=True)
-        print(f'in torrent {torrent.id}: {content}')
+        PROCESSES[torrent_id].communicate(
+            input=content.text
+        )
