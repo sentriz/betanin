@@ -6,8 +6,6 @@ from betanin.api.models.torrent import Torrent
 from betanin.extensions import db
 from betanin.extensions import scheduler
 
-import gevent
-
 
 QUEUE = Queue()
 PROCESSES = {}
