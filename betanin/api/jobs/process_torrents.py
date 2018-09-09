@@ -13,12 +13,6 @@ QUEUE = Queue()
 PROCESSES = {}
 
 
-def _print_wait(time):
-    for n in range(time):
-        print('||| prog', n)
-        gevent.sleep(1)
-
-
 def add(torrent):
     QUEUE.put(torrent)
 
@@ -33,7 +27,9 @@ def import_torrent(torrent):
         bufsize=1,
     )
     PROCESSES[torrent.id] = proc
-    for i, raw_line in enumerate(iter(p.stdout.readline, b'')):
+    for i, raw_line in enumerate(iter(proc.stdout.readline, '')):
+        # TODO: add regex here to update beta_status to
+        # possibly update NEEDS_INPUT
         data = raw_line.rstrip()
         torrent.add_line(i, data)
         events.line_read(torrent.id, i, data)

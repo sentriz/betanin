@@ -10,6 +10,7 @@
       input.input(
         type='text'
         @keyup.enter='sendStdin'
+        v-model='stdin'
         v-bind='getInputProps()'
       )
 </template>
@@ -40,6 +41,11 @@ const inputPropMap = [
 ]
 // export
 export default {
+  data () {
+    return {
+      stdin: ''
+    }
+  },
   components: {
     BaseConsole
   },
@@ -53,9 +59,10 @@ export default {
     sendStdin (event) {
       const postUrl = 'torrents/' + this.torrentID + '/console/stdin'
       const payload = {
-        text: event.target.value
+        text: this.stdin
       }
       backend.postResource(postUrl, payload)
+      this.stdin = ''
     },
     getInputProps () {
       const status = this.torrent(this.torrentID).beta_status

@@ -34,5 +34,5 @@ class StdinResource(BaseResource):
         torrent = matches.first_or_404()
         content = request.get_json(silent=True)
         PROCESSES[torrent_id].communicate(
-            input=content.text
+            input=content['text']
         )
