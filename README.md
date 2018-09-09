@@ -13,6 +13,7 @@
   - [x] only add the torrent's ID to the process queue
   - [x] start beets stuff
   - [x] console in vuex
+  - [x] make codacy fixes
+  - [x] stdin streaming
   - [ ] vuex modules
   - [ ] start sheduler based on if flask command was `run`
-  - [ ] make codacy fixes
