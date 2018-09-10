@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="300" src="https://github.com/sentriz/betanin/blob/master/betanin/client/vue_app/src/assets/logo.png?raw=true">
+  <img width="300" src="https://github.com/sentriz/betanin/blob/master/betanin/client/src/assets/logo.png?raw=true">
 </p>
 <h4 align="center">beets based man-in-the-middle of your torrent client and music player </h2>
 <p align="center">
