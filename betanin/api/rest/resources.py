@@ -1,4 +1,5 @@
 from flask import request
+from flask import abort
 
 from betanin.api.models.torrent import Torrent
 from betanin.api.rest.models import response as response_models
@@ -30,8 +31,8 @@ class StdinResource(BaseResource):
     @staticmethod
     @torrents_ns.expect(request_models.line)
     def post(torrent_id):
-        matches = Torrent.query.filter_by(id=torrent_id)
-        torrent = matches.first_or_404()
+        if torrent_id not in PROCESSES:
+            abort(404)
         content = request.get_json(silent=True)
         PROCESSES[torrent_id].communicate(
             input=content['text']
