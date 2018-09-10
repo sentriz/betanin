@@ -29,5 +29,5 @@ def clean():
             ):
                 continue
             full_pathname = os.path.join(dirpath, filename)
-            click.echo(f'removing {full_pathname}'))
+            click.echo(f'removing {full_pathname}')
             os.remove(full_pathname)
