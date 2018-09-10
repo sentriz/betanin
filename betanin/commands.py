@@ -19,44 +19,6 @@ def test():
 
 
 @click.command()
-@click.option(
-    '-f',
-    '--fix-imports',
-    default=False,
-    is_flag=True,
-    help='Fix imports using isort, before linting',
-)
-def lint(fix_imports):
-    'Lints and checks code style with flake8 and isort.'
-    skip = ['requirements']
-    root_files = glob('*.py')
-    root_directories = [
-        name
-        for name in next(os.walk('.'))[1]
-        if not name.startswith('.')
-    ]
-    files_and_directories = [
-        arg
-        for arg in root_files + root_directories
-        if arg not in skip
-    ]
-    def execute_tool(description, *args):
-        'execute a checking tool with it\'s arguments'
-        command_line = list(args) + files_and_directories
-        click.echo(
-            '{}: {}'.format(
-                description, ' '.join(command_line)
-            )
-        )
-        rv = call(command_line)
-        if rv != 0:
-            exit(rv)
-    if fix_imports:
-        execute_tool('fixing import order', 'isort', '-rc')
-    execute_tool('checking code style', 'flake8')
-
-
-@click.command()
 def clean():
     'Removes *.pyc and *.pyo files recursively starting at current directory.'
     for dirpath, _, filenames in os.walk('.'):
@@ -67,5 +29,5 @@ def clean():
             ):
                 continue
             full_pathname = os.path.join(dirpath, filename)
-            click.echo('Removing {}'.format(full_pathname))
+            click.echo(f'removing {full_pathname}'))
             os.remove(full_pathname)
