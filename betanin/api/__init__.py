@@ -14,4 +14,5 @@ blueprint = Blueprint(
 
 
 from betanin.api.rest import namespaces
-from betanin.api.rest import resources
+import betanin.api.rest.resources.settings
+import betanin.api.rest.resources.torrents
