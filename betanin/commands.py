@@ -1,5 +1,4 @@
 import os
-from glob import glob
 from subprocess import call
 
 import click
