@@ -32,6 +32,7 @@ def register_extensions(app):
     scheduler.init_app(app)
     from betanin.api.models.torrent import Torrent
     from betanin.api.models.line import Line
+    from betanin.api.models.remote import Remote
     migrate.init_app(app, db)
     socketio.init_app(app)
 
@@ -49,7 +50,6 @@ def register_blueprints(app):
 
 def register_commands(app):
     app.cli.add_command(commands.test)
-    app.cli.add_command(commands.lint)
     app.cli.add_command(commands.clean)
 
 

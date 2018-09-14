@@ -2,11 +2,5 @@ import sys
 from betanin import paths
 
 
-# config dir has 'config.py'
-sys.path.append(paths.CONFIG_DIR)
-
-try:
-    from config import *
-except ModuleNotFoundError:
-    print('config file not found', file=sys.stderr)
-    sys.exit(1)
+def get_or_set_default(remote, default):
+    return default
