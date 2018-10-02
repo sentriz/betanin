@@ -2,7 +2,7 @@ from queue import Queue
 import subprocess
 
 from betanin.api import events
-from betanin.api.models.torrent import Torrent
+from betanin.api.orm.models.torrent import Torrent
 from betanin.extensions import db
 from betanin.extensions import scheduler
 

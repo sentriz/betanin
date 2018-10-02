@@ -5,23 +5,28 @@ from betanin.api.rest.namespaces import settings_ns
 from betanin.api import torrent_client
 
 
-@settings_ns.route('/remotes')
+@settings_ns.route('/remotes/config')
 class RemotesResources(BaseResource):
     @staticmethod
-    def get():
-        'list the supported remotes'
-        return torrent_client.get_remote_names()
-
-
-@settings_ns.route('/remotes/<string:remote>')
-class RemotesResources(BaseResource):
-    @staticmethod
+    @settings_ns.marshal_list_with(response_models.remote)
     def get(remote):
-        'gets the fields for a remote'
-        fields = torrent_client.get_fields(remote)
-        if not fields:
-            abort(404)
-        return fields
+        'get all remote configs'
+        return Remote.query.all()
 
-    def put(remote):
-        'configure the remote'
+
+@settings_ns.route('/remotes/config/<int:remote_id>')
+class RemotesResources(BaseResource):
+    @staticmethod
+    def put(remote_id):
+        'update a remotes config'
+        remote = Remote.query.filter_by(id=remote_id).first_or_404()
+        remote.config = request.get_json(silent=True)
+        db.session.commit()
+
+
+@settings_ns.route('/remotes/add/<string:remote_type>')
+class RemotesResources(BaseResource):
+    @staticmethod
+    def put(remote_type):
+        'creates a new remote'
+        db.session.add(Remote(type=remote_type))

@@ -6,7 +6,7 @@ import atexit
 from betanin import api
 from betanin import client
 from betanin import commands
-from betanin.config.flask import config_from_string
+from betanin.config import config_from_string
 from betanin.extensions import cors
 from betanin.extensions import db
 from betanin.extensions import migrate
@@ -30,9 +30,9 @@ def create_app(config_name="development"):
 def register_extensions(app):
     db.init_app(app)
     scheduler.init_app(app)
-    from betanin.api.models.torrent import Torrent
-    from betanin.api.models.line import Line
-    from betanin.api.models.remote import Remote
+    from betanin.api.orm.models.torrent import Torrent
+    from betanin.api.orm.models.line import Line
+    from betanin.api.orm.models.remote import Remote
     migrate.init_app(app, db)
     socketio.init_app(app)
 

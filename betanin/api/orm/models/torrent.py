@@ -1,4 +1,4 @@
-from betanin.api.models.line import Line
+from betanin.api.orm.models.line import Line
 from betanin.api.status import BetaStatus
 from betanin.api.status import RemoteStatus
 from betanin.extensions import db
