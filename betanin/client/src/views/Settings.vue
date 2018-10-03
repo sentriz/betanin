@@ -1,78 +1,52 @@
-<!-- b-icon(icon='menu-down') -->
 <template lang="pug">
-  .box#form
+  .box
     b-field(
       horizontal
       label='remote'
     )
-      b-dropdown(hoverable)
-        button.button.is-info(slot='trigger')
-          span {{ remote }}
-        b-dropdown-item(
+      b-select(
+        :placeholder='remoteName'
+        v-model='remoteName'
+      )
+        option(
           v-for='remote in remotes'
-          :key='remote'
-          @click='setRemote(remote)'
-        ) {{ remote }}
-    b-field(
-      horizontal
-      label='host/port'
+          :value='remote.name'
+        ) {{ remote.name }}
+    component(
+      :is='remote.component'
+      v-if='remote'
     )
-      b-input(
-        placeholder='example.com'
-        expanded
-      )
-      b-input(
-        placeholder='443'
-        expanded
-      )
-    b-field(
-      horizontal
-      label='username/password'
-    )
-      b-input(
-        placeholder='sam'
-        expanded
-      )
-      b-input(
-        placeholder='eggs 🤠'
-        type='password'
-        expanded
-      )
-    b-field(
-      horizontal
-      label='use ssl?'
-    )
-      b-switch(
-        v-model='useSSL'
-        true-value='Yes'
-        false-value='No'
-      )
 </template>
 
 <script>
-const defaultRemote = 'transmission'
+// imports
+import remotes from '@/data/remotes'
+// export
 export default {
   methods: {
     setRemote (remote) {
+      console.log(remote)
       this.remote = remote
+    }
+  },
+  computed: {
+    remote () {
+      return remotes.find(remote =>
+        remote.name === this.remoteName
+      )
     }
   },
   data () {
     return {
-      useSSL: false,
-      remote: defaultRemote,
-      remotes: [
-        defaultRemote,
-        'deluge',
-        'rtorrent'
-      ]
+      remotes: remotes,
+      remoteName: 'transmission'
     }
   }
 }
 </script>
 
 <style scoped>
-  #form {
-    padding-right: 12%;
+  #buttons {
+    padding-top: 12px;
   }
 </style>
