@@ -60,7 +60,19 @@ torrent = torrents_ns.model('Torrent', {
         description='the explained status of the torrent',
         example='torrent existed before betanin saw it',
     ),
-    # 'lines': fields.List(
-    #     fields.Nested(line)
-    # ),
+})
+
+
+remote = torrents_ns.model('Remote', {
+    'id': fields.Integer(
+        description='the unique id of the remote',
+        example='2',
+    ),
+    'type': fields.String(
+        description='the type of the remote',
+        example='transmission',
+    ),
+    'config': fields.Raw(
+        description='the config of the remote',
+    )
 })

@@ -1,11 +1,12 @@
 from betanin.api import events
-from betanin.api.models.torrent import Torrent
-from betanin.api.torrent_client import get_torrents
+from betanin.api.orm.models.torrent import Torrent
+from betanin.api import torrent_client
 from betanin.extensions import db
 from betanin.extensions import scheduler
 from betanin.api.status import RemoteStatus
 from betanin.api.status import BetaStatus
 from betanin.api.jobs import process_torrents
+from betanin.api.torrent_client import get_torrents
 
 
 def _update_basics(torrent, torrent_dict):
@@ -35,6 +36,7 @@ def start():
     with scheduler.app.app_context():
         try:
             torrents = list(get_torrents())
+            print('torrents are', torrents)
         except Exception as exc:
             print(f'problem with remote: {exc}')
             return
