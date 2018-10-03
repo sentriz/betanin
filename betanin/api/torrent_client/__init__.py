@@ -1,7 +1,8 @@
-from betanin.config import client
-
 import os.path
 import imp
+from itertools import chain
+from collections import namedtuple
+from betanin.api.orm.models.remote import Remote
 
 
 def _remote_name(filename):
@@ -13,7 +14,7 @@ def _qual_remote_name(name):
 	return f'remotes.{name}'
 
 
-def _list_remotes():
+def _list_remote_wrappers():
 	for remote_file in os.listdir(_this_dir):
 		remote_path = os.path.join(_this_dir, remote_file)
 		if not os.path.isfile(remote_path):
@@ -34,17 +35,34 @@ def _load_remote(name, path):
 
 
 _this_dir = os.path.dirname(__file__)
-_remotes = {
+_remote_wrappers = {
 	name: _load_remote(name, path) \
-		for name, path in _list_remotes()
+		for name, path in _list_remote_wrappers()
 }
 
 
+# /end of internals
+
+
+SessionInfo = namedtuple('SessionInfo', 'remote_id remote_name session torrent_getter')
+SESSIONS = [] # a list of `SessionInfo`s
+
+
 def get_remote_names():
-	return list(_remotes.keys())
+	return list(_remote_wrappers.keys())
 
 
-# TODO: not this
-_client = client.CLIENT
-_client_globals = _remotes[_client].__dict__
-globals().update(_client_globals)
+def make_sessions():
+    for remote in Remote.query.all():
+        wrapper = _remote_wrappers[remote.name]
+        SESSIONS.append = SessionInfo(remote.id,
+                                      remote.name,
+                                      wrapper.create_session(remote.config),
+                                      wrapper.get_torrents)
+
+
+def get_torrents():
+    return chain(*map(
+        lambda session_info: s_info.torrent_getter(s_info.session),
+        SESSIONS,
+    ))

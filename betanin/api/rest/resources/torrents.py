@@ -1,7 +1,7 @@
 from flask import request
 from flask import abort
 
-from betanin.api.models.torrent import Torrent
+from betanin.api.orm.models.torrent import Torrent
 from betanin.api.rest.models import response as response_models
 from betanin.api.rest.models import request as request_models
 from betanin.api.rest.base import BaseResource

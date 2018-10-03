@@ -1,6 +1,6 @@
 import os
 
-from betanin.config.flask import BaseConfig
+from betanin.config import BaseConfig
 
 
 class ProductionConfig(BaseConfig):
