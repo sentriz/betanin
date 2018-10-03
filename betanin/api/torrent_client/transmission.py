@@ -1,18 +1,6 @@
-from betanin.config.client import get_or_set_default
 from betanin.api import status
 
 from transmission import Transmission
-
-
-print('__name__ is', __name__)
-
-CONFIG = get_or_set_default('transmission', {
-    'host': '',
-    'port': 0,
-    'username': '',
-    'password': '',
-    'ssl': False,
-})
 
 
 def _torrent_is_done(torrent):
@@ -47,9 +35,28 @@ def _should_process(torrent):
     return True
 
 
-def get_torrents():
+DEFAULT_CONFIG = {
+    'host': '',
+    'port': 0,
+    'username': '',
+    'password': '',
+    'ssl': False,
+}
+
+
+def create_session(config):
+    return Transmission(
+        host=config['host'],
+        port=config['port'],
+        username=config['username'],
+        password=config['password'],
+        ssl=config['ssl'],
+    )
+
+
+def get_torrents(session):
     print('fetching torrents from client')
-    raw_torrents = _session(
+    raw_torrents = session(
         'torrent-get',
         fields=[
             'name',
