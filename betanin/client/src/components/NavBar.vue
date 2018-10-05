@@ -8,7 +8,7 @@
         )
       a.navbar-burger(
         role='button',
-        v-on:click='toggleShow()',
+        @click='toggleShow',
         v-bind:class="{ 'is-active' : show }"
       )
         span
