@@ -10,6 +10,7 @@
       )
       b-input(
         placeholder='80'
+        v-model='port'
       )
     b-field(
       horizontal
@@ -21,6 +22,7 @@
       )
       b-input(
         type='password'
+        v-model='password'
       )
     b-field(
       horizontal
@@ -28,7 +30,8 @@
     )
       b-switch(
         type='is-primary'
-      ) ff
+        v-model='ssl'
+      ) {{ ssl | toYesNo }}
 </template>
 
 <script>
@@ -54,8 +57,12 @@ export default {
     'remoteID'
   ],
   computed: {
+    /* eslint-disable key-spacing */
     hostname: genComputed('hostname'),
-    username: genComputed('username')
+    port:     genComputed('port'),
+    username: genComputed('username'),
+    password: genComputed('password'),
+    ssl:      genComputed('ssl')
   }
 }
 </script>

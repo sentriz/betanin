@@ -5,15 +5,17 @@
       :remoteID='remoteID'
       :key='remoteID'
     )
-    p.control
-      a.button.is-primary
+    p.control.is-pulled-right
+      a.button(
+        @click='addRemote'
+      ).is-primary
         | add
 </template>
 
 <script>
 // imports
 import Remote from '@/components/Remote.vue'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 // export
 export default {
   components: {
@@ -22,6 +24,11 @@ export default {
   computed: {
     ...mapGetters([
       'remoteIDs'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'addRemote'
     ])
   }
 }

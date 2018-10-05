@@ -8,6 +8,11 @@ const filters = {
   lower (string) {
     return string.toLowerCase()
   },
+  toYesNo (value) {
+    return value
+      ? 'yes'
+      : 'no'
+  },
   round (value) {
     return Math.round(value)
   }

@@ -18,20 +18,20 @@
     )
     .field.is-grouped.is-grouped-right#buttons
       p.control
-        a.button.is-light
+        a.button(@click='testRemote').is-light
           | test
       p.control
-        a.button.is-primary
+        a.button(@click='saveRemote').is-primary
           | save
       p.control
-        a.button.is-primary
-          | delete
+        a.button(@click='removeRemote(remoteID)').is-primary
+          | remove
 </template>
 
 <script>
 // imports
 import confComps from '@/data/possible_remote_config_components'
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 // export
 export default {
   props: [
@@ -47,6 +47,17 @@ export default {
     confComp () {
       return confComps[this.remote.type]
     }
+  },
+  methods: {
+    testRemote () {
+      console.log('test')
+    },
+    saveRemote () {
+      console.log('save')
+    },
+    ...mapMutations([
+      'removeRemote'
+    ])
   },
   data () {
     return {
