@@ -6,7 +6,8 @@ export default {
       id: 3,
       type: 'transmission',
       config: {
-        hostname: 'damn daniel'
+        hostname: 'damn daniel',
+        ssl: true
       }
     }
   ],
