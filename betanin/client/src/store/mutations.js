@@ -27,5 +27,18 @@ export default {
   },
   setConnected (state, connected) {
     state.connected = connected
+  },
+  deleteRemote (state, remoteID) {
+    console.log('delete remote', remoteID)
+  },
+  addRemote (state) {
+    console.log('add remote')
+  },
+  updateRemoteConfig (state, {remoteID, key, value}) {
+    const remoteIndex = state.remotes.findIndex(remote =>
+      remote.id === remoteID
+    )
+    state.remotes[remoteIndex].config[key] = value
+    console.log('update remote', remoteID, key, value)
   }
 }

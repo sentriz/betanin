@@ -15,7 +15,17 @@ export default {
   haveDownloads: state =>
     state.downloads.length !== 0,
   torrent: state => torrentID =>
-    state.downloads.find(download =>
-      download.id === torrentID
+    state.downloads.find(torrent =>
+      torrent.id === torrentID
+    ),
+  remoteIDs: state =>
+    state.remotes.map(remote =>
+      remote.id
+    ),
+  remotes: state =>
+    state.remotes,
+  remote: state => remoteID =>
+    state.remotes.find(remote =>
+      remote.id === remoteID
     )
 }

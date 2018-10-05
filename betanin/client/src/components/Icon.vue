@@ -11,7 +11,9 @@
 
 <script>
 export default {
-  props: ['appearance'],
+  props: [
+    'appearance'
+  ],
   methods: {
     getStyle (colour) {
       return {

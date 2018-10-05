@@ -1,46 +1,28 @@
 <template lang="pug">
-  .box
-    b-field(
-      horizontal
-      label='remote'
+  div
+    remote(
+      v-for='remoteID in remoteIDs'
+      :remoteID='remoteID'
+      :key='remoteID'
     )
-      b-select(
-        :placeholder='remoteName'
-        v-model='remoteName'
-      )
-        option(
-          v-for='remote in remotes'
-          :value='remote.name'
-        ) {{ remote.name }}
-    component(
-      :is='remote.component'
-      v-if='remote'
-    )
+    p.control
+      a.button.is-primary
+        | add
 </template>
 
 <script>
 // imports
-import remotes from '@/data/remotes'
+import Remote from '@/components/Remote.vue'
+import { mapGetters } from 'vuex'
 // export
 export default {
-  methods: {
-    setRemote (remote) {
-      console.log(remote)
-      this.remote = remote
-    }
+  components: {
+    Remote
   },
   computed: {
-    remote () {
-      return remotes.find(remote =>
-        remote.name === this.remoteName
-      )
-    }
-  },
-  data () {
-    return {
-      remotes: remotes,
-      remoteName: 'transmission'
-    }
+    ...mapGetters([
+      'remoteIDs'
+    ])
   }
 }
 </script>
