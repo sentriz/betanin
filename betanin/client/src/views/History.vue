@@ -1,5 +1,5 @@
 <template lang="pug">
-    p history here
+  p history here
 </template>
 
 <script>
