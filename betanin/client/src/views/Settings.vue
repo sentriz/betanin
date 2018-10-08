@@ -5,16 +5,35 @@
       :remoteID='remoteID'
       :key='remoteID'
     )
-    p.control.is-pulled-right
-      a.button(
-        @click='addRemote'
-      ).is-primary
-        | add
+      component(
+        :is='confFromID(remoteID)'
+        :remoteID='remoteID'
+      )
+    h6(
+      v-show='remoteIDs.length === 0'
+    ) no remotes yet, add one below
+    .field.has-addons.is-pulled-right
+      .control
+        .select.is-fullwidth
+          select(
+            v-model='newRemoteType'
+          )
+            option(
+              v-for='remoteName in remoteNames'
+              :key='remoteName'
+              :value='remoteName'
+              @click='addRemote(remoteName)'
+            ) {{ remoteName }}
+      .control
+        button.button(
+          @click='addRemote(newRemoteType)'
+        ) add new
 </template>
 
 <script>
 // imports
 import Remote from '@/components/Remote.vue'
+import confComps from '@/data/possible_remote_config_components'
 import { mapGetters, mapActions } from 'vuex'
 // export
 export default {
@@ -23,13 +42,23 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'remoteIDs'
+      'remoteIDs',
+      'remoteTypeFromID'
     ])
   },
   methods: {
     ...mapActions([
       'addRemote'
-    ])
+    ]),
+    confFromID (id) {
+      return confComps[this.remoteTypeFromID(id)]
+    }
+  },
+  data () {
+    return {
+      remoteNames: Object.keys(confComps),
+      newRemoteType: 'transmission'
+    }
   }
 }
 </script>
