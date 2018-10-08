@@ -52,6 +52,17 @@ def get_remote_names():
 	return list(_remote_wrappers.keys())
 
 
+def get_torrents():
+    return chain(*map(
+        lambda session_info: s_info.torrent_getter(s_info.session),
+        SESSIONS,
+    ))
+
+
+def get_default_config(remote_name):
+    return _remote_wrappers[remote_name].DEFAULT_CONFIG
+
+
 def make_sessions():
     for remote in Remote.query.all():
         wrapper = _remote_wrappers[remote.name]
@@ -59,10 +70,3 @@ def make_sessions():
                                       remote.name,
                                       wrapper.create_session(remote.config),
                                       wrapper.get_torrents)
-
-
-def get_torrents():
-    return chain(*map(
-        lambda session_info: s_info.torrent_getter(s_info.session),
-        SESSIONS,
-    ))

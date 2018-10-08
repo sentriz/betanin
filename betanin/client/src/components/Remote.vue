@@ -4,18 +4,12 @@
       horizontal
       label='type'
     )
-      b-select(
-        v-model='remote.type'
+      b-input(
+        placeholder='transmission.com'
+        :value='remoteTypeFromID(remoteID)'
+        disabled
       )
-        option(
-          v-for='remoteName in remoteNames'
-          :value='remoteName'
-          :key='remoteName'
-        ) {{ remoteName }}
-    component(
-      :is='confComp'
-      :remoteID='remoteID'
-    )
+    slot
     .field.is-grouped.is-grouped-right#buttons
       p.control
         a.button(@click='testRemote').is-light
@@ -30,7 +24,6 @@
 
 <script>
 // imports
-import confComps from '@/data/possible_remote_config_components'
 import { mapGetters, mapMutations } from 'vuex'
 // export
 export default {
@@ -38,15 +31,9 @@ export default {
     'remoteID'
   ],
   computed: {
-    ...mapGetters({
-      getRemote: 'remote'
-    }),
-    remote () {
-      return this.getRemote(this.remoteID)
-    },
-    confComp () {
-      return confComps[this.remote.type]
-    }
+    ...mapGetters([
+      'remoteTypeFromID'
+    ])
   },
   methods: {
     testRemote () {
@@ -58,12 +45,6 @@ export default {
     ...mapMutations([
       'removeRemote'
     ])
-  },
-  data () {
-    return {
-      remoteNames: Object.keys(confComps),
-      confComps
-    }
   }
 }
 </script>

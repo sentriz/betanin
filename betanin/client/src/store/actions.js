@@ -7,9 +7,17 @@ export default {
         commit('setDownloads', result)
       })
   },
+  getSettings ({commit}) {
+    backend.fetchResource('settings/remotes/')
+      .then(remotes => {
+        remotes.forEach(remote => {
+          commit('addRemote', remote)
+        })
+      })
+  },
   // last lines from ajax
   getLines ({commit}, torrentID) {
-    const fetchUrl = 'torrents/' + torrentID + '/console/stdout'
+    const fetchUrl = `torrents/${torrentID}/console/stdout`
     backend.fetchResource(fetchUrl)
       .then(lines => {
         lines.forEach(line => {
@@ -21,17 +29,14 @@ export default {
     // delete from api
     commit('removeRemote', remoteID)
   },
-  addRemote ({commit}) {
-    // add from api
-    const data = {
-      id: Math.floor(Math.random() * 100),
-      type: 'transmission',
-      config: {
-        hostname: 'yuppie',
-        ssl: false
-      }
-    }
-    commit('addRemote', data)
+  addRemote ({commit}, type) {
+    const fetchUrl = `settings/remotes/add/${type}`
+    console.log(fetchUrl)
+    backend.putResource(fetchUrl)
+      .then(data => {
+        console.log('new remote', data)
+        commit('addRemote', data)
+      })
   },
   socket_grabbed: ({dispatch}) => {
     dispatch('getDownloads')
@@ -42,6 +47,7 @@ export default {
   },
   socket_connect: ({commit, dispatch}) => {
     commit('setConnected', true)
+    dispatch('getSettings')
     dispatch('getDownloads')
   },
   socket_disconnect: ({commit}) => {

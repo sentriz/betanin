@@ -3,6 +3,11 @@ const lastN = (list, n) =>
     ? list
     : list.slice(-n)
 
+const itemFromID = (items, id) =>
+  items.find(item =>
+    item.id === id
+  )
+
 export default {
   downloads: state =>
     state.downloads,
@@ -15,17 +20,13 @@ export default {
   haveDownloads: state =>
     state.downloads.length !== 0,
   torrent: state => torrentID =>
-    state.downloads.find(torrent =>
-      torrent.id === torrentID
-    ),
+    itemFromID(state.downloads, torrentID),
   remoteIDs: state =>
-    state.remotes.map(remote =>
-      remote.id
-    ),
+    state.remotes.map(remote => remote.id),
   remotes: state =>
     state.remotes,
   remote: state => remoteID =>
-    state.remotes.find(remote =>
-      remote.id === remoteID
-    )
+    itemFromID(state.remotes, remoteID),
+  remoteTypeFromID: state => remoteID =>
+    itemFromID(state.remotes, remoteID).type
 }
