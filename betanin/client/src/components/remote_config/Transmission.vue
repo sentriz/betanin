@@ -23,6 +23,7 @@
       b-input(
         type='password'
         v-model='password'
+        password-reveal
       )
     b-field(
       horizontal
@@ -36,21 +37,7 @@
 
 <script>
 // imports
-import store from '@/store/store'
-// helpers
-const genComputed = key => ({
-  get () {
-    const remote = store.getters.remote(this.remoteID)
-    return remote.config[key]
-  },
-  set (value) {
-    store.commit('updateRemoteConfig', {
-      remoteID: this.remoteID,
-      key,
-      value
-    })
-  }
-})
+import { genComputed } from '@/utilities'
 // export
 export default {
   props: [
