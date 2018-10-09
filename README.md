@@ -13,8 +13,12 @@
   - [x] only add the torrent's ID to the process queue
   - [x] start beets stuff
   - [x] console in vuex
-  - [x] make codacy fixes
   - [x] stdin streaming
   - [ ] support multiple remotes
   - [ ] vuex modules
   - [ ] start sheduler based on if flask command was `run`
+  - [ ] host testing
+  - [ ] pluggable `beets`
+  - [ ] generic plugin config editor
+  - [ ] "input needed" regex matching stdout
+  - [ ] generic "expect" line to vue buttons config
