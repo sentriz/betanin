@@ -1,3 +1,4 @@
+    <!-- .field.is-grouped.is-grouped-right#buttons -->
 <template lang="pug">
   .box
     b-field(
@@ -10,21 +11,18 @@
         disabled
       )
     slot
-    .field.is-grouped.is-grouped-right#buttons
+    b-field(grouped group-multiline position='is-right')
       p.control
-        a.button(@click='testRemote').is-light
-          | test
+        button.button(@click='testRemote').is-light test
       p.control
-        a.button(@click='saveRemote').is-primary
-          | save
+        button.button(@click='saveRemote').is-primary save
       p.control
-        a.button(@click='removeRemote(remoteID)').is-primary
-          | remove
+        button.button(@click='removeRemote(remoteID)').is-primary remove
 </template>
 
 <script>
 // imports
-import { mapGetters, mapMutations } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 // export
 export default {
   props: [
@@ -42,7 +40,7 @@ export default {
     saveRemote () {
       console.log('save')
     },
-    ...mapMutations([
+    ...mapActions([
       'removeRemote'
     ])
   }
