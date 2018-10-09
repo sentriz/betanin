@@ -5,7 +5,7 @@ from betanin.api.rest.models import request as request_models
 from betanin.api.rest.models import response as response_models
 from betanin.api.rest.namespaces import settings_ns
 from betanin.extensions import db
-
+from flask import request
 
 @settings_ns.route('/remotes')
 class RemotesResources(BaseResource):
@@ -15,8 +15,20 @@ class RemotesResources(BaseResource):
         'get all remote configs'
         return Remote.query.all()
 
+    @staticmethod
+    @settings_ns.marshal_with(response_models.remote)
+    def post():
+        'creates a new remote'
+        remote_type = request.args.get('type')
+        empty_config = torrent_client.get_default_config(remote_type)
+        remote = Remote(type=remote_type,
+                        config=empty_config)
+        db.session.add(remote)
+        db.session.commit()
+        return remote
 
-@settings_ns.route('/remotes/configure/<int:remote_id>')
+
+@settings_ns.route('/remotes/<int:remote_id>/config')
 class RemotesResources(BaseResource):
     @staticmethod
     def put(remote_id):
@@ -26,15 +38,11 @@ class RemotesResources(BaseResource):
         db.session.commit()
 
 
-@settings_ns.route('/remotes/add/<string:remote_type>')
+@settings_ns.route('/remotes/<int:remote_id>')
 class RemotesResources(BaseResource):
     @staticmethod
-    @settings_ns.marshal_with(response_models.remote)
-    def put(remote_type):
-        'creates a new remote'
-        empty_config = torrent_client.get_default_config(remote_type)
-        remote = Remote(type=remote_type,
-                        config=empty_config)
-        db.session.add(remote)
+    def delete(remote_id):
+        'deletes a remote'
+        remote = Remote.query.filter_by(id=remote_id).first_or_404()
+        db.session.delete(remote)
         db.session.commit()
-        return remote
