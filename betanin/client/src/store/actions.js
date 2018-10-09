@@ -30,9 +30,9 @@ export default {
     commit('removeRemote', remoteID)
   },
   addRemote ({commit}, type) {
-    const fetchUrl = `settings/remotes/add/${type}`
+    const fetchUrl = `settings/remotes?type=${type}`
     console.log(fetchUrl)
-    backend.putResource(fetchUrl)
+    backend.postResource(fetchUrl)
       .then(data => {
         console.log('new remote', data)
         commit('addRemote', data)

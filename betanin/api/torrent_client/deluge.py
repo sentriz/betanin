@@ -36,10 +36,10 @@ def _should_process(torrent):
 
 
 DEFAULT_CONFIG = {
-    'host': None,
-    'port': None,
-    'username': None,
-    'password': None,
+    'host': '',
+    'port': 0,
+    'username': '',
+    'password': '',
     'ssl': False,
 }
 
