@@ -25,13 +25,20 @@ export default {
         })
       })
   },
-  removeRemote ({commit}, {remoteID}) {
-    // delete from api
-    commit('removeRemote', remoteID)
+  saveRemote ({commit, getters}, remoteID) {
+    const fetchUrl = `settings/remotes/${remoteID}/config`
+    const config = getters.remoteConfigFromID(remoteID)
+    backend.putResource(fetchUrl, config)
+  },
+  removeRemote ({commit}, remoteID) {
+    const fetchUrl = `settings/remotes/${remoteID}`
+    backend.deleteResource(fetchUrl)
+      .then(() => {
+        commit('removeRemote', remoteID)
+      })
   },
   addRemote ({commit}, type) {
     const fetchUrl = `settings/remotes?type=${type}`
-    console.log(fetchUrl)
     backend.postResource(fetchUrl)
       .then(data => {
         console.log('new remote', data)
