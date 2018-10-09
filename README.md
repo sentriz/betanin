@@ -17,4 +17,4 @@
   - [x] stdin streaming
   - [ ] support multiple remotes
   - [ ] vuex modules
-  - [ ] start sheduler based on if flask command was `run`
+  - [ ] start scheduler based on if flask command was `run`
