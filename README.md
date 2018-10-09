@@ -6,6 +6,7 @@
   <a class="badge-align" href="https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sentriz/betanin&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/2265971a5ec24013a961b3d601eb4ef9"/></a>
 </p>
 
+# this project is not finished yet
 
 ### todo
   - [x] not do that thing in `torrent_client`
@@ -18,7 +19,3 @@
   - [ ] support multiple remotes
   - [ ] vuex modules
   - [ ] start sheduler based on if flask command was `run`
-  
-<p align="center">
- <h2>this project is not finished yet</h2>
-</p>
