@@ -1,38 +1,15 @@
 <template lang="pug">
   div
-    b-field(
-      horizontal
-      label='host/port'
-    )
-      b-input(
-        placeholder='transmission.com'
-        v-model='hostname'
-      )
-      b-input(
-        placeholder='80'
-        v-model='port'
-      )
-    b-field(
-      horizontal
-      label='username/password'
-    )
-      b-input(
-        placeholder='admin'
-        v-model='username'
-      )
-      b-input(
-        type='password'
-        v-model='password'
-        password-reveal
-      )
-    b-field(
-      horizontal
-      label='use ssl?'
-    )
-      b-switch(
-        type='is-primary'
-        v-model='ssl'
-      ) {{ ssl | toYesNo }}
+    b-field(horizontal label='host/port')
+      b-input(icon='server' placeholder='transmission.com'
+              v-model='hostname')
+      b-input(icon='reorder' placeholder='80' v-model='port')
+    b-field(horizontal label='login')
+      b-input(icon='user' placeholder='username' v-model='username')
+      b-input(icon='lock' placeholder='password' type='password'
+              v-model='password' password-reveal)
+    b-field(horizontal label='use ssl?')
+      b-switch(type='is-primary' v-model='ssl') {{ ssl | toYesNo }}
 </template>
 
 <script>
