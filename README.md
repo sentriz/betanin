@@ -18,3 +18,7 @@
   - [ ] support multiple remotes
   - [ ] vuex modules
   - [ ] start sheduler based on if flask command was `run`
+  
+<p align="center">
+ <h2>this project is not finished yet</h2>
+</p>
