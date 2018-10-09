@@ -15,7 +15,7 @@
       p.control
         button.button(@click='testRemote').is-light test
       p.control
-        button.button(@click='saveRemote').is-primary save
+        button.button(@click='saveRemote(remoteID)').is-primary save
       p.control
         button.button(@click='removeRemote(remoteID)').is-primary remove
 </template>
@@ -37,11 +37,9 @@ export default {
     testRemote () {
       console.log('test')
     },
-    saveRemote () {
-      console.log('save')
-    },
     ...mapActions([
-      'removeRemote'
+      'removeRemote',
+      'saveRemote'
     ])
   }
 }
