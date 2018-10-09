@@ -1,3 +1,5 @@
+from flask import request
+
 from betanin.api import torrent_client
 from betanin.api.orm.models.remote import Remote
 from betanin.api.rest.base import BaseResource
@@ -5,7 +7,7 @@ from betanin.api.rest.models import request as request_models
 from betanin.api.rest.models import response as response_models
 from betanin.api.rest.namespaces import settings_ns
 from betanin.extensions import db
-from flask import request
+
 
 @settings_ns.route('/remotes')
 class RemotesResources(BaseResource):
@@ -13,6 +15,7 @@ class RemotesResources(BaseResource):
     @settings_ns.marshal_list_with(response_models.remote)
     def get():
         'get all remote configs'
+        Remote.delete_unused()
         return Remote.query.all()
 
     @staticmethod
@@ -35,6 +38,7 @@ class RemotesResources(BaseResource):
         'update a remotes config'
         remote = Remote.query.filter_by(id=remote_id).first_or_404()
         remote.config = request.get_json(silent=True)
+        remote.is_in_use = True
         db.session.commit()
 
 

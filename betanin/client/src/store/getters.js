@@ -21,12 +21,14 @@ export default {
     state.downloads.length !== 0,
   torrent: state => torrentID =>
     itemFromID(state.downloads, torrentID),
-  remoteIDs: state =>
-    state.remotes.map(remote => remote.id),
   remotes: state =>
     state.remotes,
-  remote: state => remoteID =>
+  remoteIDs: state =>
+    state.remotes.map(remote => remote.id),
+  remoteFromID: state => remoteID =>
     itemFromID(state.remotes, remoteID),
+  remoteConfigFromID: state => remoteID =>
+    itemFromID(state.remotes, remoteID).config,
   remoteTypeFromID: state => remoteID =>
     itemFromID(state.remotes, remoteID).type
 }
