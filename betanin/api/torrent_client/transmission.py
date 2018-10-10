@@ -1,6 +1,7 @@
 from betanin.api import status
 
 from transmission import Transmission
+import transmission
 import requests
 import json
 
@@ -38,12 +39,13 @@ def _should_process(torrent):
 
 
 DEFAULT_CONFIG = {
-    'host': None,
+    'hostname': None,
     'port': None,
     'username': None,
     'password': None,
     'path': '/transmission/rpc',
     'ssl': False,
+    # 'watch_dir': None,
 }
 
 
@@ -63,10 +65,15 @@ def test_connection(session):
         version = session('session-get')['version']
         return True, f'connected to transmission {version}'
     except (requests.exceptions.ConnectionError, 
-            requests.exceptions.InvalidURL):
-        return False, f'invaid hostname/port/ssl'
+            requests.exceptions.InvalidURL,
+            TimeoutError):
+        return False, 'invaid hostname/port/ssl'
+    except transmission.Unauthorized:
+        return False, 'invalid username/password'
     except json.decoder.JSONDecodeError:
-        return False, f'invalid response from host'
+        return False, 'invalid response from host'
+    except requests.exceptions.RequestException:
+        return False, 'unknown requests problem'
 
 
 def get_torrents(session):

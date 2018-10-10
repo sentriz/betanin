@@ -10,6 +10,7 @@ export default {
   getSettings ({commit}) {
     backend.fetchResource('settings/remotes/')
       .then(remotes => {
+        commit('clearRemotes')
         remotes.forEach(remote => {
           commit('addRemote', remote)
         })
