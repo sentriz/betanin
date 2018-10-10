@@ -1,6 +1,8 @@
 from betanin.api import status
 
 from transmission import Transmission
+import requests
+import json
 
 
 def _torrent_is_done(torrent):
@@ -46,12 +48,23 @@ DEFAULT_CONFIG = {
 
 def create_session(config):
     return Transmission(
-        host=config['host'],
-        port=config['port'],
+        host=config['hostname'],
+        port=int(config['port']),
         username=config['username'],
         password=config['password'],
         ssl=config['ssl'],
     )
+
+
+def test_connection(session):
+    try:
+        version = session('session-get')['version']
+        return True, f'connected to transmission {version}'
+    except (requests.exceptions.ConnectionError, 
+            requests.exceptions.InvalidURL):
+        return False, f'invaid hostname/port/ssl'
+    except json.decoder.JSONDecodeError:
+        return False, f'invalid response from host'
 
 
 def get_torrents(session):
