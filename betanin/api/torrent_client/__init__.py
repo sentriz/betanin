@@ -81,7 +81,7 @@ def update_session(remote):
     try:
         session = wrapper.create_session(remote.config)
     except Exception as exc:
-        print(f'exception while create session for {remote}: {exc}')
+        print(f'exception while creating session for {remote}: {exc}')
         return
     SESSIONS[remote.id] = SessionGroup(
         session,

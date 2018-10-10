@@ -57,7 +57,7 @@ export default {
   ]),
   methods: {
     sendStdin (event) {
-      const postUrl = 'torrents/' + this.torrentID + '/console/stdin'
+      const postUrl = `torrents/${this.torrentID}/console/stdin`
       const payload = {
         text: this.stdin
       }
