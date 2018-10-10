@@ -4,6 +4,8 @@
       b-input(icon='server' placeholder='transmission.com'
               v-model='hostname')
       b-input(icon='reorder' placeholder='80' v-model='port')
+    b-field(horizontal label='use ssl')
+      b-switch(type='is-primary' v-model='ssl') {{ ssl | toYesNo }}
     b-field(horizontal label='path')
       b-input(icon='folder' placeholder='/transmission/rpc'
               v-model='path')
@@ -11,8 +13,6 @@
       b-input(icon='user' placeholder='username' v-model='username')
       b-input(icon='lock' placeholder='password' type='password'
               v-model='password' password-reveal)
-    b-field(horizontal label='use ssl?')
-      b-switch(type='is-primary' v-model='ssl') {{ ssl | toYesNo }}
 </template>
 
 <script>
