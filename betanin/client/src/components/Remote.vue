@@ -11,6 +11,7 @@
         disabled
       )
     slot
+    br
     b-field(grouped group-multiline position='is-right')
       p.control
         button.button(@click='testRemote').is-light test
