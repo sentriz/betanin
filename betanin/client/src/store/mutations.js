@@ -37,6 +37,9 @@ export default {
   addRemote (state, data) {
     state.remotes.push(data)
   },
+  clearRemotes (state) {
+    state.remotes = []
+  },
   removeRemote (state, remoteID) {
     state.remotes.splice(
       state.remotes.findIndex(remote =>

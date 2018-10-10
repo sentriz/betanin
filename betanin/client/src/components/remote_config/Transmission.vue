@@ -13,6 +13,9 @@
       b-input(icon='user' placeholder='username' v-model='username')
       b-input(icon='lock' placeholder='password' type='password'
               v-model='password' password-reveal)
+    b-field(horizontal label='watch dir')
+      b-input(icon='eye' placeholder='/mnt/media/downloads/music'
+              v-model='watchDir')
 </template>
 
 <script>
@@ -30,7 +33,8 @@ export default {
     port:     genComputed('port'),
     username: genComputed('username'),
     password: genComputed('password'),
-    ssl:      genComputed('ssl')
+    ssl:      genComputed('ssl'),
+    watchDir: genComputed('watchDir')
   }
 }
 </script>

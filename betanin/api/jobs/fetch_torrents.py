@@ -38,8 +38,9 @@ def start():
             torrents = list(get_torrents())
             print('torrents are', torrents)
         except Exception as exc:
-            print(f'problem with remote: {exc}')
-            return
+            raise
+            # print(f'problem with remote: {exc}')
+            # return
         for torrent_dict in torrents:
             torrent_id = torrent_dict['id']
             torrent = Torrent.get_or_create(torrent_id)
