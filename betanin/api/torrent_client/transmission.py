@@ -42,6 +42,7 @@ DEFAULT_CONFIG = {
     'port': None,
     'username': None,
     'password': None,
+    'path': '/transmission/rpc',
     'ssl': False,
 }
 
@@ -53,6 +54,7 @@ def create_session(config):
         username=config['username'],
         password=config['password'],
         ssl=config['ssl'],
+        path=config['path'],
     )
 
 
