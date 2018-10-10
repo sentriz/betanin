@@ -33,7 +33,6 @@ export default {
       remote.id === remoteID
     )
     state.remotes[remoteIndex].config[key] = value
-    console.log('update remote', remoteID, key, value)
   },
   addRemote (state, data) {
     state.remotes.push(data)
