@@ -6,6 +6,7 @@ import atexit
 from betanin import api
 from betanin import client
 from betanin import commands
+from betanin.api import torrent_client
 from betanin.config import config_from_string
 from betanin.extensions import cors
 from betanin.extensions import db
@@ -56,5 +57,7 @@ def register_commands(app):
 def register_meta(app):
     # if os.environ['FLASK_RUN_FROM_CLI'] == 'true':
     #     return
-    scheduler.start()
+    with app.app_context():
+        torrent_client.make_all_sessions()
+    # scheduler.start()
     atexit.register(scheduler.shutdown)

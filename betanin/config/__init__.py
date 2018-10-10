@@ -35,13 +35,6 @@ class BaseConfig(object):
             'replace_existing': True,
             'trigger': 'date',
 
-        },
-        {
-            'id': 'make_sessions',
-            'func': 'betanin.api.jobs.make_sessions:start',
-            'replace_existing': True,
-            'trigger': 'date',
-
         }
     ]
 

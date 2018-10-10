@@ -22,6 +22,7 @@
 
 <script>
 // imports
+import backend from '@/backend'
 import { mapGetters, mapActions } from 'vuex'
 // export
 export default {
@@ -35,7 +36,20 @@ export default {
   },
   methods: {
     testRemote () {
-      console.log('test')
+      const fetchUrl = `settings/remotes/${this.remoteID}/test`
+      backend.fetchResource(fetchUrl)
+        .then(response => {
+          const type = response.ok
+            ? 'is-success'
+            : 'is-danger'
+          const prefix = response.ok
+            ? 'testing succeeded'
+            : 'testing failed'
+          this.$toast.open({
+            message: `${prefix}: ${response.reason}`,
+            type
+          })
+        })
     },
     ...mapActions([
       'removeRemote',

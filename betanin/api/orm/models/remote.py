@@ -16,3 +16,6 @@ class Remote(db.Model):
     @classmethod
     def delete_unused(cls):
         cls.query.filter_by(is_in_use=False).delete()
+    
+    def __repr__(self):
+        return f'Remote(id={self.id}, type={self.type})'
