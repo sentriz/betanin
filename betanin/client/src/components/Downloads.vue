@@ -1,45 +1,29 @@
 <template lang="pug">
   div
-    b-table(
-      :data='downloads'
-      :opened-detailed='openedDetails'
-      detailed
-      detail-key='id'
-      :has-detailed-visible='rowHasDetail'
-      :loading='!haveDownloads'
-      @details-open='onDetails'
-    )
-      template(
-        slot-scope='props'
-      )
-        b-table-column(
-          label='name'
-        ) {{ props.row.name }}
-        b-table-column(
-          label='progress'
-        )
-          progress(
-            :value='props.row.progress'
-            max="100"
-          )
-          | &nbsp; {{ props.row.progress | round }}%
+    b-table(:data='downloads'
+            :opened-detailed='openedDetails'
+            detailed
+            detail-key='id'
+            :has-detailed-visible='rowHasDetail'
+            :loading='!haveDownloads'
+            @details-open='onDetails')
+      template(slot-scope='props')
+        b-table-column(label='name') {{ props.row.name }}
+        b-table-column(label='progress')
+          progress(:value='props.row.progress' max="100")
+            | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status')
-          b-tooltip(
-            :active='props.row.tooltip !== null'
-            :label='props.row.tooltip'
-            multiline
-            dashed
-          )
-            Icon(
-              :appearance='betAppear(props.row.beta_status)'
-            )
-      template(slot-scope='props', slot='detail')
+          b-tooltip(:active='props.row.tooltip !== null'
+                    :label='props.row.tooltip'
+                    multiline
+                    dashed)
+            Icon(:appearance='betAppear(props.row.beta_status)')
+      template(slot-scope='props'
+               slot='detail')
         .columns
           .column
-            preview-console(
-              v-show='areLines(props.row.id)'
-              :torrentID='props.row.id'
-            )
+            preview-console(v-show='areLines(props.row.id)'
+                            :torrentID='props.row.id')
           .column
             .is-pulled-right
               p

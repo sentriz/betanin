@@ -1,5 +1,5 @@
 export default {
   /* eslint-disable no-multi-spaces, key-spacing */
-  transmission: () => import(`@/components/remote_config/Transmission`),
-  deluge:       () => import(`@/components/remote_config/Deluge`)
+  transmission: () => import(`@/components/settings/remotes/Transmission`),
+  deluge:       () => import(`@/components/settings/remotes/Deluge`)
 }
