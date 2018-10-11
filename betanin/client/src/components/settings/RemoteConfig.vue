@@ -1,33 +1,25 @@
 <template lang="pug">
   div
-    remote(
-      v-for='remoteID in remoteIDs'
-      :remoteID='remoteID'
-      :key='remoteID'
-    )
-      component(
-        :is='confFromID(remoteID)'
-        :remoteID='remoteID'
-      )
-    h6(
-      v-show='remoteIDs.length === 0'
-    ) no remotes yet, add one below
+    remote(v-for='remoteID in remoteIDs'
+           :remoteID='remoteID'
+           :key='remoteID')
+      component(:is='confFromID(remoteID)'
+                :remoteID='remoteID')
+    h6(v-show='remoteIDs.length === 0') no remotes yet, add one below
     .field.has-addons.is-pulled-right
       .control
         .select.is-fullwidth
-          select(
-            v-model='newRemoteType'
-          )
-            option(
-              v-for='remoteName in remoteNames'
-              :key='remoteName'
-              :value='remoteName'
-              @click='addRemote(remoteName)'
-            ) {{ remoteName }}
+          select(v-model='newRemoteType')
+            option(v-for='remoteName in remoteNames'
+                   :key='remoteName'
+                   :value='remoteName'
+                   @click='addRemote(remoteName)') {{ remoteName }}
       .control
-        button.button(
-          @click='addRemote(newRemoteType)'
-        ) add new
+        button.button(@click='addRemote(newRemoteType)') add new
+    br
+    br
+    #empty-sep(v-show='remoteIDs.length === 0')
+      hr
     #help.content
       h5.title.is-5 notes on transmission
       ul
