@@ -13,8 +13,8 @@
       b-input(icon='user' placeholder='username' v-model='username')
       b-input(icon='lock' placeholder='password' type='password'
               v-model='password' password-reveal)
-    b-field(horizontal label='watch dir')
-      b-input(icon='eye' placeholder='/mnt/media/downloads/music'
+    b-field(horizontal label='local map' :message='remoteMapping')
+      b-input(icon='arrows-h' placeholder='/mnt/media/downloads/music'
               v-model='watchDir')
 </template>
 
@@ -35,6 +35,29 @@ export default {
     password: genComputed('password'),
     ssl:      genComputed('ssl'),
     watchDir: genComputed('watchDir')
+  },
+  data () {
+    return {
+      remoteMapping: ''
+    }
+  },
+  watch: {
+    watchDir () {
+      this.updateRemoteMapping()
+    }
+  },
+  mounted () {
+    this.updateRemoteMapping()
+  },
+  methods: {
+    updateRemoteMapping () {
+      const exampleRemoteDir = '/mnt/downloads/music'
+      const exampleTorrent = 'The Fall - Dragnet'
+      this.remoteMapping = this.watchDir
+        ? `<b>${exampleRemoteDir}/${exampleTorrent}</b> on transmission
+          would be imported from <b>${this.watchDir}/${exampleTorrent}</b> locally`
+        : 'assuming betanin and transmission are on the same machine'
+    }
   }
 }
 </script>

@@ -1,6 +1,5 @@
-    <!-- .field.is-grouped.is-grouped-right#buttons -->
 <template lang="pug">
-  .box
+  div
     b-field(
       horizontal
       label='type'
@@ -19,6 +18,7 @@
         button.button(@click='saveRemote(remoteID)').is-primary save
       p.control
         button.button(@click='removeRemote(remoteID)').is-primary remove
+    hr
 </template>
 
 <script>
@@ -40,14 +40,11 @@ export default {
       const fetchUrl = `settings/remotes/${this.remoteID}/test`
       backend.fetchResource(fetchUrl)
         .then(response => {
-          const type = response.ok
-            ? 'is-success'
-            : 'is-danger'
-          const prefix = response.ok
-            ? 'testing succeeded'
-            : 'testing failed'
+          const type = response.ok ? 'is-success' : 'is-danger'
+          const prefix = response.ok ? 'succeeded' : 'failed'
           this.$toast.open({
-            message: `${prefix}: ${response.reason}`,
+            message: `testing ${prefix}: ${response.reason}`,
+            position: 'is-bottom-right',
             type
           })
         })
@@ -59,3 +56,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .control {
+    margin-bottom: 0 !important;
+  }
+</style>
