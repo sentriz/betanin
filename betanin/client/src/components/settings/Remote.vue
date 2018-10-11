@@ -44,7 +44,6 @@ export default {
           const prefix = response.ok ? 'succeeded' : 'failed'
           this.$toast.open({
             message: `testing ${prefix}: ${response.reason}`,
-            position: 'is-bottom-right',
             type
           })
         })

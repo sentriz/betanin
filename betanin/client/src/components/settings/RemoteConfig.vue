@@ -28,11 +28,27 @@
         button.button(
           @click='addRemote(newRemoteType)'
         ) add new
+    #help.content
+      h5.title.is-5 notes on transmission
+      ul
+        li.
+          if your transmission client is running on a different to betanin,
+          you need to mount the folder transmission uses locally. maybe something
+          like curlftpfs, sshfs, samba, etc. then use the 'local map' field.
+          start typing in it to what the mapping will look like.
+        li.
+          at the moment, betanin will only attempt to download torrents in the
+          'category' specified. this is to prevent betanin from trying to import
+          films, etc. transmission doesn't actually support categories, so you must
+          choose a directory as a category. eg /default/download/dir/music, where
+          'music' is the category. this setup is made easy with a browser extension
+          that supports custom download directories. eg. 'transmission easy client`
+          for chrome.
 </template>
 
 <script>
 // imports
-import Remote from '@/components/Remote.vue'
+import Remote from '@/components/settings/Remote.vue'
 import confComps from '@/data/possible_remote_config_components'
 import { mapGetters, mapActions } from 'vuex'
 // export

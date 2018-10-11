@@ -40,8 +40,8 @@ export default {
     watchDir: genComputed('watchDir'),
     remoteMapping () {
       return this.watchDir
-        ? `<b>${exampleRemoteDir}/${exampleTorrent}</b> on transmission would
-          be imported from <b>${this.watchDir}/${exampleTorrent}</b> locally`
+        ? `if <b>${exampleRemoteDir}/${exampleTorrent}</b> was downloaded on the
+          transmission machine, we would try to import <b>${this.watchDir}/${exampleTorrent}</b> locally`
         : 'assuming betanin and transmission are on the same machine'
     }
   }
