@@ -32,7 +32,7 @@ export default {
     const remoteIndex = state.remotes.findIndex(remote =>
       remote.id === remoteID
     )
-    state.remotes[remoteIndex].config[key] = value
+    Vue.set(state.remotes[remoteIndex].config, key, value)
   },
   addRemote (state, data) {
     state.remotes.push(data)
