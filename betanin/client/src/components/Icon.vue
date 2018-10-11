@@ -1,11 +1,7 @@
 <template lang="pug">
-  span(
-    v-bind:style="getStyle(appearance.colour)"
-  )
-    b-icon(
-      :icon='appearance.icon',
-      size='is-small',
-    )
+  span(v-bind:style="getStyle(appearance.colour)")
+    b-icon(:icon='appearance.icon'
+           size='is-small')
     |  {{ appearance.text }}
 </template>
 
