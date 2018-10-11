@@ -21,6 +21,9 @@
 <script>
 // imports
 import { genComputed } from '@/utilities'
+// help
+const exampleRemoteDir = '/mnt/downloads/music'
+const exampleTorrent = 'The Fall - Dragnet'
 // export
 export default {
   props: [
@@ -34,28 +37,11 @@ export default {
     username: genComputed('username'),
     password: genComputed('password'),
     ssl:      genComputed('ssl'),
-    watchDir: genComputed('watchDir')
-  },
-  data () {
-    return {
-      remoteMapping: ''
-    }
-  },
-  watch: {
-    watchDir () {
-      this.updateRemoteMapping()
-    }
-  },
-  mounted () {
-    this.updateRemoteMapping()
-  },
-  methods: {
-    updateRemoteMapping () {
-      const exampleRemoteDir = '/mnt/downloads/music'
-      const exampleTorrent = 'The Fall - Dragnet'
-      this.remoteMapping = this.watchDir
-        ? `<b>${exampleRemoteDir}/${exampleTorrent}</b> on transmission
-          would be imported from <b>${this.watchDir}/${exampleTorrent}</b> locally`
+    watchDir: genComputed('watchDir'),
+    remoteMapping () {
+      return this.watchDir
+        ? `<b>${exampleRemoteDir}/${exampleTorrent}</b> on transmission would
+          be imported from <b>${this.watchDir}/${exampleTorrent}</b> locally`
         : 'assuming betanin and transmission are on the same machine'
     }
   }
