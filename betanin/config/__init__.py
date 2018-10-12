@@ -25,7 +25,7 @@ class BaseConfig(object):
             'id': 'fetch_torrents',
             'func': 'betanin.api.jobs.fetch_torrents:start',
             'trigger': 'interval',
-            'seconds': 2,
+            'seconds': 5,
             'replace_existing': True,
 
         },
@@ -34,7 +34,6 @@ class BaseConfig(object):
             'func': 'betanin.api.jobs.process_torrents:start',
             'replace_existing': True,
             'trigger': 'date',
-
         }
     ]
 
