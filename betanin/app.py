@@ -59,5 +59,5 @@ def register_meta(app):
     #     return
     with app.app_context():
         torrent_client.make_all_sessions()
-    # scheduler.start()
+    scheduler.start()
     atexit.register(scheduler.shutdown)
