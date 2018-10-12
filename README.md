@@ -17,7 +17,8 @@
   - [ ] support multiple remotes
   - [ ] vuex modules
   - [ ] start sheduler based on if flask command was `run`
-  - [ ] host testing
+  - [x] host testing
+  - [ ] fix toast position
   - [ ] pluggable `beets`
   - [ ] generic plugin config editor
   - [ ] "input needed" regex matching stdout

@@ -39,13 +39,7 @@ def _should_process(torrent):
 
 
 DEFAULT_CONFIG = {
-    'hostname': None,
-    'port': None,
-    'username': None,
-    'password': None,
     'path': '/transmission/rpc',
-    'ssl': False,
-    # 'watch_dir': None,
 }
 
 
@@ -64,14 +58,14 @@ def test_connection(session):
     try:
         version = session('session-get')['version']
         return True, f'connected to transmission {version}'
-    except (requests.exceptions.ConnectionError, 
-            requests.exceptions.InvalidURL,
-            TimeoutError):
-        return False, 'invaid hostname/port/ssl'
     except transmission.Unauthorized:
         return False, 'invalid username/password'
     except json.decoder.JSONDecodeError:
         return False, 'invalid response from host'
+    except (requests.exceptions.ConnectionError,
+            requests.exceptions.InvalidURL,
+            TimeoutError):
+        return False, 'invaid hostname/port/ssl'
     except requests.exceptions.RequestException:
         return False, 'unknown requests problem'
 
