@@ -1,4 +1,4 @@
-from betanin.api import status
+from betanin.api.status import RemoteStatus
 
 from transmission import Transmission
 import transmission
@@ -6,84 +6,76 @@ import requests
 import json
 
 
-def _torrent_is_done(torrent):
-    return torrent['leftUntilDone'] == 0
-
-
-def _torrent_is_music(torrent):
-    return torrent['downloadDir'] == client.DIRECTORY
-
-
-def _torrent_status_to_object(torrent):
-    if _torrent_is_done(torrent):
-        return status.RemoteStatus.COMPLETED
-    else:
-        return status.RemoteStatus.DOWNLOADING
-
-
-def _torrent_to_object(torrent):
-    return {
-        'remote_status': _torrent_status_to_object(torrent),
-        'id':            torrent['hashString'],
-        'progress':      torrent['percentDone'] * 100,
-        'path':          torrent['downloadDir'],
-        'name':          torrent['name'],
-    }
-
-
-def _should_process(torrent):
-    if not _torrent_is_music(torrent):
-        return False
-    # more
-    return True
-
-
 DEFAULT_CONFIG = {
     'path': '/transmission/rpc',
 }
 
 
-def create_session(config):
-    return Transmission(
-        host=config['hostname'],
-        port=int(config['port']),
-        username=config['username'],
-        password=config['password'],
-        ssl=config['ssl'],
-        path=config['path'],
-    )
+def _torrent_raw_to_dict(raw):
+    return {
+        'remote_status': (RemoteStatus.DOWNLOADING,
+                          RemoteStatus.COMPLETED)[raw['leftUntilDone'] == 0],
+        'id':            raw['hashString'],
+        'progress':      raw['percentDone'] * 100,
+        'path':          raw['downloadDir'],
+        'name':          raw['name'],
+    }
 
 
-def test_connection(session):
-    try:
-        version = session('session-get')['version']
-        return True, f'connected to transmission {version}'
-    except transmission.Unauthorized:
-        return False, 'invalid username/password'
-    except json.decoder.JSONDecodeError:
-        return False, 'invalid response from host'
-    except (requests.exceptions.ConnectionError,
-            requests.exceptions.InvalidURL,
-            TimeoutError):
-        return False, 'invaid hostname/port/ssl'
-    except requests.exceptions.RequestException:
-        return False, 'unknown requests problem'
+class Client:
+    def __init__(self, row):
+        self.row = row
+        self._session = self._create_session()
 
+    def _create_session(self):
+        return Transmission(
+            host=self.row.config['hostname'],
+            port=int(self.row.config['port']),
+            username=self.row.config['username'],
+            password=self.row.config['password'],
+            ssl=self.row.config['ssl'],
+            path=self.row.config['path'],
+        )
 
-def get_torrents(session):
-    print('fetching torrents from client')
-    raw_torrents = session(
-        'torrent-get',
-        fields=[
-            'name',
-            'downloadDir',
-            'isFinished',
-            'hashString',
-            'percentDone',
-            'startDate',
-            'leftUntilDone',
-        ]
-    )
-    torrents = raw_torrents['torrents']
-    yield from map(_torrent_to_object,
-                   filter(_should_process, torrents))
+    def _should_process(self, raw):
+        if not self._torrent_is_music(raw):
+            return False
+        # more
+        return True
+
+    def _torrent_is_music(self, raw):
+        return raw['downloadDir'] == self.row.config['category']
+
+    def get_torrents(self):
+        print(f'fetching torrents from transmission #{self.row.id}')
+        raw_torrents = self._session(
+            'torrent-get',
+            fields=[
+                'name',
+                'downloadDir',
+                'isFinished',
+                'hashString',
+                'percentDone',
+                'startDate',
+                'leftUntilDone',
+            ]
+        )
+        torrents = raw_torrents['torrents']
+        yield from (_torrent_raw_to_dict(raw) \
+                        for raw in torrents  \
+                        if self._should_process(raw))
+
+    def test_connection(self):
+        try:
+            version = self.session('session-get')['version']
+            return True, f'connected to transmission {version}'
+        except transmission.Unauthorized:
+            return False, 'invalid username/password'
+        except json.decoder.JSONDecodeError:
+            return False, 'invalid response from host'
+        except (requests.exceptions.ConnectionError,
+                requests.exceptions.InvalidURL,
+                TimeoutError):
+            return False, 'invaid hostname/port/ssl'
+        except requests.exceptions.RequestException:
+            return False, 'unknown requests problem'

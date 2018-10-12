@@ -35,12 +35,10 @@ def _process(torrent):
 def start():
     with scheduler.app.app_context():
         try:
-            torrents = list(get_torrents())
-            print('torrents are', torrents)
+            torrents = get_torrents()
         except Exception as exc:
-            raise
-            # print(f'problem with remote: {exc}')
-            # return
+            print(f'problem with remote: {exc}')
+            return
         for torrent_dict in torrents:
             torrent_id = torrent_dict['id']
             torrent = Torrent.get_or_create(torrent_id)

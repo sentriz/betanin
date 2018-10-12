@@ -44,9 +44,7 @@ _remote_wrappers = {
 # /end of internals
 
 
-SessionGroup = namedtuple('SessionGroup',
-                          'session get_torrents test_connection')
-SESSIONS = {} # a map of session id to `SessionGroup`
+CLIENTS = {} # a map of session id to `Client`
 
 
 def get_remote_names():
@@ -55,8 +53,8 @@ def get_remote_names():
 
 def get_torrents():
     return chain(*map(
-        lambda s_info: s_info.get_torrents(s_info.session),
-        SESSIONS.values(),
+        lambda client: client.get_torrents(),
+        CLIENTS.values(),
     ))
 
 
@@ -66,7 +64,7 @@ def get_default_config(remote_name):
 
 def make_all_sessions():
     'called on startup'
-    SESSIONS = []
+    CLIENTS = []
     for remote in Remote.query.all():
        update_session(remote) 
 
@@ -79,18 +77,14 @@ def update_session(remote):
     # button yet, and we don't want to test the connection
     # unless we're asked. so we must make exceptions.
     try:
-        session = wrapper.create_session(remote.config)
+        client = wrapper.Client(remote)
     except Exception as exc:
-        print(f'exception while creating session for {remote}: {exc}')
+        print(f'exception while creating client for {remote}: {exc}')
         return
-    SESSIONS[remote.id] = SessionGroup(
-        session,
-        wrapper.get_torrents,
-        wrapper.test_connection
-    )
+    CLIENTS[remote.id] = client
 
 def test_connection(remote_id):
-    if not remote_id in SESSIONS:
+    if not remote_id in CLIENTS:
         return False, 'could not create session'
-    group = SESSIONS[remote_id]
-    return group.test_connection(group.session)
+    session = CLIENTS[remote_id]
+    return session.test_connection()
