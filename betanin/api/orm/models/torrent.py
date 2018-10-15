@@ -22,6 +22,7 @@ class Torrent(db.Model):
     should_process = db.Column(db.Boolean,
                                default=False)
     tooltip        = db.Column(db.String)
+    remote_id      = db.Column(db.Integer, db.ForeignKey('remotes.id'))
     lines          = db.relationship("Line")
 
     @classmethod

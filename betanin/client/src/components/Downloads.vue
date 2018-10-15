@@ -8,6 +8,7 @@
             :loading='!haveDownloads'
             @details-open='onDetails')
       template(slot-scope='props')
+        b-table-column(label='client') {{ remoteTag(props.row.remote_id) }}
         b-table-column(label='name') {{ props.row.name }}
         b-table-column(label='progress')
           progress(:value='props.row.progress' max="100")
@@ -66,7 +67,8 @@ export default {
       'lines',
       'haveDownloads',
       'areLines',
-      'activeModal'
+      'activeModal',
+      'remoteTypeFromID'
     ])
   },
   components: {
@@ -89,6 +91,13 @@ export default {
     },
     betAppear (status) {
       return betaStatusMap[status]
+    },
+    remoteTag (remoteID) {
+      const type = this.remoteTypeFromID(remoteID)
+      const uid = remoteID === 1
+        ? ''
+        : ` #${remoteID}`
+      return `${type}${uid}`
     }
   },
   data () {
