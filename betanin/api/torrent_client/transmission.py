@@ -67,7 +67,7 @@ class Client:
 
     def test_connection(self):
         try:
-            version = self.session('session-get')['version']
+            version = self._session('session-get')['version']
             return True, f'connected to transmission {version}'
         except transmission.Unauthorized:
             return False, 'invalid username/password'

@@ -18,28 +18,28 @@ def _process(torrent):
     if torrent.remote_status == RemoteStatus.DOWNLOADING:
         torrent.set_beta_status('waiting')
         torrent.should_process = True
-        return
-    if torrent.remote_status == RemoteStatus.COMPLETED \
+    elif torrent.remote_status == RemoteStatus.COMPLETED \
             and torrent.should_process:
         # sets extra remote_status
         print('+++ adding', torrent)
         torrent.should_process = False
         process_torrents.add(torrent.id)
         torrent.set_beta_status('enqueued')
-        return
-    if torrent.beta_status == BetaStatus.UNKNOWN:
+    elif torrent.beta_status == BetaStatus.UNKNOWN:
         torrent.set_beta_status('ignored',
             'the torrent existed before betanin did')
 
 
 def start():
+    'fetch torrents from all the remotes, and add them to the db'
+    print("START")
     with scheduler.app.app_context():
         try:
-            torrents = get_torrents()
+            torrent_groups = get_torrents()
         except Exception as exc:
             print(f'problem with remote: {exc}')
             return
-        for torrent_dict in torrents:
+        for torrent_dict in torrent_groups:
             torrent_id = torrent_dict['id']
             torrent = Torrent.get_or_create(torrent_id)
             # update info from the remote
@@ -51,3 +51,4 @@ def start():
         # tell client to get the latest torrent list
         db.session.commit()
         events.torrents_grabbed()
+    print("END")
