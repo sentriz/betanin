@@ -11,6 +11,7 @@
     "axios": "^0.18.0",
     "buefy": "^0.6.6",
     "font-awesome": "^4.7.0",
+    "socket.io-client": "^2.1.1",
     "vue": "^2.5.13",
     "vue-bulma-progress-bar": "^1.0.2",
     "vue-router": "^3.0.1",

@@ -40,11 +40,16 @@ _remote_wrappers = {
 		for name, path in _list_remote_wrappers()
 }
 
+def _get_torrents_with_extras(map_dict_items_row):
+    remote_id, client = map_dict_items_row
+    return map(lambda torrent_dict: {'remote_id': remote_id,
+                                     **torrent_dict},
+               client.get_torrents())
 
 # /end of internals
 
 
-CLIENTS = {} # a map of session id to `Client`
+CLIENTS = {} # a map of remote ids to `Client`s
 
 
 def get_remote_names():
@@ -53,8 +58,8 @@ def get_remote_names():
 
 def get_torrents():
     return chain(*map(
-        lambda client: client.get_torrents(),
-        CLIENTS.values(),
+        _get_torrents_with_extras,
+        CLIENTS.items(), # ((remote_id, dict)...)
     ))
 
 
@@ -82,6 +87,7 @@ def update_session(remote):
         print(f'exception while creating client for {remote}: {exc}')
         return
     CLIENTS[remote.id] = client
+
 
 def test_connection(remote_id):
     if not remote_id in CLIENTS:
