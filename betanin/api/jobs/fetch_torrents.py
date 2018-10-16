@@ -63,6 +63,9 @@ def start():
             # add to queue if should
             # (queue worker will update beta status
             _process(torrent)
+            # update status for fetch
+            status.inc_enum_key(torrent.beta_status)
+            # commit
             db.session.add(torrent)
             db.session.commit()
         # tell client to get the latest torrent list

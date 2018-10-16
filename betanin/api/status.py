@@ -33,7 +33,13 @@ def inc_key(key):
     global_status[key] += 1
 
 
+def table():
+	return [
+		{"status": key.lower(), "value": value}
+		for key, value in global_status.items()
+	]
+
+
 def inc_enum_key(enum):
-    print(str(enum))
     key = str(enum).split('.')[-1]
     inc_key(key)

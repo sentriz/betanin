@@ -11,6 +11,8 @@ const itemFromID = (items, id) =>
 export default {
   downloads: state =>
     state.downloads,
+  status: state =>
+    state.status,
   lines: state => (torrentID, lineLimit) =>
     lastN(state.lines[torrentID] || [], lineLimit),
   areLines: state => torrentID =>
