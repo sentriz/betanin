@@ -36,6 +36,7 @@
               p
                 strong downloaded
                 |  {{ props.row.progress }}%
+    status
 </template>
 
 <script>

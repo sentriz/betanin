@@ -1,20 +1,27 @@
 from flask import request
 from flask import abort
 
-from betanin.api.orm.models.torrent import Torrent
-from betanin.api.rest.models import response as response_models
-from betanin.api.rest.models import request as request_models
-from betanin.api.rest.base import BaseResource
-from betanin.api.rest.namespaces import torrents_ns
 from betanin.api.jobs.process_torrents import PROCESSES
+from betanin.api.orm.models.torrent import Torrent
+from betanin.api.rest.base import BaseResource
+from betanin.api.rest.models import request as request_models
+from betanin.api.rest.models import response as response_models
+from betanin.api.rest.namespaces import torrents_ns
+from betanin.api.status import BetaStatus
+from betanin.api.status import global_status
 
 
 @torrents_ns.route('/')
 class TorrentsResource(BaseResource):
     @staticmethod
-    @torrents_ns.marshal_list_with(response_models.torrent)
+    @torrents_ns.marshal_with(response_models.fetch)
     def get():
-        return Torrent.query.all()
+        return {
+            'torrents': Torrent.query \
+                .filter(Torrent.beta_status != BetaStatus.IGNORED),
+                # .filter(Torrent.beta_status != BetaStatus.UNKNOWN)
+            'status': global_status,
+        }
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')

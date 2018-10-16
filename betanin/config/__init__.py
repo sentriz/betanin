@@ -25,7 +25,7 @@ class BaseConfig(object):
             'id': 'fetch_torrents',
             'func': 'betanin.api.jobs.fetch_torrents:start',
             'trigger': 'interval',
-            'seconds': 5,
+            'seconds': 3,
             'replace_existing': True,
 
         },

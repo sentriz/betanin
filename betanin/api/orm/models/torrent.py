@@ -4,10 +4,6 @@ from betanin.api.status import RemoteStatus
 from betanin.extensions import db
 
 
-def _enum_value_from_string(enum, string):
-    return getattr(enum, string.upper())
-
-
 class Torrent(db.Model):
     __tablename__ = 'torrents'
     id             = db.Column(db.String,
@@ -25,6 +21,9 @@ class Torrent(db.Model):
     remote_id      = db.Column(db.Integer, db.ForeignKey('remotes.id'))
     lines          = db.relationship("Line")
 
+    def __str__(self):
+        return f'Torrent({self.remote_status}, {self.beta_status})'
+
     @classmethod
     def get_or_create(cls, torrent_id):
         existing = cls.query.filter_by(id=torrent_id)
@@ -34,12 +33,18 @@ class Torrent(db.Model):
         else:
             return cls(id=torrent_id)
 
-    def set_beta_status(self, status, reason=None):
-        self.beta_status = _enum_value_from_string(BetaStatus, status)
+    def set_status(self, status, reason=None):
+        if isinstance(status, RemoteStatus):
+            self.remote_status = status
+        elif isinstance(status, BetaStatus):
+            self.beta_status = status
+        else:
+            raise ValueError('unknown status type')
         self.tooltip = reason
 
-    def set_remote_status(self, status):
-        self.remote_status = _enum_value_from_string(RemoteStatus, status)
+    def has_status(self, status):
+        return self.beta_status == status or \
+            self.remote_status == status
 
     def delete_lines(self):
         Line.query.filter_by(torrent_id=self.id).delete()
