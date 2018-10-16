@@ -74,7 +74,7 @@ export default {
       }
       backend.postResource(postUrl, payload)
       this.stdin = ''
-    },
+    }
   }
 }
 </script>

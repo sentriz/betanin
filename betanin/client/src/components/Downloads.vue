@@ -5,7 +5,6 @@
             detailed
             detail-key='id'
             :has-detailed-visible='rowHasDetail'
-            :loading='!haveDownloads'
             @details-open='onDetails')
       template(slot-scope='props')
         b-table-column(label='client') {{ remoteTag(props.row.remote_id) }}
@@ -36,13 +35,19 @@
               p
                 strong downloaded
                 |  {{ props.row.progress }}%
-    status
+      template(slot='empty')
+        h6(v-show='!haveDownloads')
+          b-icon(icon='exclamation-triangle')
+          | &nbsp; no downloads to process yet, check the status below
+      template(slot='footer')
+        status.is-pulled-right
 </template>
 
 <script>
 // imports
 import Icon from '@/components/Icon.vue'
 import PreviewConsole from '@/components/console/PreviewConsole.vue'
+import Status from '@/components/Status.vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
 const appearToMap = (text, icon, colour) => ({
@@ -64,17 +69,18 @@ const betaStatusMap = {
 export default {
   computed: {
     ...mapGetters([
-      'downloads',
-      'lines',
-      'haveDownloads',
-      'areLines',
       'activeModal',
+      'areLines',
+      'downloads',
+      'haveDownloads',
+      'lines',
       'remoteTypeFromID'
     ])
   },
   components: {
     Icon,
-    PreviewConsole
+    PreviewConsole,
+    Status
   },
   methods: {
     ...mapActions([
