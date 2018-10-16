@@ -48,8 +48,8 @@ export default {
     return $axios.put(route, data)
       .then(response => response.data)
   },
-  postResource (route) {
-    return $axios.post(route)
+  postResource (route, data) {
+    return $axios.post(route, data)
       .then(response => response.data)
   },
   deleteResource (route) {

@@ -67,6 +67,17 @@ torrent = torrents_ns.model('Torrent', {
 })
 
 
+fetch = torrents_ns.model('Fetch', {
+    'torrents': fields.List(
+        fields.Nested(torrent),
+        description='the list of torrents',
+    ),
+    'status': fields.Raw(
+        description='the global status table',
+    ),
+})
+
+
 remote = torrents_ns.model('Remote', {
     'id': fields.Integer(
         description='the unique id of the remote',
