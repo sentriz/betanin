@@ -28,13 +28,16 @@ class Client:
         self._session = self._create_session()
 
     def _create_session(self):
+        possible_port = self.row.config.get('port')
+        if possible_port and possible_port.isdigit():
+            possible_port = int(possible_port)
         return Transmission(
-            host=self.row.config['hostname'],
-            port=int(self.row.config['port']),
-            username=self.row.config['username'],
-            password=self.row.config['password'],
-            ssl=self.row.config['ssl'],
-            path=self.row.config['path'],
+            host=self.row.config.get('hostname'),
+            port=possible_port,
+            username=self.row.config.get('username'),
+            password=self.row.config.get('password'),
+            ssl=self.row.config.get('ssl'),
+            path=self.row.config.get('path'),
         )
 
     def _should_process(self, raw):
@@ -71,7 +74,8 @@ class Client:
             return True, f'connected to transmission {version}'
         except transmission.Unauthorized:
             return False, 'invalid username/password'
-        except json.decoder.JSONDecodeError:
+        except (json.decoder.JSONDecodeError,
+                KeyError):
             return False, 'invalid response from host'
         except (requests.exceptions.ConnectionError,
                 requests.exceptions.InvalidURL,

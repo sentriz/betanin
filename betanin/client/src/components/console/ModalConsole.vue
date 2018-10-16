@@ -11,7 +11,7 @@
         type='text'
         @keyup.enter='sendStdin'
         v-model='stdin'
-        v-bind='getInputProps()'
+        v-bind='inputProps'
       )
 </template>
 
@@ -52,9 +52,20 @@ export default {
   props: [
     'torrentID'
   ],
-  computed: mapGetters([
-    'torrent'
-  ]),
+  computed: {
+    ...mapGetters([
+      'torrent'
+    ]),
+    inputProps () {
+      const status = this.torrent(this.torrentID).beta_status
+      for (let i = 0; i < inputPropMap.length; i++) {
+        const [stati, props] = inputPropMap[i]
+        if (stati.includes(status)) {
+          return props
+        }
+      }
+    }
+  },
   methods: {
     sendStdin (event) {
       const postUrl = `torrents/${this.torrentID}/console/stdin`
@@ -64,15 +75,6 @@ export default {
       backend.postResource(postUrl, payload)
       this.stdin = ''
     },
-    getInputProps () {
-      const status = this.torrent(this.torrentID).beta_status
-      for (let i = 0; i < inputPropMap.length; i++) {
-        const [stati, props] = inputPropMap[i]
-        if (stati.includes(status)) {
-          return props
-        }
-      }
-    }
   }
 }
 </script>

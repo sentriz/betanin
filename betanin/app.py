@@ -29,12 +29,18 @@ def create_app(config_name="development"):
 
 
 def register_extensions(app):
+    # orm
     db.init_app(app)
+    from sqlalchemy_utils import force_instant_defaults
+    force_instant_defaults()
+    # scheduler
     scheduler.init_app(app)
+    # migrations
     from betanin.api.orm.models.torrent import Torrent
     from betanin.api.orm.models.line import Line
     from betanin.api.orm.models.remote import Remote
     migrate.init_app(app, db)
+    # socketio
     socketio.init_app(app)
 
 

@@ -39,8 +39,8 @@ class RemotesResources(BaseResource):
         remote = Remote.query.filter_by(id=remote_id).first_or_404()
         remote.config = request.get_json(silent=True)
         remote.is_in_use = True
-        torrent_client.update_session(remote)
         db.session.commit()
+        torrent_client.update_session(remote)
 
 
 @settings_ns.route('/remotes/<int:remote_id>/test')

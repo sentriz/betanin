@@ -12,8 +12,9 @@
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue'
 import ConnectionBanner from '@/components/ConnectionBanner.vue'
+import NavBar from '@/components/NavBar.vue'
+import Status from '@/components/Status.vue'
 export default {
   name: 'activity',
   components: {

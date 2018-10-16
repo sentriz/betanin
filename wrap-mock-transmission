@@ -2,8 +2,8 @@
 
 export PYTHONWARNINGS='ignore:Unverified HTTPS request'
 export FLASK_APP='utilities.mock_transmission_server:create_app()'
-export MOCK_TRANS_AMOUNT='5'
-export MOCK_TRANS_PERIOD='1'
+export MOCK_TRANS_AMOUNT='3'
+export MOCK_TRANS_PERIOD='3'
 
 # can't seen to set port number from env var (FLASK_RUN_PORT not working)
 if [ "$1" = "run" ]; then

@@ -18,6 +18,9 @@ export default {
   setDownloads (state, downloads) {
     state.downloads = downloads
   },
+  setStatus (state, status) {
+    state.status = status
+  },
   appendLine (state, {torrentID, line}) {
     const lines = torrentID in state.lines
       ? state.lines[torrentID].concat()

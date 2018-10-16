@@ -4,7 +4,8 @@ export default {
   getDownloads ({commit}) {
     backend.fetchResource('torrents/')
       .then(result => {
-        commit('setDownloads', result)
+        commit('setDownloads', result.torrents)
+        commit('setStatus', result.status)
       })
   },
   getSettings ({commit}) {

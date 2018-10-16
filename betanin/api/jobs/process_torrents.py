@@ -5,6 +5,7 @@ from betanin.api import events
 from betanin.api.orm.models.torrent import Torrent
 from betanin.extensions import db
 from betanin.extensions import scheduler
+from betanin.api.status import BetaStatus
 
 
 QUEUE = Queue()
@@ -45,9 +46,9 @@ def start():
         while True:
             torrent_id = QUEUE.get()
             torrent = _torrent_from_id(torrent_id)
-            torrent.set_beta_status("processing")
+            torrent.set_status(BetaStatus.PROCESSING)
             db.session.commit()
             import_torrent(torrent)
-            torrent.set_beta_status("completed")
+            torrent.set_status(BetaStatus.COMPLETED)
             db.session.commit()
             QUEUE.task_done()

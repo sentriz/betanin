@@ -19,3 +19,10 @@
 	}
 }
 ```
+
+
+# importing logic
+| remote      | beta    | action                            |
+|-------------|---------|-----------------------------------|
+| downloading | unknown | beta = waiting                    |
+| complete    | waiting | beta = enqueed; beta = processing |
