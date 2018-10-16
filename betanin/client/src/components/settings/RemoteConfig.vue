@@ -5,7 +5,9 @@
            :key='remoteID')
       component(:is='confFromID(remoteID)'
                 :remoteID='remoteID')
-    h6(v-show='remoteIDs.length === 0') no remotes yet, add one below
+    h6(v-show='remoteIDs.length === 0')
+      b-icon(icon='exclamation-triangle')
+      | &nbsp; no remotes yet, add one below
     .field.has-addons.is-pulled-right
       .control
         .select.is-fullwidth

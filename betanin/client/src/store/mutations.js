@@ -16,10 +16,10 @@ const binaryInsert = (array, item, startVal, endVal) => {
 
 export default {
   setDownloads (state, downloads) {
-    state.downloads = downloads
+    Vue.set(state, 'downloads', downloads)
   },
   setStatus (state, status) {
-    state.status = status
+    Vue.set(state, 'status', status)
   },
   appendLine (state, {torrentID, line}) {
     const lines = torrentID in state.lines
@@ -29,7 +29,7 @@ export default {
     Vue.set(state.lines, torrentID, lines)
   },
   setConnected (state, connected) {
-    state.connected = connected
+    Vue.set(state, 'connected', connected)
   },
   updateRemoteConfig (state, {remoteID, key, value}) {
     const remoteIndex = state.remotes.findIndex(remote =>
@@ -41,7 +41,7 @@ export default {
     state.remotes.push(data)
   },
   clearRemotes (state) {
-    state.remotes = []
+    Vue.set(state, 'remotes', [])
   },
   removeRemote (state, remoteID) {
     state.remotes.splice(
