@@ -11,7 +11,7 @@
   - [x] start beets stuff
   - [x] console in vuex
   - [x] stdin streaming
-  - [ ] support multiple remotes
+  - [x] support multiple remotes
   - [ ] vuex modules
   - [ ] start sheduler based on if flask command was `run`
   - [x] host testing
