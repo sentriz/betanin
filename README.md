@@ -20,3 +20,19 @@
   - [ ] generic plugin config editor
   - [ ] "input needed" regex matching stdout
   - [ ] generic "expect" line to vue buttons config
+  
+### 🔥🔥🔥 hot tech used 🔥🔥🔥
+  - vue
+  - vuex
+  - vue router
+  - webpack
+  - pug
+  - scss
+  - buefy
+  - bulma
+  - axios
+  - flask
+  - socketio
+  - albemic
+  - sqlalchemy
+  - sqlite3
