@@ -1,10 +1,5 @@
 <template lang="pug">
   #container
-    #lines
-      base-console(
-        :lineLimit='10'
-        :torrentID='torrentID'
-      )
     #footer
       a(
         @click='openModal'
