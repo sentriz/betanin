@@ -1,23 +1,23 @@
 <template lang="pug">
   div
     b-field(horizontal label='host/port')
-      b-input(icon='globe' placeholder='transmission.com'
+      b-input(icon='web' placeholder='transmission.com'
               v-model='hostname')
-      b-input(icon='server' placeholder='80' v-model='port')
+      b-input(icon='pipe' placeholder='80' v-model='port')
     b-field(horizontal label='use ssl')
       b-switch(type='is-primary' v-model='ssl') {{ ssl | toYesNo }}
     b-field(horizontal label='path')
-      b-input(icon='folder' placeholder='/transmission/rpc'
+      b-input(icon='folder-outline' placeholder='/transmission/rpc'
               v-model='path')
     b-field(horizontal label='login')
-      b-input(icon='user' placeholder='username' v-model='username')
-      b-input(icon='lock' placeholder='password' type='password'
+      b-input(icon='account' placeholder='username' v-model='username')
+      b-input(icon='lock-outline' placeholder='password' type='password'
               v-model='password' password-reveal)
     b-field(horizontal label='category')
-      b-input(icon='folder' placeholder='/downloads/complete/music'
+      b-input(icon='folder-clock-outline' placeholder='/downloads/complete/music'
               v-model='category')
     b-field(horizontal label='local map' :message='remoteMapping')
-      b-input(icon='arrows-h' placeholder='/mnt/media/downloads/music'
+      b-input(icon='ray-end-arrow' placeholder='/mnt/media/downloads/music'
               v-model='watchDir')
 </template>
 

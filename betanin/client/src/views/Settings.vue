@@ -1,10 +1,10 @@
 <template lang="pug">
   b-tabs(v-model='activeTab')
+    br
     b-tab-item(label='general')
       p not needed yet
     b-tab-item(label='torrent clients')
-      .section
-        remote-config
+      remote-config
 </template>
 
 <script>
@@ -23,5 +23,8 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+  .tab-content {
+    padding: 0 !important;
+  }
 </style>

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Toast } from 'buefy'
+import { Toast } from 'buefy/dist/components/toast'
 
 const PROTOCOL = 'http://'
 const HOSTNAME = 'localhost'

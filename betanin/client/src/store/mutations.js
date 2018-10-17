@@ -21,7 +21,7 @@ export default {
   setStatus (state, status) {
     Vue.set(state, 'status', status)
   },
-  appendLine (state, {torrentID, line}) {
+  appendLine (state, { torrentID, line }) {
     const lines = torrentID in state.lines
       ? state.lines[torrentID].concat()
       : []
@@ -31,7 +31,7 @@ export default {
   setConnected (state, connected) {
     Vue.set(state, 'connected', connected)
   },
-  updateRemoteConfig (state, {remoteID, key, value}) {
+  updateRemoteConfig (state, { remoteID, key, value }) {
     const remoteIndex = state.remotes.findIndex(remote =>
       remote.id === remoteID
     )
