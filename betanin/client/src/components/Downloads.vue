@@ -12,7 +12,7 @@
         b-table-column(label='progress')
           progress(:value='props.row.progress' max="100")
             | &nbsp; {{ props.row.progress | round }}%
-        b-table-column(label='status')
+        b-table-column(label='status' numeric='true')
           b-tooltip(:active='props.row.tooltip !== null'
                     :label='props.row.tooltip'
                     multiline
@@ -20,12 +20,12 @@
             Icon(:appearance='betAppear(props.row.beta_status)')
       template(slot-scope='props'
                slot='detail')
-        .columns
-          .column
+        .level
+          .level-left
             preview-console(v-show='areLines(props.row.id)'
                             :torrentID='props.row.id')
-          .column
-            .is-pulled-right
+          .level-right
+            #row-status
               p
                 strong remote status
                 |  {{ props.row.remote_status | lower }}
@@ -37,10 +37,10 @@
                 |  {{ props.row.progress }}%
       template(slot='empty')
         h6(v-show='!haveDownloads')
-          b-icon(icon='exclamation-triangle')
+          b-icon(icon='alert')
           | &nbsp; no downloads to process yet, check the status below
       template(slot='footer')
-        status.is-pulled-right
+        status
 </template>
 
 <script>
@@ -55,15 +55,14 @@ const appearToMap = (text, icon, colour) => ({
 })
 const betaStatusMap = {
   /* eslint-disable no-multi-spaces, key-spacing */
-  //                         text shown     fa47 icon             colour of text and icon
-  'ENQUEUED':    appearToMap('equeued',     'clock-o',            'hsl(36,  99%,  65%)'), // orange
-  'PROCESSING':  appearToMap('processing',  'clock-o',            'hsl(48,  98%,  52%'),  // yellow
-  'NEEDS_INPUT': appearToMap('needs input', 'exclamation-circle', 'hsl(48,  98%,  52%)'), // yellow-orange
-  'FAILED':      appearToMap('failed',      'times',              'hsl(349, 58%,  57%)'), // angry red
-  'COMPLETED':   appearToMap('completed',   'check',              'hsl(141, 71%,  48%)'), // green
-  'WAITING':     appearToMap('waiting',     'bed',                'hsl(0,   0%,  86%)'),  // light grey
-  'UNKNOWN':     appearToMap('unknown',     'exclamation-circle', 'hsl(0,   0%,  86%)'),  // light grey
-  'IGNORED':     appearToMap('ignored',     'times',              'hsl(36,  99%,  65%)')  // orange
+  //                         text shown     mdi28 icon       colour
+  'ENQUEUED':    appearToMap('equeued',     'clock-outline', 'hsl(36,  99%,  65%)'), // orange
+  'PROCESSING':  appearToMap('processing',  'clock-fast',    'hsl(48,  98%,  52%'),  // yellow
+  'NEEDS_INPUT': appearToMap('needs input', 'alert',         'hsl(48,  98%,  52%)'), // yellow-orange
+  'FAILED':      appearToMap('failed',      'close',         'hsl(349, 58%,  57%)'), // angry red
+  'COMPLETED':   appearToMap('completed',   'check',         'hsl(141, 71%,  48%)'), // green
+  'WAITING':     appearToMap('waiting',     'sleep',         'hsl(0,   0%,  86%)'),  // light grey
+  'UNKNOWN':     appearToMap('unknown',     'file-unknown',  'hsl(0,   0%,  86%)')   // light grey
 }
 // export
 export default {
@@ -129,5 +128,11 @@ export default {
   /* foreground */
   progress::-webkit-progress-value {
     background: #d1536a;
+  }
+  .level {
+    padding-bottom: 0;
+  }
+  #row-status {
+    text-align: right;
   }
 </style>

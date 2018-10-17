@@ -1,14 +1,14 @@
 import backend from '@/backend'
 
 export default {
-  getDownloads ({commit}) {
+  getDownloads ({ commit }) {
     backend.fetchResource('torrents/')
       .then(result => {
         commit('setDownloads', result.torrents)
         commit('setStatus', result.status)
       })
   },
-  getSettings ({commit}) {
+  getSettings ({ commit }) {
     backend.fetchResource('settings/remotes/')
       .then(remotes => {
         commit('clearRemotes')
@@ -18,28 +18,28 @@ export default {
       })
   },
   // last lines from ajax
-  getLines ({commit}, torrentID) {
+  getLines ({ commit }, torrentID) {
     const fetchUrl = `torrents/${torrentID}/console/stdout`
     backend.fetchResource(fetchUrl)
       .then(lines => {
         lines.forEach(line => {
-          commit('appendLine', {torrentID, line})
+          commit('appendLine', { torrentID, line })
         })
       })
   },
-  saveRemote ({commit, getters}, remoteID) {
+  saveRemote ({ commit, getters }, remoteID) {
     const fetchUrl = `settings/remotes/${remoteID}/config`
     const config = getters.remoteConfigFromID(remoteID)
     backend.putResource(fetchUrl, config)
   },
-  removeRemote ({commit}, remoteID) {
+  removeRemote ({ commit }, remoteID) {
     const fetchUrl = `settings/remotes/${remoteID}`
     backend.deleteResource(fetchUrl)
       .then(() => {
         commit('removeRemote', remoteID)
       })
   },
-  addRemote ({commit}, type) {
+  addRemote ({ commit }, type) {
     const fetchUrl = `settings/remotes?type=${type}`
     backend.postResource(fetchUrl)
       .then(data => {
@@ -47,19 +47,19 @@ export default {
         commit('addRemote', data)
       })
   },
-  socket_grabbed: ({dispatch}) => {
+  socket_grabbed: ({ dispatch }) => {
     dispatch('getDownloads')
   },
   // one line from socket
-  socket_read: ({commit}, {torrentID, line}) => {
-    commit('appendLine', {torrentID, line})
+  socket_read: ({ commit }, { torrentID, line }) => {
+    commit('appendLine', { torrentID, line })
   },
-  socket_connect: ({commit, dispatch}) => {
+  socket_connect: ({ commit, dispatch }) => {
     commit('setConnected', true)
     dispatch('getSettings')
     dispatch('getDownloads')
   },
-  socket_disconnect: ({commit}) => {
+  socket_disconnect: ({ commit }) => {
     commit('setConnected', false)
   }
 }
