@@ -31,6 +31,8 @@ def create_app(config_name="development"):
 def register_extensions(app):
     # orm
     db.init_app(app)
+    # cors
+    cors.init_app(app)
     from sqlalchemy_utils import force_instant_defaults
     force_instant_defaults()
     # scheduler
