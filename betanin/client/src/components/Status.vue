@@ -11,12 +11,13 @@
 import { mapGetters } from 'vuex'
 // help
 const statusMap = {
-  ENQUEUED: ['is in the queue', 'are in the queue'],
-  PROCESSING: ['is being processed', 'are being processed'],
-  IGNORED: ['is ignored', 'are ignored'],
+  /* eslint-disable key-spacing */
+  ENQUEUED:    ['is in the queue', 'are in the queue'],
+  PROCESSING:  ['is being processed', 'are being processed'],
+  IGNORED:     ['is ignored', 'are ignored'],
   NEEDS_INPUT: ['needs input', 'need input'],
-  COMPLETED: ['is completed', 'are completed'],
-  WAITING: ['is waiting to finish', 'are waiting to finish']
+  COMPLETED:   ['is completed', 'are completed'],
+  WAITING:     ['is waiting to finish', 'are waiting to finish']
 }
 // export
 export default {
