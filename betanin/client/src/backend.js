@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Toast } from 'buefy/dist/components/toast'
 
 const PROTOCOL = 'http://'
-const HOSTNAME = '192.168.1.14'
+const HOSTNAME = 'localhost'
 const PORT = 5000
 const PATH = '/api'
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production'

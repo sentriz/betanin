@@ -13,17 +13,23 @@
           progress(:value='props.row.progress' max="100")
             | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status' :numeric='true')
+          span#console-link(
+            v-show='areLines(props.row.id)'
+            @click='openModal(props.row.id)'
+          )
+            b-icon(icon='console' size='is-small')
+            |  view &nbsp;
           b-tooltip(:active='props.row.tooltip !== null'
                     :label='props.row.tooltip'
                     multiline
                     dashed)
-            Icon(:appearance='betAppear(props.row.beta_status)')
+            icon(:appearance='betAppear(props.row.beta_status)')
       template(slot-scope='props'
                slot='detail')
         .level
-          //- .level-left
-          //-   preview-console(v-show='areLines(props.row.id)'
-          //-                   :torrentID='props.row.id')
+          .level-left
+            preview-console(v-show='areLines(props.row.id)'
+                            :torrentID='props.row.id')
           .level-right
             #row-status
               p
@@ -45,8 +51,8 @@
 
 <script>
 // imports
+import ModalConsole from '@/components/console/ModalConsole.vue'
 import Icon from '@/components/Icon.vue'
-import PreviewConsole from '@/components/console/PreviewConsole.vue'
 import Status from '@/components/Status.vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
@@ -78,7 +84,6 @@ export default {
   },
   components: {
     Icon,
-    PreviewConsole,
     Status
   },
   methods: {
@@ -104,6 +109,14 @@ export default {
         ? ''
         : ` #${remoteID}`
       return `${type}${uid}`
+    },
+    openModal (torrentID) {
+      this.$modal.open({
+        parent: this,
+        component: ModalConsole,
+        props: { torrentID },
+        hasModalCard: true
+      })
     }
   },
   data () {
