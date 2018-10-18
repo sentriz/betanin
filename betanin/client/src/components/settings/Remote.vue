@@ -40,7 +40,7 @@ export default {
       const fetchUrl = `settings/remotes/${this.remoteID}/test`
       backend.fetchResource(fetchUrl)
         .then(response => {
-          const type = response.ok ? 'is-success' : 'is-danger'
+          const type = response.ok ? 'is-green' : 'is-primary'
           const prefix = response.ok ? 'succeeded' : 'failed'
           this.$toast.open({
             message: `testing ${prefix}: ${response.reason}`,

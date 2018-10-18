@@ -27,11 +27,14 @@ export default {
   @import "~bulma/sass/utilities/_all";
   $primary:           #d1536a;
   $primary-invert:    findColorInvert($primary);
+  $green:             #23d160;
+  $green-invert:      findColorInvert($green);
   $link-focus-border: $primary;
   $link-invert:       $primary-invert;
   $link:              $primary;
   $colors: (
     "primary": ($primary, $primary-invert),
+    "green": ($green, $green-invert),
   );
   #app {
     display: flex;
