@@ -12,7 +12,7 @@
         b-table-column(label='progress')
           progress(:value='props.row.progress' max="100")
             | &nbsp; {{ props.row.progress | round }}%
-        b-table-column(label='status' numeric='true')
+        b-table-column(label='status' :numeric='true')
           b-tooltip(:active='props.row.tooltip !== null'
                     :label='props.row.tooltip'
                     multiline
@@ -21,9 +21,9 @@
       template(slot-scope='props'
                slot='detail')
         .level
-          .level-left
-            preview-console(v-show='areLines(props.row.id)'
-                            :torrentID='props.row.id')
+          //- .level-left
+          //-   preview-console(v-show='areLines(props.row.id)'
+          //-                   :torrentID='props.row.id')
           .level-right
             #row-status
               p

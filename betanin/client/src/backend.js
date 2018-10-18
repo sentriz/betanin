@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Toast } from 'buefy/dist/components/toast'
 
 const PROTOCOL = 'http://'
-const HOSTNAME = 'localhost'
+const HOSTNAME = '192.168.1.14'
 const PORT = 5000
 const PATH = '/api'
 export const IS_PRODUCTION = process.env.NODE_ENV === 'production'
@@ -33,7 +33,7 @@ $axios.interceptors.response.use(
   function (error) {
     Toast.open({
       message: 'network error',
-      type: 'is-danger'
+      type: 'is-primary'
     })
     return Promise.reject(error)
   }
