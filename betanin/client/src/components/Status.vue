@@ -1,5 +1,6 @@
 <template lang="pug">
   #status
+    p(v-show='Object.keys(status).length === 0') no status available
     p(v-for='count, key in status')
       b {{ countString(count) }}
       span#explaination  {{ explaination(key, count) }}

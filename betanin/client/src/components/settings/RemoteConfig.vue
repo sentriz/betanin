@@ -26,7 +26,7 @@
       h5.title.is-5 notes on transmission
       ul
         li.
-          if your transmission client is running on a different to betanin,
+          if your transmission client is running on a different to machine betanin,
           you need to mount the folder transmission uses locally. maybe something
           like curlftpfs, sshfs, samba, etc. then use the 'local map' field.
           start typing in it to what the mapping will look like.
