@@ -25,4 +25,7 @@ export default {
   pre {
     background-color: initial;
   }
+  p {
+    font-size: 12px;
+  }
 </style>

@@ -24,6 +24,10 @@ class Torrent(db.Model):
     def __str__(self):
         return f'Torrent({self.remote_status}, {self.beta_status})'
 
+    @property
+    def has_lines(self):
+        return len(self.lines) != 0
+
     @classmethod
     def get_or_create(cls, torrent_id):
         existing = cls.query.filter_by(id=torrent_id)

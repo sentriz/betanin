@@ -31,20 +31,7 @@ def _process(torrent):
         # won't process
        torrent.set_status(BetaStatus.IGNORED,
            'the torrent finished before betanin saw it')
-    else:
-        to_ignore = (
-            (RemoteStatus.DOWNLOADING, BetaStatus.WAITING),
-            (RemoteStatus.COMPLETED,   BetaStatus.IGNORED),
-            (RemoteStatus.COMPLETED,   BetaStatus.ENQUEUED),
-            (RemoteStatus.COMPLETED,   BetaStatus.PROCESSING),
-            (RemoteStatus.COMPLETED,   BetaStatus.COMPLETED),
-        )
-        for r_s, b_s in to_ignore:
-            if torrent.remote_status == r_s and \
-                    torrent.beta_status == b_s:
-                break
-        else:
-            raise UserWarning(f'not sure how to handle {torrent}')
+
 
 def start():
     'fetch torrents from all the remotes, and add them to the db'
