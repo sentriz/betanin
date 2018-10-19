@@ -19,7 +19,7 @@ class Torrent(db.Model):
                                default=False)
     tooltip        = db.Column(db.String)
     remote_id      = db.Column(db.Integer, db.ForeignKey('remotes.id'))
-    lines          = db.relationship("Line")
+    lines          = db.relationship('Line')
 
     def __str__(self):
         return f'Torrent({self.remote_status}, {self.beta_status})'
