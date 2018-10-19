@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Toast } from 'buefy/dist/components/toast'
-import { API_URL } from './app_constants'
+import { API_URL } from './constants'
 
 let $axios = axios.create({
   baseURL: API_URL,
