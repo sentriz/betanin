@@ -52,30 +52,15 @@ def _get_torrents_with_extras(map_dict_items_row):
 CLIENTS = {} # a map of remote ids to `Client`s
 
 
-def get_remote_names():
-	return list(_remote_wrappers.keys())
+# by remote type
+def get_default_config(remote_type):
+    return _remote_wrappers[remote_type].DEFAULT_CONFIG
 
 
-def get_torrents():
-    return chain(*map(
-        _get_torrents_with_extras,
-        CLIENTS.items(), # ((remote_id, dict)...)
-    ))
-
-
-def get_default_config(remote_name):
-    return _remote_wrappers[remote_name].DEFAULT_CONFIG
-
-
-def make_all_sessions():
-    'called on startup'
-    CLIENTS = []
-    for remote in Remote.query.all():
-       update_session(remote) 
-
-
-def update_session(remote):
+# by remote id
+def update_session(remote_id):
     'called by `PUT /settings/remotes/<remote_id>/config`'
+    remote = Remote.find_by_id(remote_id)
     wrapper = _remote_wrappers[remote.type]
     # a this point the config might be completely wrong. 
     # the user mightn't have pressed the 'test'
@@ -89,8 +74,27 @@ def update_session(remote):
     CLIENTS[remote.id] = client
 
 
+def calc_import_path(remote_id, *args, **kwargs):
+    session = CLIENTS[remote_id]
+    return session.calc_import_path(*args, **kwargs)
+
+
 def test_connection(remote_id):
     if not remote_id in CLIENTS:
         return False, 'could not create session'
     session = CLIENTS[remote_id]
     return session.test_connection()
+
+# the rest
+def get_torrents():
+    return chain(*map(
+        _get_torrents_with_extras,
+        CLIENTS.items(), # ((remote_id, dict)...)
+    ))
+
+
+def make_all_sessions():
+    'called on startup'
+    CLIENTS = []
+    for remote in Remote.query.all():
+       update_session(remote.id)

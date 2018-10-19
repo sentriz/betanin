@@ -1,9 +1,10 @@
-from betanin.api.status import RemoteStatus
-
 from transmission import Transmission
-import transmission
-import requests
 import json
+import os.path
+import requests
+import transmission
+
+from betanin.api.status import RemoteStatus
 
 
 DEFAULT_CONFIG = {
@@ -48,6 +49,13 @@ class Client:
 
     def _torrent_is_music(self, raw):
         return raw['downloadDir'] == self.row.config['category']
+
+    def calc_import_path(self, remote_path, name):
+        if 'localDir' in self.row.config:
+            return os.path.join(self.row.config['localDir'], name)
+        else:
+            return os.path.join(remote_path, name)
+
 
     def get_torrents(self):
         print(f'fetching torrents from transmission #{self.row.id}')

@@ -6,6 +6,7 @@ from betanin.api.orm.models.torrent import Torrent
 from betanin.extensions import db
 from betanin.extensions import scheduler
 from betanin.api.status import BetaStatus
+from betanin.api.torrent_client import calc_import_path
 
 
 QUEUE = Queue()
@@ -18,6 +19,7 @@ def add(torrent):
 
 def import_torrent(torrent):
     torrent.delete_lines()
+    print(f'beet import -c', calc_import_path(torrent.remote.id, torrent.path, torrent.name))
     proc = subprocess.Popen(
         "/home/senan/dev/repos/betanin/scripts/mock_beets",
         stdout=subprocess.PIPE,
