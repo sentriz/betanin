@@ -7,7 +7,7 @@ Vue.config.productionTip = false
 import App from './views/App.vue'
 import router from './router'
 import store from './store/store'
-import { SOCKET_URL } from './backend'
+import { SOCKET_URL } from './app_constants.js'
 import './filters'
 
 // buefy
