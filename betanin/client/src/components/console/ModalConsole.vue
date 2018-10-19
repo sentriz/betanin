@@ -1,7 +1,7 @@
 <template lang="pug">
   .modal-card
     .box#header
-      h2.subtitle {{ torrent(torrentID).name }}
+      h6.is-6.subtitle {{ torrent(torrentID).name }}
     .box#lines
       base-console(
         :torrentID='torrentID'
@@ -81,7 +81,7 @@ export default {
 
 <style scoped>
   #lines * {
-    height: 60vh;
+    height: 55vh;
     overflow-y: scroll;
     overflow-x: hidden;
   }
