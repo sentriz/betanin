@@ -60,6 +60,10 @@ torrent = torrents_ns.model('Torrent', {
         description='the name of the torrent',
         example='Sammy',
     ),
+    'has_lines': fields.Boolean(
+        description='whether there are lines for the torrent or not',
+        example=True,
+    ),
     'tooltip': fields.String(
         description='the explained status of the torrent',
         example='torrent existed before betanin saw it',

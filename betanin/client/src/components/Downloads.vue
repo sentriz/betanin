@@ -4,8 +4,7 @@
             :opened-detailed='openedDetails'
             detailed
             detail-key='id'
-            :has-detailed-visible='rowHasDetail'
-            @details-open='onDetails')
+            :has-detailed-visible='rowHasDetail')
       template(slot-scope='props')
         b-table-column(label='client') {{ remoteTag(props.row.remote_id) }}
         b-table-column(label='name') {{ props.row.name }}
@@ -14,11 +13,11 @@
             | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status' :numeric='true')
           span#console-link(
-            v-show='areLines(props.row.id)'
+            v-show='props.row.has_lines'
             @click='openModal(props.row.id)'
           )
             b-icon(icon='console' size='is-small')
-            |  view &nbsp;
+            |  open &nbsp;
           b-tooltip(:active='props.row.tooltip !== null'
                     :label='props.row.tooltip'
                     multiline
@@ -42,9 +41,9 @@
                 strong downloaded
                 |  {{ props.row.progress }}%
       template(slot='empty')
-        h6(v-show='!haveDownloads')
+        h6(v-show='downloads.length === 0')
           b-icon(icon='alert')
-          | &nbsp; no downloads to process yet, check the status below
+          | &nbsp; no downloads here yet, check the status below
       template(slot='footer')
         status
 </template>
@@ -76,7 +75,6 @@ export default {
     ...mapGetters([
       'activeModal',
       'areLines',
-      'downloads',
       'haveDownloads',
       'lines',
       'remoteTypeFromID'
@@ -86,19 +84,15 @@ export default {
     Icon,
     Status
   },
+  props: [
+    'downloads'
+  ],
   methods: {
     ...mapActions([
       'getLines'
     ]),
     rowHasDetail (torrent) {
       return torrent.beta_status !== 'IGNORED'
-    },
-    onDetails (torrent) {
-      if (this.doneAJAX.includes(torrent.id)) {
-        return
-      }
-      this.getLines(torrent.id)
-      this.doneAJAX.push(torrent.id)
     },
     betAppear (status) {
       return betaStatusMap[status]
@@ -121,8 +115,7 @@ export default {
   },
   data () {
     return {
-      openedDetails: [],
-      doneAJAX: []
+      openedDetails: []
     }
   }
 }

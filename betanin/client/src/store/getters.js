@@ -9,8 +9,12 @@ const itemFromID = (items, id) =>
   )
 
 export default {
-  downloads: state =>
-    state.downloads,
+  downloadsActivity: state =>
+    state.downloads.filter(item =>
+      item.beta_status !== 'COMPLETED'),
+  downloadsHistory: state =>
+    state.downloads.filter(item =>
+      item.beta_status === 'COMPLETED'),
   status: state =>
     state.status,
   lines: state => (torrentID, lineLimit) =>
@@ -19,8 +23,6 @@ export default {
     Boolean(state.lines[torrentID]),
   connected: state =>
     state.connected,
-  haveDownloads: state =>
-    state.downloads.length !== 0,
   torrent: state => torrentID =>
     itemFromID(state.downloads, torrentID),
   remotes: state =>
