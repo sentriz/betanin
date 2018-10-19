@@ -36,11 +36,11 @@ class RemotesResources(BaseResource):
     @staticmethod
     def put(remote_id):
         'update a remotes config'
-        remote = Remote.query.filter_by(id=remote_id).first_or_404()
+        remote = Remote.find_by_id(remote_id)
         remote.config = request.get_json(silent=True)
         remote.is_in_use = True
         db.session.commit()
-        torrent_client.update_session(remote)
+        torrent_client.update_session(remote_id)
 
 
 @settings_ns.route('/remotes/<int:remote_id>/test')
@@ -60,6 +60,6 @@ class RemotesResources(BaseResource):
     @staticmethod
     def delete(remote_id):
         'deletes a remote'
-        remote = Remote.query.filter_by(id=remote_id).first_or_404()
+        remote = Remote.find_by_id(remote_id)
         db.session.delete(remote)
         db.session.commit()

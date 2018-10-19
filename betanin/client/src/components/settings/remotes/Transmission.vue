@@ -18,7 +18,7 @@
               v-model='category')
     b-field(horizontal label='local map' :message='remoteMapping')
       b-input(icon='ray-end-arrow' placeholder='/mnt/media/downloads/music'
-              v-model='watchDir')
+              v-model='localDir')
 </template>
 
 <script>
@@ -48,18 +48,18 @@ export default {
     password: genComputed('password'),
     ssl:      genComputed('ssl'),
     category: genComputed('category'),
-    watchDir: genComputed('watchDir'),
+    localDir: genComputed('localDir'),
     remoteMapping () {
       const remoteDir = this.category
         ? this.category : exampleRemoteDir
-      const localSeperator = isWindows(this.watchDir)
+      const localSeperator = isWindows(this.localDir)
         ? winSep : unixSep
       const remoteSeperator = isWindows(this.category)
         ? winSep : unixSep
-      return this.watchDir
+      return this.localDir
         ? `if <b>${cleanPath(remoteDir)}${remoteSeperator}${exampleTorrent}</b> was downloaded
           on the transmission machine, we would try to import
-          <b>${cleanPath(this.watchDir)}${localSeperator}${exampleTorrent}</b> locally`
+          <b>${cleanPath(this.localDir)}${localSeperator}${exampleTorrent}</b> locally`
         : 'assuming betanin and transmission are on the same machine'
     }
   }

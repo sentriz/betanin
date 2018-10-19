@@ -2,7 +2,6 @@ import os
 
 from flask import Blueprint
 from flask import Flask
-from flask import current_app
 
 
 blueprint = Blueprint(
