@@ -36,3 +36,8 @@
   - albemic
   - sqlalchemy
   - sqlite3
+
+### installation
+
+    pip install --user requirements.txt
+    pip install git+https://github.com/edavis/transmission-fluid
