@@ -28,12 +28,6 @@ class BaseConfig(object):
             'seconds': 3,
             'replace_existing': True,
 
-        },
-        {
-            'id': 'process_torrents',
-            'func': 'betanin.api.jobs.process_torrents:start',
-            'replace_existing': True,
-            'trigger': 'date',
         }
     ]
 
