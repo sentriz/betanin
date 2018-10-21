@@ -6,6 +6,7 @@ import atexit
 from betanin import api
 from betanin import client
 from betanin import commands
+from betanin.api import process_queue
 from betanin.api import torrent_client
 from betanin.config import config_from_string
 from betanin.extensions import cors
@@ -67,5 +68,6 @@ def register_meta(app):
     #     return
     with app.app_context():
         torrent_client.make_all_sessions()
+        process_queue.start(app)
     scheduler.start()
     atexit.register(scheduler.shutdown)

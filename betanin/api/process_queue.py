@@ -1,3 +1,6 @@
+import gevent
+from flask import copy_current_request_context
+
 from queue import Queue
 import subprocess
 
@@ -19,10 +22,11 @@ def add(torrent):
 
 def import_torrent(torrent):
     torrent.delete_lines()
-    print(f'beet import -c', calc_import_path(torrent.remote.id, torrent.path, torrent.name))
     proc = subprocess.Popen(
-        "/home/senan/dev/repos/betanin/scripts/mock_beets",
+        ['beet', 'import', '-c',
+            calc_import_path(torrent.remote.id, torrent.path, torrent.name)],
         stdout=subprocess.PIPE,
+        stderr=subprocess.STDOUT,
         stdin=subprocess.PIPE,
         universal_newlines=True,
         bufsize=1,
@@ -37,20 +41,27 @@ def import_torrent(torrent):
         db.session.commit()
     proc.stdout.close()
     proc.wait()
+    return proc
 
 
 def _torrent_from_id(torrent_id):
     return db.session.query(Torrent).get(torrent_id)
 
 
-def start():
-    with scheduler.app.app_context():
-        while True:
-            torrent_id = QUEUE.get()
-            torrent = _torrent_from_id(torrent_id)
-            torrent.set_status(BetaStatus.PROCESSING)
-            db.session.commit()
-            import_torrent(torrent)
+def _start():
+    while True:
+        torrent_id = QUEUE.get()
+        torrent = _torrent_from_id(torrent_id)
+        torrent.set_status(BetaStatus.PROCESSING)
+        db.session.commit()
+        proc = import_torrent(torrent)
+        if proc.returncode == 0:
             torrent.set_status(BetaStatus.COMPLETED)
-            db.session.commit()
-            QUEUE.task_done()
+        else:
+            torrent.set_status(BetaStatus.FAILED)
+        db.session.commit()
+        QUEUE.task_done()
+
+
+def start():
+    gevent.spawn(_start)

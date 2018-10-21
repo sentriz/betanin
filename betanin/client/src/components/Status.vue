@@ -17,7 +17,8 @@ const statusMap = {
   IGNORED:     ['is ignored', 'are ignored'],
   NEEDS_INPUT: ['needs input', 'need input'],
   COMPLETED:   ['is completed', 'are completed'],
-  WAITING:     ['is waiting to finish', 'are waiting to finish']
+  WAITING:     ['is waiting to finish', 'are waiting to finish'],
+  FAILED:      ['has failed', 'have failed']
 }
 // export
 export default {
