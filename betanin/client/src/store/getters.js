@@ -21,6 +21,8 @@ export default {
     lastN(state.lines[torrentID] || [], lineLimit),
   areLines: state => torrentID =>
     Boolean(state.lines[torrentID]),
+  linesFetched: state => torrentID =>
+    state.fetchedLines.includes(torrentID),
   connected: state =>
     state.connected,
   torrent: state => torrentID =>

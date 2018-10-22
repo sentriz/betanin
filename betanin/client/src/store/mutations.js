@@ -28,6 +28,11 @@ export default {
     binaryInsert(lines, line)
     Vue.set(state.lines, torrentID, lines)
   },
+  markLinesFetched (state, torrentID) {
+    const linesCopy = state.fetchedLines.concat()
+    linesCopy.push(torrentID)
+    Vue.set(state, 'fetchedLines', linesCopy)
+  },
   setConnected (state, connected) {
     Vue.set(state, 'connected', connected)
   },
