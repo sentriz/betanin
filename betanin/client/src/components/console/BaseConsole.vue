@@ -8,7 +8,7 @@
 
 <script>
 // imports
-import { mapGetters } from 'vuex'
+import { mapGetters, mapActions, mapMutations } from 'vuex'
 // export
 export default {
   props: [
@@ -16,8 +16,23 @@ export default {
     'torrentID'
   ],
   computed: mapGetters([
-    'lines'
-  ])
+    'lines',
+    'linesFetched'
+  ]),
+  methods: {
+    ...mapActions([
+      'getLines'
+    ]),
+    ...mapMutations([
+      'markLinesFetched'
+    ])
+  },
+  mounted () {
+    if (!this.linesFetched(this.torrentID)) {
+      this.getLines(this.torrentID)
+      this.markLinesFetched(this.torrentID)
+    }
+  }
 }
 </script>
 
