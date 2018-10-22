@@ -1,11 +1,9 @@
 alembic==1.0.1
 aniso8601==3.0.2
-APScheduler==3.5.3
 certifi==2018.10.15
 chardet==3.0.4
 Click==7.0
 Flask==1.0.2
-Flask-APScheduler==1.10.1
 Flask-Cors==3.0.6
 Flask-Migrate==2.3.0
 flask-restplus==0.12.1
