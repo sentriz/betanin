@@ -1,5 +1,0 @@
-# none but ignored
-{"downloads":[],"status":{"IGNORED":7},"lines":{},"remotes":[{"id":2,"type":"transmission","config":{"path":"/transmission/rpc","hostname":"127.0.01","port":"5001","category":"/downloads/complete/beets"}}],"connected":true}
-
-# activity
-{"downloads":[{"id":"4b1b6d93996119e1097753dff8b06ca31994c9c5","remote_id":2,"path":"/downloads/complete/beets","progress":"100.00","remote_status":"COMPLETED","beta_status":"ENQUEUED","name":"Dave Clarke - Devil's Advocate [2003 - MP3V0]","tooltip":null},{"id":"08c301c7637bb0274b412581929c4d69fc488922","remote_id":2,"path":"/downloads/complete/beets","progress":"100.00","remote_status":"COMPLETED","beta_status":"PROCESSING","name":"Kevin Ayers and the Whole World - Shooting at the Moon (1970) [FLAC]","tooltip":null}],"status":{"ENQUEUED":1,"PROCESSING":1,"IGNORED":5},"lines":{"08c301c7637bb0274b412581929c4d69fc488922":[{"index":0,"data":"one"},{"index":1,"data":"two"},{"index":2,"data":"three"}]},"remotes":[{"id":2,"type":"transmission","config":{"path":"/transmission/rpc","hostname":"127.0.01","port":"5001","category":"/downloads/complete/beets"}}],"connected":true}

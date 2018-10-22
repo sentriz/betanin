@@ -7,7 +7,7 @@
             :has-detailed-visible='rowHasDetail')
       template(slot-scope='props')
         b-table-column(label='client') {{ remoteTag(props.row.remote_id) }}
-        b-table-column(label='name') {{ props.row.name }}
+        b-table-column(label='name') {{ props.row.name | truncate(64) }}
         b-table-column(label='progress')
           progress(:value='props.row.progress' max="100")
             | &nbsp; {{ props.row.progress | round }}%
@@ -31,6 +31,9 @@
                             :torrentID='props.row.id')
           .level-right
             #row-status
+              p
+                strong id
+                |  {{ props.row.id | truncate(10) }}
               p
                 strong remote status
                 |  {{ props.row.remote_status | lower }}

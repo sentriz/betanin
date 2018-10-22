@@ -1,13 +1,14 @@
+import gevent
+
 from betanin.api import events
-from betanin.api import process_queue
 from betanin.api import status
 from betanin.api import torrent_client
+from betanin.api.jobs import import_torrents
 from betanin.api.orm.models.torrent import Torrent
 from betanin.api.status import BetaStatus
 from betanin.api.status import RemoteStatus
 from betanin.api.torrent_client import get_torrents
 from betanin.extensions import db
-from betanin.extensions import scheduler
 
 
 def _update_basics(torrent, torrent_dict):
@@ -23,7 +24,7 @@ def _process(torrent):
     elif torrent.has_status(RemoteStatus.COMPLETED) \
             and torrent.has_status(BetaStatus.WAITING):
         # process
-        process_queue.add(torrent.id)
+        import_torrents.add(torrent.id)
         torrent.set_status(BetaStatus.ENQUEUED)
         # new status will be set after process
     elif torrent.has_status(RemoteStatus.COMPLETED) \
@@ -33,7 +34,7 @@ def _process(torrent):
            'the torrent finished before betanin saw it')
 
 
-def _start():
+def fetch_one():
     'fetch torrents from all the remotes, and add them to the db'
     try:
         torrent_groups = list(get_torrents())
@@ -57,6 +58,8 @@ def _start():
     # tell client to get the latest torrent list
     events.torrents_grabbed()
 
+
 def start():
-    with scheduler.app.app_context():
-        _start()
+    while True:
+        fetch_one()
+        gevent.sleep(2)
