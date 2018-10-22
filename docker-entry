@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# create database if it doesn't exist
+if [ ! -f /root/.local/share/betanin/betanin.db ]; then
+    ./create-database
+fi
+
+# 🤫🤫🤫
+export PYTHONWARNINGS='ignore:Unverified HTTPS request'
+
+# start betanin
+./start
