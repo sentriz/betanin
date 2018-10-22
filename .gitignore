@@ -18,5 +18,3 @@ dist
 *.sln
 *security-sgps.py
 *security_backend.py
-
-app/config_transmission.py

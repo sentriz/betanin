@@ -1,5 +1,0 @@
-#!/bin/sh
-
-export PYTHONWARNINGS='ignore:Unverified HTTPS request'
-
-./start
