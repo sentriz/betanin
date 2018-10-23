@@ -15,7 +15,7 @@
 `/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
 `/music/` so beets can access your music  
 ##### compose (example with [traefik](https://traefik.io/))
-```
+```yml
 betanin:
   container_name: betanin
   image: sentriz/betanin
