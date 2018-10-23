@@ -23,5 +23,7 @@ RUN \
 	beets \
 	git+https://github.com/edavis/transmission-fluid
 VOLUME /root/.local/share/betanin/
+VOLUME /root/.config/beets/
+VOLUME /music
 EXPOSE 5000
 CMD [ "./docker-entry" ]
