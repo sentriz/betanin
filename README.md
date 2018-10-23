@@ -37,4 +37,5 @@ betanin:
   - ${DATA}/betanin/data:/root/.local/share/betanin/
   - ${DATA}/betanin/beets:/root/.config/beets/
   - ${MEDIA}/music:/music/
+  - ${DOWNLOADS}/complete/:/downloads
 ```
