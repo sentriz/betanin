@@ -19,6 +19,7 @@
 `/root/.local/share/betanin/` for a persistent database  
 `/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
 `/music/` so beets can access your music  
+`/downloads/` so beets can access your downloads  
 ###### port
 5000
 ###### compose (example with [traefik](https://traefik.io/))
