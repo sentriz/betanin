@@ -14,13 +14,13 @@
 `/root/.local/share/betanin/` for a persistent database  
 `/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
 `/music/` so beets can access your music  
-##### compose
+##### compose (example with [traefik](https://traefik.io/))
 ```
 betanin:
   container_name: betanin
   image: sentriz/betanin
   labels:
-    traefik.docker.network: proxy
+    traefik.docker.network: <your external network>
     traefik.enable: 'true'
     traefik.frontend.auth.basic: ${HTPASSWD}
     traefik.frontend.rule: Host:betanin.${DOMAIN}
