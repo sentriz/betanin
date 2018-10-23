@@ -63,7 +63,7 @@ const appearToMap = (text, icon, colour) => ({
 const statusMap = {
   /* eslint-disable no-multi-spaces, key-spacing */
   //                         text shown     mdi28 icon       colour
-  'ENQUEUED':    appearToMap('equeued',     'clock-outline', 'hsl(36,  99%,  65%)'), // orange
+  'ENQUEUED':    appearToMap('enqueued',    'clock-outline', 'hsl(36,  99%,  65%)'), // orange
   'PROCESSING':  appearToMap('processing',  'clock-fast',    'hsl(48,  98%,  52%'),  // yellow
   'NEEDS_INPUT': appearToMap('needs input', 'alert',         'hsl(48,  98%,  52%)'), // yellow-orange
   'FAILED':      appearToMap('failed',      'close',         'hsl(349, 58%,  57%)'), // angry red
