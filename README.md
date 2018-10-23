@@ -41,3 +41,10 @@
 
     pip install --user requirements.txt
     pip install git+https://github.com/edavis/transmission-fluid
+
+### docker
+`docker pull sentriz/betanin`  
+more docs to come, but for now, mount these volumes  
+`/root/.local/share/betanin/` for a persistent database  
+`/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
+`/music` so beets can access your music  
