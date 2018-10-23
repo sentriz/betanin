@@ -62,4 +62,4 @@ def fetch_one():
 def start():
     while True:
         fetch_one()
-        gevent.sleep(2)
+        gevent.sleep(6)
