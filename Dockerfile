@@ -25,5 +25,6 @@ RUN \
 VOLUME /root/.local/share/betanin/
 VOLUME /root/.config/beets/
 VOLUME /music
+VOLUME /downloads
 EXPOSE 5000
 CMD [ "./docker-entry" ]
