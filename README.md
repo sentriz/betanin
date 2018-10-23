@@ -3,6 +3,8 @@
 </p>
 <h4 align="center">beets based man-in-the-middle of your torrent client and music player</h4>
 
+<hr>
+
 ### installation
 
     pip install --user requirements.txt
