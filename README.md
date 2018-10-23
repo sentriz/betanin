@@ -21,7 +21,6 @@ betanin:
   image: sentriz/betanin
   labels:
     traefik.docker.network: <your external network>
-    traefik.enable: 'true'
     traefik.frontend.auth.basic: ${HTPASSWD}
     traefik.frontend.rule: Host:betanin.${DOMAIN}
   networks:
