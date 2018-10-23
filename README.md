@@ -48,3 +48,21 @@ more docs to come, but for now, mount these volumes
 `/root/.local/share/betanin/` for a persistent database  
 `/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
 `/music` so beets can access your music  
+compose
+```
+betanin:
+  container_name: betanin
+  image: sentriz/betanin
+  labels:
+    traefik.docker.network: proxy
+    traefik.enable: 'true'
+    traefik.frontend.auth.basic: ${HTPASSWD}
+    traefik.frontend.rule: Host:betanin.${DOMAIN}
+  networks:
+  - proxy
+  restart: unless-stopped
+  volumes:
+  - ${DATA}/betanin/data:/root/.local/share/betanin/
+  - ${DATA}/betanin/beets:/root/.config/beets/
+  - ${MEDIA}/music:/music/
+```
