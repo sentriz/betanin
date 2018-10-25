@@ -7,8 +7,8 @@ import re
 from betanin.api import events
 from betanin.api.orm.models.torrent import Torrent
 from betanin.extensions import db
-from betanin.api.status import BetaStatus
 from betanin.api.torrent_client import calc_import_path
+
 
 ANSI_ESCAPE = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
 PROCESSES = {}
@@ -39,7 +39,7 @@ def _import_torrent(torrent):
     )
     PROCESSES[torrent.id] = proc
     for i, raw_line in enumerate(iter(proc.stdout.readline, '')):
-        # TODO: add regex here to update beta_status to
+        # TODO: add regex here to update status to
         # possibly update NEEDS_INPUT
         data = _clean_line(raw_line.rstrip())
         _add_line(torrent, i, data)
@@ -48,24 +48,19 @@ def _import_torrent(torrent):
     return proc
 
 
-def _torrent_from_id(torrent_id):
-    return db.session.query(Torrent).get(torrent_id)
-
-
 def add(torrent):
+    torrent.status = Status.ENQUEUED
     QUEUE.put_nowait(torrent)
 
 
 def start():
     while True:
         torrent_id = QUEUE.get()
-        torrent = _torrent_from_id(torrent_id)
-        torrent.set_status(BetaStatus.PROCESSING)
-        db.session.commit()
+        torrent = db.session.query(Torrent).get(torrent_id)
+        torrent.status = Status.PROCESSING
         proc = _import_torrent(torrent)
         if proc.returncode == 0:
-            torrent.set_status(BetaStatus.COMPLETED)
+            torrent.status= Status.PROCESSED
         else:
-            torrent.set_status(BetaStatus.FAILED)
+            torrent.status = Status.FAILED
         db.session.commit()
-        gevent.sleep(0)

@@ -3,8 +3,9 @@ import json
 import os.path
 import requests
 import transmission
+import pickle
 
-from betanin.api.status import RemoteStatus
+from betanin.api.status import Status
 
 
 DEFAULT_CONFIG = {
@@ -14,12 +15,12 @@ DEFAULT_CONFIG = {
 
 def _torrent_raw_to_dict(raw):
     return {
-        'remote_status': (RemoteStatus.DOWNLOADING,
-                          RemoteStatus.COMPLETED)[raw['leftUntilDone'] == 0],
-        'id':            raw['hashString'],
-        'progress':      raw['percentDone'] * 100,
-        'path':          raw['downloadDir'],
-        'name':          raw['name'],
+        'status': (Status.DOWNLOADING, Status.DOWNLOADED) \
+            [raw['leftUntilDone'] == 0],
+        'id':       raw['hashString'],
+        'progress': raw['percentDone'] * 100,
+        'path':     raw['downloadDir'],
+        'name':     raw['name'],
     }
 
 

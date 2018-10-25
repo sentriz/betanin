@@ -7,8 +7,7 @@ from betanin.api.rest.base import BaseResource
 from betanin.api.rest.models import request as request_models
 from betanin.api.rest.models import response as response_models
 from betanin.api.rest.namespaces import torrents_ns
-from betanin.api.status import BetaStatus
-from betanin.api.status import global_status
+from betanin.api import status
 
 
 @torrents_ns.route('/')
@@ -17,10 +16,8 @@ class TorrentsResource(BaseResource):
     @torrents_ns.marshal_with(response_models.fetch)
     def get():
         return {
-            'torrents': Torrent.query \
-                .filter(Torrent.beta_status != BetaStatus.IGNORED),
-                # .filter(Torrent.beta_status != BetaStatus.UNKNOWN)
-            'status': global_status,
+            'torrents': Torrent.query.all(),
+            'status': status.fetch(),
         }
 
 
