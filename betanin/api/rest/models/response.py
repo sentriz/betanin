@@ -1,6 +1,5 @@
 from betanin.api.rest.namespaces import torrents_ns
-from betanin.api.status import BetaStatus
-from betanin.api.status import RemoteStatus
+from betanin.api.status import Status
 
 from flask_restplus import fields
 
@@ -46,15 +45,10 @@ torrent = torrents_ns.model('Torrent', {
         example=34.76,
         decimals=2,
     ),
-    'remote_status': _EnumField(
+    'status': _EnumField(
         description='the current status of the torrent',
-        enum=RemoteStatus,
-        example='COMPLETED'
-    ),
-    'beta_status': _EnumField(
-        description='the current status of the torrent',
-        enum=BetaStatus,
-        example='COMPLETED',
+        enum=Status,
+        example='DOWNLOADING',
     ),
     'name': fields.String(
         description='the name of the torrent',

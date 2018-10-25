@@ -1,45 +1,24 @@
 from enum import Enum
 from collections import defaultdict
+from betanin.extensions import db
 
 
-global_status = defaultdict(int)
 
-
-RemoteStatus = Enum('RemoteStatus', [
-    'COMPLETED',
+torrent_count = 0
+Status = Enum('Status', [
     'DOWNLOADING',
-    'INACTIVE',
-    'UNKNOWN',
-])
-
-
-BetaStatus = Enum('BetaStatus', [
-    'COMPLETED',
+    'DOWNLOADED',
     'ENQUEUED',
-    'FAILED',
-    'IGNORED',
-    'NEEDS_INPUT',
     'PROCESSING',
-    'UNKNOWN',
-    'WAITING',
+    'NEEDS_INPUT',
+    'FAILED',
+    'PROCESSED',
 ])
 
 
-def clear():
-    global_status.clear()
-
-
-def inc_key(key):
-    global_status[key] += 1
-
-
-def table():
-	return [
-		{"status": key.lower(), "value": value}
-		for key, value in global_status.items()
-	]
-
-
-def inc_enum_key(enum):
-    key = str(enum).split('.')[-1]
-    inc_key(key)
+def fetch():
+    prox = db.session.execute('SELECT status, COUNT(status) from torrents;')
+    return {
+        **dict(prox.fetchall()),
+        'TOTAL': torrent_count
+    }
