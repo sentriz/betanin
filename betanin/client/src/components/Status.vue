@@ -14,11 +14,12 @@ const statusMap = {
   /* eslint-disable key-spacing */
   ENQUEUED:    ['is in the queue', 'are in the queue'],
   PROCESSING:  ['is being processed', 'are being processed'],
-  IGNORED:     ['is ignored', 'are ignored'],
   NEEDS_INPUT: ['needs input', 'need input'],
-  COMPLETED:   ['is completed', 'are completed'],
+  FAILED:      ['has failed', 'have failed'],
   WAITING:     ['is waiting to finish', 'are waiting to finish'],
-  FAILED:      ['has failed', 'have failed']
+  PROCESSED:   ['is progress', 'are processing'],
+  DOWNLOADING: ['is downloading', 'are downloading'],
+  TOTAL:       'in total'
 }
 // export
 export default {

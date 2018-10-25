@@ -1,17 +1,19 @@
 """empty message
 
-Revision ID: 9cb8f6783bf5
+Revision ID: 4fcd3802c116
 Revises: 
-Create Date: 2018-10-02 18:55:10.814762
+Create Date: 2018-10-25 14:27:37.848428
 
 """
 from alembic import op
 import sqlalchemy as sa
-import sqlalchemy_json
+
+
+from sqlalchemy_json import NestedMutableJson
 
 
 # revision identifiers, used by Alembic.
-revision = '9cb8f6783bf5'
+revision = '4fcd3802c116'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -22,18 +24,19 @@ def upgrade():
     op.create_table('remotes',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('type', sa.String(), nullable=True),
-    sa.Column('config', sqlalchemy_json.NestedMutableJson(), nullable=True),
+    sa.Column('config', NestedMutableJson(), nullable=True),
+    sa.Column('is_in_use', sa.Boolean(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('torrents',
     sa.Column('id', sa.String(), nullable=False),
     sa.Column('name', sa.String(), nullable=True),
     sa.Column('path', sa.String(), nullable=True),
-    sa.Column('remote_status', sa.Enum('COMPLETED', 'DOWNLOADING', 'INACTIVE', 'UNKNOWN', name='remotestatus'), nullable=True),
-    sa.Column('beta_status', sa.Enum('COMPLETED', 'ENQUEUED', 'FAILED', 'IGNORED', 'NEEDS_INPUT', 'PROCESSING', 'UNKNOWN', 'WAITING', name='betastatus'), nullable=True),
+    sa.Column('status', sa.Enum('DOWNLOADING', 'DOWNLOADED', 'ENQUEUED', 'PROCESSING', 'NEEDS_INPUT', 'FAILED', 'PROCESSED', name='status'), nullable=True),
     sa.Column('progress', sa.Float(), nullable=True),
-    sa.Column('should_process', sa.Boolean(), nullable=True),
     sa.Column('tooltip', sa.String(), nullable=True),
+    sa.Column('remote_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['remote_id'], ['remotes.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('lines',

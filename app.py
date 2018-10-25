@@ -56,28 +56,24 @@ def register_blueprints(app):
     app.register_blueprint(api.blueprint)
 
 
-def _make_starter(module, app):
-    def _context_wrapper():
-        with app.app_context():
-            module.start()
-    return _context_wrapper
-
-
 if __name__ == "__main__":
     from gevent.pywsgi import WSGIServer
-    from functools import partial
     flask_app = create_app()
-    make_starter_ctx = partial(_make_starter, app=flask_app)
+    def _make_starter(module):
+        def _context_wrapper():
+            with flask_app.app_context():
+                module.start()
+        return _context_wrapper
     # tasks
     init_tasks = (
-        make_starter_ctx(make_all_sessions),
+        _make_starter(make_all_sessions),
     )
     # jobs
     _http_server = WSGIServer(('', 5000), log=None, application=flask_app)
     http_server_job = gevent.spawn(_http_server.start)
     extra_jobs = map(gevent.spawn, (
-        make_starter_ctx(fetch_torrents),
-        make_starter_ctx(import_torrents),
+        _make_starter(fetch_torrents),
+        _make_starter(import_torrents),
     ))
     try:
         # start init tasks
