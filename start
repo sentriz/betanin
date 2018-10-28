@@ -9,10 +9,7 @@ from betanin import api
 from betanin import client
 from betanin.config import Config
 from betanin.api import jobs
-from betanin.api import torrent_client
-from betanin.api.jobs import fetch_torrents
 from betanin.api.jobs import import_torrents
-from betanin.api.tasks import make_all_sessions
 from betanin.extensions import cors
 from betanin.extensions import db
 from betanin.extensions import migrate
@@ -39,7 +36,6 @@ def register_extensions(app):
     # migrations
     from betanin.api.orm.models.torrent import Torrent
     from betanin.api.orm.models.line import Line
-    from betanin.api.orm.models.remote import Remote
     migrate.init_app(app, db)
     # socketio
     socketio.init_app(app)
@@ -64,20 +60,13 @@ if __name__ == "__main__":
             with flask_app.app_context():
                 module.start()
         return _context_wrapper
-    # tasks
-    init_tasks = (
-        _make_starter(make_all_sessions),
-    )
     # jobs
     _http_server = WSGIServer(('', 5000), log=None, application=flask_app)
     http_server_job = gevent.spawn(_http_server.start)
     extra_jobs = map(gevent.spawn, (
-        _make_starter(fetch_torrents),
         _make_starter(import_torrents),
     ))
     try:
-        # start init tasks
-        [task() for task in init_tasks]
         # start http job and extra jobs
         gevent.joinall((http_server_job, *extra_jobs))
     except KeyboardInterrupt:

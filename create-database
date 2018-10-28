@@ -3,7 +3,6 @@
 from flask import Flask
 
 from betanin.api.orm.models.torrent import Line
-from betanin.api.orm.models.remote import Remote
 from betanin.api.orm.models.torrent import Torrent
 from betanin.extensions import db
 from betanin.config import Config
