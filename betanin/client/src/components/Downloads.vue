@@ -57,7 +57,7 @@ const statusMap = {
   'PROCESSING':  appearToMap('processing',  'clock-fast',    'hsl(48,  98%,  52%'),  // yellow
   'NEEDS_INPUT': appearToMap('needs input', 'alert',         'hsl(48,  98%,  52%)'), // yellow-orange
   'FAILED':      appearToMap('failed',      'close',         'hsl(349, 58%,  57%)'), // angry red
-  'PROCESSED':   appearToMap('completed',   'check',         'hsl(141, 71%,  48%)'), // green
+  'COMPLETED':   appearToMap('completed',   'check',         'hsl(141, 71%,  48%)'), // green
   'DOWNLOADING': appearToMap('downloading', 'sleep',         'hsl(0,   0%,  86%)')   // light grey
 }
 // export

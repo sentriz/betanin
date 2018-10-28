@@ -17,7 +17,7 @@ const statusMap = {
   NEEDS_INPUT: ['needs input', 'need input'],
   FAILED:      ['has failed', 'have failed'],
   WAITING:     ['is waiting to finish', 'are waiting to finish'],
-  PROCESSED:   ['is progress', 'are processing'],
+  COMPLETED:   ['is completed', 'are completed'],
   DOWNLOADING: ['is downloading', 'are downloading'],
   TOTAL:       'in total'
 }
