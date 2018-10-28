@@ -3,6 +3,5 @@ export default {
   status: {},
   lines: {},
   fetchedLines: [],
-  remotes: [],
   connected: false
 }

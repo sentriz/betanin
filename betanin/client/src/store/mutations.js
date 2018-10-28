@@ -35,25 +35,5 @@ export default {
   },
   setConnected (state, connected) {
     Vue.set(state, 'connected', connected)
-  },
-  updateRemoteConfig (state, { remoteID, key, value }) {
-    const remoteIndex = state.remotes.findIndex(remote =>
-      remote.id === remoteID
-    )
-    Vue.set(state.remotes[remoteIndex].config, key, value)
-  },
-  addRemote (state, data) {
-    state.remotes.push(data)
-  },
-  clearRemotes (state) {
-    Vue.set(state, 'remotes', [])
-  },
-  removeRemote (state, remoteID) {
-    state.remotes.splice(
-      state.remotes.findIndex(remote =>
-        remote.id === remoteID
-      ),
-      1
-    )
   }
 }
