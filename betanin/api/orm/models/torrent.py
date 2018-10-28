@@ -11,7 +11,6 @@ class Torrent(db.Model):
     path           = db.Column(db.String)
     status         = db.Column(db.Enum(Status))
     progress       = db.Column(db.Float)
-    remote_id      = db.Column(db.Integer, db.ForeignKey('remotes.id'))
     lines          = db.relationship('Line')
 
     def __str__(self):
