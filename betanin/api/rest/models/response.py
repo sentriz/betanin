@@ -74,18 +74,3 @@ fetch = torrents_ns.model('Fetch', {
         description='the global status table',
     ),
 })
-
-
-remote = torrents_ns.model('Remote', {
-    'id': fields.Integer(
-        description='the unique id of the remote',
-        example='2',
-    ),
-    'type': fields.String(
-        description='the type of the remote',
-        example='transmission',
-    ),
-    'config': fields.Raw(
-        description='the config of the remote',
-    )
-})

@@ -7,7 +7,6 @@ import re
 from betanin.api import events
 from betanin.api.orm.models.torrent import Torrent
 from betanin.extensions import db
-from betanin.api.torrent_client import calc_import_path
 
 
 ANSI_ESCAPE = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
