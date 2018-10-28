@@ -18,7 +18,7 @@ export default {
         })
       })
   },
-  socket_grabbed: ({ dispatch }) => {
+  socket_changed: ({ dispatch }) => {
     dispatch('getDownloads')
   },
   // one line from socket

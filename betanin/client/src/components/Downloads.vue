@@ -5,11 +5,7 @@
             detailed
             detail-key='id')
       template(slot-scope='props')
-        b-table-column(label='client') {{ remoteTag(props.row.remote_id) }}
         b-table-column(label='name') {{ props.row.name | truncate(64) }}
-        b-table-column(label='progress')
-          progress(:value='props.row.progress' max="100")
-            | &nbsp; {{ props.row.progress | round }}%
         b-table-column(label='status' :numeric='true')
           span#console-link(
             v-show='props.row.has_lines'
@@ -36,9 +32,6 @@
               p
                 strong status
                 |  {{ props.row.status | lower }}
-              p
-                strong downloaded
-                |  {{ props.row.progress }}%
       template(slot='empty')
         h6(v-show='downloads.length === 0')
           b-icon(icon='alert')
@@ -74,8 +67,7 @@ export default {
       'activeModal',
       'areLines',
       'haveDownloads',
-      'lines',
-      'remoteTypeFromID'
+      'lines'
     ])
   },
   components: {
@@ -91,13 +83,6 @@ export default {
     ]),
     betAppear (status) {
       return statusMap[status]
-    },
-    remoteTag (remoteID) {
-      const type = this.remoteTypeFromID(remoteID)
-      const uid = remoteID === 1
-        ? ''
-        : ` #${remoteID}`
-      return `${type}${uid}`
     },
     openModal (torrentID) {
       this.$modal.open({
@@ -117,19 +102,6 @@ export default {
 </script>
 
 <style scoped>
-  progress {
-    display: inline-block;
-    border: none;
-    -webkit-appearance: none;
-  }
-  /* background */
-  progress::-webkit-progress-bar {
-    background: #eeeeee;
-  }
-  /* foreground */
-  progress::-webkit-progress-value {
-    background: #d1536a;
-  }
   .level {
     padding-bottom: 0;
   }

@@ -1,8 +1,8 @@
 from betanin.extensions import socketio
 
 
-def torrents_grabbed():
-    socketio.emit('grabbed')
+def torrents_changed():
+    socketio.emit('changed')
 
 
 def line_read(torrent_id, index, data):

@@ -2,7 +2,7 @@ from flask import request
 from flask import abort
 
 from betanin.api.orm.models.torrent import Torrent
-from betanin.api.jobs.import_torrents import PROCESSES
+from betanin.api.jobs import import_torrents
 from betanin.api.rest.base import BaseResource
 from betanin.api.rest.models import request as request_models
 from betanin.api.rest.models import response as response_models
@@ -19,6 +19,16 @@ class TorrentsResource(BaseResource):
             'torrents': Torrent.query.all(),
             'status': status.fetch(),
         }
+
+    @staticmethod
+    @torrents_ns.expect(request_models.torrent)
+    def post():
+        content = request.form
+        import_torrents.add(
+            id=content['id'],
+            path=content['path'],
+            name=content['name'],
+        )
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')
@@ -38,6 +48,6 @@ class StdinResource(BaseResource):
         if torrent_id not in PROCESSES:
             abort(404)
         content = request.get_json(silent=True)
-        PROCESSES[torrent_id].communicate(
+        import_torrents.PROCESSES[torrent_id].communicate(
             input=content['text']
         )
