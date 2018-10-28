@@ -3,6 +3,7 @@ import gevent
 import subprocess
 
 import re
+import os.path
 
 from betanin.api import events
 from betanin.api.orm.models.torrent import Torrent
@@ -25,11 +26,15 @@ def _add_line(torrent, index, data):
     events.line_read(torrent.id, index, data)
 
 
+def _calc_import_path(torrent):
+    return os.path.join(torrent.path, torrent.name)
+
+
 def _import_torrent(torrent):
     torrent.delete_lines()
     _add_line(torrent, -1, '[betanin] starting beets cli..')
     proc = subprocess.Popen(
-        ['beet', 'import', '-c', torrent.path],
+        ['beet', 'import', '-c', _calc_import_path(torrent)],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         stdin=subprocess.PIPE,
