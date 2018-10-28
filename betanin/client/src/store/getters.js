@@ -11,10 +11,10 @@ const itemFromID = (items, id) =>
 export default {
   downloadsActivity: state =>
     state.downloads.filter(item =>
-      item.beta_status !== 'COMPLETED'),
+      item.status !== 'COMPLETED'),
   downloadsHistory: state =>
     state.downloads.filter(item =>
-      item.beta_status === 'COMPLETED'),
+      item.status === 'COMPLETED'),
   status: state =>
     state.status,
   lines: state => (torrentID, lineLimit) =>
