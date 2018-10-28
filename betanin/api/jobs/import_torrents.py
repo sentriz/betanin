@@ -69,7 +69,7 @@ def start():
         events.torrents_changed()
         proc = _import_torrent(torrent)
         if proc.returncode == 0:
-            torrent.status = Status.PROCESSED
+            torrent.status = Status.COMPLETED
         else:
             torrent.status = Status.FAILED
         db.session.commit()

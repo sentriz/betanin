@@ -32,18 +32,9 @@ torrent = torrents_ns.model('Torrent', {
         description='the id of the torrent',
         example='kfjhkdjfghkdfjghdkijfhg',
     ),
-    'remote_id': fields.Integer(
-        description='the id of the remote the torrent came from',
-        example='3',
-    ),
     'path': fields.String(
         description='the path of the torrent',
         example='downloads/music/Sam - Sammy (2014) [FLAC]',
-    ),
-    'progress': fields.Fixed(
-        description='the current download progress of the torrent',
-        example=34.76,
-        decimals=2,
     ),
     'status': _EnumField(
         description='the current status of the torrent',

@@ -16,7 +16,9 @@ Status = Enum('Status', [
 
 
 def fetch():
-    prox = db.session.execute('SELECT status, COUNT(status) from torrents;')
+    prox = db.session.execute(
+        'SELECT status, count() FROM torrents GROUP BY status;'
+    )
     results = prox.fetchall()
     return {
         **{column: count for column, count in
