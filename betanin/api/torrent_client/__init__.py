@@ -42,9 +42,12 @@ _remote_wrappers = {
 
 def _get_torrents_with_extras(map_dict_items_row):
     remote_id, client = map_dict_items_row
-    return map(lambda torrent_dict: {'remote_id': remote_id,
-                                     **torrent_dict},
-               client.get_torrents())
+    return {
+        'remote_id': remote_id,
+        'torrents': map(lambda torrent_dict: {'remote_id': remote_id,
+                                              **torrent_dict},
+                        client.get_torrents())
+    }
 
 # /end of internals
 
