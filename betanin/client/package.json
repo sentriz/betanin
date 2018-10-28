@@ -15,7 +15,6 @@
     "pug-plain-loader": "^1.0.0",
     "socket.io-client": "^2.1.1",
     "vue": "^2.5.17",
-    "vue-bulma-progress-bar": "^1.0.2",
     "vue-router": "^3.0.1",
     "vue-socket.io-extended": "^3.1.0",
     "vuex": "^3.0.1"

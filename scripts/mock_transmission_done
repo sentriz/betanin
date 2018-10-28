@@ -3,14 +3,15 @@
 TR_APP_VERSION='2.94'
 TR_TIME_LOCALTIME='Sun Oct 28 13:52:48 2018'
 TR_TORRENT_DIR='/downloads/complete/beets'
-TR_TORRENT_HASH='7818533780216dfe571b499c61e178ee834ea422'
+TR_TORRENT_HASH="7818533780216dfe571b499c61e$RANDOM"
 TR_TORRENT_ID='1088'
-TR_TORRENT_NAME='Immersion - Oscillating (1994) [CD] FLAC'
+TR_TORRENT_NAME="Immersion - Oscillating ($RANDOM)"
 AUTH='secret'
 
 curl \
     --header "Authorization: $AUTH" \
     --request POST \
     -d "id=$TR_TORRENT_HASH" \
-    -d "path=$TR_TORRENT_DIR/$TR_TORRENT_NAME" \
-    'http://localhost:5000/api/import'
+    -d "path=$TR_TORRENT_DIR" \
+    -d "name=$TR_TORRENT_NAME" \
+    'http://localhost:5000/api/torrents'

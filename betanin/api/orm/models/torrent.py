@@ -10,7 +10,6 @@ class Torrent(db.Model):
     name           = db.Column(db.String)
     path           = db.Column(db.String)
     status         = db.Column(db.Enum(Status))
-    progress       = db.Column(db.Float)
     lines          = db.relationship('Line')
 
     def __str__(self):
@@ -19,12 +18,6 @@ class Torrent(db.Model):
     @property
     def has_lines(self):
         return len(self.lines) != 0
-
-    @classmethod
-    def exists(cls, torrent_id):
-        return db.session.query(cls.id) \
-            .filter_by(id=torrent_id) \
-            .scalar() is not None
 
     def delete_lines(self):
         Line.query.filter_by(torrent_id=self.id).delete()

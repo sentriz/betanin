@@ -32,11 +32,6 @@ const inputPropMap = [
       disabled: true,
       placeholder: 'beets has quit'
     }
-  ], [
-    ['WAITING'], {
-      disabled: true,
-      placeholder: 'waiting for beets to start'
-    }
   ]
 ]
 // export
@@ -57,7 +52,7 @@ export default {
       'torrent'
     ]),
     inputProps () {
-      const status = this.torrent(this.torrentID).beta_status
+      const { status } = this.torrent(this.torrentID)
       for (let i = 0; i < inputPropMap.length; i++) {
         const [stati, props] = inputPropMap[i]
         if (stati.includes(status)) {
