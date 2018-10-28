@@ -13,6 +13,7 @@ Status = Enum('Status', [
     'NEEDS_INPUT',
     'FAILED',
     'PROCESSED',
+    'IGNORED',
 ])
 
 
