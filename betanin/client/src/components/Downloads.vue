@@ -27,6 +27,12 @@
           p
             strong status
             |  {{ props.row.status | lower }}
+          p
+            strong created
+            |  {{ props.row.created }}
+          p
+            strong updated
+            |  {{ props.row.updated }}
       template(slot='empty')
         h6(v-show='downloads.length === 0')
           b-icon(icon='alert')

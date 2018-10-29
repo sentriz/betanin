@@ -53,6 +53,8 @@ torrent = torrents_ns.model('Torrent', {
         description='the explained status of the torrent',
         example='torrent existed before betanin saw it',
     ),
+    'updated': fields.DateTime,
+    'created': fields.DateTime,
 })
 
 
