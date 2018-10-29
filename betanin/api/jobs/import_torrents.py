@@ -32,7 +32,7 @@ def _calc_import_path(torrent):
 
 def _import_torrent(torrent):
     torrent.delete_lines()
-    _add_line(torrent, -1, '[betanin] starting beets cli..')
+    _add_line(torrent, -1, '[betanin] starting cli program')
     proc = subprocess.Popen(
         ['beet', 'import', '-c', _calc_import_path(torrent)],
         stdout=subprocess.PIPE,
@@ -49,7 +49,10 @@ def _import_torrent(torrent):
         _add_line(torrent, i, data)
     proc.stdout.close()
     proc.wait()
-    return proc
+    return_code = proc.returncode
+    _add_line(torrent, 2*22, '[betanin] program finished with '
+        f'exit status `{return_code}`')
+    return return_code
 
 
 def add(**kwargs):
@@ -72,8 +75,8 @@ def start():
         torrent.status = Status.PROCESSING
         db.session.commit()
         events.torrents_changed()
-        proc = _import_torrent(torrent)
-        if proc.returncode == 0:
+        return_code = _import_torrent(torrent)
+        if return_code == 0:
             torrent.status = Status.COMPLETED
         else:
             torrent.status = Status.FAILED
