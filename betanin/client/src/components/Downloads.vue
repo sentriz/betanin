@@ -20,18 +20,13 @@
             icon(:appearance='betAppear(props.row.status)')
       template(slot-scope='props'
                slot='detail')
-        .level
-          .level-left
-            preview-console(v-show='areLines(props.row.id)'
-                            :torrentID='props.row.id')
-          .level-right
-            #row-status
-              p
-                strong id
-                |  {{ props.row.id | truncate(10) }}
-              p
-                strong status
-                |  {{ props.row.status | lower }}
+        #row-status
+          p
+            strong id
+            |  {{ props.row.id | truncate(10) }}
+          p
+            strong status
+            |  {{ props.row.status | lower }}
       template(slot='empty')
         h6(v-show='downloads.length === 0')
           b-icon(icon='alert')
