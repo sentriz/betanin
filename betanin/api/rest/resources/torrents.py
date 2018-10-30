@@ -45,7 +45,7 @@ class StdinResource(BaseResource):
     @staticmethod
     @torrents_ns.expect(request_models.line)
     def post(torrent_id):
-        if torrent_id not in PROCESSES:
+        if torrent_id not in import_torrents.PROCESSES:
             abort(404)
         content = request.get_json(silent=True)
         import_torrents.PROCESSES[torrent_id].communicate(

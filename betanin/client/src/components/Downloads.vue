@@ -39,13 +39,22 @@
           | &nbsp; no downloads here yet, check the status below
       template(slot='footer')
         status
+    b-modal(
+      :width='640'
+      scroll='keep'
+      :active.sync='modalIsOpen'
+    )
+      modal-console(
+        :torrentID='modalTorrentID'
+      )
 </template>
 
 <script>
 // imports
-import ModalConsole from '@/components/console/ModalConsole.vue'
 import Icon from '@/components/Icon.vue'
+import ModalConsole from '@/components/console/ModalConsole.vue'
 import Status from '@/components/Status.vue'
+import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
 const appearToMap = (text, icon, colour) => ({
@@ -73,7 +82,8 @@ export default {
   },
   components: {
     Icon,
-    Status
+    Status,
+    ModalConsole
   },
   props: [
     'downloads'
@@ -86,17 +96,15 @@ export default {
       return statusMap[status]
     },
     openModal (torrentID) {
-      this.$modal.open({
-        parent: this,
-        component: ModalConsole,
-        props: { torrentID },
-        hasModalCard: true
-      })
+      Vue.set(this, 'modalTorrentID', torrentID)
+      Vue.set(this, 'modalIsOpen', true)
     }
   },
   data () {
     return {
-      openedDetails: []
+      openedDetails: [],
+      modalIsOpen: false,
+      modalTorrentID: ''
     }
   }
 }

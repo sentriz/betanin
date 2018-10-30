@@ -1,3 +1,7 @@
 ::-webkit-scrollbar {
     display: none;
 }
+
+.modal-background {
+  background-color: rgba(10, 10, 10, 0.5) !important;
+}
