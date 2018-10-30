@@ -4,6 +4,7 @@
       p.modal-card-title {{ torrent(torrentID).name }}
     base-console.modal-card-body(
       :torrentID='torrentID'
+      :isLive='isLive'
     )
     footer.modal-card-foot
       #send-input
@@ -11,13 +12,14 @@
           @keyup.enter='sendStdin'
           size='is-small'
           type='text'
-          v-bind='inputProps'
+          :disabled='!isLive'
+          :placeholder='isLive ? "send to to beets" : "beets has quit"'
           v-model='stdin'
         )
       #send-button
         button.button.is-dark.is-small(
           @click='sendStdin'
-          v-bind='inputProps'
+          :disabled='!isLive'
         ) send
 </template>
 
@@ -26,20 +28,6 @@
 import BaseConsole from '@/components/console/BaseConsole.vue'
 import backend from '@/backend'
 import { mapGetters } from 'vuex'
-// help
-const inputPropMap = [
-  [
-    ['PROCESSING', 'NEEDS_INPUT'], {
-      disabled: false,
-      placeholder: 'send text to beets'
-    }
-  ], [
-    ['COMPLETED', 'FAILED'], {
-      disabled: true,
-      placeholder: 'beets has quit'
-    }
-  ]
-]
 // export
 export default {
   data () {
@@ -57,14 +45,9 @@ export default {
     ...mapGetters([
       'torrent'
     ]),
-    inputProps () {
+    isLive () {
       const { status } = this.torrent(this.torrentID)
-      for (let i = 0; i < inputPropMap.length; i++) {
-        const [stati, props] = inputPropMap[i]
-        if (stati.includes(status)) {
-          return props
-        }
-      }
+      return ['PROCESSING', 'NEEDS_INPUT'].includes(status)
     }
   },
   methods: {
