@@ -1,18 +1,24 @@
 <template lang="pug">
   .modal-card
-    .box#header
-      h6.is-6.subtitle {{ torrent(torrentID).name }}
-    .box#lines
-      base-console(
-        :torrentID='torrentID'
-      )
-    .box#footer
-      input.input(
-        type='text'
-        @keyup.enter='sendStdin'
-        v-model='stdin'
-        v-bind='inputProps'
-      )
+    header.modal-card-head
+      p.modal-card-title {{ torrent(torrentID).name }}
+    base-console.modal-card-body(
+      :torrentID='torrentID'
+    )
+    footer.modal-card-foot
+      #send-input
+        b-input(
+          @keyup.enter='sendStdin'
+          size='is-small'
+          type='text'
+          v-bind='inputProps'
+          v-model='stdin'
+        )
+      #send-button
+        button.button.is-dark.is-small(
+          @click='sendStdin'
+          v-bind='inputProps'
+        ) send
 </template>
 
 <script>
@@ -74,10 +80,25 @@ export default {
 }
 </script>
 
-<style scoped>
-  #lines * {
-    height: 55vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
+<style lang="scss" scoped>
+  .modal-card-title {
+    font-size: 1rem;
+  }
+  .modal-card-head, .modal-card-foot {
+    padding: 0.75rem 0.75rem;
+  }
+  #send-row {
+    display: flex;
+  }
+  #send-input {
+    flex-grow: 1;
+    margin-right: 0.75rem;
+  }
+  #send-button {
+    flex-basis: 4rem;
+    flex-shrink: 0;
+    button {
+      width: 100%;
+    }
   }
 </style>

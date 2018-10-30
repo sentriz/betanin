@@ -38,9 +38,12 @@ export default {
 
 <style scoped>
   pre {
-    background-color: initial;
+    background-color: #404040;
+    padding: 0.75rem;
+    height: 50vh;
   }
   p {
-    font-size: 12px;
+    font-size: 11px;
+    color: white;
   }
 </style>
