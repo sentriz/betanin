@@ -9,4 +9,4 @@ fi
 export PYTHONWARNINGS='ignore:Unverified HTTPS request'
 
 # start betanin
-./start
+exec ./start
