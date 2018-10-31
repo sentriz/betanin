@@ -9,7 +9,8 @@
 
     pip install --user requirements.txt
     pip install git+https://github.com/edavis/transmission-fluid
-    ./wrap-client install
+    ./wrap-client install           # todo: host the build frontend somewhere
+    ./wrap-client run-script build  # ^^^^
     ./create-database
     ./start
     
