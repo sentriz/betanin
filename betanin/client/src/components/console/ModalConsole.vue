@@ -8,16 +8,15 @@
     )
     footer.modal-card-foot
       #send-input
-        b-input(
+        input.input.is-small(
           @keyup.enter='sendStdin'
-          size='is-small'
           type='text'
           :disabled='!isLive'
           :placeholder='isLive ? "send to to beets" : "beets has quit"'
           v-model='stdin'
         )
       #send-button
-        button.button.is-dark.is-small(
+        button.button.is-small(
           @click='sendStdin'
           :disabled='!isLive'
         ) send

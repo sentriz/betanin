@@ -1,10 +1,51 @@
 #!/bin/sh
 
 echo one
-sleep 1
 echo two
-sleep 1
-echo three
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
+echo two
 read -p '>>> ' egg
 echo "$egg" "$egg"
 sleep 1
