@@ -86,3 +86,5 @@ there is not much else to do, write your code, `/start`, kill it, write your cod
 the webserver will be available at *http://localhost:5000/*. the static frontend is served at `/`, and the api is served at `/api`. (there is a swagger ui there too)
 ###### working on the frontend
 start the backend with `./start`, but don't use the static frontend served at *http://localhost:5000/*. Instead, in a new shell, do `./wrap-client run server` and use the frontend served at *http://localhost:8081/*. it will look for a backend listening on port 5000 locally. after that you can edit anything in `betanin/client/src`, it will be linted and automatically reflected in your web browser.
+###### testing / emulation
+there is a script to mock a transmission webhook at [scripts/mock_transmission_done](https://github.com/sentriz/betanin/blob/master/scripts/mock_transmission_done), and other scripts that try to mock beets itself in [scripts/](https://github.com/sentriz/betanin/blob/master/scripts/). which should be changed [here](https://github.com/sentriz/betanin/blob/master/betanin/api/jobs/import_torrents.py).
