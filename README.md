@@ -9,6 +9,9 @@
 
     pip install --user requirements.txt
     pip install git+https://github.com/edavis/transmission-fluid
+    ./wrap-client install
+    ./create-database
+    ./start
     
 <hr>
 
@@ -68,3 +71,11 @@
     - ${DATA}/transmission/scripts:/scripts
     - ${MEDIA}/download:/downloads
     ```
+
+### developing
+make sure you have installed betanin (see above)
+###### working on the backend
+there is not much else to do, write your code, `/start`, kill it, write your code, etc.
+the webserver will be available at *http://localhost:5000/*. the static frontend is served at `/`, and the api is served at `/api`. (there is a swagger ui there too)
+###### working on the frontend
+start the backend with `./start`, but don't use the static frontend served at *http://localhost:5000/*. Instead, in a new shell, do `./wrap-client run server` and use the frontend served at *http://localhost:8081/*. it will look for a backend listening on port 5000 locally. after that you can edit anything in `betanin/client/src`, it will be linted and automatically reflected in your web browser.
