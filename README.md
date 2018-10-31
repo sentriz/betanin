@@ -12,6 +12,8 @@
     ./wrap-client install           # todo: host the compiled frontend somewhere
     ./wrap-client run-script build  # ^^^^
     ./create-database
+    
+### usage
     ./start
     
 <hr>
