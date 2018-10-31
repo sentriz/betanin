@@ -1,5 +1,7 @@
+# 3rd party
 from flask_restplus import Resource
 
+# betanin
 from betanin.api.security import require_auth
 
 

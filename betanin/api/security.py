@@ -1,7 +1,11 @@
 """ Security Related things """
+# python
 from functools import wraps
+
+# 3rd party
 from flask import request
 from flask_restplus import abort
+
 
 def require_auth(func):
     """ Secure method decorator """

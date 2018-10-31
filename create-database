@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+# 3rd party
 from flask import Flask
 
+# betanin
+from betanin.config import Config
+from betanin.extensions import db
 from betanin.api.orm.models.torrent import Line
 from betanin.api.orm.models.torrent import Torrent
-from betanin.extensions import db
-from betanin.config import Config
 
 # create and configure app
 app = Flask('throwaway')

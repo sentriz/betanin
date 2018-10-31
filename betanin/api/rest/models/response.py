@@ -1,7 +1,9 @@
-from betanin.api.rest.namespaces import torrents_ns
-from betanin.api.status import Status
-
+# 3rd party
 from flask_restplus import fields
+
+# betanin
+from betanin.api.status import Status
+from betanin.api.rest.namespaces import torrents_ns
 
 
 class _EnumField(fields.String):

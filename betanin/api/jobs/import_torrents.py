@@ -1,14 +1,16 @@
-from gevent.queue import Queue
-import gevent
+# python
+import os.path
 import subprocess
 
-import os.path
+# 3rd party
+import gevent
+from gevent.queue import Queue
 
+# betanin
 from betanin.api import events
-from betanin.api.orm.models.torrent import Torrent
-from betanin.extensions import db
 from betanin.api.status import Status
-
+from betanin.extensions import db
+from betanin.api.orm.models.torrent import Torrent
 
 PROCESSES = {}
 QUEUE = Queue()

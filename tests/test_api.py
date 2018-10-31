@@ -1,3 +1,4 @@
+# betanin
 import pytest
 
 
@@ -47,4 +48,3 @@ def test_session(request_context):
     with request_context:
         # Do something that requires request context
         assert True
-

@@ -1,13 +1,15 @@
-from flask import request
+# 3rd party
 from flask import abort
+from flask import request
 
-from betanin.api.orm.models.torrent import Torrent
+# betanin
+from betanin.api import status
 from betanin.api.jobs import import_torrents
 from betanin.api.rest.base import BaseResource
 from betanin.api.rest.models import request as request_models
 from betanin.api.rest.models import response as response_models
 from betanin.api.rest.namespaces import torrents_ns
-from betanin.api import status
+from betanin.api.orm.models.torrent import Torrent
 
 
 @torrents_ns.route('/')
