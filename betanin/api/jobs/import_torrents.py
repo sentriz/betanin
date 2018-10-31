@@ -2,7 +2,6 @@ from gevent.queue import Queue
 import gevent
 import subprocess
 
-import re
 import os.path
 
 from betanin.api import events
