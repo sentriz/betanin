@@ -6,10 +6,8 @@ TR_TORRENT_DIR='/downloads/complete/beets'
 TR_TORRENT_HASH="7818533780216dfe571b499c61e$RANDOM"
 TR_TORRENT_ID='1088'
 TR_TORRENT_NAME="Immersion - Oscillating ($RANDOM)"
-AUTH='secret'
 
 curl \
-    --header "Authorization: $AUTH" \
     --request POST \
     -d "id=$TR_TORRENT_HASH" \
     -d "path=$TR_TORRENT_DIR" \

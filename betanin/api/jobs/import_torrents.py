@@ -11,13 +11,8 @@ from betanin.extensions import db
 from betanin.api.status import Status
 
 
-ANSI_ESCAPE = re.compile(r'\x1B\[[0-?]*[ -/]*[@-~]')
 PROCESSES = {}
 QUEUE = Queue()
-
-
-def _clean_line(line):
-    return ANSI_ESCAPE.sub('', line)
 
 
 def _add_line(torrent, index, data):
@@ -45,7 +40,8 @@ def _import_torrent(torrent):
     for i, raw_line in enumerate(iter(proc.stdout.readline, '')):
         # TODO: add regex here to update status to
         # possibly update NEEDS_INPUT
-        data = _clean_line(raw_line.rstrip())
+        data = raw_line.rstrip()
+        print(i, data)
         _add_line(torrent, i, data)
     proc.stdout.close()
     proc.wait()
