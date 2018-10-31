@@ -16,9 +16,12 @@ COPY betanin/client/__init__.py ./betanin/client/
 COPY --from=frontend-builder /app/dist/ ./betanin/client/dist
 RUN \
     apk add --no-cache libev python3-dev build-base git && \
-    pip install -r requirements.txt \
-	beets \
-	git+https://github.com/edavis/transmission-fluid
+    pip install \
+        -r requirements.txt \
+        beets \
+        git+https://github.com/edavis/transmission-fluid \
+        discogs-client \
+        beets-noimport
 VOLUME /root/.local/share/betanin/
 VOLUME /root/.config/beets/
 VOLUME /music
