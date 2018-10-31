@@ -1,7 +1,8 @@
-from betanin.api.rest.namespaces import torrents_ns
-
+# 3rd party
 from flask_restplus import fields
 
+# betanin
+from betanin.api.rest.namespaces import torrents_ns
 
 line = torrents_ns.model('Line', {
     'text': fields.String(required=True)

@@ -1,6 +1,7 @@
-from betanin.api.orm.models.line import Line
+# betanin
 from betanin.api.status import Status
 from betanin.extensions import db
+from betanin.api.orm.models.line import Line
 
 
 class Torrent(db.Model):
