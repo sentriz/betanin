@@ -12,7 +12,9 @@
     ./wrap-client install           # todo: host the compiled frontend somewhere
     ./wrap-client run-script build  # ^^^^
     ./create-database
-    
+
+<hr>
+
 ### usage
     ./start
     
@@ -74,6 +76,8 @@
     - ${DATA}/transmission/scripts:/scripts
     - ${MEDIA}/download:/downloads
     ```
+
+<hr>
 
 ### developing
 make sure you have installed betanin (see above)
