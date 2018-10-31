@@ -2,17 +2,20 @@
 
 from gevent import monkey; monkey.patch_all()
 
+# 3rd party
+import gevent
 from flask import Flask
 
+# betanin
 from betanin import api
 from betanin import client
-from betanin.config import Config
 from betanin.api import jobs
+from betanin.config import Config
 from betanin.api.jobs import import_torrents
-from betanin.extensions import cors
 from betanin.extensions import db
-from betanin.extensions import migrate
+from betanin.extensions import cors
 from betanin.extensions import rest
+from betanin.extensions import migrate
 from betanin.extensions import socketio
 
 

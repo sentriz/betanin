@@ -1,6 +1,8 @@
+# python
 from enum import Enum
-from betanin.extensions import db
 
+# betanin
+from betanin.extensions import db
 
 torrent_count = 0
 Status = Enum('Status', [
