@@ -3,6 +3,9 @@
 </p>
 <h4 align="center">beets based man-in-the-middle of your torrent client and music player</h4>
 
+[![Docker Pulls](https://img.shields.io/docker/pulls/sentriz/betanin.svg)](https://hub.docker.com/r/sentriz/betanin/)
+
+
 <hr>
 
 ### installation
