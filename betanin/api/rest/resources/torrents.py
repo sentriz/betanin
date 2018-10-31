@@ -18,7 +18,7 @@ class TorrentsResource(BaseResource):
     @torrents_ns.marshal_with(response_models.fetch)
     def get():
         return {
-            'torrents': Torrent.query.order_by(Torrent.created.desc()).all(),
+            'torrents': Torrent.query.all(),
             'status': status.fetch(),
         }
 
