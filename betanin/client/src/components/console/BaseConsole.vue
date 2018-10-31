@@ -6,12 +6,15 @@
     p(
       v-for='line in lines(torrentID, lineLimit)'
       :key='line.index'
-    ) {{ line.data }}
+      v-html='colorLine(line.data)'
+    )
 </template>
 
 <script>
 // imports
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+const Convert = require('ansi-to-html')
+const converter = new Convert()
 // export
 export default {
   props: [
@@ -30,7 +33,10 @@ export default {
     ]),
     ...mapMutations([
       'markLinesFetched'
-    ])
+    ]),
+    colorLine (line) {
+      return converter.toHtml(line)
+    }
   },
   mounted () {
     if (!this.linesFetched(this.torrentID)) {
