@@ -29,7 +29,8 @@ def _import_torrent(torrent):
     torrent.delete_lines()
     _add_line(torrent, -1, '[betanin] starting cli program')
     proc = subprocess.Popen(
-        ['beet', 'import', '-c', _calc_import_path(torrent)],
+        ['sleep', '200'],
+        # ['beet', 'import', '-c', _calc_import_path(torrent)],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT,
         stdin=subprocess.PIPE,

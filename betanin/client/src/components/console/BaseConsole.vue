@@ -1,7 +1,7 @@
 <template lang="pug">
   pre
     #live-box(v-show='isLive')
-      span#live-fade &#x26AB
+      span#live-fade &#x25A0
       span#live-text live
     p(
       v-for='line in lines(torrentID, lineLimit)'
@@ -67,11 +67,9 @@ export default {
     top: 0px;
     right: 0px;
     margin: 0.75rem;
-    color: white;
     font-size: 14px;
     word-spacing:  3px;
     padding: 0 0.5rem;
-    padding-top: 0.3rem;
     border-radius: 2px;
     background-color: rgba(255, 255, 255, 0.1);
   }
@@ -80,5 +78,9 @@ export default {
     animation: fadeinout 2s;
     animation-iteration-count: infinite;
     margin-right: 4px;
+    font-size: 18px;
+  }
+  #live-text {
+    color: white;
   }
 </style>
