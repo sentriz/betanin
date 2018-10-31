@@ -1,7 +1,5 @@
 from enum import Enum
-from collections import defaultdict
 from betanin.extensions import db
-
 
 
 torrent_count = 0
