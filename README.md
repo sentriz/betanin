@@ -1,9 +1,6 @@
-<p align="center">
-  <img width="300" src="https://github.com/sentriz/betanin/blob/master/betanin/client/src/assets/logo.png?raw=true">
-</p>
+<p align="center"><img width="300" src="https://github.com/sentriz/betanin/blob/master/betanin/client/src/assets/logo.png?raw=true"></p>
 <h4 align="center">beets based man-in-the-middle of your torrent client and music player</h4>
-
-[![Docker Pulls](https://img.shields.io/docker/pulls/sentriz/betanin.svg)](https://hub.docker.com/r/sentriz/betanin/)
+<p align="center"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg" href="https://hub.docker.com/r/sentriz/betanin/"> <img src="https://api.codacy.com/project/badge/Grade/9d97d90ee91c48dc948f1bd2037ba9d7)](https://www.codacy.com?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=sentriz/betanin&amp;utm_campaign=Badge_Grade" href="https://app.codacy.com/project/senan.f.b.kelly/betanin/dashboard"></p>
 
 
 <hr>
