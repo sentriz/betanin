@@ -1,6 +1,5 @@
 *.pyc
 .cache
-
 .DS_Store
 node_modules/
 npm-debug.log*
@@ -8,8 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 selenium-debug.log
 dist
-
-# Editor directories and files
 .idea
 .vscode
 *.suo
@@ -18,3 +15,4 @@ dist
 *.sln
 *security-sgps.py
 *security_backend.py
+.venv
