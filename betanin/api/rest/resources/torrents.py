@@ -32,6 +32,15 @@ class TorrentsResource(BaseResource):
             name=content['name'],
         )
 
+    @staticmethod
+    @torrents_ns.expect(request_models.torrent)
+    def delete():
+        content = request.form
+        import_torrents.remove(
+            id=content['id'],
+            path=content['path'],
+            name=content['name']
+        )
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')
 class StdoutResource(BaseResource):

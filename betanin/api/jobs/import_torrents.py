@@ -64,6 +64,21 @@ def add(**kwargs):
     events.torrents_changed()
 
 
+def remove(**kwargs):
+    torrent = Torrent(**kwargs)
+    # dont store lines that dont have an associated torrent
+    db.session.execute(
+        'DELETE FROM lines WHERE id = :id',
+        {'id': torrent.id})
+    # delete the actual torrent second in case of foreign key
+    db.session.execute(
+        'DELETE FROM torrents WHERE id = :id',
+        {'id': torrent.id})
+    db.session.commit()
+    # send a howdy to the client
+    events.torrents_changed()
+
+
 def start():
     while True:
         torrent_id = QUEUE.get()
