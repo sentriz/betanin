@@ -18,8 +18,7 @@ const statusMap = {
   FAILED:      ['has failed', 'have failed'],
   WAITING:     ['is waiting to finish', 'are waiting to finish'],
   COMPLETED:   ['is completed', 'are completed'],
-  DOWNLOADING: ['is downloading', 'are downloading'],
-  TOTAL:       'in total'
+  DOWNLOADING: ['is downloading', 'are downloading']
 }
 // export
 export default {
