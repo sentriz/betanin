@@ -2,6 +2,10 @@
 
 from gevent import monkey; monkey.patch_all()
 
+# python
+import signal
+import sys
+
 # 3rd party
 import gevent
 from flask import Flask
@@ -17,6 +21,10 @@ from betanin.extensions import cors
 from betanin.extensions import rest
 from betanin.extensions import migrate
 from betanin.extensions import socketio
+
+
+def stop(sig_num, frame):
+    sys.exit(0)
 
 
 def create_app():
@@ -68,8 +76,8 @@ if __name__ == "__main__":
     extra_jobs = map(gevent.spawn, (
         _make_starter(import_torrents),
     ))
-    try:
-        # start http job and extra jobs
-        gevent.joinall((http_server_job, *extra_jobs))
-    except KeyboardInterrupt:
-        print('exiting')
+    # setup stop
+    signal.signal(signal.SIGINT, stop)
+    signal.signal(signal.SIGTERM, stop)
+    # start http job and extra jobs
+    gevent.joinall((http_server_job, *extra_jobs))
