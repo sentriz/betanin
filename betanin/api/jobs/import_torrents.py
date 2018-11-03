@@ -42,12 +42,11 @@ def _import_torrent(torrent):
         # TODO: add regex here to update status to
         # possibly update NEEDS_INPUT
         data = raw_line.rstrip()
-        print(i, data)
         _add_line(torrent, i, data)
     proc.stdout.close()
     proc.wait()
     return_code = proc.returncode
-    _add_line(torrent, 2*22, '[betanin] program finished with '
+    _add_line(torrent, 2**22, '[betanin] program finished with '
         f'exit status `{return_code}`')
     return return_code
 
