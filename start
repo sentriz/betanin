@@ -24,6 +24,7 @@ from betanin.extensions import socketio
 
 
 def stop(sig_num, frame):
+    print('shutting down')
     sys.exit(0)
 
 
@@ -71,7 +72,8 @@ if __name__ == "__main__":
                 module.start()
         return _context_wrapper
     # jobs
-    _http_server = WSGIServer(('', 5000), log=None, application=flask_app)
+    port = 5000
+    _http_server = WSGIServer(('', port), log=None, application=flask_app)
     http_server_job = gevent.spawn(_http_server.start)
     extra_jobs = map(gevent.spawn, (
         _make_starter(import_torrents),
@@ -79,5 +81,7 @@ if __name__ == "__main__":
     # setup stop
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
+    # hello
+    print(f'starting on port {port}')
     # start http job and extra jobs
     gevent.joinall((http_server_job, *extra_jobs))
