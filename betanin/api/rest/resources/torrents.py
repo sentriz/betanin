@@ -3,13 +3,15 @@ from flask import abort
 from flask import request
 
 # betanin
+from betanin.api import events
 from betanin.api import status
 from betanin.api.jobs import import_torrents
+from betanin.api.orm.models.torrent import Torrent
 from betanin.api.rest.base import BaseResource
 from betanin.api.rest.models import request as request_models
 from betanin.api.rest.models import response as response_models
 from betanin.api.rest.namespaces import torrents_ns
-from betanin.api.orm.models.torrent import Torrent
+from betanin.extensions import db
 
 
 @torrents_ns.route('/')
@@ -18,19 +20,32 @@ class TorrentsResource(BaseResource):
     @torrents_ns.marshal_with(response_models.fetch)
     def get():
         return {
-            'torrents': Torrent.query.order_by(Torrent.created.desc()).all(),
+            'torrents': Torrent.query \
+                .order_by(Torrent.created.desc()) \
+                .all(),
             'status': status.fetch(),
         }
 
+@torrents_ns.route('/<string:torrent_id>')
+class TorrentResource(BaseResource):
     @staticmethod
     @torrents_ns.expect(request_models.torrent)
-    def post():
+    def post(torrent_id):
         content = request.form
         import_torrents.add(
-            id=content['id'],
+            id=torrent_id,
             path=content['path'],
             name=content['name'],
         )
+
+    @staticmethod
+    def delete(torrent_id):
+        query = Torrent.query.filter_by(id=torrent_id)
+        torrent = query.first_or_404()
+        torrent.delete_lines()
+        query.delete()
+        db.session.commit()
+        events.torrents_changed()
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')
