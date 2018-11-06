@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import Activity from './views/Activity.vue'
 import History from './views/History.vue'
+import Settings from './views/Settings.vue'
 
 Vue.use(Router)
 
@@ -18,6 +19,11 @@ export default new Router({
       path: '/history',
       name: 'history',
       component: History
+    },
+    {
+      path: '/settings',
+      name: 'settings',
+      component: Settings
     },
     {
       path: '*',

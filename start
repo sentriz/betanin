@@ -3,8 +3,8 @@
 from gevent import monkey; monkey.patch_all()
 
 # python
-import signal
 import sys
+import signal
 
 # 3rd party
 import gevent
