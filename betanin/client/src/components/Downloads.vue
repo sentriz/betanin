@@ -117,4 +117,7 @@ export default {
   #row-status {
     text-align: right;
   }
+  #console-link {
+    cursor: pointer;
+  }
 </style>
