@@ -64,11 +64,10 @@ betanin:
 
 curl \
     --request POST \
-    --data-urlencode "id=$TR_TORRENT_HASH" \
     --data-urlencode "path=/downloads/complete/beets" \
     --data-urlencode "name=$TR_TORRENT_NAME" \
     --user 'user:password' \
-    'http://betanin:5000/api/torrents'
+    "http://betanin:5000/api/torrents/$TR_TORRENT_HASH"
 ```
 ###### docker compose (excerpt)
 ```yaml
