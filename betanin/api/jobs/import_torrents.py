@@ -1,6 +1,9 @@
 # python
 import os.path
 import subprocess
+import sys
+import pty
+import select
 
 # 3rd party
 import gevent
@@ -10,9 +13,11 @@ from gevent.queue import Queue
 from betanin.api import events
 from betanin.api.status import Status
 from betanin.extensions import db
+from betanin.extensions import socketio
 from betanin.api.orm.models.torrent import Torrent
 
-PROCESSES = {}
+
+DESCIPTOR = None
 QUEUE = Queue()
 
 
@@ -26,29 +31,38 @@ def _calc_import_path(torrent):
     return os.path.join(torrent.path, torrent.name)
 
 
+def _read_and_forward_pty_output(torrent, descriptor):
+    index = 0
+    while True:
+        gevent.sleep(0.01)
+        if not descriptor:
+            break
+        data_ready, _, _ = select.select([descriptor], [], [], 0)
+        if not data_ready:
+            continue
+        output = os.read(descriptor, 1024 * 20).decode()
+        _add_line(torrent, index, output)
+        index += 1
+
+
 def _import_torrent(torrent):
+    global DESCIPTOR
     torrent.delete_lines()
     _add_line(torrent, -1, '[betanin] starting cli program')
-    proc = subprocess.Popen(
-        ['beet', 'import', '-c', _calc_import_path(torrent)],
-        stdout=subprocess.PIPE,
-        stderr=subprocess.STDOUT,
-        stdin=subprocess.PIPE,
-        universal_newlines=True,
-        bufsize=1,
-    )
-    PROCESSES[torrent.id] = proc
-    for i, raw_line in enumerate(iter(proc.stdout.readline, '')):
-        # TODO: add regex here to update status to
-        # possibly update NEEDS_INPUT
-        data = raw_line.rstrip()
-        _add_line(torrent, i, data)
-    proc.stdout.close()
-    proc.wait()
-    return_code = proc.returncode
-    _add_line(torrent, 2**22, '[betanin] program finished with '
-        f'exit status `{return_code}`')
-    return return_code
+    child_pid, descriptor = pty.fork()
+    if child_pid == 0:
+        DESCIPTOR = descriptor
+        proc = subprocess.run("/home/senan/dev/repos/betanin/scripts/mock_beets")
+        proc.wait()
+        sys.exit()
+    else:
+        _read_and_forward_pty_output(torrent, descriptor)
+        _add_line(torrent, 2**22, '[betanin] program finished with '
+            f'exit status `{return_code}`')
+
+
+def send_input(text):
+    os.write(DESCIPTOR, text)
 
 
 def add(**kwargs):

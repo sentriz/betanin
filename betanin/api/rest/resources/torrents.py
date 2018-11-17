@@ -58,14 +58,11 @@ class StdoutResource(BaseResource):
         return matches.first_or_404().lines
 
 
-@torrents_ns.route('/<string:torrent_id>/console/stdin')
+@torrents_ns.route('/<string:_>/console/stdin')
 class StdinResource(BaseResource):
     @staticmethod
     @torrents_ns.expect(request_models.line)
-    def post(torrent_id):
-        if torrent_id not in import_torrents.PROCESSES:
-            abort(404)
+    def post(_):
         content = request.get_json(silent=True)
-        import_torrents.PROCESSES[torrent_id].communicate(
-            input=content['text']
-        )
+        text = content['text'].encode()
+        import_torrents.send_input(text)
