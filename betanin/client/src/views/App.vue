@@ -2,12 +2,13 @@
   .container
     #app
       .section
-          nav-bar
+        nav-bar
       .section
-          router-view
+        router-view
     #footer
-      status
-      connection-banner
+      .section
+        status
+        connection-banner
 </template>
 
 <script>
@@ -46,10 +47,15 @@ export default {
     right: 0;
     bottom: 0;
     width: 100%;
-    padding-top: 70px;
-    background: linear-gradient(rgba(255, 255, 255, 0), white);
+    background: linear-gradient(
+      rgba(255, 255, 255, 0),
+      white,
+      white,
+    );
     pointer-events: none;
-
+    .section {
+      padding-bottom: 0;
+    }
   }
   #connection-banner {
     margin-top: 0.4rem;
