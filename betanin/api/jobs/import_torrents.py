@@ -1,3 +1,5 @@
+import pexpect
+from contextlib import suppress
 # python
 import os.path
 import subprocess
@@ -17,7 +19,7 @@ from betanin.extensions import socketio
 from betanin.api.orm.models.torrent import Torrent
 
 
-DESCIPTOR = None
+PROCESSES = {}
 QUEUE = Queue()
 
 
@@ -31,38 +33,34 @@ def _calc_import_path(torrent):
     return os.path.join(torrent.path, torrent.name)
 
 
-def _read_and_forward_pty_output(torrent, descriptor):
+def _read_and_send_pty_out(proc, torrent):
     index = 0
     while True:
-        gevent.sleep(0.01)
-        if not descriptor:
-            break
-        data_ready, _, _ = select.select([descriptor], [], [], 0)
-        if not data_ready:
+        try:
+            data = proc.read_nonblocking(1024, 0.05)
+        except pexpect.exceptions.TIMEOUT:
+            gevent.sleep(1)
             continue
-        output = os.read(descriptor, 1024 * 20).decode()
-        _add_line(torrent, index, output)
+        except pexpect.exceptions.EOF:
+            break
+        text = data.decode()
+        _add_line(torrent, index, text)
         index += 1
 
 
 def _import_torrent(torrent):
-    global DESCIPTOR
     torrent.delete_lines()
     _add_line(torrent, -1, '[betanin] starting cli program')
-    child_pid, descriptor = pty.fork()
-    if child_pid == 0:
-        DESCIPTOR = descriptor
-        proc = subprocess.run("/home/senan/dev/repos/betanin/scripts/mock_beets")
-        proc.wait()
-        sys.exit()
-    else:
-        _read_and_forward_pty_output(torrent, descriptor)
-        _add_line(torrent, 2**22, '[betanin] program finished with '
-            f'exit status `{return_code}`')
+    proc = pexpect.spawn('/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
+    PROCESSES[torrent.id] = proc
+    _read_and_send_pty_out(proc, torrent)
+    _add_line(torrent, 2**22, '[betanin] program finished with '
+        f'exit status `{proc.exitstatus}`')
+    return proc.exitstatus
 
 
-def send_input(text):
-    os.write(DESCIPTOR, text)
+def send_input(torrent_id, text):
+    PROCESSES[torrent_id].sendline(text)
 
 
 def add(**kwargs):

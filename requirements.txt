@@ -31,3 +31,4 @@ SQLAlchemy-Utils==0.33.6
 tzlocal==1.5.1
 urllib3==1.24
 Werkzeug==0.14.1
+pexpect
