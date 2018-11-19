@@ -34,7 +34,11 @@ export default {
     background-color: $success;
   }
   #connection-banner {
-    border-top-right-radius: 16px;
-    border-top-left-radius: 16px;
+    clip-path: polygon(
+      0.3rem 0,
+      calc(100% - 0.3rem) 0,
+      100% 100%,
+      0% 100%
+    );
   }
 </style>
