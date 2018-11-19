@@ -1,10 +1,5 @@
 # python
-import pty
-import sys
-import select
 import os.path
-import subprocess
-from contextlib import suppress
 from collections import defaultdict
 
 # 3rd party
@@ -16,10 +11,7 @@ from gevent.queue import Queue
 from betanin.api import events
 from betanin.api.status import Status
 from betanin.extensions import db
-from betanin.extensions import socketio
-from betanin.api.orm.models.torrent import Line
 from betanin.api.orm.models.torrent import Torrent
-
 
 PROCESSES = {}
 INDEXES = {}
@@ -62,6 +54,7 @@ def _read_and_send_pty_out(proc, torrent):
 def _import_torrent(torrent):
     _add_line(torrent, '[betanin] starting cli program')
     proc = pexpect.spawn(
+        # f'/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
         f'beet import -c {_calc_import_path(torrent)!r}', use_poll=True)
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(proc, torrent)

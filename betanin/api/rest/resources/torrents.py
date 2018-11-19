@@ -1,5 +1,4 @@
 # 3rd party
-from flask import abort
 from flask import request
 
 # betanin
