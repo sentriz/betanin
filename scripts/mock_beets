@@ -2,8 +2,8 @@
 
 echo one
 echo two
-echo three stdout 1>&2
-echo two
-read -p '[A]ppy [r]emove old: ' egg
-echo "you picked $egg"
-exit 2
+# echo three stdout 1>&2
+# echo two
+# read -p '[A]ppy [r]emove old: ' egg
+# echo "you picked $egg"
+exit 0
