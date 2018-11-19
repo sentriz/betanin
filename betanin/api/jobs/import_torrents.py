@@ -45,6 +45,8 @@ def _read_and_send_pty_out(last_index, proc, torrent):
         except pexpect.exceptions.EOF:
             break
         text = data.decode()
+        if text.isspace():
+            continue
         _add_line(torrent, index, text)
         index += 1
 
@@ -52,7 +54,8 @@ def _read_and_send_pty_out(last_index, proc, torrent):
 def _import_torrent(torrent):
     last_index = torrent.last_line_index
     _add_line(torrent, last_index + 1, '[betanin] starting cli program')
-    proc = pexpect.spawn('/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
+    proc = pexpect.spawn(
+        f'beet import -c {_calc_import_path(torrent)!r}', use_poll=True)
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(last_index + 2, proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
