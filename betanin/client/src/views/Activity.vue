@@ -1,17 +1,17 @@
 <template lang="pug">
-  downloads(:downloads='downloadsActivity')
+  torrents(:torrents='torrentsActivity')
 </template>
 
 <script>
-import Downloads from '@/components/Downloads.vue'
+import Torrents from '@/components/Torrents.vue'
 import { mapGetters } from 'vuex'
 export default {
   components: {
-    Downloads
+    Torrents
   },
   computed: {
     ...mapGetters([
-      'downloadsActivity'
+      'torrentsActivity'
     ])
   }
 }
