@@ -40,8 +40,6 @@
         h6(v-show='torrents.length === 0')
           b-icon(icon='alert')
           | &nbsp; no torrents here yet, check the status below
-      template(slot='footer')
-        status
     b-modal(
       :width='640'
       scroll='keep'
@@ -55,7 +53,6 @@
 <script>
 // imports
 import ModalConsole from '@/components/console/ModalConsole.vue'
-import Status from '@/components/Status.vue'
 import Vue from 'vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
@@ -78,7 +75,6 @@ export default {
     ])
   },
   components: {
-    Status,
     ModalConsole
   },
   props: [

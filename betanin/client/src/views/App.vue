@@ -1,23 +1,24 @@
 <template lang="pug">
-  #app
-    #content
+  .container
+    #app
       .section
-        .container
           nav-bar
       .section
-        .container
           router-view
     #footer
+      status
       connection-banner
 </template>
 
 <script>
 import ConnectionBanner from '@/components/ConnectionBanner.vue'
 import NavBar from '@/components/NavBar.vue'
+import Status from '@/components/Status.vue'
 export default {
   name: 'activity',
   components: {
     NavBar,
+    Status,
     ConnectionBanner
   }
 }
@@ -37,12 +38,21 @@ export default {
     "green": ($green, $green-invert),
   );
   #app {
-    display: flex;
     min-height: 100vh;
-    flex-direction: column;
   }
-  #content {
-    flex: 1;
+  #footer {
+    position: sticky;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    padding-top: 70px;
+    background: linear-gradient(rgba(255, 255, 255, 0), white);
+    pointer-events: none;
+
+  }
+  #connection-banner {
+    margin-top: 0.4rem;
   }
   @import "~bulma";
   @import "~buefy/src/scss/buefy";

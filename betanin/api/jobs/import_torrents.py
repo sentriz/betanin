@@ -55,9 +55,16 @@ def _import_torrent(torrent):
     proc = pexpect.spawn('/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(last_index + 2, proc, torrent)
+    exit_status = _right_exit_status(proc.exitstatus)
     _add_line(torrent, last_index + 2**20, '[betanin] program finished with '
-        f'exit status `{proc.exitstatus}`')
-    return proc.exitstatus
+        f'exit status `{exit_status}`')
+    return exit_status
+
+
+def _right_exit_status(exit_status):
+    if exit_status is None:
+        return 0
+    return exit_status
 
 
 def send_input(torrent_id, text):
