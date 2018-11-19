@@ -40,6 +40,11 @@ class TorrentResource(BaseResource):
         )
 
     @staticmethod
+    def put(torrent_id):
+        import_torrents.retry(torrent_id)
+
+
+    @staticmethod
     def delete(torrent_id):
         query = Torrent.query.filter_by(id=torrent_id)
         torrent = query.first_or_404()
