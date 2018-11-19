@@ -14,7 +14,7 @@
           span.link(v-show='props.row.has_lines' @click='openModal(props.row.id)')
             b-icon(icon='console' size='is-small')
             |  view
-          span(v-show='props.row.status === "FAILED"')
+          span(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
             span.sepe &nbsp;&nbsp;|&nbsp;&nbsp;
             span.link(title='remove torrent' @click='removeTorrent(props.row.id)')
               b-icon.link(icon='close' size='is-small')
