@@ -1,14 +1,15 @@
-import pexpect
-from contextlib import suppress
 # python
+import pty
+import sys
+import select
 import os.path
 import subprocess
-import sys
-import pty
-import select
+from contextlib import suppress
+from collections import defaultdict
 
 # 3rd party
 import gevent
+import pexpect
 from gevent.queue import Queue
 
 # betanin
@@ -16,15 +17,24 @@ from betanin.api import events
 from betanin.api.status import Status
 from betanin.extensions import db
 from betanin.extensions import socketio
-from betanin.api.orm.models.torrent import Torrent
 from betanin.api.orm.models.torrent import Line
+from betanin.api.orm.models.torrent import Torrent
 
 
 PROCESSES = {}
+INDEXES = {}
 QUEUE = Queue()
 
 
-def _add_line(torrent, index, data):
+def _set_init_index(torrent):
+    if not torrent.id in INDEXES:
+        INDEXES[torrent.id] = torrent.last_line_index
+
+
+def _add_line(torrent, data):
+    _set_init_index(torrent)
+    index = INDEXES[torrent.id]
+    INDEXES[torrent.id] += 1
     torrent.add_line(index, data)
     db.session.commit()
     events.line_read(torrent.id, index, data)
@@ -34,8 +44,7 @@ def _calc_import_path(torrent):
     return os.path.join(torrent.path, torrent.name)
 
 
-def _read_and_send_pty_out(last_index, proc, torrent):
-    index = last_index
+def _read_and_send_pty_out(proc, torrent):
     while True:
         try:
             data = proc.read_nonblocking(1024, 0.05)
@@ -47,19 +56,17 @@ def _read_and_send_pty_out(last_index, proc, torrent):
         text = data.decode()
         if text.isspace():
             continue
-        _add_line(torrent, index, text)
-        index += 1
+        _add_line(torrent, text)
 
 
 def _import_torrent(torrent):
-    last_index = torrent.last_line_index
-    _add_line(torrent, last_index + 1, '[betanin] starting cli program')
+    _add_line(torrent, '[betanin] starting cli program')
     proc = pexpect.spawn(
         f'beet import -c {_calc_import_path(torrent)!r}', use_poll=True)
     PROCESSES[torrent.id] = proc
-    _read_and_send_pty_out(last_index + 2, proc, torrent)
+    _read_and_send_pty_out(proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
-    _add_line(torrent, last_index + 2**20, '[betanin] program finished with '
+    _add_line(torrent, '[betanin] program finished with '
         f'exit status `{exit_status}`')
     return exit_status
 
@@ -77,13 +84,9 @@ def send_input(torrent_id, text):
 def add(**kwargs):
     torrent = Torrent(**kwargs)
     torrent.status = Status.ENQUEUED
-    # add and commit the new torrent because the queue
-    # and socket/ajax event will need them to be
     db.session.add(torrent)
     db.session.commit()
-    # add to queue
     QUEUE.put_nowait(torrent.id)
-    # tell client to get latest torrents
     events.torrents_changed()
 
 
@@ -92,8 +95,7 @@ def retry(torrent_id):
     torrent = query.first_or_404()
     torrent.status = Status.ENQUEUED
     db.session.commit()
-    _add_line(torrent, torrent.last_line_index + 1,
-            '[betanin] retrying...')
+    _add_line(torrent, '[betanin] retrying...')
     events.torrents_changed()
     QUEUE.put_nowait(torrent.id)
 
