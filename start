@@ -13,7 +13,6 @@ from flask import Flask
 # betanin
 from betanin import api
 from betanin import client
-from betanin.api import jobs
 from betanin.config import Config
 from betanin.api.jobs import import_torrents
 from betanin.extensions import db
