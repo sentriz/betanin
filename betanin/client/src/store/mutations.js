@@ -15,8 +15,8 @@ const binaryInsert = (array, item, startVal, endVal) => {
 }
 
 export default {
-  setDownloads (state, downloads) {
-    Vue.set(state, 'downloads', downloads)
+  setTorrents (state, torrents) {
+    Vue.set(state, 'torrents', torrents)
   },
   setStatus (state, status) {
     Vue.set(state, 'status', status)

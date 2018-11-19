@@ -1,5 +1,5 @@
 export default {
-  downloads: [],
+  torrents: [],
   status: {},
   lines: {},
   fetchedLines: [],

@@ -17,6 +17,7 @@ from betanin.api.status import Status
 from betanin.extensions import db
 from betanin.extensions import socketio
 from betanin.api.orm.models.torrent import Torrent
+from betanin.api.orm.models.torrent import Line
 
 
 PROCESSES = {}
@@ -33,8 +34,8 @@ def _calc_import_path(torrent):
     return os.path.join(torrent.path, torrent.name)
 
 
-def _read_and_send_pty_out(proc, torrent):
-    index = 0
+def _read_and_send_pty_out(last_index, proc, torrent):
+    index = last_index
     while True:
         try:
             data = proc.read_nonblocking(1024, 0.05)
@@ -49,12 +50,12 @@ def _read_and_send_pty_out(proc, torrent):
 
 
 def _import_torrent(torrent):
-    torrent.delete_lines()
-    _add_line(torrent, -1, '[betanin] starting cli program')
+    last_index = torrent.last_line_index
+    _add_line(torrent, last_index + 1, '[betanin] starting cli program')
     proc = pexpect.spawn('/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
     PROCESSES[torrent.id] = proc
-    _read_and_send_pty_out(proc, torrent)
-    _add_line(torrent, 2**22, '[betanin] program finished with '
+    _read_and_send_pty_out(last_index + 2, proc, torrent)
+    _add_line(torrent, last_index + 2**20, '[betanin] program finished with '
         f'exit status `{proc.exitstatus}`')
     return proc.exitstatus
 
@@ -74,6 +75,17 @@ def add(**kwargs):
     QUEUE.put_nowait(torrent.id)
     # tell client to get latest torrents
     events.torrents_changed()
+
+
+def retry(torrent_id):
+    query = Torrent.query.filter_by(id=torrent_id)
+    torrent = query.first_or_404()
+    torrent.status = Status.ENQUEUED
+    db.session.commit()
+    _add_line(torrent, torrent.last_line_index + 1,
+            '[betanin] retrying...')
+    events.torrents_changed()
+    QUEUE.put_nowait(torrent.id)
 
 
 def start():

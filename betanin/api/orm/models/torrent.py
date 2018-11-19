@@ -22,6 +22,11 @@ class Torrent(db.Model):
     def has_lines(self):
         return len(self.lines) != 0
 
+    @property
+    def last_line_index(self):
+        return max(line.index for line in self.lines) \
+            if self.lines else -1
+
     def delete_lines(self):
         Line.query.filter_by(torrent_id=self.id).delete()
 

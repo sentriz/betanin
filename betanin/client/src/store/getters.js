@@ -9,11 +9,11 @@ const itemFromID = (items, id) =>
   )
 
 export default {
-  downloadsActivity: state =>
-    state.downloads.filter(item =>
+  torrentsActivity: state =>
+    state.torrents.filter(item =>
       item.status !== 'COMPLETED'),
-  downloadsHistory: state =>
-    state.downloads.filter(item =>
+  torrentsHistory: state =>
+    state.torrents.filter(item =>
       item.status === 'COMPLETED'),
   status: state =>
     state.status,
@@ -26,5 +26,5 @@ export default {
   connected: state =>
     state.connected,
   torrent: state => torrentID =>
-    itemFromID(state.downloads, torrentID)
+    itemFromID(state.torrents, torrentID)
 }
