@@ -1,5 +1,5 @@
 <template lang="pug">
-  .content.has-text-centered(
+  .content.has-text-centered#connection-banner(
     :class="connected ? 'green' : 'red'"
   )
     p(
@@ -32,5 +32,9 @@ export default {
   }
   .green {
     background-color: $success;
+  }
+  #connection-banner {
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
   }
 </style>
