@@ -1,8 +1,10 @@
 FROM node:8 as frontend-builder
 WORKDIR /app
 COPY betanin/client/package*.json ./
+COPY betanin/client/vue.config.js ./
 COPY betanin/client/src/ ./src/
 COPY betanin/client/public/ ./public/
+ARG SOURCE_COMMIT
 RUN npm install && \
     npm run-script build
 
