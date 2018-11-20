@@ -39,20 +39,23 @@ export default {
     "green": ($green, $green-invert),
   );
   #app {
-    min-height: 100vh;
+    margin: 0;
+    margin-bottom: 3.5rem;
   }
   #footer {
-    position: sticky;
-    left: 0;
-    right: 0;
+    position: fixed;
     bottom: 0;
-    width: 100%;
+    left: auto;
+    pointer-events: none;
+    width: inherit;
     background: linear-gradient(
       rgba(255, 255, 255, 0),
       white,
       white,
     );
-    pointer-events: none;
+    @media only screen and (max-width: 1087px) {
+      width: 100%;
+    }
     .section {
       padding-bottom: 0;
     }
