@@ -2,6 +2,7 @@
 
 echo one
 echo two
+exit 0
 echo three stdout 1>&2
 echo two
 read -p '[A]ppy [r]emove old: ' egg
