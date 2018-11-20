@@ -110,6 +110,7 @@ export default {
   }
   #row-status {
     text-align: right;
+    word-break: break-all;
   }
   .sepe {
     opacity: 0.2;
