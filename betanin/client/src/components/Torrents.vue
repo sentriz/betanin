@@ -7,15 +7,13 @@
       template(slot-scope='props')
         b-table-column(label='name') {{ props.row.name | truncate(64) }}
         b-table-column(label='status' :numeric='true')
-          span(:style='{ color: statusStyle(props.row.status).colour }')
+          span.status-group(:style='{ color: statusStyle(props.row.status).colour }')
             b-icon(:icon='statusStyle(props.row.status).icon' size='is-small')
             |  {{ statusStyle(props.row.status).text }}
-          span.sepe &nbsp;&nbsp;|&nbsp;&nbsp;
-          span.link(v-show='props.row.has_lines' @click='openModal(props.row.id)')
+          span.status-group.link(v-show='props.row.has_lines' @click='openModal(props.row.id)')
             b-icon(icon='console' size='is-small')
             |  view
-          span(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
-            span.sepe &nbsp;&nbsp;|&nbsp;&nbsp;
+          span.status-group(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
             span.link(title='remove torrent' @click='removeTorrent(props.row.id)')
               b-icon.link(icon='close' size='is-small')
             | &nbsp;
@@ -112,10 +110,13 @@ export default {
     text-align: right;
     word-break: break-all;
   }
-  .sepe {
-    opacity: 0.2;
-  }
   .link {
     cursor: pointer;
+  }
+  .status-group ~ .status-group::before {
+    content: "｜";
+    display: inline-block;
+    margin: 0 0.1rem;
+    opacity: 0.15;
   }
 </style>
