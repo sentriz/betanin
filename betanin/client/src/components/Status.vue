@@ -54,7 +54,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   p {
     text-align: right;
   }
@@ -63,7 +63,10 @@ export default {
   }
   #status {
     display: flex;
+    align-items: flex-end;
     justify-content: space-between;
-    font-size: 0.85rem;
+    @media only screen and (max-width: 1087px) {
+      font-size: 0.8rem;
+    }
   }
 </style>
