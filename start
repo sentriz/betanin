@@ -13,6 +13,7 @@ from flask import Flask
 # betanin
 from betanin import api
 from betanin import client
+from betanin.api import notifications
 from betanin.config import Config
 from betanin.api.jobs import import_torrents
 from betanin.extensions import db
@@ -69,7 +70,7 @@ if __name__ == "__main__":
     # setup
     from gevent.pywsgi import WSGIServer
     flask_app = create_app()
-    def _make_starter(module):
+    def _make_context_starter(module):
         def _context_wrapper():
             with flask_app.app_context():
                 module.start()
@@ -81,6 +82,7 @@ if __name__ == "__main__":
     print(f'starting on port {port}')
     # start http job and extra jobs
     gevent.joinall((
-        socketio.start_background_task(_make_starter(import_torrents)),
+        socketio.start_background_task(notifications.register_all),
+        socketio.start_background_task(_make_context_starter(import_torrents)),
         socketio.start_background_task(_http_server.start),
     ))

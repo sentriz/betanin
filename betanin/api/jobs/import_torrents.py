@@ -16,6 +16,7 @@ from betanin.api.orm.models.torrent import Torrent
 PROCESSES = {}
 INDEXES = {}
 QUEUE = Queue()
+NEEDS_INPUT_SNIPPETS = ('[A]pply', )
 
 
 def _set_init_index(torrent):
@@ -29,7 +30,7 @@ def _add_line(torrent, data):
     INDEXES[torrent.id] += 1
     torrent.add_line(index, data)
     db.session.commit()
-    events.line_read(torrent.id, index, data)
+    events.send_line_read(torrent.id, index, data)
 
 
 def _calc_import_path(torrent):
@@ -48,19 +49,21 @@ def _read_and_send_pty_out(proc, torrent):
         text = data.decode()
         if text.isspace():
             continue
+        if any(match in text for match in NEEDS_INPUT_SNIPPETS):
+            torrent.status = Status.NEEDS_INPUT
+            db.session.commit()
+            events.send_torrents_changed()
+            events.send_torrent_status_changed(torrent)
         _add_line(torrent, text)
 
 
 def _import_torrent(torrent):
-    _add_line(torrent, '[betanin] starting cli program')
     proc = pexpect.spawn(
-        # f'/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
-        f'beet import -c {_calc_import_path(torrent)!r}', use_poll=True)
+        f'/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
+        # f'beet import -c {_calc_import_path(torrent)!r}', use_poll=True)
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
-    _add_line(torrent, '[betanin] program finished with '
-        f'exit status `{exit_status}`')
     return exit_status
 
 
@@ -80,7 +83,7 @@ def add(**kwargs):
     db.session.add(torrent)
     db.session.commit()
     QUEUE.put_nowait(torrent.id)
-    events.torrents_changed()
+    events.send_torrents_changed()
 
 
 def retry(torrent_id):
@@ -89,7 +92,7 @@ def retry(torrent_id):
     torrent.status = Status.ENQUEUED
     db.session.commit()
     _add_line(torrent, '[betanin] retrying...')
-    events.torrents_changed()
+    events.send_torrents_changed()
     QUEUE.put_nowait(torrent.id)
 
 
@@ -99,11 +102,15 @@ def start():
         torrent = Torrent.query.get(torrent_id)
         torrent.status = Status.PROCESSING
         db.session.commit()
-        events.torrents_changed()
+        events.send_torrents_changed()
+        _add_line(torrent, '[betanin] starting cli program')
         return_code = _import_torrent(torrent)
+        _add_line(torrent, '[betanin] program finished with '
+            f'exit status `{return_code}`')
         if return_code == 0:
             torrent.status = Status.COMPLETED
         else:
             torrent.status = Status.FAILED
         db.session.commit()
-        events.torrents_changed()
+        events.send_torrents_changed()
+        events.send_torrent_status_changed(torrent)
