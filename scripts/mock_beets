@@ -2,13 +2,9 @@
 
 echo one
 echo two
-exit 0
-echo three stdout 1>&2
-echo two
-read -p '[A]ppy [r]emove old: ' egg
+echo three  1>&2
+echo four
+sleep 3
+read -p '[A]pply [r]emove old: ' egg
 echo "you picked $egg"
-sleep 1
-echo two
-echo three stdout 1>&2
-sleep 2
 exit 0
