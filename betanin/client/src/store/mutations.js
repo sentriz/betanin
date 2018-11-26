@@ -21,6 +21,29 @@ export default {
   setStatus (state, status) {
     Vue.set(state, 'status', status)
   },
+  setNotificationSettings (state, settings) {
+    Vue.set(state, 'notificationSettingsServices', settings)
+  },
+  setNotificationSettingsPossibleServices (state, possibleServices) {
+    Vue.set(state, 'notificationSettingsPossibleServices', possibleServices)
+  },
+  removeNotificationSettingsService (state, serviceID) {
+    state.notificationSettingsServices.splice(
+      state.notificationSettingsServices.findIndex(service =>
+        service.id === serviceID
+      ),
+      1
+    )
+  },
+  updateService (state, { serviceID, key, value }) {
+    const serviceIndex = state.notificationSettingsServices.findIndex(service =>
+      service.id === serviceID
+    )
+    Vue.set(state.notificationSettingsServices[serviceIndex], key, value)
+  },
+  addNotificationSettingsService (state, service) {
+    state.notificationSettingsServices.push(service)
+  },
   appendLine (state, { torrentID, line }) {
     const lines = torrentID in state.lines
       ? state.lines[torrentID].concat()

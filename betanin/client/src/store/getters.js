@@ -15,6 +15,14 @@ export default {
   torrentsHistory: state =>
     state.torrents.filter(item =>
       item.status === 'COMPLETED'),
+  notificationSettingsGeneral: state =>
+    state.notificationSettingsGeneral,
+  notificationSettingsServices: state =>
+    state.notificationSettingsServices,
+  notificationSettingsPossibleServices: state =>
+    state.notificationSettingsPossibleServices,
+  serviceFromID: state => serviceID =>
+    itemFromID(state.notificationSettingsServices, serviceID),
   status: state =>
     state.status,
   lines: state => (torrentID, lineLimit) =>

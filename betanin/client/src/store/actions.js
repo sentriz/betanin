@@ -1,6 +1,39 @@
 import backend from '@/backend'
 
 export default {
+  getNotificationSettings ({ commit }) {
+    backend.fetchResource('settings/notifications/services')
+      .then(result => {
+        commit('setNotificationSettings', result)
+      })
+  },
+  getNotificationSettingsPossibleServices ({ commit }) {
+    backend.fetchResource('settings/notifications/possible_services')
+      .then(result => {
+        commit('setNotificationSettingsPossibleServices', result.schemas)
+      })
+  },
+  removeNotificationSettingsService ({ commit }, serviceID) {
+    backend.deleteResource(`settings/notifications/services/${serviceID}`)
+      .then(result => {
+        commit('removeNotificationSettingsService', serviceID)
+      })
+  },
+  saveNotificationSettingsService ({ commit, getters }, serviceID) {
+    const service = getters.serviceFromID(serviceID)
+    backend.putResource(
+      `settings/notifications/services/${serviceID}`,
+      service
+    )
+  },
+  addNotificationSettingsService ({ commit }, serviceType) {
+    backend.postResource(
+      `settings/notifications/services`,
+      { type: serviceType }
+    ).then(result => {
+      commit('addNotificationSettingsService', result)
+    })
+  },
   getTorrents ({ commit }) {
     backend.fetchResource('torrents/')
       .then(result => {
@@ -33,6 +66,8 @@ export default {
   socket_connect: ({ commit, dispatch }) => {
     commit('setConnected', true)
     dispatch('getTorrents')
+    dispatch('getNotificationSettings')
+    dispatch('getNotificationSettingsPossibleServices')
   },
   socket_disconnect: ({ commit }) => {
     commit('setConnected', false)
