@@ -20,4 +20,4 @@ BEETS_CONFIG_PATH = _first_existing(
     os.path.join(BEETS_DIR, 'config.yaml'),
 )
 DB_PATH = os.path.join(DATA_DIR, 'betanin.db')
-NOTIFICATION_CONFIG_PATH = os.path.join(CONFIG_DIR, 'notifications.ini')
+NOTIFICATION_CONFIG_PATH = os.path.join(CONFIG_DIR, 'notifications.toml')
