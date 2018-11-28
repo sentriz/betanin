@@ -4,7 +4,7 @@
       span#live-fade &#x25A0
       span#live-text live
     p(
-      v-for='line in lines(torrentID, lineLimit)'
+      v-for='line in getAllLines(torrentID, lineLimit)'
       :key='line.index'
       v-html='colorLine(line.data)'
     )
@@ -12,7 +12,9 @@
 
 <script>
 // imports
+import { LINES_FETCHED_CREATE } from '@/store/mutation-types'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
+// help
 const Convert = require('ansi-to-html')
 const converter = new Convert()
 // export
@@ -22,26 +24,30 @@ export default {
     'torrentID',
     'isLive'
   ],
-  computed: mapGetters([
-    'lines',
-    'linesFetched',
-    'torrent'
-  ]),
+  computed: {
+    ...mapGetters({
+      getAllLines: 'lines/getAll',
+      getFetchedLines: 'lines/getFetched'
+    }),
+    ...mapGetters({
+      getOneTorrent: 'torrents/getOne'
+    })
+  },
   methods: {
-    ...mapActions([
-      'getLines'
-    ]),
-    ...mapMutations([
-      'markLinesFetched'
-    ]),
+    ...mapActions({
+      doFetchAllLines: 'lines/doFetchAll'
+    }),
+    ...mapMutations({
+      [LINES_FETCHED_CREATE]: `lines/${LINES_FETCHED_CREATE}`
+    }),
     colorLine (line) {
       return converter.toHtml(line)
     }
   },
   mounted () {
-    if (!this.linesFetched(this.torrentID)) {
-      this.getLines(this.torrentID)
-      this.markLinesFetched(this.torrentID)
+    if (!this.getFetchedLines(this.torrentID)) {
+      this.doFetchAllLines(this.torrentID)
+      this[LINES_FETCHED_CREATE](this.torrentID)
     }
   }
 }
@@ -53,6 +59,7 @@ export default {
     padding: 0.75rem;
     height: 50vh;
     position: relative;
+    overflow-x: hidden;
   }
   p {
     font-size: 11px;

@@ -1,18 +1,14 @@
 <template lang="pug">
   div
-    b-table(:data='notificationSettingsServices')
+    b-table(:data='getServices')
       template(slot-scope='props')
         b-table-column(
           label='enabled'
         )
           b-field.switch-field
             b-switch(
-              v-model='props.row.enabled'
-              @input=`updateService({
-                serviceID: props.row.id,
-                key: "enabled",
-                value: $event
-              })`
+              :value='props.row.enabled'
+              @input=`genFieldSetter(props.row.id, 'enabled', $event)`
             ) {{ ['no', 'yes'][Number(props.row.enabled)] }}
         b-table-column(label='url')
           b-field
@@ -20,39 +16,34 @@
               b-input(
                 icon='earth'
                 placeholder='eggs'
-                v-model='props.row.url'
-                @input=`updateService({
-                  serviceID: props.row.id,
-                  key: "url",
-                  value: $event
-                })`
+                :value='props.row.url'
+                @input=`genFieldSetter(props.row.id, 'url', $event)`
               )
         b-table-column
           b-field(grouped group-multiline position='is-right')
             p.control
-              button.button(@click='saveNotificationSettingsService(props.row.id)').is-light save
+              button.button(@click='doPutService(props.row.id)').is-light save
             p.control
               button.button(@click='testService(props.row.id)').is-light test
             p.control
-              button.button(@click='removeNotificationSettingsService(props.row.id)').is-primary remove
+              button.button(@click='doDeleteService(props.row.id)').is-primary remove
       template(slot='footer')
         .field.has-addons.is-pulled-right
           .control
             .select.is-fullwidth
               select(v-model='newServiceType')
                 option(
-                  v-for='service in notificationSettingsPossibleServices'
+                  v-for='service in getPossible'
                   :key='service.service_name'
                   :value='service.service_name'
                 ) {{ service.service_name }}
           .control
-            button.button(@click='addNotificationSettingsService(newServiceType)') add new
+            button.button(@click='doPostService(newServiceType)') add new
       template(slot='empty')
-        h6(v-show='notificationSettingsServices.length === 0')
+        h6(v-show='getServices.length === 0')
           b-icon(icon='alert')
           | &nbsp; no services here yet, add one below
-
-    #empty-sep(v-show='notificationSettingsServices.length === 0')
+    #empty-sep(v-show='getServices.length === 0')
       hr
     #help.content
       h5.title.is-5 notes on transmission
@@ -75,28 +66,32 @@
 <script>
 // imports
 import Service from '@/components/settings/Service.vue'
-// import backend from '@/backend'
+import { NOTI_SERVICE_UPDATE } from '@/store/mutation-types'
 import { mapMutations, mapGetters, mapActions } from 'vuex'
+// help
 // export
 export default {
   components: {
     Service
   },
   computed: {
-    ...mapGetters([
-      'notificationSettingsGeneral',
-      'notificationSettingsServices',
-      'notificationSettingsPossibleServices'
+    ...mapGetters('notifications', [
+      'getGeneral',
+      'getServices',
+      'getPossible'
     ])
   },
   methods: {
-    ...mapMutations([
-      'updateService'
+    genFieldSetter (serviceID, key, value) {
+      this[NOTI_SERVICE_UPDATE]({ serviceID, key, value })
+    },
+    ...mapMutations('notifications', [
+      NOTI_SERVICE_UPDATE
     ]),
-    ...mapActions([
-      'removeNotificationSettingsService',
-      'saveNotificationSettingsService',
-      'addNotificationSettingsService'
+    ...mapActions('notifications', [
+      'doPostService',
+      'doDeleteService',
+      'doPutService'
     ]),
     testService () {
       // const fetchUrl = `settings/remotes/${this.remoteID}/test`
@@ -113,7 +108,12 @@ export default {
   },
   data () {
     return {
-      newServiceType: 'Kodi/XBMC'
+      newServiceType: 'Kodi/XBMC',
+      form: [
+        { weed: 'greed' },
+        { weed: 'greeds' },
+        { weed: 'greedfsdf' }
+      ]
     }
   }
 }

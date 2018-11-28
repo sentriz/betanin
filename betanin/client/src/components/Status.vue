@@ -5,8 +5,8 @@
         | ver.&nbsp;
         b {{ betaninVersion | truncate(8, ' ') }}
     #right
-      p(v-show='Object.keys(status).length === 0') no status available
-      p(v-for='count, key in status')
+      p(v-show='Object.keys(getStatus).length === 0') no status available
+      p(v-for='count, key in getStatus')
         b {{ countString(count) }}
         span#explaination  {{ explaination(key, count) }}
 </template>
@@ -30,8 +30,8 @@ const betaninVersion = __SOURCE_COMMIT__
 // export
 export default {
   computed: {
-    ...mapGetters([
-      'status'
+    ...mapGetters('status', [
+      'getStatus'
     ])
   },
   data () {
