@@ -1,7 +1,7 @@
 <template lang="pug">
   .modal-card
     header.modal-card-head
-      p.modal-card-title {{ torrent(torrentID).name }}
+      p.modal-card-title {{ getOne(torrentID).name }}
     base-console.modal-card-body(
       :torrentID='torrentID'
       :isLive='isLive'
@@ -41,11 +41,11 @@ export default {
     'torrentID'
   ],
   computed: {
-    ...mapGetters([
-      'torrent'
+    ...mapGetters('torrents', [
+      'getOne'
     ]),
     isLive () {
-      const { status } = this.torrent(this.torrentID)
+      const { status } = this.getOne(this.torrentID)
       return ['PROCESSING', 'NEEDS_INPUT'].includes(status)
     }
   },

@@ -1,5 +1,5 @@
 <template lang="pug">
-  torrents(:torrents='torrentsActivity')
+  torrents(:torrents='getActivity')
 </template>
 
 <script>
@@ -10,8 +10,8 @@ export default {
     Torrents
   },
   computed: {
-    ...mapGetters([
-      'torrentsActivity'
+    ...mapGetters('torrents', [
+      'getActivity'
     ])
   }
 }

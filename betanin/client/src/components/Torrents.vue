@@ -80,9 +80,9 @@ export default {
   ],
   methods: {
     ...mapActions([
-      'getLines',
-      'removeTorrent',
-      'retryTorrent'
+      'torrents/doDeleteOne',
+      'torrents/doRetryOne',
+      'lines/doFetchAll'
     ]),
     statusStyle (status) {
       return statusMap[status]

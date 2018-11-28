@@ -1,9 +1,9 @@
 <template lang="pug">
   .content.has-text-centered#connection-banner(
-    :class="connected ? 'green' : 'red'"
+    :class="getConnected ? 'green' : 'red'"
   )
     p(
-      v-if='connected'
+      v-if='getConnected'
     ) connected to backend
     p(
       v-else
@@ -13,8 +13,8 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
-  computed: mapGetters([
-    'connected'
+  computed: mapGetters('status', [
+    'getConnected'
   ])
 }
 </script>
