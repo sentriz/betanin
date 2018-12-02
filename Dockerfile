@@ -25,6 +25,7 @@ RUN \
         discogs-client \
         beets-noimport
 VOLUME /root/.local/share/betanin/
+VOLUME /root/.config/betanin/
 VOLUME /root/.config/beets/
 EXPOSE 5000
 CMD [ "./docker-entry" ]

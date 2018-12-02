@@ -1,19 +1,21 @@
 // exports must end with _{CREATE,UPDATE,DELETE}
 
-// torrents
+// torrents module
 export const TORRENTS_UPDATE = 'TORRENTS_UPDATE'
 
-// lines
+// lines module
 export const LINES_CREATE = 'LINES_CREATE'
 export const LINES_FETCHED_CREATE = 'LINES_FETCHED_CREATE'
 
-// notifications
+// notifications module
+export const NOTI_GENERALS_UPDATE = 'NOTI_GENERALS_UPDATE'
+export const NOTI_GENERAL_UPDATE = 'NOTI_GENERAL_UPDATE'
 export const NOTI_POSSIBLE_UPDATE = 'NOTI_POSSIBLE_UPDATE'
 export const NOTI_SERVICES_UPDATE = 'NOTI_SERVICES_UPDATE'
 export const NOTI_SERVICE_CREATE = 'NOTI_SERVICE_CREATE'
 export const NOTI_SERVICE_UPDATE = 'NOTI_SERVICE_UPDATE'
 export const NOTI_SERVICE_DELETE = 'NOTI_SERVICE_DELETE'
 
-// misc
+// status module
 export const STATUS_UPDATE = 'STATUS_UPDATE'
-export const CONNECTED_UPDATE = 'CONNECTED_UPDATE'
+export const STATUS_CONNECTED_UPDATE = 'CONNECTED_UPDATE'

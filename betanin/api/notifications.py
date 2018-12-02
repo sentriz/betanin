@@ -26,16 +26,7 @@ DEFAULT_CONFIG = {
         'title': '[betanin] torrent `$name` $status',
         'body': '[betanin] torrent `$name` $status, on $time'
     },
-    'services': {
-        'nvkij8z0hqtgf5f1': {
-            'url': 'mailto://one.kelly:kmqkhblhiks@gmail.com?name=one',
-            'enabled': True,
-        },
-        'xwktpg3dgcxhyru7': {
-            'url': 'mailto://two.f.b.kelly:kmqkhblkxavels@gmail.com?name=samuek',
-            'enabled': False,
-        }
-    }
+    'services': {}
 }
 
 
@@ -52,6 +43,7 @@ def _read_config():
 def _write_config(config):
     with open(paths.NOTIFICATION_CONFIG_PATH, 'w') as file:
         toml.dump(config, file)
+
 
 @contextmanager
 def _open_config():
@@ -75,16 +67,32 @@ def _make_templates(config):
 
 # exports
 
+def register_all():
+    config = _read_config()
+    APPRISE.clear()
+    APPRISE.add([
+        f'{service["protocol"]}://{service["not_protocol"]}'
+        for service in config['services'].values()
+        if all(
+            service[key]
+            for key in ('enabled', 'protocol', 'not_protocol')
+        )
+    ])
+    
+
 def get_possible_services():
     return APPRISE.details()
 
 
 def get_services():
-    config = _read_config()
-    return [
-        {'id': id_, **service}
-        for id_, service in config['services'].items()
-    ]
+    with _open_config() as config:
+        # remove incomplete services
+        config['services'] = {
+            service_id: service \
+            for service_id, service in config['services'].items() \
+            if service['not_protocol']
+        }
+        return config['services']
 
 
 def get_general():
@@ -92,35 +100,29 @@ def get_general():
     return config['general']
 
 
-def register_all():
-    config = _read_config()
-    APPRISE.clear()
-    APPRISE.add([
-        service['url']
-        for service in config['services'].values()
-        if service['enabled']
-    ])
-    
-
 def add_service(service_type):
     service_id = _random_string(16)
     with _open_config() as config:
         config['services'][service_id] = {
-            'url': '',
+            'type': service_type,
             'enabled': True,
+            'protocol': '',
+            'not_protocol': '',
         }
-        return config['services'][service_id]
+        return {
+            'id': service_id,
+            **config['services'][service_id]
+        }
 
 
-def update_service(service_id, service):
+def update_services(services):
     with _open_config() as config:
-        config['services'][service_id] = service
+        config['services'] = services
 
 
-def remove_service(service_id):
+def update_general(general):
     with _open_config() as config:
-        del config['services'][service_id]
-    register_all()
+        config['general'] = general
 
 
 def send(torrent):

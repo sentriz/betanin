@@ -29,6 +29,8 @@ export default {
   @import "~bulma/sass/utilities/_all";
   $primary:           #d1536a;
   $primary-invert:    findColorInvert($primary);
+  $info:              #1f94ff;
+  $info-invert:       findColorInvert($info);
   $green:             #23d160;
   $green-invert:      findColorInvert($green);
   $link-focus-border: $primary;
@@ -36,11 +38,12 @@ export default {
   $link:              $primary;
   $colors: (
     "primary": ($primary, $primary-invert),
-    "green": ($green, $green-invert),
+    "green":   ($green, $green-invert),
+    "info":    ($info, $info-invert),
   );
   #app {
     margin: 0;
-    margin-bottom: 3.5rem;
+    margin-bottom: 5rem;
   }
   #footer {
     position: fixed;

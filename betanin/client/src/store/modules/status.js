@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { STATUS_UPDATE, CONNECTED_UPDATE } from '../mutation-types'
+import { STATUS_UPDATE, STATUS_CONNECTED_UPDATE } from '../mutation-types'
 
 const state = {
   connected: false,
@@ -15,10 +15,10 @@ const getters = {
 
 const actions = {
   socket_connect: ({ commit, dispatch }) => {
-    commit(CONNECTED_UPDATE, true)
+    commit(STATUS_CONNECTED_UPDATE, true)
   },
   socket_disconnect: ({ commit }) => {
-    commit(CONNECTED_UPDATE, false)
+    commit(STATUS_CONNECTED_UPDATE, false)
   }
 }
 
@@ -26,7 +26,7 @@ const mutations = {
   [STATUS_UPDATE] (state, status) {
     Vue.set(state, 'status', status)
   },
-  [CONNECTED_UPDATE] (state, connected) {
+  [STATUS_CONNECTED_UPDATE] (state, connected) {
     Vue.set(state, 'connected', connected)
   }
 }

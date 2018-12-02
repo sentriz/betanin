@@ -1,132 +1,122 @@
 <template lang="pug">
   div
-    b-table(:data='getServices')
-      template(slot-scope='props')
-        b-table-column(
-          label='enabled'
-        )
-          b-field.switch-field
-            b-switch(
-              :value='props.row.enabled'
-              @input=`genFieldSetter(props.row.id, 'enabled', $event)`
-            ) {{ ['no', 'yes'][Number(props.row.enabled)] }}
-        b-table-column(label='url')
-          b-field
-            p.control
-              b-input(
-                icon='earth'
-                placeholder='eggs'
-                :value='props.row.url'
-                @input=`genFieldSetter(props.row.id, 'url', $event)`
-              )
-        b-table-column
-          b-field(grouped group-multiline position='is-right')
-            p.control
-              button.button(@click='doPutService(props.row.id)').is-light save
-            p.control
-              button.button(@click='testService(props.row.id)').is-light test
-            p.control
-              button.button(@click='doDeleteService(props.row.id)').is-primary remove
-      template(slot='footer')
-        .field.has-addons.is-pulled-right
-          .control
-            .select.is-fullwidth
-              select(v-model='newServiceType')
-                option(
-                  v-for='service in getPossible'
-                  :key='service.service_name'
-                  :value='service.service_name'
-                ) {{ service.service_name }}
-          .control
-            button.button(@click='doPostService(newServiceType)') add new
-      template(slot='empty')
-        h6(v-show='getServices.length === 0')
-          b-icon(icon='alert')
-          | &nbsp; no services here yet, add one below
-    #empty-sep(v-show='getServices.length === 0')
-      hr
-    #help.content
-      h5.title.is-5 notes on transmission
-      ul
-        li.
-          if your transmission client is running on a different to machine betanin,
-          you need to mount the folder transmission uses locally. maybe something
-          like curlftpfs, sshfs, samba, etc. then use the 'local map' field.
-          start typing in it to what the mapping will look like.
-        li.
-          at the moment, betanin will only attempt to download torrents in the
-          'category' specified. this is to prevent betanin from trying to import
-          films, etc. transmission doesn't actually support categories, so you must
-          choose a directory as a category. eg /default/download/dir/music, where
-          'music' is the category. this setup is made easy with a browser extension
-          that supports custom download directories. eg. 'transmission easy client`
-          for chrome.
+    h5.title.is-5 notification format
+    #general-editor
+      div
+        b-field(label='title')
+          b-input(v-model='generalTitle')
+        b-field(label='body')
+          b-input(
+            placeholder='Success'
+            type='textarea'
+            v-model='generalBody'
+          )
+      #variables-help
+        label.label available variables
+        ul
+          li
+            code $id
+            |  the unique id or hash of the torrent
+          li
+            code $title
+            |  the title of the torrent
+          li
+            code $time
+            |  the timestamp of the last update to the torrent
+          li
+            code $status
+            |  the current betanin status of the torrent. eg. '
+            b needs input
+            | '
+    .field.is-pulled-right
+      button.button.is-primary.is-right#format-save-button(@click='doPutGeneral()') save
+    hr
+    h5.title.is-5 services
+    h6(v-show='getServices.length === 0')
+      b-icon(icon='alert')
+      | &nbsp; no services here yet, add one below
+    notification-service(
+      v-for='service in getServices'
+      :serviceID='service.id'
+      :key='service.id'
+    )
+    .field.is-horizontal.is-pulled-right#controls
+      .field-body
+        .field
+          .field.has-addons.is-marginless
+            .control
+              .select.is-fullwidth
+                select(v-model='newServiceType')
+                  option(
+                    v-for='service in getPossible'
+                    :key='service.service_name'
+                    :value='service.service_name'
+                  ) {{ service.service_name }}
+            .control
+              button.button(@click='doPostService(newServiceType)') add new
+        .field
+          .field.is-marginless
+            .control
+              button.button.is-primary(@click='doPutServices()') save
 </template>
 
 <script>
 // imports
-import Service from '@/components/settings/Service.vue'
-import { NOTI_SERVICE_UPDATE } from '@/store/mutation-types'
-import { mapMutations, mapGetters, mapActions } from 'vuex'
-// help
+import NotificationService from '@/components/settings/NotificationService.vue'
+import { genNotiGeneralComputed } from '@/utilities'
+import { mapActions, mapGetters } from 'vuex'
 // export
 export default {
   components: {
-    Service
+    NotificationService
+  },
+  created () {
+    this.doFetchPossible()
+    this.doFetchServices()
+    this.doFetchGeneral()
   },
   computed: {
     ...mapGetters('notifications', [
-      'getGeneral',
       'getServices',
       'getPossible'
-    ])
+    ]),
+    generalTitle: genNotiGeneralComputed('title'),
+    generalBody: genNotiGeneralComputed('body')
   },
   methods: {
-    genFieldSetter (serviceID, key, value) {
-      this[NOTI_SERVICE_UPDATE]({ serviceID, key, value })
-    },
-    ...mapMutations('notifications', [
-      NOTI_SERVICE_UPDATE
-    ]),
     ...mapActions('notifications', [
+      'doFetchPossible',
+      'doFetchServices',
+      'doFetchGeneral',
+      'doPutGeneral',
       'doPostService',
-      'doDeleteService',
-      'doPutService'
-    ]),
-    testService () {
-      // const fetchUrl = `settings/remotes/${this.remoteID}/test`
-      // backend.fetchResource(fetchUrl)
-      //   .then(response => {
-      //     const type = response.ok ? 'is-green' : 'is-primary'
-      //     const prefix = response.ok ? 'succeeded' : 'failed'
-      //     this.$toast.open({
-      //       message: `testing ${prefix}: ${response.reason}`,
-      //       type
-      //     })
-      //   })
-    }
+      'doPutServices'
+    ])
   },
   data () {
     return {
-      newServiceType: 'Kodi/XBMC',
-      form: [
-        { weed: 'greed' },
-        { weed: 'greeds' },
-        { weed: 'greedfsdf' }
-      ]
+      newServiceType: 'Kodi/XBMC'
     }
   }
 }
 </script>
 
-<style scoped>
-  td[data-label='enabled'] {
-    width: 190px !important;
+<style lang="scss" scoped>
+  hr {
+    margin-top: 4rem;
   }
-  .switch-field {
-    padding-top: 6px;
+  #controls {
+    margin-top: 24px;
   }
-  #buttons {
-    padding-top: 12px;
+  #general-editor {
+    width: 100%;
+    display: flex;
+    align-items: stretch;
+    #variables-help {
+      margin-left: 2rem;
+    }
+    > * {
+      flex: 1 100%;
+    }
   }
 </style>
