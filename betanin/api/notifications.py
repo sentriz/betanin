@@ -118,6 +118,7 @@ def add_service(service_type):
 def update_services(services):
     with _open_config() as config:
         config['services'] = services
+    register_all()
 
 
 def update_general(general):
