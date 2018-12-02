@@ -45,7 +45,7 @@ betanin:
     restart: unless-stopped
     volumes:
     - ${DATA}/betanin/data:/root/.local/share/betanin/
-    - ${DATA}/betanin/data:/root/.config/betanin/
+    - ${DATA}/betanin/config:/root/.config/betanin/
     - ${DATA}/betanin/beets:/root/.config/beets/
     - ${MEDIA}/music:/music/
     - ${MEDIA}/downloads:/downloads/
