@@ -16,7 +16,11 @@ from betanin.api.orm.models.torrent import Torrent
 PROCESSES = {}
 INDEXES = {}
 QUEUE = Queue()
-NEEDS_INPUT_SNIPPETS = ('[A]pply', )
+NEEDS_INPUT_SNIPPETS = (
+    '[A]pply',
+    'kip new, ',
+    'ter search, ente',
+)
 
 
 def _set_init_index(torrent):
