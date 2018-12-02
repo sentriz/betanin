@@ -35,7 +35,7 @@
             strong updated
             |  {{ props.row.updated }}
       template(slot='empty')
-        h6(v-show='torrents.length === 0')
+        h6
           b-icon(icon='alert')
           | &nbsp; no torrents here yet, check the status below
     b-modal(

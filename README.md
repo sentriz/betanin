@@ -25,6 +25,7 @@
 `docker pull sentriz/betanin`  
 ###### volumes
 `/root/.local/share/betanin/` for a persistent database  
+`/root/.config/betanin/` for a persistent betanin config  
 `/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
 `/music/` so beets can access your music  
 `/downloads/` so beets can access your downloads  
@@ -44,6 +45,7 @@ betanin:
     restart: unless-stopped
     volumes:
     - ${DATA}/betanin/data:/root/.local/share/betanin/
+    - ${DATA}/betanin/data:/root/.config/betanin/
     - ${DATA}/betanin/beets:/root/.config/beets/
     - ${MEDIA}/music:/music/
     - ${MEDIA}/downloads:/downloads/
