@@ -20,6 +20,7 @@ NEEDS_INPUT_SNIPPETS = (
     '[A]pply',
     'kip new, ',
     'ter search, ente',
+    'it, edit ',
 )
 
 
