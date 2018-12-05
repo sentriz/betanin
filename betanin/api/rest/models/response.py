@@ -58,14 +58,3 @@ torrent = torrents_ns.model('Torrent', {
     'updated': fields.DateTime,
     'created': fields.DateTime,
 })
-
-
-fetch = torrents_ns.model('Fetch', {
-    'torrents': fields.List(
-        fields.Nested(torrent),
-        description='the list of torrents',
-    ),
-    'status': fields.Raw(
-        description='the global status table',
-    ),
-})

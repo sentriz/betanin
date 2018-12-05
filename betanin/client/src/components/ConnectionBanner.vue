@@ -1,31 +1,40 @@
 <template lang="pug">
-  .content.has-text-centered#connection-banner(
+  #banner(
     :class="getConnected ? 'green' : 'red'"
   )
-    p(
-      v-if='getConnected'
-    ) connected to backend
-    p(
-      v-else
-    ) not connected to backend
+    .side-item#version
+      span(v-show='betaninVersion') ver.&nbsp;
+      b {{ "eggs" | truncate(8, ' ') }}
+    #connection
+      p(v-if='getConnected') connected to backend
+      p(v-else) not connected to backend
+    .side-item#status
+      p {{ getHistoryCount }} imports, {{ getActivityCount }} active
 </template>
 
 <script>
+// import
 import { mapGetters } from 'vuex'
+// export
 export default {
-  computed: mapGetters('status', [
-    'getConnected'
-  ])
+  computed: mapGetters({
+    getConnected: 'status/getConnected',
+    getActivityCount: 'torrents/getActivityCount',
+    getHistoryCount: 'torrents/getHistoryCount'
+  }),
+  data () {
+    return {
+      betaninVersion: 'change'
+      // betaninVersion: __SOURCE_COMMIT__
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
   @import "~bulma";
-  p {
+  * {
     color: white;
-  }
-  .content {
-    opacity: 0.8;
   }
   .red {
     background-color: $danger;
@@ -33,12 +42,38 @@ export default {
   .green {
     background-color: $success;
   }
-  #connection-banner {
+  #banner {
+    z-index: 10000;
+    padding: 0 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    opacity: 0.85;
     clip-path: polygon(
       0.3rem 0,
       calc(100% - 0.3rem) 0,
       100% 100%,
       0% 100%
     );
+    > * {
+      width: 33.33%;
+    }
+    #version {
+      text-align: left;
+    }
+    #connection {
+      text-align: center;
+    }
+    #status {
+      text-align: right;
+    }
+    @media only screen and (max-width: 768px) {
+      .side-item {
+        display: none;
+      }
+      #connection {
+        width: 100%;
+      }
+    }
   }
 </style>

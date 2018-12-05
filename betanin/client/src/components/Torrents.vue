@@ -14,10 +14,10 @@
             b-icon(icon='console' size='is-small')
             |  view
           span.status-group(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
-            span.link(title='remove torrent' @click='removeTorrent(props.row.id)')
+            span.link(title='remove torrent' @click='doDeleteOneTorrent(props.row.id)')
               b-icon.link(icon='close' size='is-small')
             | &nbsp;
-            span.link(title='retry import' @click='retryTorrent(props.row.id)')
+            span.link(title='retry import' @click='doRetryOneTorrent(props.row.id)')
               b-icon.link(title='retry import' icon='loop' size='is-small')
       template(slot-scope='props'
                slot='detail')
@@ -79,11 +79,10 @@ export default {
     'torrents'
   ],
   methods: {
-    ...mapActions([
-      'torrents/doDeleteOne',
-      'torrents/doRetryOne',
-      'lines/doFetchAll'
-    ]),
+    ...mapActions({
+      doDeleteOneTorrent: 'torrents/doDeleteOne',
+      doRetryOneTorrent: 'torrents/doRetryOne'
+    }),
     statusStyle (status) {
       return statusMap[status]
     },

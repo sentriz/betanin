@@ -1,9 +1,8 @@
 <template lang="pug">
-  b-tabs(v-model='activeTab')
-    br
-    b-tab-item(label='notifications')
+  b-tabs(v-model='activeTab' :animated='false')
+    b-tab-item.tab-item(icon='alert-circle-outline' label='notifications')
       notification-editor
-    b-tab-item(label='beets config')
+    b-tab-item.tab-item(icon='note-outline' label='beets config')
       config-editor
 </template>
 
@@ -26,6 +25,9 @@ export default {
 </script>
 
 <style>
+  .tab-item {
+    margin-top: 2rem;
+  }
   .tab-content {
     padding: 0 !important;
   }

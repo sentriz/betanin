@@ -7,19 +7,16 @@
         router-view
     #footer
       .section
-        status
         connection-banner
 </template>
 
 <script>
 import ConnectionBanner from '@/components/ConnectionBanner.vue'
 import NavBar from '@/components/NavBar.vue'
-import Status from '@/components/Status.vue'
 export default {
   name: 'activity',
   components: {
     NavBar,
-    Status,
     ConnectionBanner
   }
 }
@@ -43,7 +40,6 @@ export default {
   );
   #app {
     margin: 0;
-    margin-bottom: 5rem;
   }
   #footer {
     position: fixed;
@@ -51,20 +47,12 @@ export default {
     left: auto;
     pointer-events: none;
     width: inherit;
-    background: linear-gradient(
-      rgba(255, 255, 255, 0),
-      white,
-      white,
-    );
     @media only screen and (max-width: 1087px) {
       width: 100%;
     }
     .section {
       padding-bottom: 0;
     }
-  }
-  #connection-banner {
-    margin-top: 0.4rem;
   }
   @import "~bulma";
   @import "~buefy/src/scss/buefy";

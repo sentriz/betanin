@@ -3,7 +3,6 @@ from flask import request
 
 # betanin
 from betanin.api import events
-from betanin.api import status
 from betanin.api.jobs import import_torrents
 from betanin.extensions import db
 from betanin.api.rest.base import BaseResource
@@ -16,14 +15,11 @@ from betanin.api.orm.models.torrent import Torrent
 @torrents_ns.route('/')
 class TorrentsResource(BaseResource):
     @staticmethod
-    @torrents_ns.marshal_with(response_models.fetch)
+    @torrents_ns.marshal_list_with(response_models.torrent)
     def get():
-        return {
-            'torrents': Torrent.query \
-                .order_by(Torrent.created.desc()) \
-                .all(),
-            'status': status.fetch(),
-        }
+        return Torrent.query \
+            .order_by(Torrent.created.desc()) \
+            .all()
 
 
 @torrents_ns.route('/<string:torrent_id>')
