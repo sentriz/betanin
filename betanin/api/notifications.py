@@ -121,6 +121,13 @@ def update_services(services):
     register_all()
 
 
+def test_services():
+    return APPRISE.notify(
+        title='betanin test notification',
+        body='testing succeeded 😎'
+    )
+
+
 def update_general(general):
     with _open_config() as config:
         config['general'] = general

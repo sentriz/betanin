@@ -7,14 +7,17 @@ import {
   NOTI_SERVICES_UPDATE,
   NOTI_SERVICE_CREATE,
   NOTI_SERVICE_DELETE,
-  NOTI_SERVICE_UPDATE
+  NOTI_SERVICE_UPDATE,
+  NOTI_SERVICE_TESTING_UPDATE
 } from '../mutation-types'
 import { itemFromID } from '../utilities'
+import { Toast } from 'buefy/dist/components/toast'
 
 const state = {
   general: {},
   services: [],
-  possible: []
+  possible: [],
+  isTesting: false
 }
 
 const getters = {
@@ -24,6 +27,8 @@ const getters = {
     state.possible,
   getServices: state =>
     state.services,
+  getIsTesting: state =>
+    state.isTesting,
   getServiceFromID: state => serviceID =>
     itemFromID(state.services, serviceID),
   getPossibility: state => serviceName => state.possible.find(
@@ -41,40 +46,43 @@ const getters = {
 
 const actions = {
   // one service
-  doPostService ({ commit }, serviceName) {
-    backend.postResource(
+  async doPostService ({ commit }, serviceName) {
+    const result = await backend.postResource(
       `settings/notifications/services`,
       { type: serviceName }
-    ).then(result => {
-      commit(NOTI_SERVICE_CREATE, result)
-    })
+    )
+    commit(NOTI_SERVICE_CREATE, result)
   },
   // all services
-  doPutServices ({ getters }) {
-    backend.putResource(
+  async doPutServices ({ commit, getters }) {
+    await backend.putResource(
       `settings/notifications/services`,
       getters.getServices
     )
+    await commit(NOTI_SERVICE_TESTING_UPDATE, true)
+    const testResult = await backend.fetchResource(
+      `settings/notifications/test_services`,
+      getters.getServices
+    )
+    await commit(NOTI_SERVICE_TESTING_UPDATE, false)
+    Toast.open({
+      message: testResult ? 'testing succeeded' : 'testing failed',
+      type: testResult ? 'is-green' : 'is-primary'
+    })
   },
-  doFetchServices ({ commit }) {
-    backend.fetchResource('settings/notifications/services')
-      .then(result => {
-        commit(NOTI_SERVICES_UPDATE, result)
-      })
+  async doFetchServices ({ commit }) {
+    const result = await backend.fetchResource('settings/notifications/services')
+    commit(NOTI_SERVICES_UPDATE, result)
   },
   // all possible
-  doFetchPossible ({ commit }) {
-    backend.fetchResource('settings/notifications/possible_services')
-      .then(result => {
-        commit(NOTI_POSSIBLE_UPDATE, result.schemas)
-      })
+  async doFetchPossible ({ commit }) {
+    const result = await backend.fetchResource('settings/notifications/possible_services')
+    commit(NOTI_POSSIBLE_UPDATE, result.schemas)
   },
   // general
-  doFetchGeneral ({ commit }) {
-    backend.fetchResource('settings/notifications/general')
-      .then(result => {
-        commit(NOTI_GENERALS_UPDATE, result)
-      })
+  async doFetchGeneral ({ commit }) {
+    const result = await backend.fetchResource('settings/notifications/general')
+    commit(NOTI_GENERALS_UPDATE, result)
   },
   doPutGeneral ({ getters }) {
     backend.putResource(
@@ -110,6 +118,9 @@ const mutations = {
   },
   [NOTI_POSSIBLE_UPDATE] (state, services) {
     Vue.set(state, 'possible', services)
+  },
+  [NOTI_SERVICE_TESTING_UPDATE] (state, value) {
+    Vue.set(state, 'isTesting', value)
   }
 }
 

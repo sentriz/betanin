@@ -23,11 +23,9 @@ const getters = {
 }
 
 const actions = {
-  doFetchAll ({ commit }) {
-    backend.fetchResource('torrents/')
-      .then(result => {
-        commit(TORRENTS_UPDATE, result)
-      })
+  async doFetchAll ({ commit }) {
+    const result = await backend.fetchResource('torrents/')
+    commit(TORRENTS_UPDATE, result)
   },
   doDeleteOne (torrentID) {
     backend.deleteResource(`torrents/${torrentID}`)

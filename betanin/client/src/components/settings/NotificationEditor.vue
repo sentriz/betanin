@@ -40,7 +40,7 @@
       :serviceID='service.id'
       :key='service.id'
     )
-    #service-controls
+    #service-controls.controls
       .field.has-addons#service-type-selector
         .control
           .select.is-fullwidth
@@ -55,7 +55,10 @@
       .field
         .field
           .control
-            button.button.is-primary(@click='doPutServices()') save
+            button.button.is-primary(
+              @click='doPutServices()'
+              :class='{ "is-loading": getIsTesting }'
+            ) save
 </template>
 
 <script>
@@ -76,7 +79,8 @@ export default {
   computed: {
     ...mapGetters('notifications', [
       'getServices',
-      'getPossible'
+      'getPossible',
+      'getIsTesting'
     ]),
     generalTitle: genNotiGeneralComputed('title'),
     generalBody: genNotiGeneralComputed('body')

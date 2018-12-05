@@ -59,6 +59,13 @@ class NotificationResource(BaseResource):
         return notifications.remove_service(service_id)
 
 
+@settings_ns.route('/notifications/test_services')
+class TorrentResource(BaseResource):
+    @staticmethod
+    def get():
+        return notifications.test_services()
+
+
 @settings_ns.route('/notifications/possible_services')
 class TorrentResource(BaseResource):
     @staticmethod

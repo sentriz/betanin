@@ -18,13 +18,11 @@ const getters = {
 }
 
 const actions = {
-  doFetchAll ({ commit }, torrentID) {
-    backend.fetchResource(`torrents/${torrentID}/console/stdout`)
-      .then(lines => {
-        lines.forEach(line => {
-          commit(LINES_CREATE, { torrentID, line })
-        })
-      })
+  async doFetchAll ({ commit }, torrentID) {
+    const lines = await backend.fetchResource(`torrents/${torrentID}/console/stdout`)
+    lines.forEach(line => {
+      commit(LINES_CREATE, { torrentID, line })
+    })
   },
   doSocket__read ({ commit }, { torrentID, line }) {
     commit(LINES_CREATE, { torrentID, line })
