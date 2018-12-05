@@ -35,9 +35,7 @@
             strong updated
             |  {{ props.row.updated }}
       template(slot='empty')
-        h6
-          b-icon(icon='alert')
-          | &nbsp; no torrents here yet, check the status below
+        slot
     b-modal(
       :width='640'
       scroll='keep'
@@ -76,7 +74,8 @@ export default {
     ModalConsole
   },
   props: [
-    'torrents'
+    'torrents',
+    'emptyString'
   ],
   methods: {
     ...mapActions({
