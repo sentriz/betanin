@@ -2,7 +2,7 @@
   div
     h5.title.is-5 notification format
     #general-editor
-      div
+      #general-inputs
         b-field(label='title')
           b-input(v-model='generalTitle')
         b-field(label='body')
@@ -28,7 +28,7 @@
             |  the current betanin status of the torrent. eg. '
             b needs input
             | '
-    .field.is-pulled-right
+    .field.is-pulled-right.controls
       button.button.is-primary.is-right#format-save-button(@click='doPutGeneral()') save
     hr
     h5.title.is-5 services
@@ -40,24 +40,22 @@
       :serviceID='service.id'
       :key='service.id'
     )
-    .field.is-horizontal.is-pulled-right#controls
-      .field-body
+    #service-controls
+      .field.has-addons#service-type-selector
+        .control
+          .select.is-fullwidth
+            select(v-model='newServiceType')
+              option(
+                v-for='service in getPossible'
+                :key='service.service_name'
+                :value='service.service_name'
+              ) {{ service.service_name }}
+        .control
+          button.button(@click='doPostService(newServiceType)') add new
+      .field
         .field
-          .field.has-addons.is-marginless
-            .control
-              .select.is-fullwidth
-                select(v-model='newServiceType')
-                  option(
-                    v-for='service in getPossible'
-                    :key='service.service_name'
-                    :value='service.service_name'
-                  ) {{ service.service_name }}
-            .control
-              button.button(@click='doPostService(newServiceType)') add new
-        .field
-          .field.is-marginless
-            .control
-              button.button.is-primary(@click='doPutServices()') save
+          .control
+            button.button.is-primary(@click='doPutServices()') save
 </template>
 
 <script>
@@ -103,9 +101,12 @@ export default {
 
 <style lang="scss" scoped>
   hr {
-    margin-top: 4rem;
+    margin-top: 5rem;
   }
-  #controls {
+  .controls {
+    margin-top: 24px;
+  }
+  #general-save-button {
     margin-top: 24px;
   }
   #general-editor {
@@ -114,9 +115,23 @@ export default {
     align-items: stretch;
     #variables-help {
       margin-left: 2rem;
+      @media only screen and (max-width: 768px) {
+        display: none;
+      }
     }
     > * {
       flex: 1 100%;
     }
+  }
+  #service-controls {
+    display: flex;
+    justify-content: flex-end;
+    #service-type-selector {
+      margin-right: 1rem;
+    }
+  }
+  #general-inputs /deep/ textarea {
+    min-height: calc(36px * 2);
+    max-height: unset;
   }
 </style>
