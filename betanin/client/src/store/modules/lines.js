@@ -25,6 +25,9 @@ const actions = {
           commit(LINES_CREATE, { torrentID, line })
         })
       })
+  },
+  doSocket__read ({ commit }, { torrentID, line }) {
+    commit(LINES_CREATE, { torrentID, line })
   }
 }
 

@@ -5,7 +5,8 @@ COPY betanin/client/vue.config.js ./
 COPY betanin/client/src/ ./src/
 COPY betanin/client/public/ ./public/
 ARG SOURCE_COMMIT
-RUN npm install && \
+RUN \
+    npm install && \
     npm run-script build
 
 FROM python:3.6.6-alpine3.6

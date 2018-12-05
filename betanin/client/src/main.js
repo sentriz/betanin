@@ -27,7 +27,11 @@ import IO from 'socket.io-client'
 Vue.use(
   VueSocketio,
   IO(SOCKET_URL),
-  { store }
+  {
+    store,
+    actionPrefix: 'doSocket__',
+    mutationPrefix: 'SOCKET__'
+  }
 )
 
 // start

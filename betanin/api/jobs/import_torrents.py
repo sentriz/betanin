@@ -54,12 +54,12 @@ def _read_and_send_pty_out(proc, torrent):
         text = data.decode()
         if text.isspace():
             continue
+        _add_line(torrent, text)
         if any(match in text for match in NEEDS_INPUT_SNIPPETS):
             torrent.status = Status.NEEDS_INPUT
             db.session.commit()
             events.send_torrents_changed()
             events.send_torrent_status_changed(torrent)
-        _add_line(torrent, text)
 
 
 def _import_torrent(torrent):

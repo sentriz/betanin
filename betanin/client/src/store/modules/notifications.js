@@ -50,7 +50,7 @@ const actions = {
     })
   },
   // all services
-  doPutServices ({ commit, getters }) {
+  doPutServices ({ getters }) {
     backend.putResource(
       `settings/notifications/services`,
       getters.getServices
@@ -76,7 +76,7 @@ const actions = {
         commit(NOTI_GENERALS_UPDATE, result)
       })
   },
-  doPutGeneral ({ commit, getters }) {
+  doPutGeneral ({ getters }) {
     backend.putResource(
       'settings/notifications/general',
       getters.getGeneral

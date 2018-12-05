@@ -14,10 +14,10 @@ const getters = {
 }
 
 const actions = {
-  socket_connect: ({ commit, dispatch }) => {
+  doSocket__connect: ({ commit, dispatch }) => {
     commit(STATUS_CONNECTED_UPDATE, true)
   },
-  socket_disconnect: ({ commit }) => {
+  doSocket__disconnect: ({ commit }) => {
     commit(STATUS_CONNECTED_UPDATE, false)
   }
 }

@@ -32,10 +32,10 @@ const actions = {
   doRetryOne (torrentID) {
     backend.putResource(`torrents/${torrentID}`)
   },
-  socket_connect: ({ dispatch }) => {
+  doSocket__connect: ({ dispatch }) => {
     dispatch('doFetchAll')
   },
-  socket_changed: ({ dispatch }) => {
+  doSocket__changed: ({ dispatch }) => {
     dispatch('doFetchAll')
   }
 }
