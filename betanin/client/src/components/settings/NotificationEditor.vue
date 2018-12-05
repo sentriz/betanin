@@ -134,8 +134,13 @@ export default {
       margin-right: 1rem;
     }
   }
-  #general-inputs /deep/ textarea {
-    min-height: calc(36px * 2);
-    max-height: unset;
+  #general-inputs /deep/ {
+    textarea, input {
+      padding: 5px;
+    }
+    textarea {
+      min-height: calc(36px * 2);
+      max-height: unset;
+    }
   }
 </style>
