@@ -1,9 +1,13 @@
 <template lang="pug">
   div
-    b-table(:data='torrents'
-            :opened-detailed='openedDetails'
-            detailed
-            detail-key='id')
+    b-table(
+      :data='torrents'
+      :opened-detailed='openedDetails'
+      detailed
+      detail-key='id'
+      paginated
+      :per-page='itemsPerPage'
+    )
       template(slot-scope='props')
         b-table-column(label='name') {{ props.row.name | truncate(64) }}
         b-table-column(label='status' :numeric='true')
@@ -68,7 +72,14 @@ export default {
       'activeModal',
       'areLines',
       'lines'
-    ])
+    ]),
+    itemsPerPage () {
+      const viewHeight = Math.max(
+        document.documentElement.clientHeight,
+        window.innerHeight || 0
+      )
+      return Math.floor(viewHeight - 370) / 44
+    }
   },
   components: {
     ModalConsole
