@@ -4,10 +4,10 @@ import Vue from 'vue'
 Vue.config.productionTip = false
 
 // us
-import App from './views/App.vue'
-import router from './router'
-import store from './store/main'
-import { SOCKET_URL } from './constants'
+import App from '@/components/App.vue'
+import router from '@/router'
+import store from '@/store/main'
+import { SOCKET_URL } from '@/constants'
 import './filters'
 
 // buefy

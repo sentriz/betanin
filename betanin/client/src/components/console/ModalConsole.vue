@@ -1,25 +1,31 @@
 <template lang="pug">
-  .modal-card
-    header.modal-card-head
-      p.modal-card-title {{ getOne(torrentID).name }}
-    base-console.modal-card-body(
-      :torrentID='torrentID'
-      :isLive='isLive'
-    )
-    footer.modal-card-foot
-      #send-input
-        input.input.is-small(
-          @keyup.enter='sendStdin'
-          type='text'
-          :disabled='!isLive'
-          :placeholder='isLive ? "send to to beets" : "beets has quit"'
-          v-model='stdin'
-        )
-      #send-button
-        button.button.is-small(
-          @click='sendStdin'
-          :disabled='!isLive'
-        ) send
+  b-modal(
+    :width='640'
+    scroll='keep'
+    :active='$route.meta.modalIsOpen'
+    :onCancel='openModalClose'
+  )
+    .modal-card
+      header.modal-card-head
+        p.modal-card-title {{ getOne($route.params.torrentID).name }}
+      base-console.modal-card-body(
+        :torrentID='$route.params.torrentID'
+        :isLive='isLive'
+      )
+      footer.modal-card-foot
+        #send-input
+          input.input.is-small(
+            @keyup.enter='sendStdin'
+            type='text'
+            :disabled='!isLive'
+            :placeholder='isLive ? "send to to beets" : "beets has quit"'
+            v-model='stdin'
+          )
+        #send-button
+          button.button.is-small(
+            @click='sendStdin'
+            :disabled='!isLive'
+          ) send
 </template>
 
 <script>
@@ -37,21 +43,21 @@ export default {
   components: {
     BaseConsole
   },
-  props: [
-    'torrentID'
-  ],
   computed: {
     ...mapGetters('torrents', [
       'getOne'
     ]),
     isLive () {
-      const { status } = this.getOne(this.torrentID)
+      const { status } = this.getOne(this.$route.params.torrentID)
       return ['PROCESSING', 'NEEDS_INPUT'].includes(status)
     }
   },
   methods: {
+    openModalClose () {
+      this.$router.go(-1)
+    },
     sendStdin (event) {
-      const postUrl = `torrents/${this.torrentID}/console/stdin`
+      const postUrl = `torrents/${this.$route.params.torrentID}/console/stdin`
       const payload = {
         text: this.stdin
       }
