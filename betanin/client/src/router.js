@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Activity from './views/Activity.vue'
-import History from './views/History.vue'
-import Settings from './views/Settings.vue'
+import Settings from '@/components/Settings.vue'
+import ModalConsole from '@/components/console/ModalConsole.vue'
+import Torrents from '@/components/Torrents.vue'
 
 Vue.use(Router)
 
@@ -11,23 +11,28 @@ export default new Router({
   linkActiveClass: 'is-active',
   routes: [
     {
-      path: '/activity',
-      name: 'activity',
-      component: Activity
-    },
-    {
-      path: '/history',
-      name: 'history',
-      component: History
+      path: '/torrents/:listType',
+      component: Torrents,
+      children: [
+        {
+          path: 'console/:torrentID',
+          components: {
+            modal: ModalConsole
+          },
+          name: 'modal console',
+          meta: {
+            modalIsOpen: true
+          }
+        }
+      ]
     },
     {
       path: '/settings',
-      name: 'settings',
       component: Settings
     },
     {
       path: '*',
-      redirect: '/activity'
+      redirect: '/torrents/active'
     }
   ]
 })

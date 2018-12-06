@@ -16,8 +16,8 @@
         span
     .navbar-menu(:class="{ 'is-active': show }")
       .navbar-end
-        router-link.navbar-item(to='/activity') Activity
-        router-link.navbar-item(to='/history') History
+        router-link.navbar-item(to='/torrents/active') Activity
+        router-link.navbar-item(to='/torrents/complete') History
         router-link.navbar-item(to='/settings') Settings
 </template>
 

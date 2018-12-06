@@ -24,7 +24,7 @@ STATUS_LONG = {
 DEFAULT_CONFIG = {
     'general': {
         'title': '[betanin] torrent `$name` $status',
-        'body': '[betanin] torrent `$name` $status, on $time'
+        'body': '@ $time. view/use the console at http://127.0.0.1:5000/$console_path'
     },
     'services': {}
 }
@@ -136,15 +136,21 @@ def update_general(general):
 def send(torrent):
     config = _read_config()
     templates = _make_templates(config)
+    torrents_path = 'complete' \
+        if torrent.status == Status.COMPLETED \
+        else 'active'
     variables = {
         'name': torrent.name,
         'id': torrent.id,
         'time': torrent.updated,
+        'console_path': f'#/torrents/{torrents_path}/console/{torrent.id}',
         'status': STATUS_LONG.get(
             torrent.status,                             # custom
             f'has status {torrent.status.name.lower()}' # default
         ),
     }
+    print("title", templates['title'].safe_substitute(variables))
+    print("body", templates['body'].safe_substitute(variables))
     APPRISE.notify(
         title=templates['title'].safe_substitute(variables),
         body=templates['body'].safe_substitute(variables),

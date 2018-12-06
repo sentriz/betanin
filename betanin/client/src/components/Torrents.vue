@@ -14,7 +14,10 @@
           span.status-group(:style='{ color: statusStyle(props.row.status).colour }')
             b-icon(:icon='statusStyle(props.row.status).icon' size='is-small')
             |  {{ statusStyle(props.row.status).text }}
-          span.status-group.link(v-show='props.row.has_lines' @click='openModal(props.row.id)')
+          router-link.status-group.link(
+            v-show='props.row.has_lines'
+            :to=`{ name: 'modal console', params: { torrentID: props.row.id } }`
+          )
             b-icon(icon='console' size='is-small')
             |  view
           span.status-group(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
@@ -39,21 +42,14 @@
             strong updated
             |  {{ props.row.updated }}
       template(slot='empty')
-        slot
-    b-modal(
-      :width='640'
-      scroll='keep'
-      :active.sync='modalIsOpen'
-    )
-      modal-console(
-        :torrentID='modalTorrentID'
-      )
+        component(:is='emptyTorrentsComponent')
+    router-view(name='modal')
 </template>
 
 <script>
 // imports
-import ModalConsole from '@/components/console/ModalConsole.vue'
-import Vue from 'vue'
+import NoActive from '@/components/tips/NoActive.vue'
+import NoHistory from '@/components/tips/NoHistory.vue'
 import { mapGetters, mapActions } from 'vuex'
 // help
 const statusMap = {
@@ -68,26 +64,28 @@ const statusMap = {
 // export
 export default {
   computed: {
-    ...mapGetters([
-      'activeModal',
-      'areLines',
-      'lines'
+    ...mapGetters('torrents', [
+      'getActivity',
+      'getHistory'
     ]),
+    torrents () {
+      return this.$route.params.listType === 'active'
+        ? this.getActivity
+        : this.getHistory
+    },
     itemsPerPage () {
       const viewHeight = Math.max(
         document.documentElement.clientHeight,
         window.innerHeight || 0
       )
       return Math.floor(viewHeight - 370) / 44
+    },
+    emptyTorrentsComponent () {
+      return this.$route.params.listType === 'active'
+        ? NoActive
+        : NoHistory
     }
   },
-  components: {
-    ModalConsole
-  },
-  props: [
-    'torrents',
-    'emptyString'
-  ],
   methods: {
     ...mapActions({
       doDeleteOneTorrent: 'torrents/doDeleteOne',
@@ -95,17 +93,11 @@ export default {
     }),
     statusStyle (status) {
       return statusMap[status]
-    },
-    openModal (torrentID) {
-      Vue.set(this, 'modalTorrentID', torrentID)
-      Vue.set(this, 'modalIsOpen', true)
     }
   },
   data () {
     return {
-      openedDetails: [],
-      modalIsOpen: false,
-      modalTorrentID: ''
+      openedDetails: []
     }
   }
 }
@@ -127,5 +119,8 @@ export default {
     display: inline-block;
     margin: 0 0.1rem;
     opacity: 0.15;
+  }
+  a {
+    color: unset;
   }
 </style>
