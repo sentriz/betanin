@@ -111,7 +111,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .level {
     padding-bottom: 0;
   }
