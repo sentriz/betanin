@@ -4,7 +4,7 @@
   )
     .side-item#version
       span(v-show='betaninVersion') ver.&nbsp;
-      b {{ "eggs" | truncate(8, ' ') }}
+      b {{ betaninVersion | truncate(8, ' ') }}
     #connection
       p(v-if='getConnected') connected to backend
       p(v-else) not connected to backend
@@ -24,8 +24,7 @@ export default {
   }),
   data () {
     return {
-      betaninVersion: 'change'
-      // betaninVersion: __SOURCE_COMMIT__
+      betaninVersion: __SOURCE_COMMIT__
     }
   }
 }
