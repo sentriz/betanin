@@ -7,7 +7,6 @@
           b-input(v-model='generalTitle')
         b-field(label='body')
           b-input(
-            placeholder='Success'
             type='textarea'
             v-model='generalBody'
           )
@@ -29,7 +28,9 @@
             b needs input
             | '
     .field.is-pulled-right.controls
-      button.button.is-primary.is-right#format-save-button(@click='doPutGeneral()') save
+      button.button.is-primary.is-right#format-save-button(
+        @click='doPutGeneral()'
+      ) save
     hr
     h5.title.is-5 services
     h6(v-show='getServices.length === 0')
