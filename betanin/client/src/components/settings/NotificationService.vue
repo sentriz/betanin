@@ -76,7 +76,7 @@ export default {
     > * {
       margin: 0 5px;
     }
-    #not-protocol-box {
+    /deep/ #not-protocol-box {
       width: 500px;
     }
     #protocol-helper {
@@ -84,15 +84,15 @@ export default {
     }
   }
   #line {
-    padding: 0.5rem;
-    background-color: #fafafa;
-    border-radius: 5px;
-    #enabled-switch {
-      width: 35px;
-    }
-    margin: 0.30rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background-color: #fafafa;
+    border-radius: 5px;
+    margin: 0.30rem 0;
+    padding: 0.5rem;
+    #enabled-switch {
+      width: 35px;
+    }
   }
 </style>
