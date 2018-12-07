@@ -51,7 +51,7 @@ export default {
       return this.$route.params.torrentID
     },
     torrent () {
-      return this.getOne(this.torrentID)
+      return this.getOne(this.torrentID) || {}
     },
     isLive () {
       const { status } = this.torrent
@@ -60,7 +60,11 @@ export default {
   },
   methods: {
     openModalClose () {
-      this.$router.go(-1)
+      // not using .go(-1) here just in case there is no history
+      this.$router.push({
+        name: 'torrents',
+        params: { listType: this.$route.params.listType }
+      })
     },
     sendStdin (event) {
       backend.postResource(
