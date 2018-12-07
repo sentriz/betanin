@@ -24,6 +24,7 @@ export default {
   }),
   data () {
     return {
+      // eslint-disable-next-line
       betaninVersion: __SOURCE_COMMIT__
     }
   }
