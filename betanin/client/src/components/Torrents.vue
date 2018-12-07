@@ -68,11 +68,6 @@ export default {
       'getActivity',
       'getHistory'
     ]),
-    torrents () {
-      return this.$route.params.listType === 'active'
-        ? this.getActivity
-        : this.getHistory
-    },
     itemsPerPage () {
       const viewHeight = Math.max(
         document.documentElement.clientHeight,
@@ -84,8 +79,18 @@ export default {
       return this.$route.params.listType === 'active'
         ? NoActive
         : NoHistory
+    },
+    torrents () {
+      return this.$route.params.listType === 'active'
+        ? this.getActivity
+        : this.getHistory
     }
   },
+  // mounted () {
+  //   // force header
+  //   Vue.set(this.$children[0], 'data',
+  //     [{ status: 'COMPLETED', name: '_' }])
+  // },
   methods: {
     ...mapActions({
       doDeleteOneTorrent: 'torrents/doDeleteOne',
