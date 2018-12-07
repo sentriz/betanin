@@ -12,14 +12,15 @@ export default new Router({
   routes: [
     {
       path: '/torrents/:listType',
+      name: 'torrents',
       component: Torrents,
       children: [
         {
           path: 'console/:torrentID',
+          name: 'modal console',
           components: {
             modal: ModalConsole
           },
-          name: 'modal console',
           meta: {
             modalIsOpen: true
           }
@@ -28,6 +29,7 @@ export default new Router({
     },
     {
       path: '/settings',
+      name: 'settings',
       component: Settings
     },
     {
