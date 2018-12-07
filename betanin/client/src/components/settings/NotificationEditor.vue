@@ -27,6 +27,9 @@
             |  the current betanin status of the torrent. eg. '
             b needs input
             | '
+          li
+            code $console_path
+            |  the relative path to the console modal
     .field.is-pulled-right.controls
       button.button.is-primary.is-right#format-save-button(
         @click='doPutGeneral()'
