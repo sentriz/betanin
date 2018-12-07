@@ -149,8 +149,6 @@ def send(torrent):
             f'has status {torrent.status.name.lower()}' # default
         ),
     }
-    print("title", templates['title'].safe_substitute(variables))
-    print("body", templates['body'].safe_substitute(variables))
     APPRISE.notify(
         title=templates['title'].safe_substitute(variables),
         body=templates['body'].safe_substitute(variables),

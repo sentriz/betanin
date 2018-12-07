@@ -7,9 +7,9 @@
   )
     .modal-card
       header.modal-card-head
-        p.modal-card-title {{ getOne($route.params.torrentID).name }}
+        p.modal-card-title {{ torrent.name }}
       base-console.modal-card-body(
-        :torrentID='$route.params.torrentID'
+        :torrentID='torrentID'
         :isLive='isLive'
       )
       footer.modal-card-foot
@@ -47,8 +47,14 @@ export default {
     ...mapGetters('torrents', [
       'getOne'
     ]),
+    torrentID () {
+      return this.$route.params.torrentID
+    },
+    torrent () {
+      return this.getOne(this.torrentID)
+    },
     isLive () {
-      const { status } = this.getOne(this.$route.params.torrentID)
+      const { status } = this.torrent
       return ['PROCESSING', 'NEEDS_INPUT'].includes(status)
     }
   },
@@ -57,11 +63,10 @@ export default {
       this.$router.go(-1)
     },
     sendStdin (event) {
-      const postUrl = `torrents/${this.$route.params.torrentID}/console/stdin`
-      const payload = {
-        text: this.stdin
-      }
-      backend.postResource(postUrl, payload)
+      backend.postResource(
+        `torrents/${this.torrentID}/console/stdin`, {
+          text: this.stdin
+        })
       this.stdin = ''
     }
   }
