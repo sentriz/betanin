@@ -3,7 +3,7 @@
     .navbar-brand
       router-link.navbar-item(to='/')
         img#logo(
-          src='../assets/logo.png',
+          :src='getLogoPath()'
           height='100%'
         )
       a.navbar-burger(
@@ -31,6 +31,12 @@ export default {
   methods: {
     toggleShow () {
       this.show = !this.show
+    },
+    getLogoPath () {
+      // eslint-disable-next-line
+      return __NODE_ENV__ === 'production'
+        ? require('../assets/logo.png')
+        : require('../assets/logo_dev.png')
     }
   }
 }
