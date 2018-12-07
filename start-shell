@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 
+# standart library
+import code
+
 # 3rd party
 from flask import Flask
 
@@ -14,7 +17,10 @@ from betanin.api.orm.models.torrent import Torrent
 app = Flask('throwaway')
 app.config.from_object(Config)
 
-# make db
+# start repl
 with app.app_context():
     db.init_app(app)
-    db.create_all()
+    console = code.InteractiveConsole(locals=globals())
+    console.interact(banner=f'''welcome to the betanin shell.
+available globals include `Torrent`, `Line`, and `db`,
+use `exit()` to exit.''')
