@@ -27,10 +27,10 @@ const actions = {
     const result = await backend.fetchResource('torrents/')
     commit(TORRENTS_UPDATE, result)
   },
-  doDeleteOne (torrentID) {
+  doDeleteOne (context, torrentID) {
     backend.deleteResource(`torrents/${torrentID}`)
   },
-  doRetryOne (torrentID) {
+  doRetryOne (context, torrentID) {
     backend.putResource(`torrents/${torrentID}`)
   },
   doSocket__connect: ({ dispatch }) => {
