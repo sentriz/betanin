@@ -87,7 +87,7 @@ export default {
     }
   },
   // mounted () {
-  //   // force header
+  //   // force table header
   //   Vue.set(this.$children[0], 'data',
   //     [{ status: 'COMPLETED', name: '_' }])
   // },
