@@ -46,7 +46,7 @@ class TorrentResource(BaseResource):
         torrent.delete_lines()
         query.delete()
         db.session.commit()
-        events.torrents_changed()
+        events.send_torrents_changed()
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')
