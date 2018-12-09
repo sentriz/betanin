@@ -35,8 +35,8 @@ export default {
   $link:              $primary;
   $colors: (
     "primary": ($primary, $primary-invert),
-    "green":   ($green, $green-invert),
-    "info":    ($info, $info-invert),
+    "green": ($green, $green-invert),
+    "info": ($info, $info-invert),
   );
   #app {
     margin: 0;
