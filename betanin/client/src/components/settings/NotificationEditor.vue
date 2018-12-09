@@ -107,7 +107,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
   hr {
     margin-top: 5rem;
   }

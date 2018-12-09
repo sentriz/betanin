@@ -24,7 +24,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
   /deep/ {
     .tab-item {
       margin-top: 2rem;
