@@ -77,7 +77,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang='scss' scoped>
   .modal-card-title {
     font-size: 1rem;
   }
