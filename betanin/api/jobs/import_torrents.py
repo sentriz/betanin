@@ -11,6 +11,7 @@ from gevent.queue import Queue
 from betanin.api import events
 from betanin.api.status import Status
 from betanin.extensions import db
+from betanin.extensions import socketio
 from betanin.api.orm.models.torrent import Torrent
 
 PROCESSES = {}
@@ -26,7 +27,7 @@ NEEDS_INPUT_SNIPPETS = (
 
 def _set_init_index(torrent):
     if not torrent.id in INDEXES:
-        INDEXES[torrent.id] = torrent.last_line_index
+        INDEXES[torrent.id] = torrent.last_line_index + 1
 
 
 def _add_line(torrent, data):
@@ -65,7 +66,7 @@ def _read_and_send_pty_out(proc, torrent):
 def _import_torrent(torrent):
     proc = pexpect.spawn(
         # f'/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
-        f'beet import -c {_calc_import_path(torrent)!r}', use_poll=True)
+        f'beet import --copy --noresume {_calc_import_path(torrent)!r}', use_poll=True)
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
@@ -101,7 +102,7 @@ def retry(torrent_id):
     QUEUE.put_nowait(torrent.id)
 
 
-def start():
+def _start():
     while True:
         torrent_id = QUEUE.get()
         torrent = Torrent.query.get(torrent_id)
@@ -119,3 +120,10 @@ def start():
         db.session.commit()
         events.send_torrents_changed()
         events.send_torrent_status_changed(torrent)
+
+
+def start(flask_app):
+    def with_context():
+        with flask_app.app_context():
+            _start()
+    return socketio.start_background_task(with_context)
