@@ -5,6 +5,7 @@ from gevent import monkey; monkey.patch_all()
 # python
 import sys
 import signal
+from functools import partial
 
 # 3rd party
 import gevent
@@ -13,9 +14,11 @@ from flask import Flask
 # betanin
 from betanin import api
 from betanin import client
-from betanin.api import notifications
 from betanin.config import Config
+from betanin.api.jobs import serve_web
 from betanin.api.jobs import import_torrents
+from betanin.api.jobs import retry_old_imports
+from betanin.api.jobs import register_notifications
 from betanin.extensions import db
 from betanin.extensions import cors
 from betanin.extensions import rest
@@ -63,26 +66,22 @@ def register_blueprints(app):
     app.register_blueprint(api.blueprint)
 
 
+def make_starter(module, flask_app, *args, **kwargs):
+    print(f'starting job {module.__name__}')
+    return module.start(flask_app, *args, **kwargs)
+
+
 if __name__ == "__main__":
     # setup stop
     signal.signal(signal.SIGINT, stop)
     signal.signal(signal.SIGTERM, stop)
-    # setup
-    from gevent.pywsgi import WSGIServer
-    flask_app = create_app()
-    def _make_context_starter(module):
-        def _context_wrapper():
-            with flask_app.app_context():
-                module.start()
-        return _context_wrapper
-    # jobs
-    port = 5000
-    _http_server = WSGIServer(('', port), log=None, application=flask_app)
-    # hello
-    print(f'starting on port {port}')
-    # start http job and extra jobs
+    # setup start
+    start = partial(make_starter, flask_app=create_app())
+    # start sync jobs
+    start(retry_old_imports)
+    # start async jobs
     gevent.joinall((
-        socketio.start_background_task(notifications.register_all),
-        socketio.start_background_task(_make_context_starter(import_torrents)),
-        socketio.start_background_task(_http_server.start),
+        start(register_notifications),
+        start(import_torrents),
+        start(serve_web),
     ))
