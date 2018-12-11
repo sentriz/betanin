@@ -21,10 +21,10 @@
             b-icon(icon='console' size='is-small')
             |  view
           span.status-group(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
-            span.link(title='remove torrent' @click='doDeleteOneTorrent(props.row.id)')
+            span.link(title='remove torrent' @click='deleteTorrent(props.row.id)')
               b-icon.link(icon='close' size='is-small')
             | &nbsp;
-            span.link(title='retry import' @click='doRetryOneTorrent(props.row.id)')
+            span.link(title='retry import' @click='retryTorrent(props.row.id)')
               b-icon.link(title='retry import' icon='loop' size='is-small')
       template(slot-scope='props'
                slot='detail')
@@ -96,6 +96,19 @@ export default {
       doDeleteOneTorrent: 'torrents/doDeleteOne',
       doRetryOneTorrent: 'torrents/doRetryOne'
     }),
+    retryTorrent (torrentID) {
+      if (confirm('do you want to retry this?')) {
+        this.doRetryOneTorrent(torrentID)
+        this.$router.push({
+          name: 'modal console', params: { torrentID }
+        })
+      }
+    },
+    deleteTorrent (torrentID) {
+      if (confirm('do you want to remove this from betanin?')) {
+        this.doDeleteOneTorrent(torrentID)
+      }
+    },
     statusStyle (status) {
       return statusMap[status]
     }
