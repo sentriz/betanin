@@ -12,7 +12,13 @@ RUN \
 FROM python:3.6.6-alpine3.6
 LABEL maintainer="Senan Kelly <senan@senan.xyz>"
 WORKDIR /app
-COPY requirements.txt start create-database start-shell docker-entry ./
+COPY \
+    requirements.txt \
+    start \
+    create-database \
+    start-shell \
+    docker-entry \
+    ./
 COPY betanin/*.py ./betanin/
 COPY betanin/api/ ./betanin/api
 COPY betanin/client/__init__.py ./betanin/client/
