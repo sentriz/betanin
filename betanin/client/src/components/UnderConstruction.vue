@@ -5,7 +5,7 @@
     img.image(src='https://media1.tenor.com/images/eb1b27863813653543914d222ceb9cd0/tenor.gif?itemid=5548554')#content
 </template>
 
-<style lange='scss' scoped>
+<style lang='scss' scoped>
   #construction {
     position: fixed;
     bottom: 0;
