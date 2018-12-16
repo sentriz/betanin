@@ -43,7 +43,7 @@ export default {
     background-color: $success;
   }
   #banner {
-    z-index: 10000;
+    z-index: 1000000;
     padding: 0 1rem;
     display: flex;
     flex-flow: row wrap;
