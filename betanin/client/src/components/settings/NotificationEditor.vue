@@ -1,5 +1,6 @@
 <template lang="pug">
   div
+
     h5.title.is-5 notification format
     #general-editor
       #general-inputs
@@ -35,45 +36,50 @@
         @click='doPutGeneral()'
       ) save
     hr
+
     h5.title.is-5 services
-    h6(v-show='getServices.length === 0')
-      b-icon(icon='alert')
-      | &nbsp; no services here yet, add one below
-    notification-service(
-      v-for='service in getServices'
-      :serviceID='service.id'
-      :key='service.id'
-    )
-    #service-controls.controls
-      .field.has-addons#service-type-selector
-        .control
-          .select.is-fullwidth
-            select(v-model='newServiceType')
-              option(
-                v-for='service in getPossible'
-                :key='service.service_name'
-                :value='service.service_name'
-              ) {{ service.service_name }}
-        .control
-          button.button(@click='doPostService(newServiceType)') add new
-      .field
-        .field
+    #service-editor
+      h6(v-show='getServices.length === 0')
+        b-icon(icon='alert')
+        | &nbsp; no services here yet, add one below
+      notification-service(
+        v-for='service in getServices'
+        :serviceID='service.id'
+        :key='service.id'
+        ref='services'
+      )
+      #service-controls.controls
+        .field.has-addons#service-type-selector
           .control
-            button.button.is-primary(
-              @click='doPutServices()'
-              :class='{ "is-loading": getIsTesting }'
-            ) save
+            .select.is-fullwidth
+              select(v-model='newServiceType')
+                option(
+                  v-for='service in getPossible'
+                  :key='service.service_name'
+                  :value='service.service_name'
+                ) {{ service.service_name }}
+          .control
+            button.button(@click='doPostService(newServiceType)') add new
+        .field
+          .field
+            .control
+              button.button.is-primary(
+                @click='saveServices()'
+                :class='{ "is-loading": getIsTesting }'
+              ) save
 </template>
 
 <script>
 // imports
 import NotificationService from '@/components/settings/NotificationService.vue'
+import { ValidationObserver } from 'vee-validate'
 import { genNotiGeneralComputed } from '@/utilities'
 import { mapActions, mapGetters } from 'vuex'
 // export
 export default {
   components: {
-    NotificationService
+    NotificationService,
+    ValidationObserver
   },
   created () {
     this.doFetchPossible()
@@ -97,7 +103,16 @@ export default {
       'doPutGeneral',
       'doPostService',
       'doPutServices'
-    ])
+    ]),
+    async saveServices () {
+      const services = this.$refs.services || []
+      const promises = services.map(service =>
+        service.$validator.validateAll())
+      const results = await Promise.all(promises)
+      if (results.every(v => v)) {
+        this.doPutServices()
+      }
+    }
   },
   data () {
     return {

@@ -60,28 +60,36 @@ const actions = {
       getters.getServices
     )
     await commit(NOTI_SERVICE_TESTING_UPDATE, true)
-    const testResult = await backend.fetchResource(
-      `settings/notifications/test_services`,
-      getters.getServices
-    )
-    await commit(NOTI_SERVICE_TESTING_UPDATE, false)
+    let testResult
+    try {
+      testResult = await backend.fetchResource(
+        `settings/notifications/test_services`,
+        getters.getServices
+      )
+    } catch (error) {
+    } finally {
+      await commit(NOTI_SERVICE_TESTING_UPDATE, false)
+    }
     Toast.open({
       message: testResult ? 'testing succeeded' : 'testing failed',
       type: testResult ? 'is-green' : 'is-primary'
     })
   },
   async doFetchServices ({ commit }) {
-    const result = await backend.fetchResource('settings/notifications/services')
+    const result = await backend.fetchResource(
+      'settings/notifications/services')
     commit(NOTI_SERVICES_UPDATE, result)
   },
   // all possible
   async doFetchPossible ({ commit }) {
-    const result = await backend.fetchResource('settings/notifications/possible_services')
+    const result = await backend.fetchResource(
+      'settings/notifications/possible_services')
     commit(NOTI_POSSIBLE_UPDATE, result.schemas)
   },
   // general
   async doFetchGeneral ({ commit }) {
-    const result = await backend.fetchResource('settings/notifications/general')
+    const result = await backend.fetchResource(
+      'settings/notifications/general')
     commit(NOTI_GENERALS_UPDATE, result)
   },
   doPutGeneral ({ getters }) {

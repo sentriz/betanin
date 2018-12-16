@@ -34,6 +34,20 @@ Vue.use(
   }
 )
 
+// vee
+import VeeValidate, { Validator } from 'vee-validate'
+Vue.use(VeeValidate)
+Validator.localize('en', {
+  custom: {
+    protocol: {
+      required: 'protocol required'
+    },
+    notProtocol: {
+      required: 'url required'
+    }
+  }
+})
+
 // start
 const view = new Vue({
   router,

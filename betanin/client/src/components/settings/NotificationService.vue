@@ -2,25 +2,36 @@
   div#line
     b-switch#enabled-switch(
       v-model='enabled'
-    ) {{ ['no', 'yes'][Number(service.enabled)] }}
+    ) {{ ['disabled', 'enabled'][Number(service.enabled)] }}
     #url
-      .select
-        select(
-          v-model='protocol'
-        )
-          option(disabled value='') please select
-          option(
-            v-for='service in getPossibleProtocols(service.type)'
-            :key='service'
-            :value='service'
-          ) {{ service}}
-      p#protocol-helper ://
-      b-input#not-protocol-box(
-        icon='earth'
-        placeholder='see info button for help'
-        v-model='notProtocol'
+      b-field(
+        :type='{"is-primary": errors.has("protocol")}'
+        :message='errors.first("protocol")'
       )
-      a(
+         b-select#protocol-selector(
+           v-model='protocol'
+           v-validate="'required'"
+           data-vv-name='protocol'
+         )
+           option(disabled value='') please select
+           option(
+             v-for='service in getPossibleProtocols(service.type)'
+             :key='service'
+             :value='service'
+           ) {{ service}}
+      p#protocol-helper ://
+      b-field(
+        :type='{"is-primary": errors.has("notProtocol")}'
+        :message='errors.first("notProtocol")'
+      )
+        b-input#not-protocol-box(
+          icon='earth'
+          placeholder='see info button for help'
+          v-model='notProtocol'
+          v-validate="'required'"
+          data-vv-name='notProtocol'
+        )
+      a#info-link(
         :href='getPossibleInfo(service.type)'
         target='_blank'
       )
@@ -28,8 +39,10 @@
           icon='information'
           type='is-info'
         )
-    p.control
-      button.button.left-button(@click='NOTI_SERVICE_DELETE(service.id)') remove
+    p.control#delete-button
+      button.button.left-button(
+        @click='NOTI_SERVICE_DELETE(service.id)'
+      ) remove
 </template>
 
 <script>
@@ -72,7 +85,7 @@ export default {
 <style lang='scss' scoped>
   #url {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     > * {
       margin: 0 5px;
     }
@@ -85,14 +98,15 @@ export default {
   }
   #line {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     background-color: #fafafa;
     border-radius: 5px;
-    margin: 0.30rem 0;
     padding: 0.5rem;
-    #enabled-switch {
-      width: 35px;
-    }
+    margin: 0.5rem 0;
+  }
+  #protocol-helper, #info-link, #delete-button, #enabled-switch {
+    height: 36px;
+    line-height: 36px;
   }
 </style>
