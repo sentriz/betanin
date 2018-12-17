@@ -32,5 +32,6 @@ tzlocal==1.5.1
 urllib3==1.24
 Werkzeug==0.14.1
 pexpect
-apprise
 toml
+https://github.com/edavis/transmission-fluid/archive/master.zip
+https://github.com/caronc/apprise/archive/master.zip
