@@ -10,13 +10,17 @@ from contextlib import contextmanager
 
 # 3rd party
 import toml
-import apprise
+from apprise import Apprise
+from apprise import AppriseAsset
 
 # betanin
 from betanin import paths
 from betanin.api.status import Status
 
-APPRISE = apprise.Apprise()
+_apprise_asset = AppriseAsset()
+_apprise_asset.app_id = 'betanin'
+_apprise_asset.app_desc = 'betanin'
+APPRISE = Apprise(asset=_apprise_asset)
 STATUS_LONG = {
     Status.COMPLETED: 'has completed',
     Status.NEEDS_INPUT: 'needs input',
