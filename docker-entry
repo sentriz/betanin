@@ -7,6 +7,7 @@ fi
 
 # 🤫🤫🤫
 export PYTHONWARNINGS='ignore:Unverified HTTPS request'
+export PYTHONUNBUFFERED='1'
 
 # start betanin
 exec ./start
