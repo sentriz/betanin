@@ -15,7 +15,7 @@
 import { LINES_FETCHED_CREATE } from '@/store/mutation-types'
 import { mapGetters, mapActions, mapMutations } from 'vuex'
 // help
-const Convert = require('ansi-to-html')
+import Convert from 'ansi-to-html'
 const converter = new Convert()
 // export
 export default {
