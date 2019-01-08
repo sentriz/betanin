@@ -1,5 +1,5 @@
 <template lang="pug">
-  pre
+  pre(v-chat-scroll)
     #live-box(v-show='isLive')
       span#live-fade &#x25A0
       span#live-text live
