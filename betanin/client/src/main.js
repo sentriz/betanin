@@ -1,9 +1,10 @@
 /* eslint-disable import/first */
+
 // vue
 import Vue from 'vue'
 Vue.config.productionTip = false
 
-// us
+// betanin
 import App from '@/components/App.vue'
 import router from '@/router'
 import store from '@/store/main'
@@ -47,6 +48,10 @@ Validator.localize('en', {
     }
   }
 })
+
+// chat-scroll
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 
 // start
 const view = new Vue({
