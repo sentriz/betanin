@@ -18,7 +18,7 @@
             @keyup.enter='sendStdin'
             type='text'
             :disabled='!isLive'
-            :placeholder='isLive ? "send to to beets" : "beets has quit"'
+            :placeholder='isLive ? "send to beets" : "beets has quit"'
             v-model='stdin'
           )
         #send-button
