@@ -7,6 +7,7 @@
       detail-key='id'
       paginated
       :per-page='itemsPerPage'
+      :pagination-simple='true'
     )
       template(slot-scope='props')
         b-table-column(label='name') {{ props.row.name | truncate(64) }}
@@ -69,11 +70,9 @@ export default {
       'getHistory'
     ]),
     itemsPerPage () {
-      const viewHeight = Math.max(
-        document.documentElement.clientHeight,
-        window.innerHeight || 0
-      )
-      return Math.floor(viewHeight - 370) / 44
+      const viewHeight = window.innerHeight || 0
+      const perPage = Math.floor(viewHeight - 370) / 44
+      return Math.round(perPage)
     },
     emptyTorrentsComponent () {
       return this.$route.params.listType === 'active'
