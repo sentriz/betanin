@@ -17,6 +17,7 @@ from apprise import AppriseAsset
 from betanin import paths
 from betanin.api.status import Status
 
+
 _apprise_asset = AppriseAsset()
 _apprise_asset.app_id = 'betanin'
 _apprise_asset.app_desc = 'betanin'

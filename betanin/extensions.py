@@ -5,6 +5,7 @@ from flask_restplus import Api
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 
+
 cors = CORS()
 db = SQLAlchemy()
 migrate = Migrate()

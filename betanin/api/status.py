@@ -4,6 +4,7 @@ from enum import Enum
 # betanin
 from betanin.extensions import db
 
+
 Status = Enum('Status', [
     'COMPLETED',
     'ENQUEUED',
