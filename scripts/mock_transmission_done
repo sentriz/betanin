@@ -12,5 +12,3 @@ curl \
     -d "path=$TR_TORRENT_DIR" \
     -d "name=$TR_TORRENT_NAME" \
     "http://localhost:5000/api/torrents/$TR_TORRENT_HASH"
-
-echo $TR_TORRENT_HASH
