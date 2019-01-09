@@ -4,6 +4,7 @@ from flask_restplus import fields
 # betanin
 from betanin.api.rest.namespaces import torrents_ns
 
+
 torrent = torrents_ns.parser()
 torrent.add_argument(
     'name', type=str, location='form', required=True,

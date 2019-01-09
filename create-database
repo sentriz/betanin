@@ -9,6 +9,7 @@ from betanin.extensions import db
 from betanin.api.orm.models.torrent import Line
 from betanin.api.orm.models.torrent import Torrent
 
+
 # create and configure app
 app = Flask('throwaway')
 app.config.from_object(Config)

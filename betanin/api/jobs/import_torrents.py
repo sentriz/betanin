@@ -14,6 +14,7 @@ from betanin.extensions import db
 from betanin.extensions import socketio
 from betanin.api.orm.models.torrent import Torrent
 
+
 PROCESSES = {}
 INDEXES = {}
 QUEUE = Queue()
