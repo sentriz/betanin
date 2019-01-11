@@ -12,11 +12,15 @@ from betanin.api.orm.models.torrent import Torrent
 @torrents_ns.route('/')
 class TorrentsResource(BaseResource):
     @staticmethod
+    @torrents_ns.doc(parser=req_models.torrents)
     @torrents_ns.marshal_list_with(resp_models.torrent)
     def get():
-        return Torrent.query \
-            .order_by(Torrent.created.desc()) \
-            .all()
+        args = req_models.torrents.parse_args()
+        torrents = Torrent.query.order_by(Torrent.created.desc())
+        if args['page'] and args['per_page']:
+            page = torrents.paginate(**args, error_out=False)
+            return page.items
+        return torrents.all()
 
 
 @torrents_ns.route('/<string:torrent_id>')
@@ -34,7 +38,6 @@ class TorrentResource(BaseResource):
     @staticmethod
     def put(torrent_id):
         import_torrents.retry(torrent_id)
-
 
     @staticmethod
     def delete(torrent_id):
