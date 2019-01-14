@@ -24,6 +24,7 @@ _apprise_asset.app_desc = 'betanin'
 APPRISE = Apprise(asset=_apprise_asset)
 STATUS_LONG = {
     Status.COMPLETED: 'has completed',
+    Status.FAILED: 'has failed',
     Status.NEEDS_INPUT: 'needs input',
 }
 DEFAULT_CONFIG = {
