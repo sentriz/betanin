@@ -1,4 +1,4 @@
-# python
+# standard library
 import os
 
 # betanin

@@ -1,4 +1,4 @@
-# python
+# standard library
 from enum import Enum
 
 # betanin

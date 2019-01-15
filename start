@@ -2,7 +2,7 @@
 
 from gevent import monkey; monkey.patch_all()
 
-# python
+# standard library
 import sys
 import signal
 from functools import partial

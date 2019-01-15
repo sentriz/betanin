@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# python
+# standard library
 import os
 import random
 import string
