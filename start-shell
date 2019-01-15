@@ -2,6 +2,7 @@
 
 # standard library
 import code
+import readline
 
 # 3rd party
 from flask import Flask
