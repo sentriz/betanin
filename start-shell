@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-# python
-# standart library
+# standard library
 import code
 
 # 3rd party

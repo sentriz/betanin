@@ -1,4 +1,4 @@
-# python
+# standard library
 import os.path
 from collections import defaultdict
 

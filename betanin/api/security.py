@@ -1,5 +1,4 @@
-""" Security Related things """
-# python
+# standard library
 from functools import wraps
 
 # 3rd party
@@ -8,11 +7,8 @@ from flask_restplus import abort
 
 
 def require_auth(func):
-    """ Secure method decorator """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        # Verify if User is Authenticated
-        # Authentication logic goes here
         if request.headers.get('authorization'):
             return func(*args, **kwargs)
         else:
