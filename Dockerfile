@@ -16,6 +16,7 @@ LABEL maintainer="Senan Kelly <senan@senan.xyz>"
 WORKDIR /app
 COPY \
     requirements.txt \
+    requirements-docker.txt \
     start \
     create-database \
     start-shell \
@@ -33,9 +34,7 @@ RUN \
     && \
     pip install \
         -r requirements.txt \
-        beets \
-        discogs-client \
-        beets-noimport
+        -r requirements-docker.txt
 VOLUME /root/.local/share/betanin/
 VOLUME /root/.config/betanin/
 VOLUME /root/.config/beets/

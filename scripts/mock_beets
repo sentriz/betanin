@@ -4,7 +4,7 @@ echo one
 echo two
 echo three  1>&2
 echo four
-sleep 8
+sleep 3
 read -p '[A]pply [r]emove old: ' egg
 echo "you picked $egg"
 exit 0

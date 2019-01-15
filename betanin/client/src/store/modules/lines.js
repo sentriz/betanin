@@ -1,7 +1,14 @@
 import Vue from 'vue'
 import backend from '@/backend'
-import { binaryInsert, lastN } from '../utilities'
-import { LINES_CREATE, LINES_FETCHED_CREATE } from '../mutation-types'
+import {
+  binaryInsert,
+  lastN,
+  cleanObject
+} from '../utilities'
+import {
+  LINES_CREATE,
+  LINES_FETCHED_CREATE
+} from '../mutation-types'
 
 const state = {
   lines: {},
@@ -19,28 +26,28 @@ const getters = {
 
 const actions = {
   async doFetchAll ({ commit }, torrentID) {
-    const lines = await backend.fetchResource(`torrents/${torrentID}/console/stdout`)
+    const lines = await backend.fetchResource(
+      `torrents/${torrentID}/console/stdout`)
     lines.forEach(line => {
-      commit(LINES_CREATE, { torrentID, line })
+      commit(LINES_CREATE, { torrentID, ...line })
     })
   },
-  doSocket__read ({ commit }, { torrentID, line }) {
-    commit(LINES_CREATE, { torrentID, line })
+  doSocket__newLine ({ commit }, data) {
+    const cleanData = cleanObject(data)
+    commit(LINES_CREATE, cleanData)
   }
 }
 
 const mutations = {
-  [LINES_CREATE] (state, { torrentID, line }) {
+  [LINES_CREATE] (state, { torrentID, index, data }) {
     const lines = torrentID in state.lines
-      ? state.lines[torrentID].concat()
+      ? state.lines[torrentID]
       : []
-    binaryInsert(lines, line)
+    binaryInsert(lines, { index, data })
     Vue.set(state.lines, torrentID, lines)
   },
   [LINES_FETCHED_CREATE] (state, torrentID) {
-    const copy = state.fetched.concat()
-    copy.push(torrentID)
-    Vue.set(state, 'fetched', copy)
+    state.fetched.push(torrentID)
   }
 }
 

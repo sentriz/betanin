@@ -1,7 +1,11 @@
 import Vue from 'vue'
 import backend from '@/backend'
 import { itemFromID } from '../utilities'
-import { TORRENTS_UPDATE } from '../mutation-types'
+import {
+  TORRENTS_ALL_CREATE,
+  TORRENTS_ONE_UPDATE,
+  TORRENTS_ONE_DELETE
+} from '../mutation-types'
 
 const state = {
   torrents: []
@@ -25,10 +29,11 @@ const getters = {
 const actions = {
   async doFetchAll ({ commit }) {
     const result = await backend.fetchResource('torrents/')
-    commit(TORRENTS_UPDATE, result)
+    commit(TORRENTS_ALL_CREATE, result)
   },
-  doDeleteOne (context, torrentID) {
+  doDeleteOne ({ commit }, torrentID) {
     backend.deleteResource(`torrents/${torrentID}`)
+    commit(TORRENTS_ONE_DELETE, torrentID)
   },
   doRetryOne (context, torrentID) {
     backend.putResource(`torrents/${torrentID}`)
@@ -36,14 +41,29 @@ const actions = {
   doSocket__connect: ({ dispatch }) => {
     dispatch('doFetchAll')
   },
-  doSocket__changed: ({ dispatch }) => {
-    dispatch('doFetchAll')
+  doSocket__newTorrent: ({ commit }, torrent) => {
+    commit(TORRENTS_ONE_UPDATE, torrent)
   }
 }
 
 const mutations = {
-  [TORRENTS_UPDATE] (state, torrents) {
+  [TORRENTS_ALL_CREATE] (state, torrents) {
     Vue.set(state, 'torrents', torrents)
+  },
+  [TORRENTS_ONE_UPDATE] (state, torrent) {
+    const i = state.torrents.findIndex(item =>
+      item.id === torrent.id)
+    if (i > -1) {
+      Vue.set(state.torrents, i, torrent)
+      return
+    }
+    state.torrents.unshift(torrent)
+  },
+  [TORRENTS_ONE_DELETE] (state, torrentID) {
+    state.torrents.splice(
+      state.torrents.findIndex(torrent =>
+        torrent.id === torrentID), 1
+    )
   }
 }
 

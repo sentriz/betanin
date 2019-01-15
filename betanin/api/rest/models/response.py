@@ -17,6 +17,11 @@ class _EnumField(fields.String):
         return enum.name
 
 
+_torrent_id_field = fields.String(
+    description='the id of the torrent',
+    example='78d1780216dfe571b499c61e20365',
+)
+
 line = torrents_ns.model('Line', {
     'index': fields.String(
         description='the index of the line',
@@ -24,16 +29,17 @@ line = torrents_ns.model('Line', {
     ),
     'data': fields.String(
         description='the line itself',
-        example='dfksjhfshdfdfksdhfj',
+        example='No Xmas For John Quays -> No Xmas for John Quays',
     ),
 })
 
+line_with_torrent_id = torrents_ns.model('LineWithTorrentID', {
+    'torrent_id': _torrent_id_field,
+    **line,
+})
 
 torrent = torrents_ns.model('Torrent', {
-    'id': fields.String(
-        description='the id of the torrent',
-        example='kfjhkdjfghkdfjghdkijfhg',
-    ),
+    'id': _torrent_id_field,
     'path': fields.String(
         description='the path of the torrent',
         example='downloads/music/Sam - Sammy (2014) [FLAC]',

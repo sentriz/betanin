@@ -1,0 +1,3 @@
+beets
+discogs-client
+beets-noimport

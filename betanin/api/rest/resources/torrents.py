@@ -16,7 +16,8 @@ class TorrentsResource(BaseResource):
     @torrents_ns.marshal_list_with(resp_models.torrent)
     def get():
         args = req_models.torrents.parse_args()
-        torrents = Torrent.query.order_by(Torrent.created.desc())
+        torrents = Torrent.query.order_by(
+            Torrent.updated.desc())
         if args['page'] and args['per_page']:
             page = torrents.paginate(**args, error_out=False)
             return page.items

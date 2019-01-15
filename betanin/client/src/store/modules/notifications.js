@@ -121,7 +121,8 @@ const mutations = {
   },
   [NOTI_SERVICE_DELETE] (state, serviceID) {
     state.services.splice(
-      state.services.findIndex(service => service.id === serviceID), 1
+      state.services.findIndex(service =>
+        service.id === serviceID), 1
     )
   },
   [NOTI_POSSIBLE_UPDATE] (state, services) {
