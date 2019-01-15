@@ -9,14 +9,15 @@ from gevent.queue import Queue
 
 # betanin
 from betanin.api import events
+from betanin.api import notifications
 from betanin.api.status import Status
 from betanin.extensions import db
 from betanin.extensions import socketio
+from betanin.api.orm.models.torrent import Line
 from betanin.api.orm.models.torrent import Torrent
 
 
 PROCESSES = {}
-INDEXES = {}
 QUEUE = Queue()
 NEEDS_INPUT_SNIPPETS = (
     '[A]pply',
@@ -26,18 +27,11 @@ NEEDS_INPUT_SNIPPETS = (
 )
 
 
-def _set_init_index(torrent):
-    if not torrent.id in INDEXES:
-        INDEXES[torrent.id] = torrent.last_line_index + 1
-
-
 def _add_line(torrent, data):
-    _set_init_index(torrent)
-    index = INDEXES[torrent.id]
-    INDEXES[torrent.id] += 1
-    torrent.add_line(index, data)
+    line = Line(data=data)
+    torrent.add_line(line)
     db.session.commit()
-    events.send_line_read(torrent.id, index, data)
+    events.send_line(line)
 
 
 def _calc_import_path(torrent):
@@ -60,8 +54,8 @@ def _read_and_send_pty_out(proc, torrent):
         if any(match in text for match in NEEDS_INPUT_SNIPPETS):
             torrent.status = Status.NEEDS_INPUT
             db.session.commit()
-            events.send_torrents_changed()
-            events.send_torrent_status_changed(torrent)
+            events.send_torrent(torrent)
+            notifications.send_async(torrent)
 
 
 def _import_torrent(torrent):
@@ -90,7 +84,7 @@ def add(**kwargs):
     db.session.add(torrent)
     db.session.commit()
     QUEUE.put_nowait(torrent.id)
-    events.send_torrents_changed()
+    events.send_torrent(torrent)
 
 
 def retry(torrent_id):
@@ -98,8 +92,9 @@ def retry(torrent_id):
     torrent = query.first_or_404()
     torrent.status = Status.ENQUEUED
     db.session.commit()
-    _add_line(torrent, '[betanin] retrying...')
-    events.send_torrents_changed()
+    _add_line(torrent, '[betanin] retrying... '
+            f'(there are {len(QUEUE)} items in the queue)')
+    events.send_torrent(torrent)
     QUEUE.put_nowait(torrent.id)
 
 
@@ -109,18 +104,17 @@ def _start():
         torrent = Torrent.query.get(torrent_id)
         torrent.status = Status.PROCESSING
         db.session.commit()
-        events.send_torrents_changed()
         _add_line(torrent, '[betanin] starting cli program')
+        events.send_torrent(torrent)
         return_code = _import_torrent(torrent)
         _add_line(torrent, '[betanin] program finished with '
             f'exit status `{return_code}`')
+        torrent.status = Status.FAILED
         if return_code == 0:
             torrent.status = Status.COMPLETED
-        else:
-            torrent.status = Status.FAILED
         db.session.commit()
-        events.send_torrents_changed()
-        events.send_torrent_status_changed(torrent)
+        events.send_torrent(torrent)
+        notifications.send_async(torrent)
 
 
 def start(flask_app):

@@ -10,6 +10,7 @@ from contextlib import contextmanager
 
 # 3rd party
 import toml
+import gevent
 from apprise import Apprise
 from apprise import AppriseAsset
 
@@ -159,3 +160,7 @@ def send(torrent):
         title=templates['title'].safe_substitute(variables),
         body=templates['body'].safe_substitute(variables),
     )
+
+
+def send_async(torrent):
+    gevent.spawn(send, torrent)

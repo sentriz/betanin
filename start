@@ -45,11 +45,12 @@ def register_extensions(app):
     db.init_app(app)
     # cors
     cors.init_app(app)
-    from sqlalchemy_utils import force_instant_defaults
-    force_instant_defaults()
-    # migrations
+    # models
+    __import__('sqlalchemy_utils').force_instant_defaults()
+    __import__('sqlalchemy_utils').force_auto_coercion()
     from betanin.api.orm.models.torrent import Torrent
     from betanin.api.orm.models.line import Line
+    # migrations
     migrate.init_app(app, db)
     # socketio
     socketio.init_app(app)

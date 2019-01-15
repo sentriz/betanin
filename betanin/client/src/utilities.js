@@ -1,5 +1,8 @@
 import store from '@/store/main'
-import { NOTI_SERVICE_UPDATE, NOTI_GENERAL_UPDATE } from '@/store/mutation-types'
+import {
+  NOTI_SERVICE_UPDATE,
+  NOTI_GENERAL_UPDATE
+} from '@/store/mutation-types'
 
 export const genNotiServiceComputed = key => ({
   get () {

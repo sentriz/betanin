@@ -21,3 +21,26 @@ export const binaryInsert = (array, item, startVal, endVal) => {
   else if (value < array[middle].index) binaryInsert(array, item, start, middle - 1)
   else if (value > array[middle].index) binaryInsert(array, item, middle + 1, end)
 }
+
+export const cleanObject = object => {
+  const knownMap = {
+    torrent_id: 'torrentID'
+  }
+  for (const [key, value] of Object.entries(object)) {
+    // fix known fixes
+    if (key in knownMap) {
+      delete object[key]
+      object[knownMap[key]] = value
+      continue
+    }
+    // try to fix others
+    const newKey = key.replace(/(-\w)/g, m =>
+      m[1].toUpperCase())
+    if (key === newKey) {
+      continue
+    }
+    delete object[key]
+    object[newKey] = value
+  }
+  return object
+}

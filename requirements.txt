@@ -35,4 +35,3 @@ pexpect
 toml
 https://github.com/edavis/transmission-fluid/archive/master.zip
 https://github.com/caronc/apprise/archive/master.zip
-readline
