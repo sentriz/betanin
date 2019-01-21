@@ -1,6 +1,5 @@
 <template lang="pug">
   div
-
     h5.title.is-5 notification format
     #general-editor
       #general-inputs

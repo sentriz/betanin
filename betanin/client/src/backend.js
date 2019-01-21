@@ -20,12 +20,10 @@ $axios.interceptors.response.use(
     return response
   },
   function (error) {
-    if (error.search('timeout') === -1) {
-      Toast.open({
-        message: 'network error',
-        type: 'is-primary'
-      })
-    }
+    Toast.open({
+      message: `network error: ${error.response.statusText}`,
+      type: 'is-primary'
+    })
     return Promise.reject(error)
   }
 )

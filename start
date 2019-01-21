@@ -10,6 +10,8 @@ from functools import partial
 # 3rd party
 import gevent
 from flask import Flask
+from loguru import logger
+from werkzeug.contrib.fixers import ProxyFix
 
 # betanin
 from betanin import api
@@ -24,35 +26,28 @@ from betanin.extensions import cors
 from betanin.extensions import rest
 from betanin.extensions import migrate
 from betanin.extensions import socketio
+from betanin.api.orm.models.line import Line
+from betanin.api.orm.models.torrent import Torrent
 
 
-def stop(sig_num, frame):
-    print('shutting down')
-    sys.exit(0)
+__import__('sqlalchemy_utils').force_instant_defaults()
+__import__('sqlalchemy_utils').force_auto_coercion()
 
 
 def create_app():
     app = Flask(__name__.split('.')[0])
     app.url_map.strict_slashes = False
     app.config.from_object(Config)
+    register_modifications(app)
     register_extensions(app)
     register_blueprints(app)
     return app
 
 
 def register_extensions(app):
-    # orm
     db.init_app(app)
-    # cors
     cors.init_app(app)
-    # models
-    __import__('sqlalchemy_utils').force_instant_defaults()
-    __import__('sqlalchemy_utils').force_auto_coercion()
-    from betanin.api.orm.models.torrent import Torrent
-    from betanin.api.orm.models.line import Line
-    # migrations
     migrate.init_app(app, db)
-    # socketio
     socketio.init_app(app)
 
 
@@ -67,17 +62,27 @@ def register_blueprints(app):
     app.register_blueprint(api.blueprint)
 
 
-def make_starter(module, flask_app, *args, **kwargs):
-    print(f'starting job {module.__name__}')
+def register_modifications(app):
+	app.wsgi_app = ProxyFix(app.wsgi_app)
+
+
+def _make_starter(module, flask_app, *args, **kwargs):
+    logger.info(f'starting job {module.__name__}')
     return module.start(flask_app, *args, **kwargs)
+
+
+def _stop(sig_num, frame):
+    logger.info('shutting down')
+    sys.exit(0)
 
 
 if __name__ == "__main__":
     # setup stop
-    signal.signal(signal.SIGINT, stop)
-    signal.signal(signal.SIGTERM, stop)
+    signal.signal(signal.SIGINT, _stop)
+    signal.signal(signal.SIGTERM, _stop)
     # setup start
-    start = partial(make_starter, flask_app=create_app())
+    start = partial(_make_starter,
+        flask_app=create_app())
     # start sync jobs
     start(retry_old_imports)
     # start async jobs

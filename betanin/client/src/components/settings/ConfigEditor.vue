@@ -1,5 +1,6 @@
 <template lang="pug">
   div
+    h5.title.is-5 config.yaml
     .control(
       :class="{ 'is-loading': isLoading }"
     )
@@ -7,6 +8,9 @@
         placeholder='hello'
         v-model='text'
       )
+    p
+      | read from disk at
+      b  {{ readAt | formatTimestamp }}
     b-field(grouped group-multiline position='is-right')#buttons
       p.control
         button.button(@click='reloadConfig').is-light reload
@@ -19,26 +23,27 @@
 import backend from '@/backend'
 import { Toast } from 'buefy/dist/components/toast'
 // help
-const endpointPath = 'settings/beets/config'
+const endpointPath = '/beets/config'
 // export
 export default {
   data () {
     return {
       text: '',
+      readAt: '',
       isLoading: null
     }
   },
   methods: {
     setConfig () {
-      backend.putResource(endpointPath, this.text)
+      backend.putResource(endpointPath,
+        { config: this.text })
     },
-    getConfig () {
+    async getConfig () {
       this.isLoading = true
-      backend.fetchResource(endpointPath)
-        .then(text => {
-          this.text = text
-          this.isLoading = false
-        })
+      const response = await backend.fetchResource(endpointPath)
+      this.text = response.config
+      this.readAt = response.time_read
+      this.isLoading = false
     },
     reloadConfig () {
       this.getConfig()

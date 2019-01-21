@@ -14,8 +14,7 @@ def get_config():
 
 def set_config(config):
     with open(BEETS_CONFIG_PATH, 'wb') as file:
-        print(config)
-        file.write(config)
+        file.write(config.encode('utf-8'))
 
 
 def import_torrent():
