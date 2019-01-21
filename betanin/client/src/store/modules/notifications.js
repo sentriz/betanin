@@ -48,7 +48,7 @@ const actions = {
   // one service
   async doPostService ({ commit }, serviceName) {
     const result = await backend.postResource(
-      `settings/notifications/services`,
+      `/notifications/services`,
       { type: serviceName }
     )
     commit(NOTI_SERVICE_CREATE, result)
@@ -56,16 +56,17 @@ const actions = {
   // all services
   async doPutServices ({ commit, getters }) {
     await backend.putResource(
-      `settings/notifications/services`,
-      getters.getServices
+      `/notifications/services`,
+      { services: getters.getServices }
     )
     await commit(NOTI_SERVICE_TESTING_UPDATE, true)
     let testResult
     try {
-      testResult = await backend.fetchResource(
-        `settings/notifications/test_services`,
+      const testResponse = await backend.fetchResource(
+        `/notifications/test_services`,
         getters.getServices
       )
+      testResult = testResponse.result
     } catch (error) {
     } finally {
       await commit(NOTI_SERVICE_TESTING_UPDATE, false)
@@ -77,24 +78,24 @@ const actions = {
   },
   async doFetchServices ({ commit }) {
     const result = await backend.fetchResource(
-      'settings/notifications/services')
+      '/notifications/services')
     commit(NOTI_SERVICES_UPDATE, result)
   },
   // all possible
   async doFetchPossible ({ commit }) {
     const result = await backend.fetchResource(
-      'settings/notifications/possible_services')
+      '/notifications/possible_services')
     commit(NOTI_POSSIBLE_UPDATE, result.schemas)
   },
   // general
   async doFetchGeneral ({ commit }) {
     const result = await backend.fetchResource(
-      'settings/notifications/general')
+      '/notifications/general')
     commit(NOTI_GENERALS_UPDATE, result)
   },
   doPutGeneral ({ getters }) {
     backend.putResource(
-      'settings/notifications/general',
+      '/notifications/general',
       getters.getGeneral
     )
   }

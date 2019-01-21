@@ -56,8 +56,10 @@ betanin:
 ### transmission
 ###### settings.json (example excerpt)
 ```json
+...
 "script-torrent-done-enabled": true,
 "script-torrent-done-filename": "/scripts/done",
+...
 ```
 ###### done script
 ```bash

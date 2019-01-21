@@ -15,6 +15,7 @@ class TorrentsResource(BaseResource):
     @torrents_ns.doc(parser=req_models.torrents)
     @torrents_ns.marshal_list_with(resp_models.torrent)
     def get():
+        'gets the list of all torrents'
         args = req_models.torrents.parse_args()
         torrents = Torrent.query.order_by(
             Torrent.updated.desc())
@@ -29,6 +30,7 @@ class TorrentResource(BaseResource):
     @staticmethod
     @torrents_ns.doc(parser=req_models.torrent)
     def post(torrent_id):
+        'imports a new torrent'
         args = req_models.torrent.parse_args()
         import_torrents.add(
             id=torrent_id,
@@ -38,16 +40,17 @@ class TorrentResource(BaseResource):
 
     @staticmethod
     def put(torrent_id):
+        'trys to import a torrent again'
         import_torrents.retry(torrent_id)
 
     @staticmethod
     def delete(torrent_id):
+        'deletes a torrent from the list'
         query = Torrent.query.filter_by(id=torrent_id)
         torrent = query.first_or_404()
         torrent.delete_lines()
         query.delete()
         db.session.commit()
-        events.send_torrents_changed()
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')
@@ -55,6 +58,7 @@ class StdoutResource(BaseResource):
     @staticmethod
     @torrents_ns.marshal_list_with(resp_models.line)
     def get(torrent_id):
+        'gets the stdout of an imported/importing torrent'
         matches = Torrent.query.filter_by(id=torrent_id)
         return matches.first_or_404().lines
 
@@ -64,6 +68,7 @@ class StdinResource(BaseResource):
     @staticmethod
     @torrents_ns.doc(parser=req_models.line)
     def post(torrent_id):
+        'sends stdin to an importing torrent'
         args = req_models.line.parse_args()
         text = args['text'].encode()
         import_torrents.send_input(torrent_id, text)
