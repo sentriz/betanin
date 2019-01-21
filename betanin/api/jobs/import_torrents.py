@@ -5,6 +5,7 @@ from collections import defaultdict
 # 3rd party
 import gevent
 import pexpect
+from loguru import logger
 from gevent.queue import Queue
 
 # betanin
@@ -101,6 +102,7 @@ def retry(torrent_id):
 def _start():
     while True:
         torrent_id = QUEUE.get()
+        logger.info(f'got new torrent with id {torrent_id}')
         torrent = Torrent.query.get(torrent_id)
         torrent.status = Status.PROCESSING
         db.session.commit()
@@ -112,6 +114,7 @@ def _start():
         torrent.status = Status.FAILED
         if return_code == 0:
             torrent.status = Status.COMPLETED
+        logger.info(f'torrent finished with return code {return_code}')
         db.session.commit()
         events.send_torrent(torrent)
         notifications.send_async(torrent)
