@@ -7,6 +7,7 @@ COPY \
 COPY betanin/client/src/ ./src/
 COPY betanin/client/public/ ./public/
 ARG SOURCE_COMMIT
+ENV SOURCE_COMMIT=${SOURCE_COMMIT}
 RUN \
     npm install && \
     npm run-script build
@@ -26,6 +27,8 @@ COPY betanin/*.py ./betanin/
 COPY betanin/api/ ./betanin/api
 COPY betanin/client/__init__.py ./betanin/client/
 COPY --from=frontend-builder /app/dist/ ./betanin/client/dist
+ARG SOURCE_COMMIT
+ENV SOURCE_COMMIT=${SOURCE_COMMIT}
 RUN \
     apk add --no-cache \
         libev \
