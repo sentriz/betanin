@@ -1,7 +1,6 @@
 <p align="center"><img width="300" src="https://github.com/sentriz/betanin/blob/master/betanin/client/src/assets/logo.png?raw=true"></p>
 <h4 align="center">beets based man-in-the-middle of your torrent client and music player</h4>
-<p align="center"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"> <img src="https://api.codacy.com/project/badge/Grade/9d97d90ee91c48dc948f1bd2037ba9d7?isInternal=true"> <img src="https://img.shields.io/github/issues/sentriz/betanin.svg"> <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg"> <img src="https://img.shields.io/badge/python-3.6-blue.svg"> <img src="https://img.shields.io/badge/vue-2.5-brightgreen.svg"></p>
-
+<p align="center"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"> <img src="https://api.codacy.com/project/badge/Grade/db7d1db9dd404f8fa31febc8a2d52d00"> <img src="https://img.shields.io/github/issues/sentriz/betanin.svg"> <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg"> <img src="https://img.shields.io/badge/python-3.6-blue.svg"> <img src="https://img.shields.io/badge/vue-2.5-brightgreen.svg"></p>
 
 <hr>
 
