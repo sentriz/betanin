@@ -9,7 +9,7 @@
         v-model='text'
       )
     p
-      | read from disk at
+      | last read from disk at
       b  {{ readAt | formatTimestamp }}
     b-field(grouped group-multiline position='is-right')#buttons
       p.control
