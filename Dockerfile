@@ -42,4 +42,5 @@ VOLUME /root/.local/share/betanin/
 VOLUME /root/.config/betanin/
 VOLUME /root/.config/beets/
 EXPOSE 5000
+HEALTHCHECK --interval=20s --timeout=2s CMD wget --spider "http://localhost:5000/"
 CMD [ "./docker-entry" ]
