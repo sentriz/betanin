@@ -1,6 +1,11 @@
 <template lang="pug">
   div
+    component(
+      :is='emptyTorrentsComponent'
+      v-if='torrents.length == 0'
+    )
     b-table(
+      v-else
       :data='torrents'
       :opened-detailed='openedDetails'
       detailed
@@ -42,8 +47,6 @@
           p
             strong updated
             |  {{ props.row.updated }}
-      template(slot='empty')
-        component(:is='emptyTorrentsComponent')
     router-view(name='modal')
 </template>
 
