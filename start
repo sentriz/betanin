@@ -3,12 +3,15 @@
 from gevent import monkey; monkey.patch_all()
 
 # standard library
-import sys
+import os
+import platform
 import signal
+import sys
 from functools import partial
 
 # 3rd party
 import gevent
+import sqlalchemy_utils
 from flask import Flask
 from loguru import logger
 from werkzeug.contrib.fixers import ProxyFix
@@ -30,8 +33,11 @@ from betanin.api.orm.models.line import Line
 from betanin.api.orm.models.torrent import Torrent
 
 
-__import__('sqlalchemy_utils').force_instant_defaults()
-__import__('sqlalchemy_utils').force_auto_coercion()
+META_INFO = (
+    ('platform', platform.platform()),
+    ('python version', platform.python_version()),
+    ('betanin version', os.environ.get('SOURCE_COMMIT', 'development')),
+)
 
 
 def create_app():
@@ -45,6 +51,8 @@ def create_app():
 
 
 def register_extensions(app):
+    sqlalchemy_utils.force_instant_defaults()
+    sqlalchemy_utils.force_auto_coercion()
     db.init_app(app)
     cors.init_app(app)
     migrate.init_app(app, db)
@@ -66,9 +74,9 @@ def register_modifications(app):
 	app.wsgi_app = ProxyFix(app.wsgi_app)
 
 
-def _make_starter(module, flask_app, *args, **kwargs):
-    logger.info(f'starting job {module.__name__}')
-    return module.start(flask_app, *args, **kwargs)
+def _print_meta_info():
+    for line in META_INFO:
+        logger.info('{} - {}', *line)
 
 
 def _stop(sig_num, frame):
@@ -76,13 +84,18 @@ def _stop(sig_num, frame):
     sys.exit(0)
 
 
+def _make_starter(module, flask_app, *args, **kwargs):
+    logger.info(f'starting job {module.__name__}')
+    return module.start(flask_app, *args, **kwargs)
+
+
 if __name__ == "__main__":
+    _print_meta_info()
     # setup stop
     signal.signal(signal.SIGINT, _stop)
     signal.signal(signal.SIGTERM, _stop)
     # setup start
-    start = partial(_make_starter,
-        flask_app=create_app())
+    start = partial(_make_starter, flask_app=create_app())
     # start sync jobs
     start(retry_old_imports)
     # start async jobs
