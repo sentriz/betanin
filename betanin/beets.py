@@ -6,7 +6,8 @@ from betanin.paths import BEETS_CONFIG_PATH
 
 
 def get_config():
-    if not os.path.exists(BEETS_CONFIG_PATH):
+    if not BEETS_CONFIG_PATH \
+            or not os.path.exists(BEETS_CONFIG_PATH):
         return
     with open(BEETS_CONFIG_PATH, 'r+') as file:
         return file.read()
