@@ -7,21 +7,26 @@
       textarea.textarea.is-small.is-info.has-fixed-size(
         placeholder='hello'
         v-model='text'
+        :disabled='wasError'
       )
-    p
+    p(v-if='!wasError')
       | last read from disk at
       b  {{ readAt | formatTimestamp }}
     b-field(grouped group-multiline position='is-right')#buttons
       p.control
-        button.button(@click='reloadConfig').is-light reload
+        button.button(
+          @click='getConfig'
+        ).is-light reload
       p.control
-        button.button(@click='setConfig').is-primary save
+        button.button(
+          @click='setConfig'
+          :disabled='wasError'
+        ).is-primary save
 </template>
 
 <script>
 // import
 import backend from '@/backend'
-import { Toast } from 'buefy/dist/components/toast'
 // help
 const endpointPath = '/beets/config'
 // export
@@ -40,21 +45,26 @@ export default {
     },
     async getConfig () {
       this.isLoading = true
-      const response = await backend.fetchResource(endpointPath)
-      this.text = response.config
-      this.readAt = response.time_read
+      try {
+        const response = await backend.fetchResource(endpointPath)
+        this.text = response.config
+        this.readAt = response.time_read
+      } catch (error) {
+        this.text = `\
+could not load config from backend.
+reason: '${error.response.data.message}'`
+        this.readAt = null
+      }
       this.isLoading = false
-    },
-    reloadConfig () {
-      this.getConfig()
-      Toast.open({
-        message: 'config loaded from disk',
-        type: 'is-green'
-      })
     }
   },
   mounted () {
     this.getConfig()
+  },
+  computed: {
+    wasError () {
+      return this.readAt === null
+    }
   }
 }
 </script>
