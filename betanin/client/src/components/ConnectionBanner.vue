@@ -2,14 +2,16 @@
   #banner(
     :class="getConnected ? 'green' : 'red'"
   )
-    .side-item#version
-      span(v-show='betaninVersion') ver.&nbsp;
-      b {{ betaninVersion | truncate(8, ' ') }}
+    #version
+      p
+        span(v-show='betaninVersion') ver.&nbsp;
+        b {{ betaninVersion | truncate(8, ' ') }}
     #connection
-      p(v-if='getConnected') connected to backend
-      p(v-else) not connected to backend
-    .side-item#status
-      p {{ getHistoryCount }} imports, {{ getActivityCount }} active
+      p(v-show='!getConnected').
+        disconnected
+    #status
+      p.
+        {{ getHistoryCount }} imports, {{ getActivityCount }} active
 </template>
 
 <script>
@@ -46,8 +48,6 @@ export default {
     z-index: 1000000;
     padding: 0 1rem;
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-between;
     opacity: 0.85;
     clip-path: polygon(
       0.3rem 0,
@@ -56,24 +56,20 @@ export default {
       0% 100%
     );
     > * {
-      width: 33.33%;
-    }
-    #version {
-      text-align: left;
-    }
-    #connection {
-      text-align: center;
-    }
-    #status {
-      text-align: right;
-    }
-    @media only screen and (max-width: 768px) {
-      .side-item {
-        display: none;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      &:first-child > p {
+        margin-right: auto;
       }
-      #connection {
-        width: 100%;
+      &:last-child > p {
+        margin-left: auto;
       }
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    #banner {
+      display: none;
     }
   }
 </style>
