@@ -11,7 +11,7 @@
       detailed
       detail-key='id'
       paginated
-      :per-page='itemsPerPage'
+      per-page='50'
       :pagination-simple='true'
     )
       template(slot-scope='props')
@@ -72,11 +72,6 @@ export default {
       'getActivity',
       'getHistory'
     ]),
-    itemsPerPage () {
-      const viewHeight = window.innerHeight || 0
-      const perPage = Math.floor(viewHeight - 370) / 44
-      return Math.round(perPage)
-    },
     emptyTorrentsComponent () {
       return this.$route.params.listType === 'active'
         ? NoActive
