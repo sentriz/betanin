@@ -16,7 +16,8 @@ class Torrent(db.Model):
     updated = db.Column(db.DateTime,
         default=db.func.now(),
         onupdate=db.func.now())
-    lines = db.relationship('Line')
+    lines = db.relationship('Line',
+        cascade="all, delete")
 
     def __str__(self):
         return f'Torrent({self.status})'
@@ -24,9 +25,6 @@ class Torrent(db.Model):
     @property
     def has_lines(self):
         return len(self.lines) != 0
-
-    def delete_lines(self):
-        Line.query.filter_by(torrent_id=self.id).delete()
 
     def add_line(self, line):
         line.index = len(self.lines) + 1
