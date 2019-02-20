@@ -48,8 +48,7 @@ class TorrentResource(BaseResource):
         'deletes a torrent from the list'
         query = Torrent.query.filter_by(id=torrent_id)
         torrent = query.first_or_404()
-        torrent.delete_lines()
-        query.delete()
+        db.session.delete(torrent)
         db.session.commit()
 
 
