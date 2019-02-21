@@ -1,7 +1,7 @@
 import store from '@/store/main'
 import {
   NOTI_SERVICE_UPDATE,
-  NOTI_GENERAL_UPDATE
+  NOTI_STRING_UPDATE
 } from '@/store/mutation-types'
 
 export const genNotiServiceComputed = key => ({
@@ -19,13 +19,13 @@ export const genNotiServiceComputed = key => ({
   }
 })
 
-export const genNotiGeneralComputed = key => ({
+export const genNotiStringsComputed = key => ({
   get () {
-    const getter = store.getters['notifications/getGeneral']
+    const getter = store.getters['notifications/getStrings']
     return getter[key]
   },
   set (value) {
-    store.commit(`notifications/${NOTI_GENERAL_UPDATE}`, {
+    store.commit(`notifications/${NOTI_STRING_UPDATE}`, {
       key,
       value
     })

@@ -1,13 +1,13 @@
 # betanin
 from betanin.api import notifications
-from betanin.api.rest.base import BaseResource
+from betanin.api.rest.base import SecureResource
 from betanin.api.rest.models import request as req_models
 from betanin.api.rest.models import response as resp_models
 from betanin.api.rest.namespaces import notifications_ns
 
 
 @notifications_ns.route('/services')
-class ServicesResource(BaseResource):
+class ServicesResource(SecureResource):
     @staticmethod
     @notifications_ns.marshal_list_with(resp_models.notification_service)
     def get():
@@ -40,7 +40,7 @@ class ServicesResource(BaseResource):
 
 
 @notifications_ns.route('/test_services')
-class TestServicesResource(BaseResource):
+class TestServicesResource(SecureResource):
     @staticmethod
     @notifications_ns.marshal_with(resp_models.notification_test_result)
     def get():
@@ -51,24 +51,24 @@ class TestServicesResource(BaseResource):
 
 
 @notifications_ns.route('/possible_services')
-class PossibleServicesResource(BaseResource):
+class PossibleServicesResource(SecureResource):
     @staticmethod
     def get():
         'gets all possible notification services'
         return notifications.get_possible_services()
 
 
-@notifications_ns.route('/general')
-class GeneralResource(BaseResource):
+@notifications_ns.route('/strings')
+class stringsResource(SecureResource):
     @staticmethod
     @notifications_ns.marshal_with(resp_models.notification_settings)
     def get():
         'gets your saved notification services'
-        return notifications.get_general()
+        return notifications.get_strings()
 
     @staticmethod
-    @notifications_ns.doc(parser=req_models.notification_general)
+    @notifications_ns.doc(parser=req_models.notification_strings)
     def put():
         'updates a notification service'
-        args = req_models.notification_general.parse_args()
-        notifications.update_general(args)
+        args = req_models.notification_strings.parse_args()
+        notifications.update_strings(args)

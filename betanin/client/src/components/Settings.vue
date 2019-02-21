@@ -1,8 +1,10 @@
 <template lang="pug">
   b-tabs(v-model='activeTab' :animated='false')
-    b-tab-item.tab-item(icon='alert-circle-outline' label='notifications')
+    b-tab-item.tab-item(icon='download' label='torrent clients')
+      torrent-clients
+    b-tab-item.tab-item(icon='alert-circle' label='notifications')
       notification-editor
-    b-tab-item.tab-item(icon='note-outline' label='beets config')
+    b-tab-item.tab-item(icon='note' label='beets config')
       config-editor
 </template>
 
@@ -10,11 +12,13 @@
 // imports
 import ConfigEditor from '@/components/settings/ConfigEditor.vue'
 import NotificationEditor from '@/components/settings/NotificationEditor.vue'
+import TorrentClients from '@/components/settings/TorrentClients.vue'
 // export
 export default {
   components: {
     ConfigEditor,
-    NotificationEditor
+    NotificationEditor,
+    TorrentClients
   },
   data () {
     return {

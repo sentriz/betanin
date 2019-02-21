@@ -28,18 +28,15 @@ const getters = {
 
 const actions = {
   async doFetchAll ({ commit }) {
-    const result = await backend.fetchResource('torrents/')
-    commit(TORRENTS_ALL_CREATE, result)
+    const result = await backend.secureAxios.get('torrents/')
+    commit(TORRENTS_ALL_CREATE, result.data)
   },
   doDeleteOne ({ commit }, torrentID) {
-    backend.deleteResource(`torrents/${torrentID}`)
+    backend.secureAxios.delete(`torrents/${torrentID}`)
     commit(TORRENTS_ONE_DELETE, torrentID)
   },
   doRetryOne (context, torrentID) {
-    backend.putResource(`torrents/${torrentID}`)
-  },
-  doSocket__connect: ({ dispatch }) => {
-    dispatch('doFetchAll')
+    backend.secureAxios.put(`torrents/${torrentID}`)
   },
   doSocket__newTorrent: ({ commit }, torrent) => {
     commit(TORRENTS_ONE_UPDATE, torrent)

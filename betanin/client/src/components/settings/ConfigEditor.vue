@@ -40,15 +40,15 @@ export default {
   },
   methods: {
     setConfig () {
-      backend.putResource(endpointPath,
+      backend.secureAxios.put(endpointPath,
         { config: this.text })
     },
     async getConfig () {
       this.isLoading = true
       try {
-        const response = await backend.fetchResource(endpointPath)
-        this.text = response.config
-        this.readAt = response.time_read
+        const response = await backend.secureAxios.get(endpointPath)
+        this.text = response.data.config
+        this.readAt = response.data.time_read
       } catch (error) {
         this.text = `\
 could not load config from backend.

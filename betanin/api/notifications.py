@@ -6,7 +6,6 @@ import random
 import string
 import configparser
 from string import Template
-from contextlib import contextmanager
 
 # 3rd party
 import toml
@@ -16,6 +15,7 @@ from apprise import AppriseAsset
 
 # betanin
 from betanin import paths
+from betanin import main_config
 from betanin.api.status import Status
 
 
@@ -28,58 +28,25 @@ STATUS_LONG = {
     Status.FAILED: 'has failed',
     Status.NEEDS_INPUT: 'needs input',
 }
-DEFAULT_CONFIG = {
-    'general': {
-        'title': '[betanin] torrent `$name` $status',
-        'body': '@ $time. view/use the console at http://127.0.0.1:5000/$console_path'
-    },
-    'services': {}
-}
 
 
-# io helpers
-
-def _read_config():
-    _path = paths.NOTIFICATION_CONFIG_PATH
-    if not os.path.exists(_path):
-        return DEFAULT_CONFIG
-    with open(_path, 'r') as file:
-        return toml.load(file)
-
-
-def _write_config(config):
-    with open(paths.NOTIFICATION_CONFIG_PATH, 'w') as file:
-        toml.dump(config, file)
-
-
-@contextmanager
-def _open_config():
-    config = _read_config()
-    yield config
-    _write_config(config)
-
-
-# helpers
-
-def _random_string(size=6, chars=string.ascii_uppercase + string.digits):
+def _random_string(size=6, chars=string.ascii_lowercase + string.digits):
     return ''.join(random.choice(chars) for x in range(size))
 
 
 def _make_templates(config):
     return {
-        'title': Template(config['general']['title']),
-        'body': Template(config['general']['body']),
+        'title': Template(config['notifications']['strings']['title']),
+        'body': Template(config['notifications']['strings']['body']),
     }
 
 
-# exports
-
 def register_all():
-    config = _read_config()
+    config = main_config.read()
     APPRISE.clear()
     APPRISE.add([
         f'{service["protocol"]}://{service["not_protocol"]}'
-        for service in config['services'].values()
+        for service in config['notifications']['services'].values()
         if all(
             service[key]
             for key in ('enabled', 'protocol', 'not_protocol')
@@ -92,25 +59,25 @@ def get_possible_services():
 
 
 def get_services():
-    with _open_config() as config:
+    with main_config.mutate() as config:
         # remove incomplete services
-        config['services'] = {
+        config['notifications']['services'] = {
             service_id: service \
-            for service_id, service in config['services'].items() \
+            for service_id, service in config['notifications']['services'].items() \
             if service['not_protocol']
         }
-        return config['services']
+        return config['notifications']['services']
 
 
-def get_general():
-    config = _read_config()
-    return config['general']
+def get_strings():
+    config = main_config.read()
+    return config['notifications']['strings']
 
 
 def add_service(service_type):
     service_id = _random_string(16)
-    with _open_config() as config:
-        config['services'][service_id] = {
+    with main_config.mutate() as config:
+        config['notifications']['services'][service_id] = {
             'type': service_type,
             'enabled': True,
             'protocol': '',
@@ -118,13 +85,13 @@ def add_service(service_type):
         }
         return {
             'id': service_id,
-            **config['services'][service_id]
+            **config['notifications']['services'][service_id]
         }
 
 
 def update_services(services):
-    with _open_config() as config:
-        config['services'] = services
+    with main_config.mutate() as config:
+        config['notifications']['services'] = services
     register_all()
 
 
@@ -135,13 +102,13 @@ def test_services():
     )
 
 
-def update_general(general):
-    with _open_config() as config:
-        config['general'] = general
+def update_strings(strings):
+    with main_config.mutate() as config:
+        config['notifications']['strings'] = strings
 
 
 def send(torrent):
-    config = _read_config()
+    config = main_config.read()
     templates = _make_templates(config)
     torrents_path = 'complete' \
         if torrent.status == Status.COMPLETED \

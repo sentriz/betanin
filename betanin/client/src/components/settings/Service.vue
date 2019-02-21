@@ -24,17 +24,15 @@ export default {
     ])
   },
   methods: {
-    testService () {
+    async testService () {
       const fetchUrl = `settings/services/${this.serviceID}/test`
-      backend.fetchResource(fetchUrl)
-        .then(response => {
-          const type = response.ok ? 'is-green' : 'is-primary'
-          const prefix = response.ok ? 'succeeded' : 'failed'
-          this.$toast.open({
-            message: `testing ${prefix}: ${response.reason}`,
-            type
-          })
-        })
+      const response = await backend.secureAxios.get(fetchUrl)
+      const type = response.data.ok ? 'is-green' : 'is-primary'
+      const prefix = response.data.ok ? 'succeeded' : 'failed'
+      this.$toast.open({
+        message: `testing ${prefix}: ${response.data.reason}`,
+        type
+      })
     },
     ...mapActions([
       'removeService',
