@@ -26,9 +26,9 @@ const getters = {
 
 const actions = {
   async doFetchAll ({ commit }, torrentID) {
-    const lines = await backend.fetchResource(
+    const lines = await backend.secureAxios.get(
       `torrents/${torrentID}/console/stdout`)
-    lines.forEach(line => {
+    lines.data.forEach(line => {
       commit(LINES_CREATE, { torrentID, ...line })
     })
   },

@@ -67,7 +67,7 @@ export default {
       })
     },
     sendStdin (event) {
-      backend.postResource(
+      backend.secureAxios.post(
         `torrents/${this.torrentID}/console/stdin`, {
           text: this.stdin
         })

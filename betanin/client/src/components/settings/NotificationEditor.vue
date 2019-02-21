@@ -1,14 +1,14 @@
 <template lang="pug">
   div
     h5.title.is-5 notification format
-    #general-editor
-      #general-inputs
+    #strings-editor
+      #strings-inputs
         b-field(label='title')
-          b-input(v-model='generalTitle')
+          b-input(v-model='stringsTitle')
         b-field(label='body')
           b-input(
             type='textarea'
-            v-model='generalBody'
+            v-model='stringsBody'
           )
       #variables-help
         label.label available variables
@@ -32,10 +32,9 @@
             |  the relative path to the console modal
     .field.is-pulled-right.controls
       button.button.is-primary.is-right#format-save-button(
-        @click='doPutGeneral()'
+        @click='doPutStrings()'
       ) save
     hr
-
     h5.title.is-5 services
     #service-editor
       h6(v-show='getServices.length === 0')
@@ -72,7 +71,7 @@
 // imports
 import NotificationService from '@/components/settings/NotificationService.vue'
 import { ValidationObserver } from 'vee-validate'
-import { genNotiGeneralComputed } from '@/utilities'
+import { genNotiStringsComputed } from '@/utilities'
 import { mapActions, mapGetters } from 'vuex'
 // export
 export default {
@@ -80,10 +79,10 @@ export default {
     NotificationService,
     ValidationObserver
   },
-  created () {
+  mounted () {
     this.doFetchPossible()
     this.doFetchServices()
-    this.doFetchGeneral()
+    this.doFetchStrings()
   },
   computed: {
     ...mapGetters('notifications', [
@@ -91,15 +90,15 @@ export default {
       'getPossible',
       'getIsTesting'
     ]),
-    generalTitle: genNotiGeneralComputed('title'),
-    generalBody: genNotiGeneralComputed('body')
+    stringsTitle: genNotiStringsComputed('title'),
+    stringsBody: genNotiStringsComputed('body')
   },
   methods: {
     ...mapActions('notifications', [
       'doFetchPossible',
       'doFetchServices',
-      'doFetchGeneral',
-      'doPutGeneral',
+      'doFetchStrings',
+      'doPutStrings',
       'doPostService',
       'doPutServices'
     ]),
@@ -128,10 +127,10 @@ export default {
   .controls {
     margin-top: 24px;
   }
-  #general-save-button {
+  #strings-save-button {
     margin-top: 24px;
   }
-  #general-editor {
+  #strings-editor {
     width: 100%;
     display: flex;
     align-items: stretch;
@@ -152,7 +151,7 @@ export default {
       margin-right: 1rem;
     }
   }
-  #general-inputs /deep/ {
+  #strings-inputs /deep/ {
     textarea, input {
       padding: 5px;
     }

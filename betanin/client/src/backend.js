@@ -1,48 +1,40 @@
+import auth from '@/authentication'
+import authUtils from '@/authentication_utilities'
 import axios from 'axios'
-import { Toast } from 'buefy/dist/components/toast'
-import { API_URL } from './constants'
+import { API_URL } from '@/constants'
+import router from '@/router'
 
-let $axios = axios.create({
+const baseAxios = {
   baseURL: API_URL,
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json'
   }
-})
+}
 
-// request intercept
-// $axios.interceptors.request.use(
-// )
-
-// response intercept
-$axios.interceptors.response.use(
-  function (response) {
-    return response
+const insecureAxios = axios.create(baseAxios)
+const secureAxios = axios.create(baseAxios)
+secureAxios.interceptors.request.use(
+  config => {
+    config.headers['Authorization'] = `Bearer ${authUtils.getToken()}`
+    return config
   },
-  function (error) {
-    Toast.open({
-      message: `network error: ${error.response.statusText}`,
-      type: 'is-primary'
-    })
+  undefined
+)
+secureAxios.interceptors.response.use(
+  undefined,
+  error => {
+    if (error.response !== undefined &&
+      error.response.status === 401 &&
+      router.currentRoute.path !== '/login') {
+      // the token has expired. get a new one
+      auth.logout(router.currentRoute.fullPath)
+    }
     return Promise.reject(error)
   }
 )
 
 export default {
-  fetchResource (route) {
-    return $axios.get(route)
-      .then(response => response.data)
-  },
-  putResource (route, data) {
-    return $axios.put(route, data)
-      .then(response => response.data)
-  },
-  postResource (route, data) {
-    return $axios.post(route, data)
-      .then(response => response.data)
-  },
-  deleteResource (route) {
-    return $axios.delete(route)
-      .then(response => response.data)
-  }
+  insecureAxios,
+  secureAxios
 }

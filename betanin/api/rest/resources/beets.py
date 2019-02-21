@@ -6,14 +6,14 @@ from flask import abort
 
 # betanin
 from betanin import beets
-from betanin.api.rest.base import BaseResource
+from betanin.api.rest.base import SecureResource
 from betanin.api.rest.models import request as req_models
 from betanin.api.rest.models import response as resp_models
 from betanin.api.rest.namespaces import beets_ns
 
 
 @beets_ns.route('/config')
-class BeetsResource(BaseResource):
+class BeetsResource(SecureResource):
     @staticmethod
     @beets_ns.marshal_list_with(resp_models.beets_config)
     def get():

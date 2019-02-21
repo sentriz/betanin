@@ -16,3 +16,5 @@ from betanin.api.rest import namespaces
 import betanin.api.rest.resources.torrents
 import betanin.api.rest.resources.beets
 import betanin.api.rest.resources.notifications
+import betanin.api.rest.resources.authentication
+import betanin.api.rest.resources.torrent_clients

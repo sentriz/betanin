@@ -1,8 +1,14 @@
+# 3rd party
+from flask_restplus import abort
+from flask_jwt_extended import jwt_required
+
 # betanin
+from betanin import main_config
 from betanin.api import events
 from betanin.api.jobs import import_torrents
 from betanin.extensions import db
 from betanin.api.rest.base import BaseResource
+from betanin.api.rest.base import SecureResource
 from betanin.api.rest.models import request as req_models
 from betanin.api.rest.models import response as resp_models
 from betanin.api.rest.namespaces import torrents_ns
@@ -10,7 +16,7 @@ from betanin.api.orm.models.torrent import Torrent
 
 
 @torrents_ns.route('/')
-class TorrentsResource(BaseResource):
+class TorrentsResource(SecureResource):
     @staticmethod
     @torrents_ns.doc(parser=req_models.torrents)
     @torrents_ns.marshal_list_with(resp_models.torrent)
@@ -25,13 +31,22 @@ class TorrentsResource(BaseResource):
         return torrents.all()
 
 
+# not based on SecureResource because the POST called by the torrent clients
+# (which use the api key for auth), and the PUT and DELETE is made by the frontend,
+# (which use a json web token for auth). For those there is the @jwt_required -
+# which is usually implied by the SecureResource
 @torrents_ns.route('/<string:torrent_id>')
 class TorrentResource(BaseResource):
     @staticmethod
     @torrents_ns.doc(parser=req_models.torrent)
+    @torrents_ns.doc(security=None)
+    @torrents_ns.response(422, 'invalid api key')
     def post(torrent_id):
         'imports a new torrent'
         args = req_models.torrent.parse_args()
+        if not main_config.api_key_correct(args['X-API-Key']):
+            abort(422, 'invalid api key')
+            return
         import_torrents.add(
             id=torrent_id,
             name=args['name'],
@@ -39,11 +54,13 @@ class TorrentResource(BaseResource):
         )
 
     @staticmethod
+    @jwt_required
     def put(torrent_id):
         'trys to import a torrent again'
         import_torrents.retry(torrent_id)
 
     @staticmethod
+    @jwt_required
     def delete(torrent_id):
         'deletes a torrent from the list'
         query = Torrent.query.filter_by(id=torrent_id)
@@ -53,7 +70,7 @@ class TorrentResource(BaseResource):
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdout')
-class StdoutResource(BaseResource):
+class StdoutResource(SecureResource):
     @staticmethod
     @torrents_ns.marshal_list_with(resp_models.line)
     def get(torrent_id):
@@ -63,7 +80,7 @@ class StdoutResource(BaseResource):
 
 
 @torrents_ns.route('/<string:torrent_id>/console/stdin')
-class StdinResource(BaseResource):
+class StdinResource(SecureResource):
     @staticmethod
     @torrents_ns.doc(parser=req_models.line)
     def post(torrent_id):

@@ -22,7 +22,6 @@ _torrent_id_field = fields.String(
     example='78d1780216dfe571b499c61e20365',
 )
 
-
 line = torrents_ns.model('Line', {
     'index': fields.String(
         description='the index of the line',
@@ -34,12 +33,10 @@ line = torrents_ns.model('Line', {
     ),
 })
 
-
 line_with_torrent_id = torrents_ns.model('LineWithTorrentID', {
     'torrent_id': _torrent_id_field,
     **line,
 })
-
 
 torrent = torrents_ns.model('Torrent', {
     'id': _torrent_id_field,
@@ -68,7 +65,6 @@ torrent = torrents_ns.model('Torrent', {
     'created': fields.DateTime,
 })
 
-
 beets_config = torrents_ns.model('BeetsConfig', {
     'time_read': fields.DateTime(
         description='the time the config was read from disk',
@@ -78,7 +74,6 @@ beets_config = torrents_ns.model('BeetsConfig', {
         example='''import:\nwrite: yes\nmove: yes''',
     ),
 })
-
 
 notification_service = torrents_ns.model('NotificationService', {
     'id': fields.String(
@@ -103,14 +98,12 @@ notification_service = torrents_ns.model('NotificationService', {
     ),
 })
 
-
 notification_test_result = torrents_ns.model('NotificationTestResult', {
     'result': fields.Boolean(
         description='whether or not the test passed',
         example=True,
     ),
 })
-
 
 notification_settings = torrents_ns.model('NotificationSettings', {
     'title': fields.String(
@@ -120,5 +113,19 @@ notification_settings = torrents_ns.model('NotificationSettings', {
     'body': fields.String(
         description='the body of the notification',
         example='console: https://betanin.you.net/$console_path',
+    )
+})
+
+api_key = torrents_ns.model('ClientAPIKey', {
+    'api_key': fields.String(
+        description='the client api key',
+        example='d136f2db997f64d78534fadb0e2f1f2b',
+    ),
+})
+
+auth_token = torrents_ns.model('AuthToken', {
+    'token': fields.String(
+        description='the json web token for authentication',
+        example='eyJAecNiOJKV1aHLCJ...',
     ),
 })

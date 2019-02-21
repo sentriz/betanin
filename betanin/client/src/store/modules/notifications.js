@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import backend from '@/backend'
 import {
-  NOTI_GENERALS_UPDATE,
-  NOTI_GENERAL_UPDATE,
+  NOTI_STRINGS_UPDATE,
+  NOTI_STRING_UPDATE,
   NOTI_POSSIBLE_UPDATE,
   NOTI_SERVICES_UPDATE,
   NOTI_SERVICE_CREATE,
@@ -14,15 +14,15 @@ import { itemFromID } from '../utilities'
 import { Toast } from 'buefy/dist/components/toast'
 
 const state = {
-  general: {},
+  strings: {},
   services: [],
   possible: [],
   isTesting: false
 }
 
 const getters = {
-  getGeneral: state =>
-    state.general,
+  getStrings: state =>
+    state.strings,
   getPossible: state =>
     state.possible,
   getServices: state =>
@@ -47,26 +47,26 @@ const getters = {
 const actions = {
   // one service
   async doPostService ({ commit }, serviceName) {
-    const result = await backend.postResource(
+    const result = await backend.secureAxios.post(
       `/notifications/services`,
       { type: serviceName }
     )
-    commit(NOTI_SERVICE_CREATE, result)
+    commit(NOTI_SERVICE_CREATE, result.data)
   },
   // all services
   async doPutServices ({ commit, getters }) {
-    await backend.putResource(
+    await backend.secureAxios.put(
       `/notifications/services`,
       { services: getters.getServices }
     )
     await commit(NOTI_SERVICE_TESTING_UPDATE, true)
     let testResult
     try {
-      const testResponse = await backend.fetchResource(
+      const testResponse = await backend.secureAxios.get(
         `/notifications/test_services`,
         getters.getServices
       )
-      testResult = testResponse.result
+      testResult = testResponse.data.result
     } catch (error) {
     } finally {
       await commit(NOTI_SERVICE_TESTING_UPDATE, false)
@@ -77,36 +77,36 @@ const actions = {
     })
   },
   async doFetchServices ({ commit }) {
-    const result = await backend.fetchResource(
+    const result = await backend.secureAxios.get(
       '/notifications/services')
-    commit(NOTI_SERVICES_UPDATE, result)
+    commit(NOTI_SERVICES_UPDATE, result.data)
   },
   // all possible
   async doFetchPossible ({ commit }) {
-    const result = await backend.fetchResource(
+    const result = await backend.secureAxios.get(
       '/notifications/possible_services')
-    commit(NOTI_POSSIBLE_UPDATE, result.schemas)
+    commit(NOTI_POSSIBLE_UPDATE, result.data.schemas)
   },
-  // general
-  async doFetchGeneral ({ commit }) {
-    const result = await backend.fetchResource(
-      '/notifications/general')
-    commit(NOTI_GENERALS_UPDATE, result)
+  // strings
+  async doFetchStrings ({ commit }) {
+    const result = await backend.secureAxios.get(
+      '/notifications/strings')
+    commit(NOTI_STRINGS_UPDATE, result.data)
   },
-  doPutGeneral ({ getters }) {
-    backend.putResource(
-      '/notifications/general',
-      getters.getGeneral
+  doPutStrings ({ getters }) {
+    backend.secureAxios.put(
+      '/notifications/strings',
+      getters.getStrings
     )
   }
 }
 
 const mutations = {
-  [NOTI_GENERALS_UPDATE] (state, settings) {
-    Vue.set(state, 'general', settings)
+  [NOTI_STRINGS_UPDATE] (state, settings) {
+    Vue.set(state, 'strings', settings)
   },
-  [NOTI_GENERAL_UPDATE] (state, { key, value }) {
-    Vue.set(state.general, key, value)
+  [NOTI_STRING_UPDATE] (state, { key, value }) {
+    Vue.set(state.strings, key, value)
   },
   [NOTI_SERVICE_CREATE] (state, service) {
     state.services.push(service)

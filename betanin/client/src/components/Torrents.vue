@@ -83,15 +83,11 @@ export default {
         : this.getHistory
     }
   },
-  // mounted () {
-  //   // force table header
-  //   Vue.set(this.$children[0], 'data',
-  //     [{ status: 'COMPLETED', name: '_' }])
-  // },
   methods: {
     ...mapActions({
       doDeleteOneTorrent: 'torrents/doDeleteOne',
-      doRetryOneTorrent: 'torrents/doRetryOne'
+      doRetryOneTorrent: 'torrents/doRetryOne',
+      doFetchAllTorrents: 'torrents/doFetchAll'
     }),
     retryTorrent (torrentID) {
       if (confirm('do you want to retry this?')) {
@@ -114,6 +110,9 @@ export default {
     return {
       openedDetails: []
     }
+  },
+  mounted () {
+    this.doFetchAllTorrents()
   }
 }
 </script>

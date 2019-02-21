@@ -47,7 +47,7 @@
 
 <script>
 // imports
-import { NOTI_SERVICE_UPDATE, NOTI_SERVICE_DELETE } from '@/store/mutation-types'
+import { NOTI_SERVICE_DELETE } from '@/store/mutation-types'
 import { mapMutations, mapGetters } from 'vuex'
 import { genNotiServiceComputed } from '@/utilities'
 // export
@@ -75,7 +75,6 @@ export default {
   },
   methods: {
     ...mapMutations('notifications', [
-      NOTI_SERVICE_UPDATE,
       NOTI_SERVICE_DELETE
     ])
   }
