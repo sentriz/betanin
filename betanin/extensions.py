@@ -1,5 +1,3 @@
-# standard library
-import os
 
 # 3rd party
 from flask_cors import CORS
@@ -8,6 +6,9 @@ from flask_restplus import Api
 from flask_socketio import SocketIO
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
+
+# betanin
+from betanin import system_info
 
 
 _rest_authorisations = {
@@ -21,7 +22,7 @@ cors = CORS()
 db = SQLAlchemy()
 migrate = Migrate()
 rest = Api(
-    version=os.environ.get('SOURCE_COMMIT', 'development'),
+    version=system_info.BETANIN_VERSION,
     title='betanin\'s rest api',
     description='see https://github.com/sentriz/betanin for more',
     authorizations=_rest_authorisations,
