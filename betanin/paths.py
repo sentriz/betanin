@@ -1,6 +1,6 @@
 # standard library
 import os
-import sys
+import site
 from contextlib import suppress
 
 # 3rd party
@@ -20,6 +20,16 @@ def _first_existing(paths):
 DATA_DIR = xdg.BaseDirectory.save_data_path('betanin')
 CONFIG_DIR = xdg.BaseDirectory.save_config_path('betanin')
 BEETS_DIR = os.path.expanduser('~/.config/beets/')
+CLIENT_DIST_DIR = _first_existing((
+    os.path.join(os.getcwd(), 'betanin_client', 'dist'),
+    os.path.join(site.getusersitepackages(), 'betanin_client', 'dist'),
+    os.path.join(site.getsitepackages()[0], 'betanin_client', 'dist'),
+))
+MIGRATIONS_DIR = _first_existing((
+    os.path.join(os.getcwd(), 'betanin_migrations'),
+    os.path.join(site.getusersitepackages(), 'betanin_migrations'),
+    os.path.join(site.getsitepackages()[0], 'betanin_migrations'),
+))
 
 # path
 BEETS_CONFIG_PATH = _first_existing((

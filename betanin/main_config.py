@@ -1,7 +1,6 @@
 # standard library
 import os
 import sys
-import random
 from contextlib import contextmanager
 
 # 3rd party
@@ -21,7 +20,7 @@ _DEFAULT_CONFIG = {
     'notifications': {
     	'services': {},
         'strings': {
-            'body': '@ $time. view/use the console at http://127.0.0.1:5000/$console_path',
+            'body': '@ $time. view/use the console at http://127.0.0.1:9393/$console_path',
             'title': '[betanin] torrent `$name` $status'
         }
     },

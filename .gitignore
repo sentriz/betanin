@@ -16,3 +16,6 @@ dist
 *security-sgps.py
 *security_backend.py
 .venv
+build
+dist
+*.egg-info
