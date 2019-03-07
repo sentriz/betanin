@@ -6,7 +6,7 @@
 
 ### installation
 
-    pip install --user requirements.txt
+    pip install --user -r requirements.txt
     pip install git+https://github.com/edavis/transmission-fluid
     ./wrap-client install           # todo: host the compiled frontend somewhere
     ./wrap-client run-script build  # ^^^^
