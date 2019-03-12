@@ -57,7 +57,7 @@ current_client_sum=$(
         | xargs -0 sha1sum \
         | sha1sum
 )
-last_client_sum=$( < "$last_client_sum_path")
+last_client_sum=$( < "$last_client_sum_path" )
 if [[ "$last_client_sum" != "$current_client_sum" ]]; then
     npm --prefix betanin_client/ run-script build
 fi
