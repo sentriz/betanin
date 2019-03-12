@@ -1,9 +1,8 @@
+# standard library
+import os
 
 # 3rd party
 import setuptools
-
-# betanin
-from betanin import system_info
 
 
 REQUIREMENTS = [
@@ -47,21 +46,21 @@ REQUIREMENTS = [
     'tzlocal>=1.5.1',
     'urllib3>=1.24',
 ]
-
-
 ENTRY_POINTS = {
     'console_scripts': [
         'betanin = betanin.entry_betanin:main',
         'betanin-shell = betanin.entry_shell:main',
     ]
 }
-
-
 CLASSIFIERS = [
     'Programming Language :: Python :: 3',
     'License :: OSI Approved :: MIT License',
     'Operating System :: OS Independent',
 ]
+
+
+def get_new_version():
+    return os.getenv('NEW_VERSION', 'development')
 
 
 def get_long_description():
@@ -70,9 +69,11 @@ def get_long_description():
 
 
 if __name__ == '__main__':
+    new_version = get_new_version()
+    print(f'setting up version {new_version}')
     setuptools.setup(
         name='betanin',
-        version=system_info.BETANIN_VERSION,
+        version=new_version,
         author='Senan Kelly',
         author_email='senan@senan.xyz',
         description='beets based mitm of your torrent client and music player',
