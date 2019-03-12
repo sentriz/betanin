@@ -1,12 +1,16 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
-import Settings from '@/components/Settings.vue'
-import ModalConsole from '@/components/console/ModalConsole.vue'
-import Torrents from '@/components/Torrents.vue'
-import Login from '@/views/Login.vue'
-import Betanin from '@/views/Betanin.vue'
 import authUtils from '@/authentication_utilities'
+
+import Betanin from '@/views/Betanin.vue'
+import Login from '@/views/Login.vue'
+
+import ConfigEditor from '@/components/settings/ConfigEditor.vue'
+import ModalConsole from '@/components/console/ModalConsole.vue'
+import NotificationEditor from '@/components/settings/NotificationEditor.vue'
+import Settings from '@/components/Settings.vue'
+import TorrentClients from '@/components/settings/TorrentClients.vue'
+import Torrents from '@/components/Torrents.vue'
 
 Vue.use(Router)
 
@@ -45,7 +49,21 @@ export default new Router({
           path: 'settings',
           name: 'settings',
           component: Settings,
-          beforeEnter: requireAuth
+          beforeEnter: requireAuth,
+          children: [
+            {
+              path: 'clients',
+              component: TorrentClients
+            },
+            {
+              path: 'notifications',
+              component: NotificationEditor
+            },
+            {
+              path: 'beets',
+              component: ConfigEditor
+            }
+          ]
         }
       ]
     },
