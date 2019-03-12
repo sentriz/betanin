@@ -62,6 +62,10 @@ export default new Router({
             {
               path: 'beets',
               component: ConfigEditor
+            },
+            {
+              path: '',
+              redirect: 'clients'
             }
           ]
         }
