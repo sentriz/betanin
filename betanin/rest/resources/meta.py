@@ -1,5 +1,3 @@
-
-
 # betanin
 from betanin import system_info
 from betanin.rest.base import BaseResource
