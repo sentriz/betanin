@@ -1,32 +1,24 @@
 <template lang="pug">
-  b-tabs(v-model='activeTab' :animated='false')
-    b-tab-item.tab-item(icon='download' label='torrent clients')
-      torrent-clients
-    b-tab-item.tab-item(icon='alert-circle' label='notifications')
-      notification-editor
-    b-tab-item.tab-item(icon='note' label='beets config')
-      config-editor
+  div
+    nav.tabs
+      ul
+        //- b-tabs doesnt't support router, so try make it match
+        //- also using:
+        //- https://router.vuejs.org/api/#applying-active-class-to-outer-element
+        router-link(tag='li' to='/settings/clients')
+          a
+            b-icon(icon='download')
+            | torrent clients
+        router-link(tag='li' to='/settings/notifications')
+          a
+            b-icon(icon='alert-circle')
+            | notifications
+        router-link(tag='li' to='/settings/beets')
+          a
+            b-icon(icon='note')
+            | beets config
+    router-view
 </template>
-
-<script>
-// imports
-import ConfigEditor from '@/components/settings/ConfigEditor.vue'
-import NotificationEditor from '@/components/settings/NotificationEditor.vue'
-import TorrentClients from '@/components/settings/TorrentClients.vue'
-// export
-export default {
-  components: {
-    ConfigEditor,
-    NotificationEditor,
-    TorrentClients
-  },
-  data () {
-    return {
-      activeTab: 0
-    }
-  }
-}
-</script>
 
 <style lang='scss' scoped>
   /deep/ {
