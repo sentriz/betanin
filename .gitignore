@@ -19,3 +19,4 @@ dist
 build
 dist
 *.egg-info
+.last_client_sum
