@@ -1,6 +1,6 @@
 <p align="center"><img width="300" src="https://raw.githubusercontent.com/sentriz/betanin/master/betanin_client/src/assets/logo.png"></p>
 <h4 align="center">beets based man-in-the-middle of your torrent client and music player</h4>
-<p align="center"><a href="http://hub.docker.com/r/sentriz/betanin"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"></a> <img src="https://api.codacy.com/project/badge/Grade/db7d1db9dd404f8fa31febc8a2d52d00"> <img src="https://img.shields.io/github/issues/sentriz/betanin.svg"> <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg"> <img src="https://sentriz.keybase.pub/share/howdy.svg"></p>
+<p align="center"><a href="http://hub.docker.com/r/sentriz/betanin"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"></a> <a href="https://microbadger.com/images/sentriz/betanin" title="Get your own image badge on microbadger.com"><img src="https://images.microbadger.com/badges/image/sentriz/betanin.svg"></a> <img src="https://api.codacy.com/project/badge/Grade/db7d1db9dd404f8fa31febc8a2d52d00"> <img src="https://img.shields.io/github/issues/sentriz/betanin.svg"> <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg"> <img src="https://sentriz.keybase.pub/share/howdy.svg"></p>
 
 <hr>
 
