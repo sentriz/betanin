@@ -60,6 +60,8 @@ CLASSIFIERS = [
 
 
 def get_new_version():
+    '''gets the bumped version from the environment variable
+    passed by the `deploy` script in the project root'''
     return os.getenv('NEW_VERSION', 'development')
 
 
