@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-const IS_PRODUCTION = __NODE_ENV__ === 'production'
+const IS_PRODUCTION = process.env.NODE_ENV === 'production'
 const LOCAL_PROTOCOL = 'http://'
 const LOCAL_HOSTNAME = 'localhost'
 const LOCAL_PORT = 9393

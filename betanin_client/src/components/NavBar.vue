@@ -47,8 +47,7 @@ export default {
       this.show = !this.show
     },
     getLogoPath () {
-      // eslint-disable-next-line
-      return __NODE_ENV__ === 'production'
+      return process.env.NODE_ENV === 'production'
         ? require('../assets/logo.png')
         : require('../assets/logo_dev.png')
     },
