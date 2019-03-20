@@ -6,8 +6,8 @@ import {
 
 export const genNotiServiceComputed = key => ({
   get () {
-    const getter = store.getters['notifications/getServiceFromID']
-    const service = getter(this.serviceID)
+    const getter = store.getters['notifications/getServiceByID']
+    const service = getter[this.serviceID]
     return service[key]
   },
   set (value) {

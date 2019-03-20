@@ -4,7 +4,7 @@
       span#live-fade &#x25A0
       span#live-text live
     p(
-      v-for='line in getAllLines(torrentID, lineLimit)'
+      v-for='line in getByID[torrentID]'
       :key='line.index'
       v-html='colorLine(line.data)'
     )
@@ -12,43 +12,29 @@
 
 <script>
 // imports
-import { LINES_FETCHED_CREATE } from '@/store/mutation-types'
-import { mapGetters, mapActions, mapMutations } from 'vuex'
+import store from '@/store/main'
+import { mapGetters } from 'vuex'
 // help
 import Convert from 'ansi-to-html'
 const converter = new Convert()
 // export
 export default {
   props: [
-    'lineLimit',
     'torrentID',
     'isLive'
   ],
   computed: {
-    ...mapGetters({
-      getAllLines: 'lines/getAll',
-      getFetchedLines: 'lines/getFetched'
-    }),
-    ...mapGetters({
-      getOneTorrent: 'torrents/getOne'
-    })
+    ...mapGetters('lines', [
+      'getByID'
+    ])
   },
   methods: {
-    ...mapActions({
-      doFetchAllLines: 'lines/doFetchAll'
-    }),
-    ...mapMutations({
-      [LINES_FETCHED_CREATE]: `lines/${LINES_FETCHED_CREATE}`
-    }),
     colorLine (line) {
       return converter.toHtml(line)
     }
   },
   mounted () {
-    if (!this.getFetchedLines(this.torrentID)) {
-      this.doFetchAllLines(this.torrentID)
-      this[LINES_FETCHED_CREATE](this.torrentID)
-    }
+    store.dispatch('lines/doFetchAll', this.torrentID)
   }
 }
 </script>

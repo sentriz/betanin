@@ -47,7 +47,6 @@ export default new Router({
         },
         {
           path: 'settings',
-          name: 'settings',
           component: Settings,
           beforeEnter: requireAuth,
           children: [
@@ -64,6 +63,7 @@ export default new Router({
               component: ConfigEditor
             },
             {
+              name: 'settings',
               path: '',
               redirect: 'clients'
             }

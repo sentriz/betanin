@@ -32,7 +32,7 @@
 // imports
 import BaseConsole from '@/components/console/BaseConsole.vue'
 import backend from '@/backend'
-import { mapGetters } from 'vuex'
+import store from '@/store/main'
 // export
 export default {
   data () {
@@ -44,14 +44,12 @@ export default {
     BaseConsole
   },
   computed: {
-    ...mapGetters('torrents', [
-      'getOne'
-    ]),
     torrentID () {
       return this.$route.params.torrentID
     },
     torrent () {
-      return this.getOne(this.torrentID) || {}
+      const torrents = store.getters['torrents/getByID']
+      return torrents[this.torrentID] || {}
     },
     isLive () {
       const { status } = this.torrent

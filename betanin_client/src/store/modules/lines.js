@@ -2,26 +2,17 @@ import Vue from 'vue'
 import backend from '@/backend'
 import {
   binaryInsert,
-  lastN,
   cleanObject
 } from '../utilities'
-import {
-  LINES_CREATE,
-  LINES_FETCHED_CREATE
-} from '../mutation-types'
+import { LINES_CREATE } from '../mutation-types'
 
 const state = {
-  lines: {},
-  fetched: []
+  lines: {}
 }
 
 const getters = {
-  getAll: state => (torrentID, lineLimit) =>
-    lastN(state.lines[torrentID] || [], lineLimit),
-  getExists: state => torrentID =>
-    Boolean(state.lines[torrentID]),
-  getFetched: state => torrentID =>
-    state.fetched.includes(torrentID)
+  getByID: state =>
+    state.lines
 }
 
 const actions = {
@@ -45,9 +36,6 @@ const mutations = {
       : []
     binaryInsert(lines, { index, data })
     Vue.set(state.lines, torrentID, lines)
-  },
-  [LINES_FETCHED_CREATE] (state, torrentID) {
-    state.fetched.push(torrentID)
   }
 }
 

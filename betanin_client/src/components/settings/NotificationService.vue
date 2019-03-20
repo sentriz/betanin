@@ -49,6 +49,7 @@
 // imports
 import { NOTI_SERVICE_DELETE } from '@/store/mutation-types'
 import { mapMutations, mapGetters } from 'vuex'
+import store from '@/store/main'
 import { genNotiServiceComputed } from '@/utilities'
 // export
 export default {
@@ -62,12 +63,12 @@ export default {
   },
   computed: {
     ...mapGetters('notifications', [
-      'getServiceFromID',
       'getPossibleProtocols',
       'getPossibleInfo'
     ]),
     service () {
-      return this.getServiceFromID(this.serviceID)
+      const services = store.getters['notifications/getServiceByID']
+      return services[this.serviceID]
     },
     enabled: genNotiServiceComputed('enabled'),
     protocol: genNotiServiceComputed('protocol'),

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import backend from '@/backend'
+import keyBy from 'lodash.keyby'
+import { Toast } from 'buefy/dist/components/toast'
 import {
   NOTI_STRINGS_UPDATE,
   NOTI_STRING_UPDATE,
@@ -10,8 +12,6 @@ import {
   NOTI_SERVICE_UPDATE,
   NOTI_SERVICE_TESTING_UPDATE
 } from '../mutation-types'
-import { itemFromID } from '../utilities'
-import { Toast } from 'buefy/dist/components/toast'
 
 const state = {
   strings: {},
@@ -29,8 +29,8 @@ const getters = {
     state.services,
   getIsTesting: state =>
     state.isTesting,
-  getServiceFromID: state => serviceID =>
-    itemFromID(state.services, serviceID),
+  getServiceByID: state =>
+    keyBy(state.services, 'id'),
   getPossibility: state => serviceName => state.possible.find(
     possibility => possibility.service_name === serviceName),
   getPossibleInfo: (state, getters) => serviceName =>
