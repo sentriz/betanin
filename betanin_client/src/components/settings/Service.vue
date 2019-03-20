@@ -18,11 +18,6 @@ export default {
   props: [
     'serviceIndex'
   ],
-  computed: {
-    ...mapGetters([
-      'serviceFromIndex'
-    ])
-  },
   methods: {
     async testService () {
       const fetchUrl = `settings/services/${this.serviceID}/test`
@@ -35,8 +30,7 @@ export default {
       })
     },
     ...mapActions([
-      'removeService',
-      'saveService'
+      'removeService'
     ])
   }
 }

@@ -54,7 +54,7 @@
 // imports
 import NoActive from '@/components/tips/NoActive.vue'
 import NoHistory from '@/components/tips/NoHistory.vue'
-import { mapGetters, mapActions } from 'vuex'
+import store from '@/store/main'
 // help
 const statusMap = {
   /* eslint-disable no-multi-spaces, key-spacing */
@@ -62,16 +62,11 @@ const statusMap = {
   'PROCESSING': { text: 'processing', icon: 'clock-fast', colour: 'hsl(48, 98%, 52%' }, // yellow
   'NEEDS_INPUT': { text: 'needs input', icon: 'alert', colour: 'hsl(48, 98%, 52%)' }, // yellow-orange
   'FAILED': { text: 'failed', icon: 'close', colour: 'hsl(349, 58%, 57%)' }, // angry red
-  'COMPLETED': { text: 'completed', icon: 'check', colour: 'hsl(141, 71%, 48%)' }, // green
-  'DOWNLOADING': { text: 'downloading', icon: 'sleep', colour: 'hsl(0, 0%, 86%)' } // light grey
+  'COMPLETED': { text: 'completed', icon: 'check', colour: 'hsl(141, 71%, 48%)' } // green
 }
 // export
 export default {
   computed: {
-    ...mapGetters('torrents', [
-      'getActivity',
-      'getHistory'
-    ]),
     emptyTorrentsComponent () {
       return this.$route.params.listType === 'active'
         ? NoActive
@@ -79,19 +74,14 @@ export default {
     },
     torrents () {
       return this.$route.params.listType === 'active'
-        ? this.getActivity
-        : this.getHistory
+        ? store.getters['torrents/getActivity']
+        : store.getters['torrents/getHistory']
     }
   },
   methods: {
-    ...mapActions({
-      doDeleteOneTorrent: 'torrents/doDeleteOne',
-      doRetryOneTorrent: 'torrents/doRetryOne',
-      doFetchAllTorrents: 'torrents/doFetchAll'
-    }),
     retryTorrent (torrentID) {
       if (confirm('do you want to retry this?')) {
-        this.doRetryOneTorrent(torrentID)
+        store.dispatch('torrents/doRetryOne', torrentID)
         this.$router.push({
           name: 'modal console', params: { torrentID }
         })
@@ -99,7 +89,7 @@ export default {
     },
     deleteTorrent (torrentID) {
       if (confirm('do you want to remove this from betanin?')) {
-        this.doDeleteOneTorrent(torrentID)
+        store.dispatch('torrents/doDeleteOne', torrentID)
       }
     },
     statusStyle (status) {
@@ -112,7 +102,7 @@ export default {
     }
   },
   mounted () {
-    this.doFetchAllTorrents()
+    store.dispatch('torrents/doFetchAll')
   }
 }
 </script>

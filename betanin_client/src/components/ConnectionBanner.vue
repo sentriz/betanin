@@ -16,12 +16,10 @@
 
 <script>
 // import
-import { mapGetters, mapActions } from 'vuex'
+import store from '@/store/main'
+import { mapGetters } from 'vuex'
 // export
 export default {
-  methods: mapActions('status', [
-    'doFetchSystemInfo'
-  ]),
   computed: mapGetters({
     getConnected: 'status/getConnected',
     getSystemInfo: 'status/getSystemInfo',
@@ -29,7 +27,7 @@ export default {
     getHistoryCount: 'torrents/getHistoryCount'
   }),
   mounted () {
-    this.doFetchSystemInfo()
+    store.dispatch('status/doFetchSystemInfo')
   }
 }
 </script>

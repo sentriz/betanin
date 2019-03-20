@@ -1,13 +1,3 @@
-export const lastN = (list, n) =>
-  typeof n === 'undefined'
-    ? list
-    : list.slice(-n)
-
-export const itemFromID = (items, id) =>
-  items.find(item =>
-    item.id === id
-  )
-
 /* eslint-disable no-multi-spaces, key-spacing, complexity */
 export const binaryInsert = (array, item, startVal, endVal) => {
   const value = Number(item.index)

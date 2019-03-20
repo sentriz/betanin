@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import backend from '@/backend'
-import { itemFromID } from '../utilities'
+import keyBy from 'lodash.keyby'
 import {
   TORRENTS_ALL_CREATE,
   TORRENTS_ONE_UPDATE,
@@ -22,8 +22,8 @@ const getters = {
     getters.getActivity.length,
   getHistoryCount: (state, getters) =>
     getters.getHistory.length,
-  getOne: state => torrentID =>
-    itemFromID(state.torrents, torrentID)
+  getByID: state =>
+    keyBy(state.torrents, 'id')
 }
 
 const actions = {

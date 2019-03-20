@@ -73,6 +73,7 @@ import NotificationService from '@/components/settings/NotificationService.vue'
 import { ValidationObserver } from 'vee-validate'
 import { genNotiStringsComputed } from '@/utilities'
 import { mapActions, mapGetters } from 'vuex'
+import store from '@/store/main'
 // export
 export default {
   components: {
@@ -80,9 +81,9 @@ export default {
     ValidationObserver
   },
   mounted () {
-    this.doFetchPossible()
-    this.doFetchServices()
-    this.doFetchStrings()
+    store.dispatch('notifications/doFetchPossible')
+    store.dispatch('notifications/doFetchServices')
+    store.dispatch('notifications/doFetchStrings')
   },
   computed: {
     ...mapGetters('notifications', [
@@ -95,9 +96,6 @@ export default {
   },
   methods: {
     ...mapActions('notifications', [
-      'doFetchPossible',
-      'doFetchServices',
-      'doFetchStrings',
       'doPutStrings',
       'doPostService',
       'doPutServices'
