@@ -1,0 +1,13 @@
+#!/usr/bin/bash
+
+if [[ $# -ne 1 ]]; then
+    echo "usage: $0 <api_key>" >&2
+    exit 1
+fi
+
+curl \
+    --request POST \
+    --data-urlencode 'path=/downloads' \
+    --data-urlencode "name=Cardiacs - On Land and in the Sea (1989) [$RANDOM]" \
+    --header "X-API-Key: $1" \
+    "http://localhost:9393/api/torrents/$RANDOM$RANDOM$RANDOM"
