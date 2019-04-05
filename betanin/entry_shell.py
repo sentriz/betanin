@@ -6,6 +6,9 @@ import click
 
 # betanin
 from betanin import application
+from betanin.extensions import db  # noqa
+from betanin.orm.models.line import Line  # noqa
+from betanin.orm.models.torrent import Torrent  # noqa
 
 
 @click.command()
