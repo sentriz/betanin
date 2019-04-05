@@ -8,19 +8,19 @@
       .column
         .title.is-7.example-heading transmission
         pre
-          | <u># torrent-finished.sh</u>
+          | <u><a href="https://github.com/transmission/transmission/wiki/Scripts#On_Torrent_Completion"># torrent-finished.sh</a></u>
           |
           | #!/bin/sh
           |
           | curl \
           |     --request POST \
-          |     --data-urlencode "path=/downloads_wall" \
+          |     --data-urlencode "path=/mnt/media/downloads" \
           |     --data-urlencode "name=$TR_TORRENT_NAME" \
           |     --header "X-API-Key: <b>{{ apiKey }}</b>" \
-          |     "https://<b>your.domain</b>/api/torrents/$TR_TORRENT_HASH"
+          |     "<b>{{ origin }}</b>/api/torrents/$TR_TORRENT_HASH"
         br
         pre
-          | <u># settings.json (excerpt)</u>
+          | <u><a href="https://github.com/transmission/transmission/wiki/Editing-Configuration-Files"># settings.json (excerpt)</a></u>
           |
           | ...
           | "script-torrent-done-enabled": <b>true</b>,
@@ -42,6 +42,11 @@ export default {
   data () {
     return {
       apiKey: 'loading...'
+    }
+  },
+  computed: {
+    origin () {
+      return window.location.origin
     }
   },
   async mounted () {
