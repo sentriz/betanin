@@ -5,6 +5,19 @@ import os
 import setuptools
 
 
+INFO = {
+    'name': 'betanin',
+    'author': 'Senan Kelly',
+    'author_email': 'senan@senan.xyz',
+    'description': 'beets based mitm of your torrent client and music player',
+    'url': 'https://github.com/sentriz/betanin',
+}
+ENTRY_POINTS = {
+    'console_scripts': [
+        'betanin = betanin.entry_betanin:main',
+        'betanin-shell = betanin.entry_shell:main',
+    ],
+}
 REQUIREMENTS = [
     'Click>=7.0',
     'Flask-Cors>=3.0.6',
@@ -46,12 +59,6 @@ REQUIREMENTS = [
     'tzlocal>=1.5.1',
     'urllib3>=1.24',
 ]
-ENTRY_POINTS = {
-    'console_scripts': [
-        'betanin = betanin.entry_betanin:main',
-        'betanin-shell = betanin.entry_shell:main',
-    ]
-}
 CLASSIFIERS = [
     'Programming Language :: Python :: 3',
     'License :: OSI Approved :: MIT License',
@@ -74,14 +81,10 @@ if __name__ == '__main__':
     new_version = get_new_version()
     print(f'setting up version {new_version}')
     setuptools.setup(
-        name='betanin',
+        **INFO,
         version=new_version,
-        author='Senan Kelly',
-        author_email='senan@senan.xyz',
-        description='beets based mitm of your torrent client and music player',
         long_description=get_long_description(),
         long_description_content_type='text/markdown',
-        url='https://github.com/sentriz/betanin',
         packages=setuptools.find_packages(),
         install_requires=REQUIREMENTS,
         classifiers=CLASSIFIERS,

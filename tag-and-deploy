@@ -1,6 +1,6 @@
 #!/usr/bin/bash
 
-# safety checks.
+# safety checks
 if [[ $# -ne 1 ]]; then
     echo "usage: $0 <major|minor|patch>" >&2
     exit 1
@@ -11,7 +11,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
 fi
 
 # get the current verison from last git tag into array and
-# inc the provided part.
+# inc the provided part
 semver_expression='s/^v([0-9]+)\.([0-9]+)\.([0-9]+).*$/\1 \2 \3/'
 version=( $(git describe --tags | sed -E -e "$semver_expression" ) )
 case "$1" in
@@ -43,13 +43,13 @@ cat > betanin/version.py  << EOL
 __version__ = '$new_version'
 EOL
 
-# create and tag single commit with a change to the version file.
-git commit --all -m "bump to $new_version"
+# create and tag single commit with a change to the version file
+git commit --all --message "bump to $new_version"
 git tag "$new_version"
 
 # we don't want to build the frontend if it hasn't changed since
 # the last time - so read the old from disk, and calculate the new.
-# if the old != new, then build.
+# if the old != new, then build
 last_client_sum_path='.last_client_sum'
 current_client_sum=$(
     find betanin_client/ -type f -not -path '*node_modules*' -print0 \
@@ -64,6 +64,6 @@ fi
 echo "$current_client_sum" > "$last_client_sum_path"
 
 # run setuptools and upload. we're passing the bumped version
-# (just for pypi) in my enviroment variable.
+# (just for pypi) in my enviroment variable
 NEW_VERSION=$new_version python3 setup.py sdist bdist_wheel
 python3 -m twine upload --disable-progress-bar dist/*
