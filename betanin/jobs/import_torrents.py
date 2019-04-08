@@ -3,8 +3,8 @@ import os.path
 
 # 3rd party
 import gevent
-import pexpect
 from loguru import logger
+from ptyprocess import PtyProcessUnicode
 from gevent.queue import Queue
 
 # betanin
@@ -12,7 +12,6 @@ from betanin import events
 from betanin import notifications
 from betanin.status import Status
 from betanin.extensions import db
-from betanin.extensions import socketio
 from betanin.orm.models.line import Line
 from betanin.orm.models.torrent import Torrent
 
@@ -41,11 +40,8 @@ def _calc_import_path(torrent):
 def _read_and_send_pty_out(proc, torrent):
     while True:
         try:
-            data = proc.read_nonblocking(1024, 0.05)
-        except pexpect.exceptions.TIMEOUT:
-            gevent.sleep(1)
-            continue
-        except pexpect.exceptions.EOF:
+            data = gevent.os.tp_read(proc.fd, 65536)
+        except OSError:
             break
         text = data.decode()
         if text.isspace():
@@ -59,9 +55,13 @@ def _read_and_send_pty_out(proc, torrent):
 
 
 def _import_torrent(torrent):
-    proc = pexpect.spawn(
-        # f'/home/senan/dev/repos/betanin/scripts/mock_beets', use_poll=True)
-        f'beet import --copy --noresume {_calc_import_path(torrent)!r}', use_poll=True)
+    proc = PtyProcessUnicode.spawn([
+        'beet',
+        'import',
+        '--copy',
+        '--noresume',
+        _calc_import_path(torrent),
+    ])
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
@@ -123,4 +123,4 @@ def start(flask_app):
     def with_context():
         with flask_app.app_context():
             _start()
-    return socketio.start_background_task(with_context)
+    return gevent.spawn(with_context)

@@ -51,6 +51,7 @@ def main(port):
     signal.signal(signal.SIGINT, _stop)
     signal.signal(signal.SIGTERM, _stop)
     # setup start
+    gevent.hub.Hub.NOT_ERROR = (OSError, )
     flask_app=application.create()
     def start(module, *args, **kwargs):
         return _make_starter(flask_app, module, *args, **kwargs)

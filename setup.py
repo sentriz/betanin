@@ -45,7 +45,7 @@ REQUIREMENTS = [
     'idna>=2.7',
     'jsonschema>=2.6.0',
     'loguru',
-    'pexpect',
+    'ptyprocess',
     'python-dateutil>=2.7.3',
     'python-editor>=1.0.3',
     'python-engineio>=2.3.2',
