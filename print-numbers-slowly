@@ -12,11 +12,8 @@ echo 2
 sleep 0.4
 echo 3
 sleep 1.4
-echo 1
-sleep 0.4
-echo 2
-sleep 0.4
-echo 3
+read -p 'give me a howdy: ' howdy
+echo "your howdy was: $howdy"
 sleep 1.4
 echo 1
 sleep 0.4
@@ -29,3 +26,11 @@ sleep 0.4
 echo 2
 sleep 0.4
 echo 3
+sleep 1.4
+echo 1
+sleep 0.4
+echo 2
+sleep 0.4
+echo 3
+sleep 1.4
+echo 'goodbye'
