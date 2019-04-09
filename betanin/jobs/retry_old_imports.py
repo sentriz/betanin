@@ -6,9 +6,9 @@ from betanin.jobs.import_torrents import retry
 
 def _start():
     old_imports = Torrent.query.filter(
-        (Torrent.status == Status.ENQUEUED) | \
-        (Torrent.status == Status.PROCESSING) | \
-        (Torrent.status == Status.NEEDS_INPUT)
+        (Torrent.status == Status.ENQUEUED)
+        | (Torrent.status == Status.PROCESSING)
+        | (Torrent.status == Status.NEEDS_INPUT)
     )
     for torrent in old_imports.all():
         retry(torrent.id)
