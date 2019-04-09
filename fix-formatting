@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+python_files=$(git ls-files "*.py")
+# black will use pyproject.toml
+black $python_files
