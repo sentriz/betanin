@@ -30,10 +30,10 @@ class TorrentsResource(SecureResource):
 
 
 # not based on SecureResource because the POST called by the torrent clients
-# (which use the api key for auth), and the PUT and DELETE is made by the frontend,
-# (which use a json web token for auth). For those there is the @jwt_required -
-# which is usually implied by the SecureResource
-@torrents_ns.route("/<string:torrent_id>")
+# (which use the api key for auth), and the PUT and DELETE is made by the
+# frontend, (which use a json web token for auth). For those there is
+# the @jwt_required - which is usually implied by the SecureResource
+@TORRENTS_NS.route("/<string:torrent_id>")
 class TorrentResource(BaseResource):
     @staticmethod
     @torrents_ns.doc(parser=req_models.torrent)

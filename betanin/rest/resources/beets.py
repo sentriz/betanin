@@ -12,23 +12,20 @@ from betanin.rest.models import response as resp_models
 from betanin.rest.namespaces import beets_ns
 
 
-@beets_ns.route('/config')
+@beets_ns.route("/config")
 class BeetsResource(SecureResource):
     @staticmethod
     @beets_ns.marshal_list_with(resp_models.beets_config)
     def get():
-        'reads the beets config from disk'
+        "reads the beets config from disk"
         config = beets.get_config()
         if not config:
-            return abort(400, 'config does not exist')
-        return {
-            "time_read": datetime.datetime.now(),
-            "config": config,
-        }
+            return abort(400, "config does not exist")
+        return {"time_read": datetime.datetime.now(), "config": config}
 
     @staticmethod
     @beets_ns.doc(parser=req_models.beets_config)
     def put():
-        'update the beets config on disk'
+        "update the beets config on disk"
         args = req_models.beets_config.parse_args()
-        beets.set_config(args['config'])
+        beets.set_config(args["config"])
