@@ -3,11 +3,11 @@
     :class="getConnected ? 'green' : 'red'"
   )
     #version
-      p <b>{{ getSystemInfo.betaninVersion }}</b>
+      p {{ getSystemInfo.betaninVersion }}
     #connection
       p(v-show='!getConnected') disconnected
     #status
-      p {{ getHistoryCount }} imports, {{ getActivityCount }} active
+      p <b>{{ getHistoryCount }}</b> imports, {{ getActivityCount }} active
 </template>
 
 <script>
