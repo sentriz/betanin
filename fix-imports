@@ -3,4 +3,5 @@
 python_files=$(git ls-files "*.py")
 sed -i -E '/^# (standard library|betanin|3rd party)$/d' $python_files
 autoflake -i --remove-all-unused-imports $python_files
+# isort will use pyproject.toml
 isort -y $python_files
