@@ -1,7 +1,3 @@
-#!/usr/bin/env python3
-
-from gevent import monkey; monkey.patch_all()
-
 # 3rd party
 import sqlalchemy_utils
 from flask import Flask
@@ -28,7 +24,7 @@ from betanin.orm.models.torrent import Torrent  # noqa
 
 
 def create():
-    app = Flask(__name__.split('.')[0])
+    app = Flask(__name__.split(".")[0])
     register_modifications(app)
     register_extensions(app)
     register_blueprints(app)
@@ -49,7 +45,7 @@ def register_extensions(app):
 def register_blueprints(app):
     # blueprint extensions (before register)
     rest.init_app(blueprints.api)
-    _origins = app.config.get('CORS_ORIGIN_WHITELIST', '*')
+    _origins = app.config.get("CORS_ORIGIN_WHITELIST", "*")
     cors.init_app(blueprints.api, origins=_origins)
     cors.init_app(blueprints.client, origins=_origins)
     # blueprints

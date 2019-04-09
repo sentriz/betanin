@@ -20,18 +20,20 @@ def _file_exists():
 
 
 def _write(key):
-    with open(paths.SECRET_KEY_PATH, 'w') as file:
+    with open(paths.SECRET_KEY_PATH, "w") as file:
         file.write(key)
 
 
 def read():
-    with open(paths.SECRET_KEY_PATH, 'r') as file:
+    with open(paths.SECRET_KEY_PATH, "r") as file:
         return file.read()
 
 
 def ensure():
     if not _file_exists():
         _write(_gen())
-        logger.info(f'secret key `{paths.SECRET_KEY_PATH}`: does not exist - creating')
+        logger.info(
+            f"secret key `{paths.SECRET_KEY_PATH}`: does not exist - creating"
+        )
     else:
-        logger.info(f'using secret key `{paths.SECRET_KEY_PATH}`')
+        logger.info(f"using secret key `{paths.SECRET_KEY_PATH}`")

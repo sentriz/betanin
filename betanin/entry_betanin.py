@@ -1,3 +1,9 @@
+# doing this ugly import thing seems to be the
+# only thing i can do where isort/autoflake8/black don't
+# freak out
+gevent = __import__("gevent.monkey")
+gevent.monkey.patch_all()
+
 # standard library
 import sys
 import signal

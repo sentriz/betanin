@@ -8,4 +8,4 @@ class BaseResource(Resource):
 
 
 class SecureResource(BaseResource):
-    method_decorators = (jwt_required, )
+    method_decorators = (jwt_required,)
