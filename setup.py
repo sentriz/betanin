@@ -34,7 +34,7 @@ REQUIREMENTS = [
     "Werkzeug>=0.14.1",
     "alembic>=1.0.1",
     "aniso8601>=3.0.2",
-    "apprise",
+    "apprise>=0.7.5",
     "beets",
     "certifi>=2018.10.15",
     "chardet>=3.0.4",
