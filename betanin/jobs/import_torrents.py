@@ -19,10 +19,10 @@ from betanin.orm.models.torrent import Torrent
 PROCESSES = {}
 QUEUE = Queue()
 NEEDS_INPUT_SNIPPETS = (
-    '[A]pply',
-    'kip new, ',
-    'ter search, ente',
-    'it, edit ',
+    "[A]pply",
+    "kip new, ",
+    "ter search, ente",
+    "it, edit ",
 )
 
 
@@ -33,7 +33,7 @@ def _add_line(torrent, data):
     events.send_line(line)
 
 
-def _calc_import_path(torrent):
+def _calculate_import_path(torrent):
     return os.path.join(torrent.path, torrent.name)
 
 
@@ -55,13 +55,15 @@ def _read_and_send_pty_out(proc, torrent):
 
 
 def _import_torrent(torrent):
-    proc = PtyProcessUnicode.spawn([
-        'beet',
-        'import',
-        '--copy',
-        '--noresume',
-        _calc_import_path(torrent),
-    ])
+    proc = PtyProcessUnicode.spawn(
+        [
+            "beet",
+            "import",
+            "--copy",
+            "--noresume",
+            _calculate_import_path(torrent),
+        ]
+    )
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
@@ -75,7 +77,7 @@ def _right_exit_status(exit_status):
 
 
 def send_input(torrent_id, text):
-    PROCESSES[torrent_id].sendline(text)
+    PROCESSES[torrent_id].write(f"{text}\n")
 
 
 def add(**kwargs):
@@ -92,8 +94,11 @@ def retry(torrent_id):
     torrent = query.first_or_404()
     torrent.status = Status.ENQUEUED
     db.session.commit()
-    _add_line(torrent, '[betanin] retrying... '
-            f'(there are {len(QUEUE)} items in the queue)')
+    _add_line(
+        torrent,
+        "[betanin] retrying... "
+        f"(there are {len(QUEUE)} items in the queue)",
+    )
     events.send_torrent(torrent)
     QUEUE.put_nowait(torrent.id)
 
@@ -101,19 +106,21 @@ def retry(torrent_id):
 def _start():
     while True:
         torrent_id = QUEUE.get()
-        logger.info(f'got new torrent with id {torrent_id}')
+        logger.info(f"got new torrent with id {torrent_id}")
         torrent = Torrent.query.get(torrent_id)
         torrent.status = Status.PROCESSING
         db.session.commit()
-        _add_line(torrent, '[betanin] starting cli program')
+        _add_line(torrent, "[betanin] starting cli program")
         events.send_torrent(torrent)
         return_code = _import_torrent(torrent)
-        _add_line(torrent, '[betanin] program finished with '
-            f'exit status `{return_code}`')
+        _add_line(
+            torrent,
+            f"[betanin] program finished with exit status `{return_code}`",
+        )
         torrent.status = Status.FAILED
         if return_code == 0:
             torrent.status = Status.COMPLETED
-        logger.info(f'torrent finished with return code {return_code}')
+        logger.info(f"torrent finished with return code {return_code}")
         db.session.commit()
         events.send_torrent(torrent)
         notifications.send_async(torrent)
@@ -123,4 +130,5 @@ def start(flask_app):
     def with_context():
         with flask_app.app_context():
             _start()
+
     return gevent.spawn(with_context)
