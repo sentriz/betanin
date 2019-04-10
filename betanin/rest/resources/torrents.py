@@ -7,21 +7,21 @@ from betanin import main_config
 from betanin.jobs import import_torrents
 from betanin.rest.base import BaseResource
 from betanin.rest.base import SecureResource
-from betanin.extensions import db
+from betanin.extensions import DB
 from betanin.rest.models import request as req_models
 from betanin.rest.models import response as resp_models
-from betanin.rest.namespaces import torrents_ns
+from betanin.rest.namespaces import TORRENTS_NS
 from betanin.orm.models.torrent import Torrent
 
 
-@torrents_ns.route("/")
+@TORRENTS_NS.route("/")
 class TorrentsResource(SecureResource):
     @staticmethod
-    @torrents_ns.doc(parser=req_models.torrents)
-    @torrents_ns.marshal_list_with(resp_models.torrent)
+    @TORRENTS_NS.doc(parser=req_models.TORRENTS)
+    @TORRENTS_NS.marshal_list_with(resp_models.TORRENT)
     def get():
         "gets the list of all torrents"
-        args = req_models.torrents.parse_args()
+        args = req_models.TORRENTS.parse_args()
         torrents = Torrent.query.order_by(Torrent.updated.desc())
         if args["page"] and args["per_page"]:
             page = torrents.paginate(**args, error_out=False)
@@ -36,12 +36,12 @@ class TorrentsResource(SecureResource):
 @TORRENTS_NS.route("/<string:torrent_id>")
 class TorrentResource(BaseResource):
     @staticmethod
-    @torrents_ns.doc(parser=req_models.torrent)
-    @torrents_ns.doc(security=None)
-    @torrents_ns.response(422, "invalid api key")
+    @TORRENTS_NS.doc(parser=req_models.TORRENT)
+    @TORRENTS_NS.doc(security=None)
+    @TORRENTS_NS.response(422, "invalid api key")
     def post(torrent_id):
         "imports a new torrent"
-        args = req_models.torrent.parse_args()
+        args = req_models.TORRENT.parse_args()
         if not main_config.api_key_correct(args["X-API-Key"]):
             abort(422, "invalid api key")
             return
@@ -61,26 +61,26 @@ class TorrentResource(BaseResource):
         "deletes a torrent from the list"
         query = Torrent.query.filter_by(id=torrent_id)
         torrent = query.first_or_404()
-        db.session.delete(torrent)
-        db.session.commit()
+        DB.session.delete(torrent)
+        DB.session.commit()
 
 
-@torrents_ns.route("/<string:torrent_id>/console/stdout")
+@TORRENTS_NS.route("/<string:torrent_id>/console/stdout")
 class StdoutResource(SecureResource):
     @staticmethod
-    @torrents_ns.marshal_list_with(resp_models.line)
+    @TORRENTS_NS.marshal_list_with(resp_models.LINE)
     def get(torrent_id):
         "gets the stdout of an imported/importing torrent"
         matches = Torrent.query.filter_by(id=torrent_id)
         return matches.first_or_404().lines
 
 
-@torrents_ns.route("/<string:torrent_id>/console/stdin")
+@TORRENTS_NS.route("/<string:torrent_id>/console/stdin")
 class StdinResource(SecureResource):
     @staticmethod
-    @torrents_ns.doc(parser=req_models.line)
+    @TORRENTS_NS.doc(parser=req_models.LINE)
     def post(torrent_id):
         "sends stdin to an importing torrent"
-        args = req_models.line.parse_args()
+        args = req_models.LINE.parse_args()
         text = args["text"]
         import_torrents.send_input(torrent_id, text)
