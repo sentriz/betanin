@@ -7,7 +7,7 @@ import click
 
 # betanin
 from betanin import application
-from betanin.extensions import db  # noqa
+from betanin.extensions import DB  # noqa
 from betanin.orm.models.line import Line  # noqa
 from betanin.orm.models.torrent import Torrent  # noqa
 
@@ -15,8 +15,8 @@ from betanin.orm.models.torrent import Torrent  # noqa
 WELCOME_MESSAGE = """\
 |_  _ _|_ _  _ . _
 |_)(/_ | (_|| ||| |
-available variables include `Torrent`, `Line`, and `db`
-save your changes with `db.session.commit()`
+available variables include `Torrent`, `Line`, and `DB`
+save your changes with `DB.session.commit()`
 exit with `exit`\
 """
 
@@ -45,7 +45,7 @@ def main():
                 "Line": Line,
                 "Torrent": Torrent,
                 "app": app,
-                "db": db,
+                "DB": DB,
                 "exit": Exit(),
             }
         )

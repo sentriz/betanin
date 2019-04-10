@@ -1,21 +1,25 @@
 # betanin
-from betanin.extensions import rest
+from betanin.extensions import REST
 
 
-rest.namespaces.clear()
-torrents_ns = rest.namespace(
+# this removes the default namespace
+REST.namespaces.clear()
+
+TORRENTS_NS = REST.namespace(
     "torrents", description="operations related to torrents"
 )
-beets_ns = rest.namespace("beets", description="operations related to beets")
-notifications_ns = rest.namespace(
+BEETS_NS = REST.namespace(
+    "beets", description="operations related to beets and it's config"
+)
+NOTIFICATIONS_NS = REST.namespace(
     "notifications", description="operations related to notifications"
 )
-authentication_ns = rest.namespace(
+AUTHENTICATION_NS = REST.namespace(
     "authentication", description="operations related to authentication"
 )
-clients_ns = rest.namespace(
+CLIENTS_NS = REST.namespace(
     "clients", description="operations related to the torrent clients"
 )
-meta_ns = rest.namespace(
+META_NS = REST.namespace(
     "meta", description="operations related to betanin and the current system"
 )

@@ -3,12 +3,18 @@ from flask_restplus import fields
 
 # betanin
 from betanin.status import Status
-from betanin.rest.namespaces import meta_ns
-from betanin.rest.namespaces import beets_ns
-from betanin.rest.namespaces import clients_ns
-from betanin.rest.namespaces import torrents_ns
-from betanin.rest.namespaces import notifications_ns
-from betanin.rest.namespaces import authentication_ns
+from betanin.rest.namespaces import META_NS
+from betanin.rest.namespaces import BEETS_NS
+from betanin.rest.namespaces import CLIENTS_NS
+from betanin.rest.namespaces import TORRENTS_NS
+from betanin.rest.namespaces import NOTIFICATIONS_NS
+from betanin.rest.namespaces import AUTHENTICATION_NS
+
+
+_torrent_id_field = fields.String(
+    description="the id of the torrent",
+    example="78d1780216dfe571b499c61e20365",
+)
 
 
 class _EnumField(fields.String):
@@ -22,12 +28,7 @@ class _EnumField(fields.String):
         return enum.name
 
 
-_torrent_id_field = fields.String(
-    description="the id of the torrent",
-    example="78d1780216dfe571b499c61e20365",
-)
-
-line = torrents_ns.model(
+LINE = TORRENTS_NS.model(
     "Line",
     {
         "index": fields.String(
@@ -39,12 +40,10 @@ line = torrents_ns.model(
         ),
     },
 )
-
-line_with_torrent_id = torrents_ns.model(
-    "LineWithTorrentID", {"torrent_id": _torrent_id_field, **line}
+LINE_WITH_TORRENT_ID = TORRENTS_NS.model(
+    "LineWithTorrentID", {"torrent_id": _torrent_id_field, **LINE}
 )
-
-torrent = torrents_ns.model(
+TORRENT = TORRENTS_NS.model(
     "Torrent",
     {
         "id": _torrent_id_field,
@@ -73,8 +72,7 @@ torrent = torrents_ns.model(
         "created": fields.DateTime,
     },
 )
-
-beets_config = beets_ns.model(
+BEETS_CONFIG = BEETS_NS.model(
     "BeetsConfig",
     {
         "time_read": fields.DateTime(
@@ -86,8 +84,7 @@ beets_config = beets_ns.model(
         ),
     },
 )
-
-notification_service = notifications_ns.model(
+NOTIFICATION_SERVICE = NOTIFICATIONS_NS.model(
     "NotificationService",
     {
         "id": fields.String(
@@ -109,8 +106,7 @@ notification_service = notifications_ns.model(
         ),
     },
 )
-
-notification_test_result = notifications_ns.model(
+NOTIFICATION_TEST_RESULT = NOTIFICATIONS_NS.model(
     "NotificationTestResult",
     {
         "result": fields.Boolean(
@@ -118,8 +114,7 @@ notification_test_result = notifications_ns.model(
         )
     },
 )
-
-notification_settings = notifications_ns.model(
+NOTIFICATION_SETTINGS = NOTIFICATIONS_NS.model(
     "NotificationSettings",
     {
         "title": fields.String(
@@ -132,8 +127,7 @@ notification_settings = notifications_ns.model(
         ),
     },
 )
-
-api_key = clients_ns.model(
+API_KEY = CLIENTS_NS.model(
     "ClientAPIKey",
     {
         "api_key": fields.String(
@@ -142,8 +136,7 @@ api_key = clients_ns.model(
         )
     },
 )
-
-auth_token = authentication_ns.model(
+AUTH_TOKEN = AUTHENTICATION_NS.model(
     "AuthToken",
     {
         "token": fields.String(
@@ -152,8 +145,7 @@ auth_token = authentication_ns.model(
         )
     },
 )
-
-system_info = meta_ns.model(
+SYSTEM_INFO = META_NS.model(
     "SystemInfo",
     {
         "platform": fields.String(

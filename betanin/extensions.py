@@ -13,19 +13,21 @@ from betanin import version
 _rest_authorisations = {
     "jwt": {"type": "apiKey", "in": "header", "name": "Authorization"}
 }
-cors = CORS()
-db = SQLAlchemy()
-migrate = Migrate()
-rest = Api(
+
+
+CORS = CORS()
+DB = SQLAlchemy()
+MIGRATE = Migrate()
+REST = Api(
     version=version.__version__,
     title="betanin's rest api",
     description="see https://github.com/sentriz/betanin for more",
     authorizations=_rest_authorisations,
     security="jwt",
 )
-socketio = SocketIO(
+SOCKETIO = SocketIO(
     # engineio_logger=True,
     # logger=True,
     async_mode="gevent"
 )
-jwt = JWTManager()
+JWT = JWTManager()

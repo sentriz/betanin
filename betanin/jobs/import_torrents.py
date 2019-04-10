@@ -11,7 +11,7 @@ from gevent.queue import Queue
 from betanin import events
 from betanin import notifications
 from betanin.status import Status
-from betanin.extensions import db
+from betanin.extensions import DB
 from betanin.orm.models.line import Line
 from betanin.orm.models.torrent import Torrent
 
@@ -29,7 +29,7 @@ NEEDS_INPUT_SNIPPETS = (
 def _add_line(torrent, data):
     line = Line(data=data)
     torrent.add_line(line)
-    db.session.commit()
+    DB.session.commit()
     events.send_line(line)
 
 
@@ -49,7 +49,7 @@ def _read_and_send_pty_out(proc, torrent):
         _add_line(torrent, text)
         if any(match in text for match in NEEDS_INPUT_SNIPPETS):
             torrent.status = Status.NEEDS_INPUT
-            db.session.commit()
+            DB.session.commit()
             events.send_torrent(torrent)
             notifications.send_async(torrent)
 
@@ -83,8 +83,8 @@ def send_input(torrent_id, text):
 def add(**kwargs):
     torrent = Torrent(**kwargs)
     torrent.status = Status.ENQUEUED
-    db.session.add(torrent)
-    db.session.commit()
+    DB.session.add(torrent)
+    DB.session.commit()
     QUEUE.put_nowait(torrent.id)
     events.send_torrent(torrent)
 
@@ -93,7 +93,7 @@ def retry(torrent_id):
     query = Torrent.query.filter_by(id=torrent_id)
     torrent = query.first_or_404()
     torrent.status = Status.ENQUEUED
-    db.session.commit()
+    DB.session.commit()
     _add_line(
         torrent,
         "[betanin] retrying... "
@@ -109,7 +109,7 @@ def _start():
         logger.info(f"got new torrent with id {torrent_id}")
         torrent = Torrent.query.get(torrent_id)
         torrent.status = Status.PROCESSING
-        db.session.commit()
+        DB.session.commit()
         _add_line(torrent, "[betanin] starting cli program")
         events.send_torrent(torrent)
         return_code = _import_torrent(torrent)
@@ -121,7 +121,7 @@ def _start():
         if return_code == 0:
             torrent.status = Status.COMPLETED
         logger.info(f"torrent finished with return code {return_code}")
-        db.session.commit()
+        DB.session.commit()
         events.send_torrent(torrent)
         notifications.send_async(torrent)
 

@@ -1,10 +1,10 @@
 # betanin
-from betanin.extensions import db
+from betanin.extensions import DB
 
 
-class Line(db.Model):
+class Line(DB.Model):
     __tablename__ = "lines"
-    id = db.Column(db.Integer, primary_key=True)
-    index = db.Column(db.Integer)
-    data = db.Column(db.String)
-    torrent_id = db.Column(db.String, db.ForeignKey("torrents.id"))
+    id = DB.Column(DB.Integer, primary_key=True)
+    index = DB.Column(DB.Integer)
+    data = DB.Column(DB.String)
+    torrent_id = DB.Column(DB.String, DB.ForeignKey("torrents.id"))
