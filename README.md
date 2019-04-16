@@ -76,5 +76,6 @@ volumes:
 ###### working on the backend
 there is not much else to do, write your code, `python -m betanin.entry_betanin`, kill it, write your code, etc.
 the webserver will be available at *http://localhost:9393/*. the static frontend is served at `/`, and the api is served at `/api`. (there is a swagger ui there too)
+also see `python -m betanin.entry_shell`
 ###### working on the frontend
-start the backend with `python -m betanin.entry_betanin`, but don't use the static frontend served at *http://localhost:9393/*. Instead, in a new shell, do `npm --prefix client/ run serve` and use the frontend served at *http://localhost:8081/*. it will look for a backend listening on port 9393 locally. after that you can edit anything in `client/src`, it will be linted and automatically reflected in your web browser.
+start the backend with `python -m betanin.entry_betanin`, but don't use the static frontend served at *http://localhost:9393/*. Instead, in a new shell, do `npm --prefix betanin_client/ run serve` and use the frontend served at *http://localhost:8081/*. it will look for a backend listening on port 9393 locally. after that you can edit anything in `betanin_client/src`, it will be linted and automatically reflected in your web browser.
