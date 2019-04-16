@@ -20,6 +20,7 @@
             :disabled='!isLive'
             :placeholder='isLive ? "send to beets" : "beets has quit"'
             v-model='stdin'
+            v-focus
           )
         #send-button
           button.button.is-small(
@@ -70,6 +71,13 @@ export default {
           text: this.stdin
         })
       this.stdin = ''
+    }
+  },
+  directives: {
+    focus: {
+      inserted (el) {
+        el.focus()
+      }
     }
   }
 }
