@@ -131,7 +131,7 @@ export default {
     }
   }
   @keyframes fadeinout {
-    0%, 60%, 100% {opacity: 1;}
-    80%           {opacity: 0;}
+    0%, 60%, 100% { opacity: 1; }
+    80%           { opacity: 0; }
   }
 </style>
