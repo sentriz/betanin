@@ -8,10 +8,14 @@
     .modal-card
       header.modal-card-head
         p.modal-card-title {{ torrent.name }}
-      base-console.modal-card-body(
-        :torrentID='torrentID'
-        :isLive='isLive'
-      )
+      #console
+        base-console.modal-card-body(
+          :torrentID='torrentID'
+          :isLive='isLive'
+        )
+        #live-box(v-show='isLive')
+          span#fade &#x25A0
+          span#text live
       footer.modal-card-foot
         #send-input
           input.input.is-small(
@@ -90,9 +94,6 @@ export default {
   .modal-card-head, .modal-card-foot {
     padding: 0.75rem 0.75rem;
   }
-  #send-row {
-    display: flex;
-  }
   #send-input {
     flex-grow: 1;
     margin-right: 0.75rem;
@@ -103,5 +104,34 @@ export default {
     button {
       width: 100%;
     }
+  }
+  #console {
+    position: relative;
+  }
+  #live-box {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    /* scrollbar is 17px */
+    margin: 0.75rem calc(0.75rem + 17px);
+    font-size: 14px;
+    font-family: monospace;
+    padding: 0 0.5rem;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.1);
+    #fade {
+      color: red;
+      animation: fadeinout 2s;
+      animation-iteration-count: infinite;
+      margin-right: 4px;
+      font-size: 18px;
+    }
+    #text {
+      color: white;
+    }
+  }
+  @keyframes fadeinout {
+    0%, 60%, 100% {opacity: 1;}
+    80%           {opacity: 0;}
   }
 </style>
