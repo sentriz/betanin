@@ -35,7 +35,7 @@ REQUIREMENTS = [
     "alembic>=1.0.1",
     "aniso8601>=3.0.2",
     "apprise>=0.7.5",
-    "beets",
+    "beets==1.4.9",
     "certifi>=2018.10.15",
     "chardet>=3.0.4",
     "flask-jwt-extended",
