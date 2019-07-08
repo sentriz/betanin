@@ -3,7 +3,10 @@ LABEL maintainer="Senan Kelly <senan@senan.xyz>"
 COPY ./requirements-docker.txt /
 RUN \
     apk add --no-cache libev build-base && \
-    pip --no-cache-dir install -U betanin -r /requirements-docker.txt && \
+    pip --no-cache-dir install -U \
+        betanin \
+        https://github.com/caronc/apprise/archive/master.zip \
+        -r /requirements-docker.txt && \
     apk del build-base
 VOLUME /root/.local/share/betanin/
 VOLUME /root/.config/betanin/
