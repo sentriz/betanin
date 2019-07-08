@@ -4,7 +4,7 @@
       :is='emptyTorrentsComponent'
       v-if='torrents.length == 0'
     )
-    b-table(
+    b-table#torrents(
       v-else
       :data='torrents'
       :opened-detailed='openedDetails'
@@ -15,8 +15,8 @@
       :pagination-simple='true'
     )
       template(slot-scope='props')
-        b-table-column(label='name') {{ props.row.name | truncate(64) }}
-        b-table-column(label='status' :numeric='true')
+        b-table-column(label='name') {{ props.row.name }}
+        b-table-column.controls(label='status' :numeric='true')
           span.status-group(:style='{ color: statusStyle(props.row.status).colour }')
             b-icon(:icon='statusStyle(props.row.status).icon' size='is-small')
             |  {{ statusStyle(props.row.status).text }}
@@ -108,8 +108,8 @@ export default {
 </script>
 
 <style scoped>
-  .level {
-    padding-bottom: 0;
+  #torrents /deep/ td {
+    vertical-align: middle;
   }
   #row-status {
     text-align: right;
@@ -123,6 +123,9 @@ export default {
     display: inline-block;
     margin: 0 0.1rem;
     opacity: 0.15;
+  }
+  .controls {
+    white-space: nowrap;
   }
   a {
     color: unset;
