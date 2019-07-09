@@ -14,11 +14,27 @@ from betanin.rest.namespaces import TORRENTS_NS
 from betanin.orm.models.torrent import Torrent
 
 
+# not use SecureResource here. the POST uses api key auth.
+# the GET is normal though, and using @jwt_required, which
+# is usually implied by SecureResource
 @TORRENTS_NS.route("/")
-class TorrentsResource(SecureResource):
+class TorrentsResource(BaseResource):
+    @staticmethod
+    @TORRENTS_NS.doc(parser=req_models.TORRENT)
+    @TORRENTS_NS.doc(security=None)
+    @TORRENTS_NS.response(422, "invalid api key")
+    def post():
+        "imports a new torrent"
+        args = req_models.TORRENT.parse_args()
+        if not main_config.api_key_correct(args["X-API-Key"]):
+            abort(422, "invalid api key")
+            return
+        import_torrents.add(name=args["name"], path=args["path"])
+
     @staticmethod
     @TORRENTS_NS.doc(parser=req_models.TORRENTS)
     @TORRENTS_NS.marshal_list_with(resp_models.TORRENT)
+    @jwt_required
     def get():
         "gets the list of all torrents"
         args = req_models.TORRENTS.parse_args()
@@ -29,34 +45,14 @@ class TorrentsResource(SecureResource):
         return torrents.all()
 
 
-# not based on SecureResource because the POST called by the torrent clients
-# (which use the api key for auth), and the PUT and DELETE is made by the
-# frontend, (which use a json web token for auth). For those there is
-# the @jwt_required - which is usually implied by the SecureResource
 @TORRENTS_NS.route("/<string:torrent_id>")
-class TorrentResource(BaseResource):
+class TorrentResource(SecureResource):
     @staticmethod
-    @TORRENTS_NS.doc(parser=req_models.TORRENT)
-    @TORRENTS_NS.doc(security=None)
-    @TORRENTS_NS.response(422, "invalid api key")
-    def post(torrent_id):
-        "imports a new torrent"
-        args = req_models.TORRENT.parse_args()
-        if not main_config.api_key_correct(args["X-API-Key"]):
-            abort(422, "invalid api key")
-            return
-        import_torrents.add(
-            id=torrent_id, name=args["name"], path=args["path"]
-        )
-
-    @staticmethod
-    @jwt_required
     def put(torrent_id):
         "trys to import a torrent again"
         import_torrents.retry(torrent_id)
 
     @staticmethod
-    @jwt_required
     def delete(torrent_id):
         "deletes a torrent from the list"
         query = Torrent.query.filter_by(id=torrent_id)
