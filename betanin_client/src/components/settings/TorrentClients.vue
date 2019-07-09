@@ -17,7 +17,7 @@
           |     --data-urlencode "path=/mnt/media/downloads" \
           |     --data-urlencode "name=$TR_TORRENT_NAME" \
           |     --header "X-API-Key: <b>{{ apiKey }}</b>" \
-          |     "<b>{{ origin }}</b>/api/torrents/$TR_TORRENT_HASH"
+          |     "<b>{{ origin }}</b>/api/torrents"
         br
         pre
           | <u><a href="https://github.com/transmission/transmission/wiki/Editing-Configuration-Files"># settings.json (excerpt)</a></u>

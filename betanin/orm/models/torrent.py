@@ -5,7 +5,7 @@ from betanin.extensions import DB
 
 class Torrent(DB.Model):
     __tablename__ = "torrents"
-    id = DB.Column(DB.String, primary_key=True)
+    id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
     name = DB.Column(DB.String)
     path = DB.Column(DB.String)
     status = DB.Column(DB.Enum(Status))
