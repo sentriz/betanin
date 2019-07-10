@@ -1,20 +1,7 @@
 <template lang="pug">
   div
     #manual-search(v-show='isActivity()')
-      b-field#import-label(label='manually import')
-      b-field
-        b-autocomplete(
-          v-model='manualSelection'
-          expanded
-          placeholder='eg. /downloads/music/the fall - dragnet (1979)'
-          :data='manualResults'
-          @typing='manualFind'
-        )
-          template(slot='empty')
-            p no results found
-        p.control
-          button.button(@click='manualImport')
-            b-icon#import-button(icon='library-music')
+      manual-import
       hr
     component(
       :is='emptyTorrentsComponent'
@@ -66,8 +53,7 @@
 // imports
 import NoActive from '@/components/tips/NoActive.vue'
 import NoHistory from '@/components/tips/NoHistory.vue'
-import backend from '@/backend'
-import debounce from 'lodash.debounce'
+import ManualImport from '@/components/ManualImport.vue'
 import store from '@/store/main'
 
 // help
@@ -81,6 +67,9 @@ const statusMap = {
 }
 // export
 export default {
+  components: {
+    ManualImport
+  },
   computed: {
     emptyTorrentsComponent () {
       return this.isActivity()
@@ -110,43 +99,13 @@ export default {
         store.dispatch('torrents/doDeleteOne', torrentID)
       }
     },
-    async manualImport () {
-      const fetchUrl = `torrents`
-      const formData = new FormData()
-      formData.append('both', this.manualSelection)
-      try {
-        await backend.secureAxios.post(fetchUrl, formData)
-      } catch (error) {
-        this.$toast.open({
-          message: `error importing: ${error.response.data.message}`,
-          type: 'is-primary'
-        })
-      } finally {
-        this.manualSelection = ''
-      }
-    },
-    manualFind: debounce(async function async (dir) {
-      if (!dir.length) {
-        this.manualResults = []
-        return
-      }
-      const results = await backend.secureAxios.get(
-        `/meta/sub_dirs`, { params: { dir } }
-      )
-      this.manualResults = []
-      for (let item of results.data) {
-        this.manualResults.push(item.path)
-      }
-    }, 200),
     statusStyle (status) {
       return statusMap[status]
     }
   },
   data () {
     return {
-      openedDetails: [],
-      manualResults: [],
-      manualSelection: ''
+      openedDetails: []
     }
   },
   mounted () {
@@ -177,13 +136,5 @@ export default {
   }
   a {
     color: unset;
-  }
-  #manual-search {
-    #import-button {
-      margin: 0 0.5rem;
-    }
-    #import-label {
-      margin-bottom: 8px;
-    }
   }
 </style>
