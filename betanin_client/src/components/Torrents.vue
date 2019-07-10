@@ -44,17 +44,13 @@
                slot='detail')
         #row-status
           p
-            strong id
-            |  {{ props.row.id }}
+            <strong>id</strong> {{ props.row.id }}
           p
-            strong status
-            |  {{ props.row.status | lower }}
+            <strong>status</strong> {{ props.row.status | lower }}
           p
-            strong created
-            |  {{ props.row.created }}
+            <strong>created</strong> {{ props.row.created }}
           p
-            strong updated
-            |  {{ props.row.updated }}
+            <strong>updated</strong> {{ props.row.updated }}
     router-view(name='modal')
 </template>
 
