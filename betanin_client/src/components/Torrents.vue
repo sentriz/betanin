@@ -1,12 +1,20 @@
 <template lang="pug">
   div
     #manual-search(v-show='isActivity()')
-      b-field(label='manually import')
-        b-input(
-          placeholder='eg. /path/to/downloads/Artist - Album'
-          v-model='manualPath'
-          @keyup.native.enter='importTorrent'
+      b-field#import-label(label='manually import')
+      b-field
+        b-autocomplete(
+          v-model='manualSelection'
+          expanded
+          placeholder='eg. /downloads/music/the fall - dragnet (1979)'
+          :data='manualResults'
+          @typing='manualFind'
         )
+          template(slot='empty')
+            p no results found
+        p.control
+          button.button(@click='manualImport')
+            b-icon#import-button(icon='library-music')
       hr
     component(
       :is='emptyTorrentsComponent'
@@ -56,10 +64,12 @@
 
 <script>
 // imports
-import backend from '@/backend'
 import NoActive from '@/components/tips/NoActive.vue'
 import NoHistory from '@/components/tips/NoHistory.vue'
+import backend from '@/backend'
+import debounce from 'lodash.debounce'
 import store from '@/store/main'
+
 // help
 const statusMap = {
   /* eslint-disable no-multi-spaces, key-spacing */
@@ -100,10 +110,10 @@ export default {
         store.dispatch('torrents/doDeleteOne', torrentID)
       }
     },
-    async importTorrent () {
+    async manualImport () {
       const fetchUrl = `torrents`
       const formData = new FormData()
-      formData.append('both', this.manualPath)
+      formData.append('both', this.manualSelection)
       try {
         await backend.secureAxios.post(fetchUrl, formData)
       } catch (error) {
@@ -112,9 +122,22 @@ export default {
           type: 'is-primary'
         })
       } finally {
-        this.manualPath = ''
+        this.manualSelection = ''
       }
     },
+    manualFind: debounce(async function async (dir) {
+      if (!dir.length) {
+        this.manualResults = []
+        return
+      }
+      const results = await backend.secureAxios.get(
+        `/meta/sub_dirs`, { params: { dir } }
+      )
+      this.manualResults = []
+      for (let item of results.data) {
+        this.manualResults.push(item.path)
+      }
+    }, 200),
     statusStyle (status) {
       return statusMap[status]
     }
@@ -122,7 +145,8 @@ export default {
   data () {
     return {
       openedDetails: [],
-      manualPath: ''
+      manualResults: [],
+      manualSelection: ''
     }
   },
   mounted () {
@@ -131,7 +155,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='scss' scoped>
   #torrents /deep/ td {
     vertical-align: middle;
   }
@@ -153,5 +177,13 @@ export default {
   }
   a {
     color: unset;
+  }
+  #manual-search {
+    #import-button {
+      margin: 0 0.5rem;
+    }
+    #import-label {
+      margin-bottom: 8px;
+    }
   }
 </style>

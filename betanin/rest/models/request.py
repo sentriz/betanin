@@ -3,6 +3,7 @@ from betanin.rest.namespaces import BEETS_NS
 from betanin.rest.namespaces import TORRENTS_NS
 from betanin.rest.namespaces import NOTIFICATIONS_NS
 from betanin.rest.namespaces import AUTHENTICATION_NS
+from betanin.rest.namespaces import META_NS
 
 
 # for importing a torrent
@@ -112,4 +113,15 @@ CREDENTIALS.add_argument(
     location="json",
     required=True,
     help="`the password to authenticate with`",
+)
+
+
+# for getting sub dirs with manual import
+SUB_DIRS = META_NS.parser()
+SUB_DIRS.add_argument(
+    "dir",
+    type=str,
+    location="args",
+    required=True,
+    help="`the directory you want the sub directories of`",
 )

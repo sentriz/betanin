@@ -12,6 +12,7 @@
     "ansi-to-html": "^0.6.10",
     "axios": "^0.18.0",
     "buefy": "^0.7.3",
+    "lodash.debounce": "^4.0.8",
     "lodash.keyby": "^4.6.0",
     "pug-plain-loader": "^1.0.0",
     "socket.io-client": "^2.2.0",

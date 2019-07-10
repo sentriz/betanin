@@ -160,3 +160,12 @@ SYSTEM_INFO = META_NS.model(
         ),
     },
 )
+SUB_DIR = META_NS.model(
+    "SubDir",
+    {
+        "path": fields.String(
+            description="the path of the dir",
+            example="/downloads/september/music",
+        )
+    },
+)
