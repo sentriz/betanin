@@ -44,7 +44,7 @@ class TorrentsResource(SecureResource):
         return torrents.all()
 
 
-@TORRENTS_NS.route("/<string:torrent_id>")
+@TORRENTS_NS.route("/<int:torrent_id>")
 class TorrentResource(SecureResource):
     @staticmethod
     def put(torrent_id):
@@ -60,7 +60,7 @@ class TorrentResource(SecureResource):
         DB.session.commit()
 
 
-@TORRENTS_NS.route("/<string:torrent_id>/console/stdout")
+@TORRENTS_NS.route("/<int:torrent_id>/console/stdout")
 class StdoutResource(SecureResource):
     @staticmethod
     @TORRENTS_NS.marshal_list_with(resp_models.LINE)
@@ -70,7 +70,7 @@ class StdoutResource(SecureResource):
         return matches.first_or_404().lines
 
 
-@TORRENTS_NS.route("/<string:torrent_id>/console/stdin")
+@TORRENTS_NS.route("/<int:torrent_id>/console/stdin")
 class StdinResource(SecureResource):
     @staticmethod
     @TORRENTS_NS.doc(parser=req_models.LINE)
