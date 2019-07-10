@@ -11,23 +11,20 @@ TORRENT.add_argument(
     "name",
     type=str,
     location="form",
-    required=True,
     help="`the name of the folder the torrent is downloaded to`",
 )
 TORRENT.add_argument(
     "path",
     type=str,
     location="form",
-    required=True,
     help="`the download folder of torrent client (relative to betanin) "
     "for this import`",
 )
 TORRENT.add_argument(
-    "X-API-Key",
+    "both",
     type=str,
-    location="headers",
-    required=True,
-    help="`your client api key (found in the settings page)`",
+    location="form",
+    help="`the full path to torrent (same as both args)`",
 )
 
 

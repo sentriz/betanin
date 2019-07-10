@@ -1,11 +1,11 @@
+# standard library
+import os.path
+
 # 3rd party
-from flask_restplus import abort
-from flask_jwt_extended import jwt_required
+from flask import abort
 
 # betanin
-from betanin import main_config
 from betanin.jobs import import_torrents
-from betanin.rest.base import BaseResource
 from betanin.rest.base import SecureResource
 from betanin.extensions import DB
 from betanin.rest.models import request as req_models
@@ -14,11 +14,8 @@ from betanin.rest.namespaces import TORRENTS_NS
 from betanin.orm.models.torrent import Torrent
 
 
-# not use SecureResource here. the POST uses api key auth.
-# the GET is normal though, and using @jwt_required, which
-# is usually implied by SecureResource
 @TORRENTS_NS.route("/")
-class TorrentsResource(BaseResource):
+class TorrentsResource(SecureResource):
     @staticmethod
     @TORRENTS_NS.doc(parser=req_models.TORRENT)
     @TORRENTS_NS.doc(security=None)
@@ -26,15 +23,18 @@ class TorrentsResource(BaseResource):
     def post():
         "imports a new torrent"
         args = req_models.TORRENT.parse_args()
-        if not main_config.api_key_correct(args["X-API-Key"]):
-            abort(422, "invalid api key")
+        if args.get("name") and args.get("path"):
+            import_torrents.add(name=args["name"], path=args["path"])
             return
-        import_torrents.add(name=args["name"], path=args["path"])
+        path, name = os.path.split(args.get("both"))
+        if path and name:
+            import_torrents.add(name=name, path=path)
+            return
+        return abort(400, "please provide a valid path")
 
     @staticmethod
     @TORRENTS_NS.doc(parser=req_models.TORRENTS)
     @TORRENTS_NS.marshal_list_with(resp_models.TORRENT)
-    @jwt_required
     def get():
         "gets the list of all torrents"
         args = req_models.TORRENTS.parse_args()
