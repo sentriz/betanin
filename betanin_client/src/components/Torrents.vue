@@ -1,5 +1,13 @@
 <template lang="pug">
   div
+    #manual-search(v-show='isActivity()')
+      b-field(label='manually import')
+        b-input(
+          placeholder='eg. /path/to/downloads/Artist - Album'
+          v-model='manualPath'
+          @keyup.native.enter='importTorrent'
+        )
+      hr
     component(
       :is='emptyTorrentsComponent'
       v-if='torrents.length == 0'
@@ -52,6 +60,7 @@
 
 <script>
 // imports
+import backend from '@/backend'
 import NoActive from '@/components/tips/NoActive.vue'
 import NoHistory from '@/components/tips/NoHistory.vue'
 import store from '@/store/main'
@@ -68,17 +77,20 @@ const statusMap = {
 export default {
   computed: {
     emptyTorrentsComponent () {
-      return this.$route.params.listType === 'active'
+      return this.isActivity()
         ? NoActive
         : NoHistory
     },
     torrents () {
-      return this.$route.params.listType === 'active'
+      return this.isActivity()
         ? store.getters['torrents/getActivity']
         : store.getters['torrents/getHistory']
     }
   },
   methods: {
+    isActivity () {
+      return this.$route.params.listType === 'active'
+    },
     retryTorrent (torrentID) {
       if (confirm('do you want to retry this?')) {
         store.dispatch('torrents/doRetryOne', torrentID)
@@ -92,13 +104,29 @@ export default {
         store.dispatch('torrents/doDeleteOne', torrentID)
       }
     },
+    async importTorrent () {
+      const fetchUrl = `torrents`
+      const formData = new FormData()
+      formData.append('both', this.manualPath)
+      try {
+        await backend.secureAxios.post(fetchUrl, formData)
+      } catch (error) {
+        this.$toast.open({
+          message: `error importing: ${error.response.data.message}`,
+          type: 'is-primary'
+        })
+      } finally {
+        this.manualPath = ''
+      }
+    },
     statusStyle (status) {
       return statusMap[status]
     }
   },
   data () {
     return {
-      openedDetails: []
+      openedDetails: [],
+      manualPath: ''
     }
   },
   mounted () {
