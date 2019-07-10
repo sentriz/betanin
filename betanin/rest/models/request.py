@@ -1,9 +1,9 @@
 # betanin
+from betanin.rest.namespaces import META_NS
 from betanin.rest.namespaces import BEETS_NS
 from betanin.rest.namespaces import TORRENTS_NS
 from betanin.rest.namespaces import NOTIFICATIONS_NS
 from betanin.rest.namespaces import AUTHENTICATION_NS
-from betanin.rest.namespaces import META_NS
 
 
 # for importing a torrent

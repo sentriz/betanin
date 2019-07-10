@@ -1,13 +1,13 @@
-from glob import glob
+# standard library
 import os
+from glob import glob
 
 # betanin
 from betanin import system_info
 from betanin.rest.base import SecureResource
-from betanin.rest.models import response as resp_models
 from betanin.rest.models import request as req_models
+from betanin.rest.models import response as resp_models
 from betanin.rest.namespaces import META_NS
-from flask_restplus import fields
 
 
 @META_NS.route("/system_info")
