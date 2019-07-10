@@ -18,7 +18,6 @@ from betanin.orm.models.torrent import Torrent
 class TorrentsResource(SecureResource):
     @staticmethod
     @TORRENTS_NS.doc(parser=req_models.TORRENT)
-    @TORRENTS_NS.doc(security=None)
     @TORRENTS_NS.response(422, "invalid api key")
     def post():
         "imports a new torrent"

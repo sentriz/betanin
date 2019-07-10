@@ -11,7 +11,8 @@ from betanin import version
 
 
 _rest_authorisations = {
-    "jwt": {"type": "apiKey", "in": "header", "name": "Authorization"}
+    "jwt": {"type": "apiKey", "in": "header", "name": "Authorization"},
+    "api key": {"type": "apiKey", "in": "header", "name": "X-API-Key"},
 }
 
 
@@ -23,7 +24,7 @@ REST = Api(
     title="betanin's rest api",
     description="see https://github.com/sentriz/betanin for more",
     authorizations=_rest_authorisations,
-    security="jwt",
+    security=["jwt", "api key"],
 )
 SOCKETIO = SocketIO(
     # engineio_logger=True,
