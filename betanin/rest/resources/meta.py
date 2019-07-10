@@ -27,6 +27,7 @@ class metaResource(SecureResource):
     def get():
         "gets the sub directories of a provided one"
         args = req_models.SUB_DIRS.parse_args()
-        sub_paths = glob(args["dir"] + "*")
+        path = os.path.expanduser(args["dir"])
+        sub_paths = glob(path + "*")
         sub_dirs = filter(os.path.isdir, sub_paths)
         return [{"path": path} for path in sub_dirs]
