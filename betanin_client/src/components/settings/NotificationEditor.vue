@@ -13,23 +13,11 @@
       #variables-help
         label.label available variables
         ul
-          li
-            code $id
-            |  the unique id or hash of the torrent
-          li
-            code $title
-            |  the title of the torrent
-          li
-            code $time
-            |  the timestamp of the last update to the torrent
-          li
-            code $status
-            |  the current betanin status of the torrent. eg. '
-            b needs input
-            | '
-          li
-            code $console_path
-            |  the relative path to the console modal
+          li <code>$id</code> the unique id or hash of the torrent
+          li <code>$title</code> the title of the torrent
+          li <code>$time</code> the timestamp of the last update to the torrent
+          li <code>$status</code> the current betanin status of the torrent. eg. '<b>needs input</b>'
+          li <code>$console_path</code> the relative path to the console modal
     .field.is-pulled-right.controls
       button.button.is-primary.is-right#format-save-button(
         @click='doPutStrings()'
