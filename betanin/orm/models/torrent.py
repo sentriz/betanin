@@ -5,7 +5,8 @@ from betanin.extensions import DB
 
 class Torrent(DB.Model):
     __tablename__ = "torrents"
-    id = DB.Column(DB.Integer, primary_key=True, autoincrement=True)
+    __table_args__ = {"sqlite_autoincrement": True}
+    id = DB.Column(DB.Integer, primary_key=True)
     name = DB.Column(DB.String)
     path = DB.Column(DB.String)
     status = DB.Column(DB.Enum(Status))

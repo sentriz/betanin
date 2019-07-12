@@ -24,7 +24,7 @@ _DEFAULT_CONFIG = {
     "clients": {"api_key": ""},
 }
 _NEEDED_CONFIG_PATHS = (
-    #  path                     reason
+    # (path, ) reason
     (("frontend", "username"), "please provide a frontend username"),
     (("frontend", "password"), "please provide a frontend password"),
     (("clients", "api_key"), "please provide a client api key"),
