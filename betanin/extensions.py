@@ -15,7 +15,10 @@ _rest_authorisations = {
     "api key": {"type": "apiKey", "in": "header", "name": "X-API-Key"},
 }
 
+# loading swagger.json mixed content fix
+Api.specs_url = "/api/swagger.json"
 
+# uninitialised extensions
 CORS = CORS()
 DB = SQLAlchemy()
 MIGRATE = Migrate()
