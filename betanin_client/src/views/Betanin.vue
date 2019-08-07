@@ -1,12 +1,12 @@
 <template lang="pug">
   .container
     #app
-      .section
+      .main-section
         nav-bar
-      .section
+      .main-section
         router-view
     #footer
-      .section
+      .main-section
         connection-banner
 </template>
 
@@ -41,6 +41,9 @@ export default {
   #app {
     margin: 0;
   }
+  .main-section {
+    margin: 2rem;
+  }
   #footer {
     position: fixed;
     bottom: 0;
@@ -50,8 +53,8 @@ export default {
     @media only screen and (max-width: 1087px) {
       width: 100%;
     }
-    .section {
-      padding-bottom: 0;
+    .main-section {
+      margin-bottom: 0;
     }
   }
   @import "~bulma";
