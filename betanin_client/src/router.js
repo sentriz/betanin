@@ -14,6 +14,17 @@ import Torrents from '@/components/Torrents.vue'
 
 Vue.use(Router)
 
+const requireAuth = (to, from, next) => {
+  if (authUtils.isLoggedIn()) {
+    next()
+    return
+  }
+  next({
+    name: 'login',
+    query: { redirect: to.fullPath }
+  })
+}
+
 const pages = [
   {
     path: 'torrents/:listType',
@@ -81,14 +92,3 @@ export default new Router({
   linkActiveClass: 'is-active',
   routes: screens
 })
-
-function requireAuth (to, from, next) {
-  if (!authUtils.isLoggedIn()) {
-    next({
-      name: 'login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    next()
-  }
-}
