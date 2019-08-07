@@ -1,7 +1,7 @@
 <template lang="pug">
   nav.navbar
     .navbar-brand
-      router-link.navbar-item(to='/')
+      router-link.navbar-item#brand-link(to='/')
         img#logo(
           :src='getLogoPath()'
           height='100%'
@@ -64,6 +64,13 @@ export default {
   }
   .is-active {
     font-weight: 600;
+  }
+  #brand-link {
+    background-color: unset;
+    padding: 0;
+  }
+  .navbar-burger {
+    background-color: #f9f9f9;
   }
   #activity-count {
     $count-size: 16px;
