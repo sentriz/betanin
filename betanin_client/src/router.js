@@ -14,68 +14,72 @@ import Torrents from '@/components/Torrents.vue'
 
 Vue.use(Router)
 
+const pages = [
+  {
+    path: 'torrents/:listType',
+    name: 'torrents',
+    component: Torrents,
+    beforeEnter: requireAuth,
+    children: [
+      {
+        path: 'console/:torrentID',
+        name: 'modal console',
+        components: { modal: ModalConsole },
+        meta: { modalIsOpen: true }
+      }
+    ]
+  },
+  {
+    path: 'settings',
+    component: Settings,
+    beforeEnter: requireAuth,
+    children: [
+      {
+        path: 'clients',
+        component: TorrentClients
+      },
+      {
+        path: 'notifications',
+        component: NotificationEditor
+      },
+      {
+        path: 'beets',
+        component: ConfigEditor
+      },
+      {
+        name: 'settings',
+        path: '',
+        redirect: 'clients'
+      }
+    ]
+  }
+]
+
+const screens = [
+  {
+    name: 'login',
+    path: '/login',
+    component: Login
+  },
+  {
+    name: 'betanin',
+    path: '/',
+    redirect: {
+      name: 'torrents',
+      params: { listType: 'active' }
+    },
+    component: Betanin,
+    children: pages
+  },
+  {
+    path: '*',
+    redirect: '/'
+  }
+]
+
 export default new Router({
   linkActiveClass: 'is-active',
-  routes: [
-    {
-      name: 'login',
-      path: '/login',
-      component: Login
-    },
-    {
-      name: 'betanin',
-      path: '/',
-      redirect: {
-        name: 'torrents',
-        params: { listType: 'active' }
-      },
-      component: Betanin,
-      children: [
-        {
-          path: 'torrents/:listType',
-          name: 'torrents',
-          component: Torrents,
-          beforeEnter: requireAuth,
-          children: [
-            {
-              path: 'console/:torrentID',
-              name: 'modal console',
-              components: { modal: ModalConsole },
-              meta: { modalIsOpen: true }
-            }
-          ]
-        },
-        {
-          path: 'settings',
-          component: Settings,
-          beforeEnter: requireAuth,
-          children: [
-            {
-              path: 'clients',
-              component: TorrentClients
-            },
-            {
-              path: 'notifications',
-              component: NotificationEditor
-            },
-            {
-              path: 'beets',
-              component: ConfigEditor
-            },
-            {
-              name: 'settings',
-              path: '',
-              redirect: 'clients'
-            }
-          ]
-        }
-      ]
-    },
-    {
-      path: '*',
-      redirect: '/'
-    }
-  ]
+  routes: screens
 })
 
 function requireAuth (to, from, next) {
