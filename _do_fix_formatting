@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 python_files=$(git ls-files "*.py")
 # black will use pyproject.toml
