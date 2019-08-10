@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
 # safety checks
 if [[ $# -ne 1 ]]; then
