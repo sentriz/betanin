@@ -1,6 +1,6 @@
-<p align="center"><img width="300" src="https://raw.githubusercontent.com/sentriz/betanin/master/betanin_client/src/assets/logo.png"></p>
-<h4 align="center">beets based man-in-the-middle of your torrent client and music player</h4>
-<p align="center"><a href="http://hub.docker.com/r/sentriz/betanin"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"></a> <a href="https://microbadger.com/images/sentriz/betanin" title="Get your own image badge on microbadger.com"><img src="https://images.microbadger.com/badges/image/sentriz/betanin.svg"></a> <img src="https://api.codacy.com/project/badge/Grade/db7d1db9dd404f8fa31febc8a2d52d00"> <img src="https://img.shields.io/github/issues/sentriz/betanin.svg"> <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg"> <img src="https://sentriz.keybase.pub/share/howdy.svg"></p>
+<p align="center"><img width="300" src="https://github.com/sentriz/betanin/raw/master/.github/logo.png"></p>
+<h4 align="center">beets.io based man-in-the-middle of your torrent client and music player</h4>
+<p align="center"><a href="http://hub.docker.com/r/sentriz/betanin"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"></a> <a href="https://microbadger.com/images/sentriz/betanin" title="Get your own image badge on microbadger.com"><img src="https://images.microbadger.com/badges/image/sentriz/betanin.svg"></a> <img src="https://api.codacy.com/project/badge/Grade/db7d1db9dd404f8fa31febc8a2d52d00"> <img src="https://img.shields.io/github/issues/sentriz/betanin.svg"> <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg"></p>
 
 <hr>
 
@@ -13,6 +13,15 @@
 ### usage
 
     $ betanin [--port=<port>]
+
+<hr>
+
+### screenshots
+
+<p align="center"><img src="https://github.com/sentriz/betanin/raw/master/.github/scrot_1.png"></p>
+<p align="center"><img src="https://github.com/sentriz/betanin/raw/master/.github/scrot_2.png"></p>
+<p align="center"><img src="https://github.com/sentriz/betanin/raw/master/.github/scrot_3.png"></p>
+<p align="center"><img src="https://github.com/sentriz/betanin/raw/master/.github/scrot_4.png"></p>
 
 <hr>
 
@@ -73,6 +82,7 @@ volumes:
 <hr>
 
 ### developing
+
 ###### working on the backend
 there is not much else to do, write your code, `python -m betanin.entry_betanin`, kill it, write your code, etc.
 the webserver will be available at *http://localhost:9393/*. the static frontend is served at `/`, and the api is served at `/api`. (there is a swagger ui there too)
