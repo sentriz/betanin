@@ -10,7 +10,7 @@
   "dependencies": {
     "@mdi/font": "^3.5.95",
     "ansi-to-html": "^0.6.10",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "buefy": "^0.7.3",
     "lodash.debounce": "^4.0.8",
     "lodash.keyby": "^4.6.0",
