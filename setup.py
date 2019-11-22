@@ -34,7 +34,6 @@ REQUIREMENTS = [
     "Werkzeug>=0.14.1",
     "alembic>=1.0.1",
     "aniso8601>=3.0.2",
-    "apprise>=0.7.5",
     "beets==1.4.9",
     "certifi>=2018.10.15",
     "chardet>=3.0.4",
@@ -87,6 +86,9 @@ if __name__ == "__main__":
         long_description_content_type="text/markdown",
         packages=setuptools.find_packages(),
         install_requires=REQUIREMENTS,
+        dependency_links=[
+            "git+https://github.com/caronc/apprise.git@cc8fae4c73cc5df0bb6c9e0b492bc088ce412427",
+        ],
         classifiers=CLASSIFIERS,
         entry_points=ENTRY_POINTS,
         include_package_data=True,
