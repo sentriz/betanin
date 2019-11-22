@@ -4,6 +4,23 @@
 
 <hr>
 
+### workflow
+
+<p align="center"><img src="https://github.com/sentriz/betanin/raw/master/.github/flow.png"></p>
+
+<hr>
+
+### notifiers
+
+betanin uses [apprise](https://github.com/caronc/apprise) for notifications. so anything supported there will work. but some include
+
+- email
+- discord
+- telegram
+- emby
+
+<hr>
+
 ### installation
 
     $ pip install --user betanin
