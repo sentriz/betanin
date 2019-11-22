@@ -23,13 +23,27 @@ betanin uses [apprise](https://github.com/caronc/apprise) for notifications. so 
 
 ### installation
 
-    $ pip install --user betanin
+```shell
+$ pip install --user betanin
+```
 
 <hr>
 
 ### usage
 
-    $ betanin [--port=<port>]
+```shell
+$ # start server
+$ betanin
+$ # a config file will be created, add your credentials to it
+$ # start again
+$ betanin [--port=<port>]
+$ # ui will be available at port
+
+$ # optionally start cli (for db operations, debugging)
+$ betanin-shell
+$ # or if docker
+$ docker exec -it <container_id> betanin-shell
+```
 
 <hr>
 
