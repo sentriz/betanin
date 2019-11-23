@@ -34,9 +34,8 @@
               b-icon.link(icon='close' size='is-small')
             | &nbsp;
             span.link(title='retry import' @click='retryTorrent(props.row.id)')
-              b-icon.link(title='retry import' icon='loop' size='is-small')
-      template(slot-scope='props'
-               slot='detail')
+              b-icon.link(title='retry import' icon='refresh' size='is-small')
+      template(slot-scope='props' slot='detail')
         #row-status
           p
             <strong>id</strong> {{ props.row.id }}
