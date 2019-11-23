@@ -47,26 +47,13 @@ EOL
 git commit --all --message "bump to $new_version"
 git tag "$new_version"
 
-# we don't want to build the frontend if it hasn't changed since
-# the last time - so read the old from disk, and calculate the new.
-# if the old != new, then build
-last_client_sum_path='.last_client_sum'
-current_client_sum=$(
-    find betanin_client/ -type f -not -path '*node_modules*' -print0 \
-        | sort -z \
-        | xargs -0 sha1sum \
-        | sha1sum
-)
-last_client_sum=$( < "$last_client_sum_path" )
-if [[ "$last_client_sum" != "$current_client_sum" ]]; then
-    sudo docker \
-        run -it --rm \
-        -v './betanin_client:/betanin' \
-        -w '/betanin' \
-        node \
-        npm run-script build
-fi
-echo "$current_client_sum" > "$last_client_sum_path"
+# rebuild frontend
+sudo docker \
+    run -it --rm \
+    -v './betanin_client:/betanin' \
+    -w '/betanin' \
+    node \
+    npm run-script build
 
 # run setuptools and upload. we're passing the bumped version
 # (just for pypi) in my enviroment variable
