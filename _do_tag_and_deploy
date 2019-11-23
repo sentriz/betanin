@@ -59,7 +59,12 @@ current_client_sum=$(
 )
 last_client_sum=$( < "$last_client_sum_path" )
 if [[ "$last_client_sum" != "$current_client_sum" ]]; then
-    npm --prefix betanin_client/ run-script build
+    sudo docker \
+        run -it --rm \
+        -v './betanin_client:/betanin' \
+        -w '/betanin' \
+        node \
+        npm run-script build
 fi
 echo "$current_client_sum" > "$last_client_sum_path"
 
