@@ -44,19 +44,6 @@ export default {
   .main-section {
     margin: 2rem;
   }
-  #footer {
-    position: fixed;
-    bottom: 0;
-    left: auto;
-    pointer-events: none;
-    width: inherit;
-    @media only screen and (max-width: 1087px) {
-      width: 100%;
-    }
-    .main-section {
-      margin-bottom: 0;
-    }
-  }
   @media only screen and (max-width: 768px) {
     #footer {
       display: none;

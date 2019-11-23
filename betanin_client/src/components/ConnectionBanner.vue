@@ -1,11 +1,9 @@
 <template lang="pug">
-  #banner(
-    :class="getConnected ? 'green' : 'red'"
-  )
+  #banner
+    #disconnected(v-show='!getConnected')
+      p disconnected
     #version
       p {{ getSystemInfo.betaninVersion }}
-    #connection
-      p(v-show='!getConnected') disconnected
     #status
       p <b>{{ getHistoryCount }}</b> imports, {{ getActivityCount }} active
 </template>
@@ -30,36 +28,23 @@ export default {
 
 <style lang='scss' scoped>
   @import "~bulma";
-  * {
-    color: white;
+  #banner {
+    width: 100%;
+    color: black;
+    display: flex;
+    justify-content: flex-end;
+    > * ~ * {
+      margin-left: 10px;
+    }
   }
-  .red {
+  #disconnected{
+    border-radius: 0.5rem;
+    color: white;
+    display: inline-block;
+    padding: 0 0.5rem;
     background-color: $danger;
   }
-  .green {
-    background-color: $success;
-  }
-  #banner {
-    z-index: 1000000;
-    padding: 0 1rem;
-    display: flex;
-    opacity: 0.85;
-    clip-path: polygon(
-      0.3rem 0,
-      calc(100% - 0.3rem) 0,
-      100% 100%,
-      0% 100%
-    );
-    > * {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      &:first-child > p {
-        margin-right: auto;
-      }
-      &:last-child > p {
-        margin-left: auto;
-      }
-    }
+  #version {
+    opacity: 0.6;
   }
 </style>

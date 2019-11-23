@@ -2,7 +2,7 @@
   div
     #manual-search(v-show='isActivity()')
       manual-import
-    br
+      br
     component(
       :is='emptyTorrentsComponent'
       v-if='torrents.length == 0'
