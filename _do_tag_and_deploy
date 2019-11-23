@@ -50,7 +50,7 @@ git tag "$new_version"
 # rebuild frontend
 sudo docker \
     run -it --rm \
-    -v './betanin_client:/betanin' \
+    -v "$PWD/betanin_client:/betanin" \
     -w '/betanin' \
     node \
     npm run-script build
