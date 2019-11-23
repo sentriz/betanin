@@ -57,6 +57,11 @@ export default {
       margin-bottom: 0;
     }
   }
+  @media only screen and (max-width: 768px) {
+    #footer {
+      display: none;
+    }
+  }
   @import "~bulma";
   @import "~buefy/src/scss/buefy";
 </style>

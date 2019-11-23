@@ -2,7 +2,7 @@
   div
     #manual-search(v-show='isActivity()')
       manual-import
-      hr
+    br
     component(
       :is='emptyTorrentsComponent'
       v-if='torrents.length == 0'
@@ -126,7 +126,7 @@ export default {
     cursor: pointer;
   }
   .status-group ~ .status-group::before {
-    content: "｜";
+    content: '\00a0';
     display: inline-block;
     margin: 0 0.1rem;
     opacity: 0.15;
