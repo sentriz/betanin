@@ -25,7 +25,10 @@ class TorrentsResource(SecureResource):
         if args.get("name") and args.get("path"):
             import_torrents.add(name=args["name"], path=args["path"])
             return
-        path, name = os.path.split(args.get("both"))
+        both = args.get("both")
+        if not both:
+            return abort(400, "please provide one of (`path` and `name`) or (`both`)")
+        path, name = os.path.split(both)
         if path and name:
             import_torrents.add(name=name, path=path)
             return
