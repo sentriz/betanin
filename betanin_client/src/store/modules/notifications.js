@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import backend from '@/backend'
 import keyBy from 'lodash.keyby'
-import { Toast } from 'buefy/dist/components/toast'
+import { ToastProgrammatic as Toast } from 'buefy'
 import {
   NOTI_STRINGS_UPDATE,
   NOTI_STRING_UPDATE,
