@@ -2,7 +2,7 @@
 import sqlalchemy_utils
 from flask import Flask
 from flask import render_template
-from werkzeug.contrib.fixers import ProxyFix
+from werkzeug.middleware.proxy_fix import ProxyFix
 
 # betanin
 from betanin import blueprints

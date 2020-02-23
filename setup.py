@@ -31,7 +31,7 @@ REQUIREMENTS = [
     "MarkupSafe>=1.0",
     "SQLAlchemy-Utils>=0.33.6",
     "SQLAlchemy>=1.2.12",
-    "Werkzeug>=0.14.1",
+    "Werkzeug==1.0.0",
     "alembic>=1.0.1",
     "aniso8601>=3.0.2",
     "beets==1.4.9",
