@@ -84,12 +84,15 @@ betanin:
 
 ### transmission
 
+create a script named `done.sh` or anything you like, and make it executable:  
+`chmod +x done.sh`
+
 ###### settings.json (example excerpt)
 
 ```json
 ...
 "script-torrent-done-enabled": true,
-"script-torrent-done-filename": "/scripts/done",
+"script-torrent-done-filename": "/scripts/done.sh",
 ...
 ```
 
@@ -106,13 +109,34 @@ curl \
     "https://betanin.example.com/api/torrents"
 ```
 
-###### docker compose (excerpt)
+###### transmission docker compose (excerpt)
 
 ```yaml
 volumes:
 - ${DATA}/transmission/config:/config
 - ${DATA}/transmission/scripts:/scripts
 - ${MEDIA}/download:/downloads
+```
+
+<hr>
+
+### deluge
+
+create a script named `done.sh` or anything you like, and make it executable:  
+`chmod +x done.sh`  
+you must also be using the [Execute](https://dev.deluge-torrent.org/wiki/Plugins/Execute) plugin, set to the `Torrent Complete` event
+
+###### done script
+
+```bash
+#!/bin/sh
+
+curl \
+    --request POST \
+    --data-urlencode "path=<path_to_deluge_downloads>" \
+    --data-urlencode "name=$2" \
+    --header "X-API-Key: <your_api_key>" \
+    "https://betanin.example.com/api/torrents"
 ```
 
 <hr>

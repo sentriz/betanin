@@ -33,7 +33,14 @@
           |
           | #!/bin/sh
           |
-          | coming soon
+          | curl \
+          |     --request POST \
+          |     --data-urlencode "path=/mnt/media/downloads" \
+          |     --data-urlencode "name=$2" \
+          |     --header "X-API-Key: <b>{{ apiKey }}</b>" \
+          |     "<b>{{ origin }}</b>/api/torrents"
+        br
+        p now install the <a href="https://dev.deluge-torrent.org/wiki/Plugins/Execute#Configuration">Execute</a> plugin, and add add the above script for the event 'Torrent Complete'
 </template>
 
 <script>
