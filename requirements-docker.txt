@@ -1,2 +1,3 @@
 discogs-client
 beets-noimport
+pyacoustid
