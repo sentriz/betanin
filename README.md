@@ -72,6 +72,9 @@ betanin:
     ports:
     - 9393:9393
     restart: unless-stopped
+    environment:
+    - UID=1000 # (optionally) set user id
+    - GID=1000 # (optionally) set group id
     volumes:
     - ${DATA}/betanin/data:/root/.local/share/betanin/
     - ${DATA}/betanin/config:/root/.config/betanin/

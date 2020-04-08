@@ -1,0 +1,7 @@
+#!/bin/sh
+
+[[ "$UID" -eq 0 ]] && exec betanin
+
+adduser -D -h ~root -u $UID -g $GID betanin
+chown -R betanin:betanin ~root
+exec sudo -u betanin -g betanin betanin
