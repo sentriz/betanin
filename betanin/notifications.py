@@ -9,7 +9,7 @@ from apprise import Apprise
 from apprise import AppriseAsset
 
 # betanin
-from betanin import main_config
+import betanin.config.betanin as conf_betanin
 from betanin.status import Status
 
 
@@ -36,7 +36,7 @@ def _make_templates(config):
 
 
 def register_all():
-    config = main_config.read()
+    config = conf_betanin.read()
     APPRISE.clear()
     APPRISE.add(
         [
@@ -54,7 +54,7 @@ def get_possible_services():
 
 
 def get_services():
-    with main_config.mutate() as config:
+    with conf_betanin.mutate() as config:
         # remove incomplete services
         config["notifications"]["services"] = {
             service_id: service
@@ -67,13 +67,13 @@ def get_services():
 
 
 def get_strings():
-    config = main_config.read()
+    config = conf_betanin.read()
     return config["notifications"]["strings"]
 
 
 def add_service(service_type):
     service_id = _random_string(16)
-    with main_config.mutate() as config:
+    with conf_betanin.mutate() as config:
         config["notifications"]["services"][service_id] = {
             "type": service_type,
             "enabled": True,
@@ -87,7 +87,7 @@ def add_service(service_type):
 
 
 def update_services(services):
-    with main_config.mutate() as config:
+    with conf_betanin.mutate() as config:
         config["notifications"]["services"] = services
     register_all()
 
@@ -99,12 +99,12 @@ def test_services():
 
 
 def update_strings(strings):
-    with main_config.mutate() as config:
+    with conf_betanin.mutate() as config:
         config["notifications"]["strings"] = strings
 
 
 def send(torrent):
-    config = main_config.read()
+    config = conf_betanin.read()
     templates = _make_templates(config)
     torrents_path = (
         "complete" if torrent.status == Status.COMPLETED else "active"

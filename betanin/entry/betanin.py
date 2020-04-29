@@ -14,9 +14,9 @@ import gevent
 from loguru import logger
 
 # betanin
-from betanin import secret_key
+import betanin.config.betanin as conf_betanin
+import betanin.config.secret_key as conf_secret_key
 from betanin import application
-from betanin import main_config
 from betanin import system_info
 from betanin.jobs import serve_web
 from betanin.jobs import import_torrents
@@ -51,8 +51,8 @@ def main(port):
     "starts betanin"
     _print_meta_info()
     # ensure config exists and is valid
-    main_config.ensure()
-    secret_key.ensure()
+    conf_betanin.ensure()
+    conf_secret_key.ensure()
     # setup stop
     signal.signal(signal.SIGINT, _stop)
     signal.signal(signal.SIGTERM, _stop)
@@ -76,4 +76,4 @@ def main(port):
 
 
 if __name__ == "__main__":
-    main()
+    main(None)

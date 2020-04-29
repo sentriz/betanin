@@ -1,6 +1,6 @@
 # betanin
+from betanin.models import Torrent
 from betanin.status import Status
-from betanin.orm.models.torrent import Torrent
 from betanin.jobs.import_torrents import retry
 
 

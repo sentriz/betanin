@@ -7,9 +7,9 @@ import click
 
 # betanin
 from betanin import application
+from betanin.models import Line  # noqa
+from betanin.models import Torrent  # noqa
 from betanin.extensions import DB  # noqa
-from betanin.orm.models.line import Line  # noqa
-from betanin.orm.models.torrent import Torrent  # noqa
 
 
 WELCOME_MESSAGE = """\

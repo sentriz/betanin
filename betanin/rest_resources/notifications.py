@@ -1,8 +1,8 @@
 # betanin
 from betanin import notifications
 from betanin.rest.base import SecureResource
-from betanin.rest.models import request as req_models
-from betanin.rest.models import response as resp_models
+from betanin.rest_models import request as req_models
+from betanin.rest_models import response as resp_models
 from betanin.rest.namespaces import NOTIFICATIONS_NS
 
 
@@ -55,7 +55,7 @@ class PossibleServicesResource(SecureResource):
 
 
 @NOTIFICATIONS_NS.route("/strings")
-class stringsResource(SecureResource):
+class StringsResource(SecureResource):
     @staticmethod
     @NOTIFICATIONS_NS.marshal_with(resp_models.NOTIFICATION_SETTINGS)
     def get():

@@ -5,13 +5,13 @@ from glob import glob
 # betanin
 from betanin import system_info
 from betanin.rest.base import SecureResource
-from betanin.rest.models import request as req_models
-from betanin.rest.models import response as resp_models
+from betanin.rest_models import request as req_models
+from betanin.rest_models import response as resp_models
 from betanin.rest.namespaces import META_NS
 
 
 @META_NS.route("/system_info")
-class metaResource(SecureResource):
+class SystemInfoResource(SecureResource):
     @staticmethod
     @META_NS.marshal_with(resp_models.SYSTEM_INFO)
     def get():
@@ -20,7 +20,7 @@ class metaResource(SecureResource):
 
 
 @META_NS.route("/sub_dirs")
-class metaResource(SecureResource):
+class SubDirsResource(SecureResource):
     @staticmethod
     @META_NS.doc(parser=req_models.SUB_DIRS)
     @META_NS.marshal_list_with(resp_models.SUB_DIR)

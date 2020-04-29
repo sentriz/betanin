@@ -1,7 +1,7 @@
 # betanin
-from betanin import main_config
+import betanin.config.betanin as conf_betanin
 from betanin.rest.base import SecureResource
-from betanin.rest.models import response as resp_models
+from betanin.rest_models import response as resp_models
 from betanin.rest.namespaces import CLIENTS_NS
 
 
@@ -11,4 +11,4 @@ class LoginResource(SecureResource):
     @CLIENTS_NS.marshal_with(resp_models.API_KEY)
     def get():
         "fetches the clients api key"
-        return {"api_key": main_config.get_api_key()}
+        return {"api_key": conf_betanin.get_api_key()}

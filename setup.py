@@ -14,8 +14,8 @@ INFO = {
 }
 ENTRY_POINTS = {
     "console_scripts": [
-        "betanin = betanin.entry_betanin:main",
-        "betanin-shell = betanin.entry_shell:main",
+        "betanin = betanin.entry.betanin:main",
+        "betanin-shell = betanin.entry.shell:main",
     ]
 }
 REQUIREMENTS = [
@@ -67,7 +67,7 @@ CLASSIFIERS = [
 
 def get_new_version():
     """gets the bumped version from the environment variable
-    passed by the `tag-and-deploy` script in the project root"""
+    passed by the `_do_tag_and_deploy` script in the project root"""
     return os.getenv("NEW_VERSION", "development")
 
 

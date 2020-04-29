@@ -5,23 +5,23 @@ from flask import render_template
 from werkzeug.contrib.fixers import ProxyFix
 
 # betanin
+import betanin.config.flask as conf_flask
+import betanin.config.secret_key as conf_secret_key
 from betanin import blueprints
-from betanin import secret_key
-from betanin import flask_config
+from betanin.models import Line  # noqa
+from betanin.models import Torrent  # noqa
 from betanin.extensions import DB
 from betanin.extensions import JWT
 from betanin.extensions import CORS
 from betanin.extensions import REST
 from betanin.extensions import MIGRATE
 from betanin.extensions import SOCKETIO
-from betanin.rest.resources import meta  # noqa
-from betanin.rest.resources import beets  # noqa
-from betanin.rest.resources import torrents  # noqa
-from betanin.rest.resources import notifications  # noqa
-from betanin.rest.resources import authentication  # noqa
-from betanin.rest.resources import torrent_clients  # noqa
-from betanin.orm.models.line import Line  # noqa
-from betanin.orm.models.torrent import Torrent  # noqa
+from betanin.rest_resources import meta  # noqa
+from betanin.rest_resources import beets  # noqa
+from betanin.rest_resources import torrents  # noqa
+from betanin.rest_resources import notifications  # noqa
+from betanin.rest_resources import authentication  # noqa
+from betanin.rest_resources import torrent_clients  # noqa
 
 
 def create():
@@ -67,7 +67,7 @@ def register_blueprints(app):
 
 
 def register_modifications(app):
-    app.config.from_object(flask_config)
+    app.config.from_object(conf_flask)
     app.url_map.strict_slashes = False
-    app.secret_key = secret_key.read()
+    app.secret_key = conf_secret_key.read()
     app.wsgi_app = ProxyFix(app.wsgi_app)

@@ -3,6 +3,14 @@ from betanin.status import Status
 from betanin.extensions import DB
 
 
+class Line(DB.Model):
+    __tablename__ = "lines"
+    id = DB.Column(DB.Integer, primary_key=True)
+    index = DB.Column(DB.Integer)
+    data = DB.Column(DB.String)
+    torrent_id = DB.Column(DB.Integer, DB.ForeignKey("torrents.id"))
+
+
 class Torrent(DB.Model):
     __tablename__ = "torrents"
     __table_args__ = {"sqlite_autoincrement": True}

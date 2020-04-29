@@ -3,7 +3,7 @@ from flask_restplus import marshal
 
 # betanin
 from betanin.extensions import SOCKETIO
-from betanin.rest.models import response
+from betanin.rest_models import response
 
 
 def send_torrent(torrent):

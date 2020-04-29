@@ -7,8 +7,8 @@ from flask import abort
 # betanin
 from betanin import beets
 from betanin.rest.base import SecureResource
-from betanin.rest.models import request as req_models
-from betanin.rest.models import response as resp_models
+from betanin.rest_models import request as req_models
+from betanin.rest_models import response as resp_models
 from betanin.rest.namespaces import BEETS_NS
 
 

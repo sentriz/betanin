@@ -12,3 +12,20 @@ sections = "STDLIB,THIRDPARTY,FIRSTPARTY"
 [tool.black]
 line-length = 79
 target_version = ['py37']
+
+[tool.pylint.'messages control']
+# `no-member` because: https://github.com/PyCQA/pylint/issues/2917
+# `*-docstring` because lazy (at the moment)
+# `unused-import` because the isort/autoflake is doing this already the exception comment differs
+# `wrong-import-position` for the same reason
+enable = "all"
+disable = """\
+	missing-module-docstring,\
+	missing-class-docstring,\
+	missing-function-docstring,\
+	no-member,\
+	fixme,\
+	too-few-public-methods,\
+	unused-import,\
+	wrong-import-position\
+"""

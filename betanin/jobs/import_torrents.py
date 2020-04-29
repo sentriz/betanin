@@ -10,10 +10,10 @@ from gevent.queue import Queue
 # betanin
 from betanin import events
 from betanin import notifications
+from betanin.models import Line
+from betanin.models import Torrent
 from betanin.status import Status
 from betanin.extensions import DB
-from betanin.orm.models.line import Line
-from betanin.orm.models.torrent import Torrent
 
 
 PROCESSES = {}

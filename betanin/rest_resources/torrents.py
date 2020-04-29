@@ -6,12 +6,12 @@ from flask import abort
 
 # betanin
 from betanin.jobs import import_torrents
+from betanin.models import Torrent
 from betanin.rest.base import SecureResource
 from betanin.extensions import DB
-from betanin.rest.models import request as req_models
-from betanin.rest.models import response as resp_models
+from betanin.rest_models import request as req_models
+from betanin.rest_models import response as resp_models
 from betanin.rest.namespaces import TORRENTS_NS
-from betanin.orm.models.torrent import Torrent
 
 
 @TORRENTS_NS.route("/")
@@ -24,14 +24,16 @@ class TorrentsResource(SecureResource):
         args = req_models.TORRENT.parse_args()
         if args.get("name") and args.get("path"):
             import_torrents.add(name=args["name"], path=args["path"])
-            return
+            return None
         both = args.get("both")
         if not both:
-            return abort(400, "please provide one of (`path` and `name`) or (`both`)")
+            return abort(
+                400, "please provide one of (`path` and `name`) or (`both`)"
+            )
         path, name = os.path.split(both)
         if path and name:
             import_torrents.add(name=name, path=path)
-            return
+            return None
         return abort(400, "please provide a valid path")
 
     @staticmethod
