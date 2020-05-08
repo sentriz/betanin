@@ -42,12 +42,18 @@ def _make_starter(flask_app, module, *args, **kwargs):
 
 @click.command()
 @click.option(
+    "--host",
+    default="",
+    envvar="BETANIN_HOST",
+    help="the host to bind to for webui/api/hook",
+)
+@click.option(
     "--port",
     default=9393,
     envvar="BETANIN_PORT",
     help="the port to listen on for webui/api/hook",
 )
-def main(port):
+def main(host, port):
     "starts betanin"
     _print_meta_info()
     # ensure config exists and is valid
@@ -70,10 +76,10 @@ def main(port):
         (
             start_job(register_notifications),
             start_job(import_torrents),
-            start_job(serve_web, port),
+            start_job(serve_web, host, port),
         )
     )
 
 
 if __name__ == "__main__":
-    main(None)
+    main(None, None)

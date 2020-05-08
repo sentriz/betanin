@@ -36,8 +36,11 @@ $ # start server
 $ betanin
 $ # a config file will be created, add your credentials to it
 $ # start again
-$ betanin [--port=<port>]
+$ betanin [--host=<host>] [--port=<port>]
 $ # ui will be available at port
+$ # you may also use env vars instead, eg
+$ BETANIN_HOST=0.0.0.0 betanin
+$ BETANIN_PORT=4030 betanin
 
 $ # optionally start cli (for db operations, debugging)
 $ betanin-shell
