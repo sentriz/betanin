@@ -53,7 +53,7 @@ sudo docker \
     -v "$PWD/betanin_client:/betanin" \
     -w '/betanin' \
     node \
-    npm run-script build
+    sh -c "npm install && npm run-script build"
 
 # run setuptools and upload. we're passing the bumped version
 # (just for pypi) in my enviroment variable
