@@ -5,7 +5,7 @@ COPY \
     ./_docker_entry \
     /
 RUN \
-    apk add --no-cache libev build-base sudo && \
+    apk add --no-cache libev build-base libffi-dev sudo && \
     pip --no-cache-dir install -U \
         betanin \
         https://github.com/caronc/apprise/archive/master.zip \
