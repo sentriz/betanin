@@ -44,10 +44,11 @@ __version__ = "$new_version"
 EOL
 
 # create and tag single commit with a change to the version file
-git commit --all --message "bump to $new_version"
+git commit --all --message "bump to $new_version" && \
 git tag "$new_version"
 
 # rebuild frontend
+sudo systemctl start docker
 sudo docker \
     run -it --rm \
     -v "$PWD/betanin_client:/betanin" \
@@ -58,4 +59,9 @@ sudo docker \
 # run setuptools and upload. we're passing the bumped version
 # (just for pypi) in my enviroment variable
 NEW_VERSION=$new_version python3 setup.py sdist bdist_wheel
-python3 -m twine upload --disable-progress-bar dist/*
+python3 -m twine \
+    upload \
+    --username "$(secret twine_username)" \
+    --password "$(secret twine_password)" \
+    --disable-progress-bar \
+    dist/*
