@@ -42,7 +42,6 @@ export default {
     padding: 0.75rem;
     height: 50vh;
     position: relative;
-    overflow-x: hidden;
     overflow-y: scroll;
   }
   p {
