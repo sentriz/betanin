@@ -9,7 +9,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "@mdi/font": "^4.5.95",
+    "@mdi/font": "4.9.95",
     "ansi-to-html": "^0.6.13",
     "axios": "^0.19.0",
     "buefy": "^0.8.8",
