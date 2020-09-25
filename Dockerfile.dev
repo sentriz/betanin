@@ -4,8 +4,7 @@ FROM python:3.6.6-alpine3.6
 LABEL maintainer="Senan Kelly <senan@senan.xyz>"
 RUN apk add --no-cache libev build-base libffi-dev
 COPY ./requirements-docker.txt /
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -U \
+RUN pip install -U \
         https://github.com/caronc/apprise/archive/master.zip \
         -r /requirements-docker.txt
 WORKDIR /src
