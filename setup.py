@@ -34,7 +34,7 @@ REQUIREMENTS = [
     "Werkzeug==0.16.1",
     "alembic>=1.0.1",
     "aniso8601>=3.0.2",
-    "beets==1.4.9",
+    "beets @ https://github.com/beetbox/beets/tarball/master",
     "certifi>=2018.10.15",
     "chardet>=3.0.4",
     "flask-jwt-extended",
