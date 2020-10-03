@@ -34,7 +34,7 @@ REQUIREMENTS = [
     "Werkzeug==0.16.1",
     "alembic>=1.0.1",
     "aniso8601>=3.0.2",
-    "beets @ https://github.com/beetbox/beets/tarball/master",
+    "beets",
     "certifi>=2018.10.15",
     "chardet>=3.0.4",
     "flask-jwt-extended",
@@ -88,6 +88,7 @@ if __name__ == "__main__":
         install_requires=REQUIREMENTS,
         dependency_links=[
             "git+https://github.com/caronc/apprise.git@cc8fae4c73cc5df0bb6c9e0b492bc088ce412427",
+            "git+https://github.com/beetbox/beets.git"
         ],
         classifiers=CLASSIFIERS,
         entry_points=ENTRY_POINTS,
