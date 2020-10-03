@@ -10,11 +10,10 @@ RUN pip install -U \
 WORKDIR /src
 COPY . .
 RUN pip install -U -e .
-VOLUME [ \
+VOLUME \
     "/root/.local/share/betanin/" \
     "/root/.config/betanin/" \
-    "/root/.config/beets/" \
-]
+    "/root/.config/beets/"
 ENV \
     PYTHONUNBUFFERED=1 \
     PYTHONWARNINGS="ignore:Unverified HTTPS request"
