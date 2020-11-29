@@ -1,7 +1,7 @@
 FROM linuxserver/beets:nightly
 LABEL maintainer="Senan Kelly <senan@senan.xyz>"
 
-COPY /root /
+COPY root/ /
 
 RUN apk add --no-cache --virtual=build-deps --upgrade \
         libev \
