@@ -59,7 +59,6 @@ def _import_torrent(torrent):
         [
             "beet",
             "import",
-            "--copy",
             "--noresume",
             _calculate_import_path(torrent),
         ]
