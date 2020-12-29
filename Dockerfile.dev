@@ -2,21 +2,23 @@
 
 FROM python:3.6.6-alpine3.6
 LABEL maintainer="Senan Kelly <senan@senan.xyz>"
+
 RUN apk add --no-cache libev build-base libffi-dev
-COPY ./requirements-docker.txt /
+COPY \
+  ./requirements-docker.txt \
+  /
 RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install -U \
-        https://github.com/caronc/apprise/archive/master.zip \
-        -r /requirements-docker.txt
+  pip install -U -r /requirements-docker.txt
 WORKDIR /src
 COPY . .
 RUN pip install -U -e .
 VOLUME [ \
-    "/root/.local/share/betanin/" \
-    "/root/.config/betanin/" \
-    "/root/.config/beets/" \
-]
+  "/root/.local/share/betanin/" \
+  "/root/.config/betanin/" \
+  "/root/.config/beets/" \
+  ]
+
 ENV \
-    PYTHONUNBUFFERED=1 \
-    PYTHONWARNINGS="ignore:Unverified HTTPS request"
+  PYTHONUNBUFFERED=1 \
+  PYTHONWARNINGS="ignore:Unverified HTTPS request"
 CMD [ "betanin" ]
