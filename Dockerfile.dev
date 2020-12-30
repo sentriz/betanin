@@ -12,13 +12,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 WORKDIR /src
 COPY . .
 RUN pip install -U -e .
-VOLUME [ \
-  "/root/.local/share/betanin/" \
-  "/root/.config/betanin/" \
-  "/root/.config/beets/" \
-  ]
+VOLUME /root/.local/share/betanin/
+VOLUME /root/.config/betanin/
+VOLUME /root/.config/beets/
 
-ENV \
-  PYTHONUNBUFFERED=1 \
-  PYTHONWARNINGS="ignore:Unverified HTTPS request"
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONWARNINGS="ignore:Unverified HTTPS request"
 CMD [ "betanin" ]

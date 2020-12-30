@@ -10,15 +10,12 @@ RUN \
   pip --no-cache-dir install -U \
   betanin -r /requirements-docker.txt && \
   apk del build-base
-VOLUME [ \
-  "/root/.local/share/betanin/" \
-  "/root/.config/betanin/" \
-  "/root/.config/beets/" \
-  ]
+VOLUME /root/.local/share/betanin/
+VOLUME /root/.config/betanin/
+VOLUME /root/.config/beets/
 
-ENV \
-  PYTHONUNBUFFERED=1 \
-  PYTHONWARNINGS="ignore:Unverified HTTPS request" \
-  UID=0 \
-  GID=0
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONWARNINGS="ignore:Unverified HTTPS request"
+ENV UID=0
+ENV GID=0
 CMD [ "/_docker_entry" ]
