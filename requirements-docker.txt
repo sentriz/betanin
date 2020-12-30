@@ -1,3 +1,4 @@
 discogs-client
 beets-noimport
 pyacoustid
+pylast
