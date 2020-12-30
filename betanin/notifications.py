@@ -16,6 +16,7 @@ from betanin.status import Status
 _apprise_asset = AppriseAsset()
 _apprise_asset.app_id = "betanin"
 _apprise_asset.app_desc = "betanin"
+_apprise_asset.async_mode = False
 APPRISE = Apprise(asset=_apprise_asset)
 STATUS_LONG = {
     Status.COMPLETED: "has completed",
