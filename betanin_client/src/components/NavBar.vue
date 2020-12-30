@@ -22,7 +22,7 @@
         router-link.navbar-item(to='/torrents/complete') History
         router-link.navbar-item(to='/settings') Settings
         a.navbar-item(@click='logout')
-          span Logout&nbsp;
+          span Logout
           b-icon(size='is-small' icon='logout-variant')
 </template>
 
@@ -71,6 +71,9 @@ export default {
   }
   .navbar-burger {
     background-color: #f9f9f9;
+  }
+  .navbar-item {
+    gap: 5px;
   }
   #activity-count {
     $count-size: 16px;
