@@ -75,8 +75,8 @@ def main(host, port):
     gevent.joinall(
         (
             start_job(register_notifications),
-            start_job(import_torrents),
             start_job(serve_web, host, port),
+            start_job(import_torrents),
         )
     )
 
