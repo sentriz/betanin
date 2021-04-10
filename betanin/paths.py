@@ -1,21 +1,49 @@
 # standard library
 import os
 import site
+import psutil
 from contextlib import suppress
 
 # 3rd party
 import xdg.BaseDirectory
 
-
 def _first_existing(paths):
     with suppress(StopIteration):
         return next((path for path in paths if os.path.exists(path)))
 
+def _first_existing_mount(mounted_paths):
+    with suppress(StopIteration):
+        return next((path for path in mounted_paths if os.path.exists(path) and _path_is_mounted(path)))
+
+def _path_is_mounted(path):
+    partitions = psutil.disk_partitions()
+    for p in partitions:
+        if (p.mountpoint == path):
+            return True
+    return False
 
 # dir
-DATA_DIR = xdg.BaseDirectory.save_data_path("betanin")
-CONFIG_DIR = xdg.BaseDirectory.save_config_path("betanin")
-BEETS_DIR = xdg.BaseDirectory.save_config_path("beets")
+DATA_DIR = _first_existing_mount(
+    (
+        "/root/.local/share/betanin",
+        "/betanin/data",
+    )    
+) or xdg.BaseDirectory.save_data_path("betanin")
+
+CONFIG_DIR = _first_existing_mount(
+    (
+        "/root/.config/betanin",
+        "/betanin/config",
+    )
+) or xdg.BaseDirectory.save_config_path("betanin")
+
+BEETS_DIR = _first_existing_mount(
+    (
+        "/root/.config/beets",
+        "/config",
+    )
+) or xdg.BaseDirectory.save_config_path("beets")
+
 CLIENT_DIST_DIR = _first_existing(
     (
         os.path.join(os.getcwd(), "betanin_client", "dist"),

@@ -63,9 +63,9 @@ $ docker exec -it <container_id> betanin-shell
 ###### image
 `docker pull sentriz/betanin`  
 ###### volumes
-`/root/.local/share/betanin/` for a persistent database  
-`/root/.config/betanin/` for a persistent betanin config  
-`/root/.config/beets/` for a persistent beets home (point this to your current beets home if you have one)  
+`/betanin/data` for a persistent database  
+`/betanin/config` for a persistent betanin config  
+`/config` for a persistent beets home (point this to your current beets home if you have one)  
 `/music/` so beets can access your music  
 `/downloads/` so beets can access your downloads  
 ###### compose
@@ -76,12 +76,12 @@ betanin:
     - 9393:9393
     restart: unless-stopped
     environment:
-    - UID=1000 # (optionally) set user id
-    - GID=1000 # (optionally) set group id
+    - PUID=1000 # (optionally) set user id
+    - PGID=1000 # (optionally) set group id
     volumes:
-    - ${DATA}/betanin/data:/root/.local/share/betanin/
-    - ${DATA}/betanin/config:/root/.config/betanin/
-    - ${DATA}/betanin/beets:/root/.config/beets/
+    - ${DATA}/betanin/data:/betanin/data
+    - ${DATA}/betanin/config:/betanin/config
+    - ${DATA}/betanin/beets:/config
     - ${MEDIA}/music:/music/
     - ${MEDIA}/downloads:/downloads/
 ```

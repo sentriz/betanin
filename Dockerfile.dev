@@ -1,21 +1,7 @@
-# syntax=docker/dockerfile:experimental
-
-FROM python:3.6.6-alpine3.6
-LABEL maintainer="Senan Kelly <senan@senan.xyz>"
-
-RUN apk add --no-cache libev build-base libffi-dev
-COPY \
-  ./requirements-docker.txt \
-  /
-RUN --mount=type=cache,target=/root/.cache/pip \
-  pip install -U -r /requirements-docker.txt
-WORKDIR /src
+FROM sentriz/betanin
+# or build the image with `docker build . -t betanin-dev`
+# and then use `FROM betanin-dev` here
+COPY root/ /
 COPY . .
-RUN pip install -U -e .
-VOLUME /root/.local/share/betanin/
-VOLUME /root/.config/betanin/
-VOLUME /root/.config/beets/
-
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONWARNINGS="ignore:Unverified HTTPS request"
-CMD [ "betanin" ]
+RUN pip --no-cache-dir install -U -e .
+RUN cd /src/betanin_client && npm run-script build

@@ -1,0 +1,26 @@
+#!/usr/bin/with-contenv bash
+umask 022
+
+# fix permissions in case old volumes are used
+if [[ -d "/root/.config/betanin" || -d "/root/.config/beets" || -d "/root/.local/share/betanin" ]]; then
+    chown abc:abc /root
+    chown -R abc:abc /root/.config/be*
+    chown -R abc:abc /root/.local/share/betanin
+fi
+
+#symlink for old beets volume
+if [[ -d "/root/.config/beets" ]]; then
+    cd /root/.config/beets
+    for f in *; do
+        if [[ -f "/config/$f" ]]; then
+            mv "/config/$f" "/config/${f}_original"
+        fi
+        ln -s "/root/.config/beets/$f" "/config/$f"
+    done
+fi
+
+# fix permissions for betanin data and config
+chown -R abc:abc /betanin
+
+cd /src
+exec s6-setuidgid abc betanin
