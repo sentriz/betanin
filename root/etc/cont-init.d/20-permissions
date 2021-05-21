@@ -21,6 +21,3 @@ fi
 
 # fix permissions for betanin data and config
 chown -R abc:abc /betanin
-
-cd /src
-exec s6-setuidgid abc betanin
