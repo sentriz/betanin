@@ -1,7 +1,6 @@
 # standard library
 import os
 
-# 3rd party
 import setuptools
 
 
@@ -19,6 +18,7 @@ ENTRY_POINTS = {
     ]
 }
 REQUIREMENTS = [
+    "cryptography==3.3.2",
     "beets",
     "apprise",
     "alembic==1.4.3",
@@ -84,7 +84,7 @@ CLASSIFIERS = [
 def get_new_version():
     """gets the bumped version from the environment variable
     passed by the `_do_tag_and_deploy` script in the project root"""
-    return os.getenv("NEW_VERSION", "development")
+    return os.getenv("NEW_VERSION", "v0.0.0")
 
 
 def get_long_description():

@@ -1,21 +1,28 @@
-FROM python:3.6.6-alpine3.6
-LABEL maintainer="Senan Kelly <senan@senan.xyz>"
+FROM node:12.22.1-stretch-slim AS frontend-builder
+RUN apt update -qq
+RUN apt install -y -qq build-essential python
+WORKDIR /src
+COPY betanin_client/ .
+RUN npm install
+RUN PRODUCTION=true npm run-script build
 
-COPY \
-  ./requirements-docker.txt \
-  ./_docker_entry \
-  /
+
+FROM linuxserver/beets
+ENV HOME=/root
+RUN apk add --no-cache sudo build-base libev libffi-dev openssl-dev python3-dev
+WORKDIR /src
+COPY . .
+COPY --from=frontend-builder /src/dist/ /src/betanin_client/dist/
 RUN \
-  apk add --no-cache libev build-base libffi-dev sudo && \
-  pip --no-cache-dir install -U \
-  betanin -r /requirements-docker.txt && \
-  apk del build-base
+    /usr/bin/pip3 install --no-cache-dir --user . && \
+    apk del build-base libffi-dev openssl-dev python3-dev
+
 VOLUME /root/.local/share/betanin/
 VOLUME /root/.config/betanin/
 VOLUME /root/.config/beets/
 
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONWARNINGS="ignore:Unverified HTTPS request"
 ENV UID=0
 ENV GID=0
-CMD [ "/_docker_entry" ]
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONWARNINGS="ignore:Unverified HTTPS request"
+ENTRYPOINT [ "/src/docker-entry" ]

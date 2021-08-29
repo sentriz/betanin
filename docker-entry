@@ -1,5 +1,9 @@
 #!/bin/sh
 
+set -e
+
+export PATH=$HOME/.local/bin:$PATH
+
 [[ "$UID" -eq 0 ]] && exec betanin
 
 adduser -D -h ~root -u $UID -g $GID betanin

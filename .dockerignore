@@ -1,0 +1,7 @@
+.git
+.github
+.gitignore
+Dockerfile*
+betanin_client/dist
+betanin_client/node_modules
+venv

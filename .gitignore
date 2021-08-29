@@ -1,7 +1,8 @@
 *.pyc
 .cache
 .DS_Store
-node_modules/
+betanin_client/node_modules
+betanin_client/dist
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -16,6 +17,7 @@ dist
 *security-sgps.py
 *security_backend.py
 .venv
+venv
 build
 dist
 *.egg-info
