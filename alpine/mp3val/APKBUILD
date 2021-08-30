@@ -1,0 +1,21 @@
+# Maintainer: Senan Kelly <senan@senan.xyz>
+pkgname=mp3val
+pkgver=0.1.8
+pkgrel=0
+pkgdesc="A tool for validating and repairing MPEG audio streams"
+url="http://mp3val.sourceforge.net/"
+arch="all"
+license="GPL"
+source="http://downloads.sourceforge.net/$pkgname/$pkgname-$pkgver-src.tar.gz"
+builddir="$srcdir/$pkgname-$pkgver-src"
+
+build() {
+    make -f Makefile.linux CXXFLAGS="$CXXFLAGS"
+}
+
+package() {
+    install -Dm755 $pkgname "$pkgdir/usr/bin/$pkgname"
+}
+sha512sums="
+62371453be53840fb0f0d87c9fcf9cbd6f5c8ae107e529f0cb6b8190ef9e7ebf564bb080c9d0a6adc3b5450673e70b5f4343dee82c1e6400750935cccebc2604  mp3val-0.1.8-src.tar.gz
+"

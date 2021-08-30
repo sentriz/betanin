@@ -1,11 +1,6 @@
 #!/bin/sh
 
-set -e
-
-export PATH=$HOME/.local/bin:$PATH
-
 [ "$UID" -eq 0 ] && exec betanin
 
-adduser -D -h ~root -u "$UID" -g "$GID" betanin
-chown -R betanin:betanin ~root
+chown -R betanin:betanin ~b
 exec sudo -u betanin -g betanin betanin

@@ -1,0 +1,10 @@
+https://github.com/beetbox/beets/archive/master.zip
+discogs-client
+beets-noimport
+pyacoustid
+pylast
+requests
+beautifulsoup4
+beets-extrafiles
+pillow
+unidecode
