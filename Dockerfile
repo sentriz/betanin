@@ -26,24 +26,22 @@ RUN apk update && \
 
 
 FROM alpine:3.14.2
-
-RUN apk add --no-cache sudo build-base libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev libev chromaprint
-
-COPY --from=mp3gain-builder /tmp/out/x86_64/*.apk /pkgs/
-COPY --from=mp3val-builder /tmp/out/x86_64/*.apk /pkgs/
-RUN apk add --no-cache --allow-untrusted /pkgs/* && \
-    rm -r /pkgs
-
-ENV UID=1000
-ENV GID=1000
-RUN adduser -D -h /b -u "$UID" -g "$GID" betanin
-
 WORKDIR /src
 COPY . .
 COPY --from=frontend-builder /src/dist/ /src/betanin_client/dist/
-RUN python3 -m ensurepip && \
+COPY --from=mp3gain-builder /tmp/out/x86_64/*.apk /pkgs/
+COPY --from=mp3val-builder /tmp/out/x86_64/*.apk /pkgs/
+
+ENV UID=1000
+ENV GID=1000
+RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev && \
+    apk add --no-cache --upgrade sudo python3 libev chromaprint && \
+    apk add --no-cache --allow-untrusted /pkgs/* && \
+    python3 -m ensurepip && \
     pip3 install --no-cache-dir . --requirement requirements-docker.txt && \
-    apk del build-base libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev
+    apk del --purge build-dependencies && \
+    rm -r /pkgs /tmp/* ~/.cache && \
+    adduser -D -h /b -u "$UID" -g "$GID" betanin
 
 VOLUME /b/.local/share/betanin/
 VOLUME /b/.config/betanin/
@@ -52,4 +50,5 @@ VOLUME /b/.config/beets/
 ENV HOME=/b
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONWARNINGS="ignore:Unverified HTTPS request"
+
 ENTRYPOINT [ "/src/docker-entry" ]

@@ -2,5 +2,5 @@
 
 [ "$UID" -eq 0 ] && exec betanin
 
-chown -R betanin:betanin ~b
+chown -R betanin:betanin /b
 exec sudo -u betanin -g betanin betanin
