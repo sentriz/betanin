@@ -1,4 +1,4 @@
-FROM node:12.22.1-stretch-slim AS frontend-builder
+FROM node:12.22.1-stretch-slim AS builder-frontend
 RUN apt-get update -qq && \
     apt-get install -y -qq --no-install-recommends build-essential python
 WORKDIR /src
@@ -7,7 +7,7 @@ RUN npm install && \
     PRODUCTION=true npm run-script build
 
 
-FROM alpine:3.14.2 AS mp3gain-builder
+FROM alpine:3.14.2 AS builder-mp3gain
 WORKDIR /tmp
 COPY alpine/mp3gain/APKBUILD .
 RUN apk update && \
@@ -16,7 +16,7 @@ RUN apk update && \
     REPODEST=/tmp/out abuild -F -r
 
 
-FROM alpine:3.14.2 AS mp3val-builder
+FROM alpine:3.14.2 AS builder-mp3val
 WORKDIR /tmp
 COPY alpine/mp3val/APKBUILD .
 RUN apk update && \
@@ -28,9 +28,9 @@ RUN apk update && \
 FROM alpine:3.14.2
 WORKDIR /src
 COPY . .
-COPY --from=frontend-builder /src/dist/ /src/betanin_client/dist/
-COPY --from=mp3gain-builder /tmp/out/x86_64/*.apk /pkgs/
-COPY --from=mp3val-builder /tmp/out/x86_64/*.apk /pkgs/
+COPY --from=builder-frontend /src/dist/ /src/betanin_client/dist/
+COPY --from=builder-mp3gain /tmp/out/x86_64/*.apk /pkgs/
+COPY --from=builder-mp3val /tmp/out/x86_64/*.apk /pkgs/
 
 ENV UID=1000
 ENV GID=1000
