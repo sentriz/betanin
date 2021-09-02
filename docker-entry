@@ -1,0 +1,22 @@
+#!/bin/sh
+
+echo "!! warning, the docker volumes for this container have changed!"
+echo "!! mounts in the container prefixed with /root should now be /b"
+echo "!!"
+echo "!! for example, with docker-compose you can set"
+echo "!! volumes:"
+echo "!!  - ./data:/b/.local/share/betanin/ # betanin database"
+echo "!!  - ./config:/b/.config/betanin/    # betanin config"
+echo "!!  - ./beets:/b/.config/beets/       # beets config"
+echo "!!"
+echo "!! it is also recommended that you set the UID/GID environment variables"
+echo "!!"
+echo "!! for more info, check the README"
+echo "!! https://github.com/sentriz/betanin"
+echo "!!"
+echo "!! thanks!"
+
+[ "$UID" -eq 0 ] && exec betanin
+
+chown -R betanin:betanin /b
+exec sudo -u betanin -g betanin betanin

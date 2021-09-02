@@ -1,0 +1,25 @@
+# Maintainer: Senan Kelly <senan@senan.xyz>
+pkgname=mp3gain
+pkgver=1.6.2
+pkgrel=0
+pkgdesc="Lossless mp3 normalizer with statistical analysis"
+url="https://sourceforge.net/projects/mp3gain/"
+arch="all"
+license="GPL"
+makedepends="
+    mpg123-dev
+"
+source="http://downloads.sourceforge.net/$pkgname/$pkgname-${pkgver//./_}-src.zip"
+builddir="$srcdir"
+
+build() {
+    make OSTYPE=linux
+}
+
+package() {
+    mkdir -p "$pkgdir"/usr/bin
+    make OSTYPE=linux INSTALL_PATH="$pkgdir"/usr/bin install
+}
+sha512sums="
+ec9de6c755120480ccb72b34a0042aea7546ef923090ab04e420d5b189523b4504e29952a3d695d3c42c74348f5c3c9123ff090bcc671e43375711e085d67480  mp3gain-1_6_2-src.zip
+"
