@@ -1,6 +1,6 @@
-FROM node:12.22.1-stretch-slim AS builder-frontend
+FROM node:16.8.0-stretch-slim AS builder-frontend
 RUN apt-get update -qq && \
-    apt-get install -y -qq --no-install-recommends build-essential python
+    apt-get install -y -qq --no-install-recommends build-essential
 WORKDIR /src
 COPY betanin_client/ .
 RUN npm install && \
