@@ -1,5 +1,3 @@
-/* eslint-disable import/first */
-
 // vue
 import Vue from "vue";
 Vue.config.productionTip = false;

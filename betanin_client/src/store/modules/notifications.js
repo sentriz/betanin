@@ -65,6 +65,7 @@ const actions = {
       );
       testResult = testResponse.data.result;
     } catch (error) {
+      // empty
     } finally {
       await commit(NOTI_SERVICE_TESTING_UPDATE, false);
     }

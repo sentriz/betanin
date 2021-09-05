@@ -62,7 +62,6 @@ import { mapGetters } from "vuex";
 
 // help
 const statusMap = {
-  /* eslint-disable no-multi-spaces, key-spacing, standard/object-curly-even-spacing */
   ENQUEUED: {
     text: "enqueued",
     icon: "clock-outline",

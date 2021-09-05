@@ -17,7 +17,7 @@ const getters = {
 };
 
 const actions = {
-  doSocket__connect: ({ commit, dispatch }) => {
+  doSocket__connect: ({ commit }) => {
     commit(STATUS_CONNECTED_UPDATE, true);
   },
   doSocket__disconnect: ({ commit }) => {
