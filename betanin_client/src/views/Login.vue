@@ -27,11 +27,11 @@
             @keyup.native.enter="login"
           )
       button.button.is-primary.is-pulled-right(@click="handleSubmit(login)") login
-      p#error-text(v-if="errorMessage") {{ errorMessage }}
 </template>
 
 <script>
 import { ValidationProvider, ValidationObserver } from "vee-validate";
+import { ToastProgrammatic as Toast } from "buefy";
 import auth from "@/authentication";
 export default {
   components: { ValidationProvider, ValidationObserver },
@@ -39,12 +39,16 @@ export default {
     return {
       username: "",
       password: "",
-      errorMessage: "",
     };
   },
   methods: {
     async login() {
-      this.errorMessage = await auth.login(this.username, this.password);
+      const message = await auth.login(this.username, this.password);
+      if (!message) return;
+      Toast.open({
+        message,
+        type: "is-primary",
+      });
     },
   },
 };
@@ -56,9 +60,6 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.error {
-  color: red;
 }
 .card {
   display: flex;
@@ -74,9 +75,5 @@ export default {
   #logo {
     width: 60%;
   }
-}
-#error-text {
-  color: #696969;
-  margin-top: 1rem 6rem 0 0;
 }
 </style>
