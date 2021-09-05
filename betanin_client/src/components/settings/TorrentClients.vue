@@ -13,16 +13,11 @@ div
         | #!/bin/sh
         |
         | curl \
-        |
-        | --request POST \
-        |
-        | --data-urlencode "path=/mnt/media/downloads" \
-        |
-        | --data-urlencode "name=$TR_TORRENT_NAME" \
-        |
-        | --header "X-API-Key: <b>{{ apiKey }}</b>" \
-        |
-        | "<b>{{ origin }}</b>/api/torrents"
+        |     --request POST \
+        |     --data-urlencode "path=/mnt/media/downloads" \
+        |     --data-urlencode "name=$TR_TORRENT_NAME" \
+        |     --header "X-API-Key: <b>{{ apiKey }}</b>" \
+        |     "<b>{{ origin }}</b>/api/torrents"
       br
       pre
         | <u><a href="https://github.com/transmission/transmission/wiki/Editing-Configuration-Files"># settings.json (excerpt)</a></u>
@@ -39,16 +34,11 @@ div
         | #!/bin/sh
         |
         | curl \
-        |
-        | --request POST \
-        |
-        | --data-urlencode "path=/mnt/media/downloads" \
-        |
-        | --data-urlencode "name=$2" \
-        |
-        | --header "X-API-Key: <b>{{ apiKey }}</b>" \
-        |
-        | "<b>{{ origin }}</b>/api/torrents"
+        |     --request POST \
+        |     --data-urlencode "path=/mnt/media/downloads" \
+        |     --data-urlencode "name=$2" \
+        |     --header "X-API-Key: <b>{{ apiKey }}</b>" \
+        |     "<b>{{ origin }}</b>/api/torrents"
       br
       p now install the <a href="https://dev.deluge-torrent.org/wiki/Plugins/Execute#Configuration">Execute</a> plugin, and add add the above script for the event 'Torrent Complete'
 </template>
