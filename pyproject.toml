@@ -11,7 +11,7 @@ sections = "STDLIB,THIRDPARTY,FIRSTPARTY"
 
 [tool.black]
 line-length = 79
-target_version = ['py37']
+target_version = ['py39']
 
 [tool.pylint.'messages control']
 # `no-member` because: https://github.com/PyCQA/pylint/issues/2917

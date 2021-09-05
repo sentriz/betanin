@@ -13,6 +13,8 @@ def get_config():
 
 
 def set_config(config):
+    if not BEETS_CONFIG_PATH:
+        return
     with open(BEETS_CONFIG_PATH, "wb") as file:
         file.write(config.encode("utf-8"))
 
