@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 
 # betanin
-from betanin import version
+from betanin.system_info import VERSION
 
 
 _rest_authorisations = {
@@ -23,7 +23,7 @@ CORS = CORS()
 DB = SQLAlchemy()
 MIGRATE = Migrate()
 REST = Api(
-    version=version.__version__,
+    version=VERSION,
     title="betanin's rest api",
     description="see https://github.com/sentriz/betanin for more",
     authorizations=_rest_authorisations,

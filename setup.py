@@ -82,10 +82,9 @@ CLASSIFIERS = [
 ]
 
 
-def get_new_version():
-    """gets the bumped version from the environment variable
-    passed by the `_do_tag_and_deploy` script in the project root"""
-    return os.getenv("NEW_VERSION", "v0.0.0")
+def get_version():
+    with open("version.txt") as version_file:
+        return f"v{version_file.read()}"
 
 
 def get_long_description():
@@ -94,11 +93,11 @@ def get_long_description():
 
 
 if __name__ == "__main__":
-    new_version = get_new_version()
-    print(f"setting up version {new_version}")
+    version = get_version()
+    print(f"setting up version {version}")
     setuptools.setup(
         **INFO,
-        version=new_version,
+        version=version,
         long_description=get_long_description(),
         long_description_content_type="text/markdown",
         packages=setuptools.find_packages(),
