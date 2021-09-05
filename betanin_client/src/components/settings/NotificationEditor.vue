@@ -3,10 +3,10 @@ div
   h5.title.is-5 notification format
   #strings-editor
     #strings-inputs
-      b-field(label="title")
-        b-input(v-model="stringsTitle")
-      b-field(label="body")
-        b-input(type="textarea", v-model="stringsBody")
+      b-field(label='title')
+        b-input(v-model='stringsTitle')
+      b-field(label='body')
+        b-input(type='textarea', v-model='stringsBody')
     #variables-help
       label.label available variables
       ul
@@ -16,48 +16,35 @@ div
         li <code>$status</code> the current betanin status of the torrent. eg. '<b>needs input</b>'
         li <code>$console_path</code> the relative path to the console modal
   .field.is-pulled-right.controls
-    button#format-save-button.button.is-primary.is-right(
-      @click="doPutStrings()"
-    ) save
+    button#format-save-button.button.is-primary.is-right(@click='doPutStrings()') save
   hr
   h5.title.is-5 services
-  validation-observer#service-editor(v-slot="{ handleSubmit }")
-    h6(v-show="getServices.length === 0")
-      b-icon(icon="alert")
+  validation-observer#service-editor(v-slot='{ handleSubmit }')
+    h6(v-show='getServices.length === 0')
+      b-icon(icon='alert')
       | &nbsp; no services here yet, add one below
-    notification-service(
-      v-for="service in getServices",
-      :serviceID="service.id",
-      :key="service.id",
-    )
+    notification-service(v-for='service in getServices', :serviceID='service.id', :key='service.id')
     #service-controls.controls
       #service-type-selector.field.has-addons
         .control
           .select.is-fullwidth
-            select(v-model="newServiceType")
-              option(
-                v-for="service in getPossible",
-                :key="service.service_name",
-                :value="service.service_name"
-              ) {{ service.service_name }}
+            select(v-model='newServiceType')
+              option(v-for='service in getPossible', :key='service.service_name', :value='service.service_name') {{ service.service_name }}
         .control
-          button.button(@click="doPostService(newServiceType)") add new
+          button.button(@click='doPostService(newServiceType)') add new
       .field
         .field
           .control
-            button.button.is-primary(
-              @click="handleSubmit(doPutServices)",
-              :class="{ 'is-loading': getIsTesting }"
-            ) save
+            button.button.is-primary(@click='handleSubmit(doPutServices)', :class='{ "is-loading": getIsTesting }') save
 </template>
 
 <script>
 // imports
-import NotificationService from "@/components/settings/NotificationService.vue";
-import { ValidationObserver } from "vee-validate";
-import { genNotiStringsComputed } from "@/utilities";
-import { mapActions, mapGetters } from "vuex";
-import store from "@/store/main";
+import NotificationService from '@/components/settings/NotificationService.vue'
+import { ValidationObserver } from 'vee-validate'
+import { genNotiStringsComputed } from '@/utilities'
+import { mapActions, mapGetters } from 'vuex'
+import store from '@/store/main'
 // export
 export default {
   components: {
@@ -65,32 +52,24 @@ export default {
     ValidationObserver,
   },
   mounted() {
-    store.dispatch("notifications/doFetchPossible");
-    store.dispatch("notifications/doFetchServices");
-    store.dispatch("notifications/doFetchStrings");
+    store.dispatch('notifications/doFetchPossible')
+    store.dispatch('notifications/doFetchServices')
+    store.dispatch('notifications/doFetchStrings')
   },
   computed: {
-    ...mapGetters("notifications", [
-      "getServices",
-      "getPossible",
-      "getIsTesting",
-    ]),
-    stringsTitle: genNotiStringsComputed("title"),
-    stringsBody: genNotiStringsComputed("body"),
+    ...mapGetters('notifications', ['getServices', 'getPossible', 'getIsTesting']),
+    stringsTitle: genNotiStringsComputed('title'),
+    stringsBody: genNotiStringsComputed('body'),
   },
   methods: {
-    ...mapActions("notifications", [
-      "doPutStrings",
-      "doPostService",
-      "doPutServices",
-    ]),
+    ...mapActions('notifications', ['doPutStrings', 'doPostService', 'doPutServices']),
   },
   data() {
     return {
-      newServiceType: "Kodi/XBMC",
-    };
+      newServiceType: 'Kodi/XBMC',
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

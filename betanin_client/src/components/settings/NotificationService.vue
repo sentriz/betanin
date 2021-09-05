@@ -1,67 +1,55 @@
 '
 <template lang="pug">
 #line
-  b-switch#enabled-switch(v-model="enabled") {{ ['disabled', 'enabled'][Number(service.enabled)] }}
+  b-switch#enabled-switch(v-model='enabled') {{ ["disabled", "enabled"][Number(service.enabled)] }}
   #url
-    validation-provider(name="protocol", rules="required", v-slot="{ errors }")
-      b-field(:type="{ 'is-primary': errors.length }", :message="errors[0]")
-        b-select#protocol-selector(v-model="protocol")
-          option(disabled, value="") please select
-          option(
-            v-for="service in getPossibleProtocols(service.type)",
-            :key="service",
-            :value="service"
-          ) {{ service }}
+    validation-provider(name='protocol', rules='required', v-slot='{ errors }')
+      b-field(:type='{ "is-primary": errors.length }', :message='errors[0]')
+        b-select#protocol-selector(v-model='protocol')
+          option(disabled, value='') please select
+          option(v-for='service in getPossibleProtocols(service.type)', :key='service', :value='service') {{ service }}
     p#protocol-helper ://
-    validation-provider(
-      name="notProtocol",
-      rules="required",
-      v-slot="{ errors }"
-    )
-      b-field(:type="{ 'is-primary': errors.length }", :message="errors[0]")
-        b-input#not-protocol-box(
-          icon="earth",
-          placeholder="see info button for help",
-          v-model="notProtocol"
-        )
-    a#info-link(:href="getPossibleInfo(service.type)", target="_blank")
-      b-icon(icon="information", type="is-info")
+    validation-provider(name='notProtocol', rules='required', v-slot='{ errors }')
+      b-field(:type='{ "is-primary": errors.length }', :message='errors[0]')
+        b-input#not-protocol-box(icon='earth', placeholder='see info button for help', v-model='notProtocol')
+    a#info-link(:href='getPossibleInfo(service.type)', target='_blank')
+      b-icon(icon='information', type='is-info')
   p#delete-button.control
-    button.button.left-button(@click="NOTI_SERVICE_DELETE(service.id)") remove
+    button.button.left-button(@click='NOTI_SERVICE_DELETE(service.id)') remove
 </template>
 
 <script>
 // imports
-import { ValidationProvider } from "vee-validate";
-import { NOTI_SERVICE_DELETE } from "@/store/mutation-types";
-import { mapMutations, mapGetters } from "vuex";
-import store from "@/store/main";
-import { genNotiServiceComputed } from "@/utilities";
+import { ValidationProvider } from 'vee-validate'
+import { NOTI_SERVICE_DELETE } from '@/store/mutation-types'
+import { mapMutations, mapGetters } from 'vuex'
+import store from '@/store/main'
+import { genNotiServiceComputed } from '@/utilities'
 // export
 export default {
   components: {
     ValidationProvider,
   },
-  props: ["serviceID"],
+  props: ['serviceID'],
   data() {
     return {
       deleteIsVisible: false,
-    };
+    }
   },
   computed: {
-    ...mapGetters("notifications", ["getPossibleProtocols", "getPossibleInfo"]),
+    ...mapGetters('notifications', ['getPossibleProtocols', 'getPossibleInfo']),
     service() {
-      const services = store.getters["notifications/getServiceByID"];
-      return services[this.serviceID];
+      const services = store.getters['notifications/getServiceByID']
+      return services[this.serviceID]
     },
-    enabled: genNotiServiceComputed("enabled"),
-    protocol: genNotiServiceComputed("protocol"),
-    notProtocol: genNotiServiceComputed("not_protocol"),
+    enabled: genNotiServiceComputed('enabled'),
+    protocol: genNotiServiceComputed('protocol'),
+    notProtocol: genNotiServiceComputed('not_protocol'),
   },
   methods: {
-    ...mapMutations("notifications", [NOTI_SERVICE_DELETE]),
+    ...mapMutations('notifications', [NOTI_SERVICE_DELETE]),
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

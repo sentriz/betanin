@@ -11,19 +11,19 @@
 </template>
 
 <script>
-import ConnectionBanner from "@/components/ConnectionBanner.vue";
-import NavBar from "@/components/NavBar.vue";
+import ConnectionBanner from '@/components/ConnectionBanner.vue'
+import NavBar from '@/components/NavBar.vue'
 export default {
-  name: "betanin",
+  name: 'betanin',
   components: {
     NavBar,
     ConnectionBanner,
   },
-};
+}
 </script>
 
 <style lang="scss">
-@import "~bulma/sass/utilities/_all";
+@import '~bulma/sass/utilities/_all';
 $primary: #d1536a;
 $primary-invert: findColorInvert($primary);
 $info: #1f94ff;
@@ -34,15 +34,15 @@ $link-focus-border: $primary;
 $link-invert: $primary-invert;
 $link: $primary;
 $colors: (
-  "primary": (
+  'primary': (
     $primary,
     $primary-invert,
   ),
-  "green": (
+  'green': (
     $green,
     $green-invert,
   ),
-  "info": (
+  'info': (
     $info,
     $info-invert,
   ),
@@ -58,6 +58,6 @@ $colors: (
     display: none;
   }
 }
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+@import '~bulma';
+@import '~buefy/src/scss/buefy';
 </style>

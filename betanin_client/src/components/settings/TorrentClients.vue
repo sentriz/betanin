@@ -7,6 +7,7 @@ div
   .columns
     .column
       .title.is-7.example-heading transmission
+      //- prettier-ignore
       pre
         | <u><a href="https://github.com/transmission/transmission/wiki/Scripts#On_Torrent_Completion"># torrent-finished.sh</a></u>
         |
@@ -19,6 +20,7 @@ div
         |     --header "X-API-Key: <b>{{ apiKey }}</b>" \
         |     "<b>{{ origin }}</b>/api/torrents"
       br
+      //- prettier-ignore
       pre
         | <u><a href="https://github.com/transmission/transmission/wiki/Editing-Configuration-Files"># settings.json (excerpt)</a></u>
         |
@@ -28,6 +30,7 @@ div
         | ...
     .column
       .title.is-7.example-heading deluge
+      //- prettier-ignore
       pre
         | <u># torrent-finished.sh</u>
         |
@@ -44,23 +47,23 @@ div
 </template>
 
 <script>
-import backend from "@/backend";
+import backend from '@/backend'
 export default {
   data() {
     return {
-      apiKey: "loading...",
-    };
+      apiKey: 'loading...',
+    }
   },
   computed: {
     origin() {
-      return window.location.origin;
+      return window.location.origin
     },
   },
   async mounted() {
-    const response = await backend.secureAxios.get("clients/api_key");
-    this.apiKey = response.data.api_key;
+    const response = await backend.secureAxios.get('clients/api_key')
+    this.apiKey = response.data.api_key
   },
-};
+}
 </script>
 
 <style>

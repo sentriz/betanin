@@ -3,44 +3,37 @@ div
   #manual-search
     manual-import
     br
-  no-active(v-if="getTorrents.length == 0")
+  no-active(v-if='getTorrents.length == 0')
   b-table#torrents(
     v-else,
-    :data="getTorrents",
-    :opened-detailed="openedDetails",
+    :data='getTorrents',
+    :opened-detailed='openedDetails',
     detailed,
-    detail-key="id",
+    detail-key='id',
     paginated,
-    per-page="50",
-    :pagination-simple="true"
+    per-page='50',
+    :pagination-simple='true'
   )
-    b-table-column(label="name", v-slot="props") {{ props.row.name }}
-    b-table-column.controls(label="status", :numeric="true", v-slot="props")
-      span.status-group(
-        :style="{ color: statusStyle(props.row.status).colour }"
-      )
-        b-icon(:icon="statusStyle(props.row.status).icon", size="is-small")
+    b-table-column(label='name', v-slot='props') {{ props.row.name }}
+    b-table-column.controls(label='status', :numeric='true', v-slot='props')
+      span.status-group(:style='{ color: statusStyle(props.row.status).colour }')
+        b-icon(:icon='statusStyle(props.row.status).icon', size='is-small')
         |
         | {{ statusStyle(props.row.status).text }}
       router-link.status-group.link(
-        v-show="props.row.has_lines",
-        :to="{ name: 'modal console', params: { torrentID: props.row.id } }"
+        v-show='props.row.has_lines',
+        :to='{ name: "modal console", params: { torrentID: props.row.id } }'
       )
-        b-icon(icon="console", size="is-small")
+        b-icon(icon='console', size='is-small')
         |
         | view
-      span.status-group(
-        v-show="[\"FAILED\", \"COMPLETED\"].includes(props.row.status)"
-      )
-        span.link(
-          title="remove torrent",
-          @click="deleteTorrent(props.row.id)"
-        )
-          b-icon.link(icon="close", size="is-small")
+      span.status-group(v-show='["FAILED", "COMPLETED"].includes(props.row.status)')
+        span.link(title='remove torrent', @click='deleteTorrent(props.row.id)')
+          b-icon.link(icon='close', size='is-small')
         | &nbsp;
-        span.link(title="retry import", @click="retryTorrent(props.row.id)")
-          b-icon.link(title="retry import", icon="refresh", size="is-small")
-    template(#detail="props")
+        span.link(title='retry import', @click='retryTorrent(props.row.id)')
+          b-icon.link(title='retry import', icon='refresh', size='is-small')
+    template(#detail='props')
       #row-status
         p
           <strong>id</strong> {{ props.row.id }}
@@ -50,36 +43,36 @@ div
           <strong>created</strong> {{ props.row.created }}
         p
           <strong>updated</strong> {{ props.row.updated }}
-  router-view(name="modal")
+  router-view(name='modal')
 </template>
 
 <script>
 // imports
-import NoActive from "@/components/tips/NoActive.vue";
-import ManualImport from "@/components/ManualImport.vue";
-import store from "@/store/main";
-import { mapGetters } from "vuex";
+import NoActive from '@/components/tips/NoActive.vue'
+import ManualImport from '@/components/ManualImport.vue'
+import store from '@/store/main'
+import { mapGetters } from 'vuex'
 
 // help
 const statusMap = {
   ENQUEUED: {
-    text: "enqueued",
-    icon: "clock-outline",
-    colour: "hsl(36, 99%, 65%)",
+    text: 'enqueued',
+    icon: 'clock-outline',
+    colour: 'hsl(36, 99%, 65%)',
   }, // orange
   PROCESSING: {
-    text: "processing",
-    icon: "clock-fast",
-    colour: "hsl(48, 98%, 52%",
+    text: 'processing',
+    icon: 'clock-fast',
+    colour: 'hsl(48, 98%, 52%',
   }, // yellow
   NEEDS_INPUT: {
-    text: "needs input",
-    icon: "alert",
-    colour: "hsl(48, 98%, 52%)",
+    text: 'needs input',
+    icon: 'alert',
+    colour: 'hsl(48, 98%, 52%)',
   }, // yellow-orange
-  FAILED: { text: "failed", icon: "close", colour: "hsl(349, 58%, 57%)" }, // angry red
-  COMPLETED: { text: "completed", icon: "check", colour: "hsl(141, 71%, 48%)" }, // green
-};
+  FAILED: { text: 'failed', icon: 'close', colour: 'hsl(349, 58%, 57%)' }, // angry red
+  COMPLETED: { text: 'completed', icon: 'check', colour: 'hsl(141, 71%, 48%)' }, // green
+}
 // export
 export default {
   components: {
@@ -87,36 +80,36 @@ export default {
     NoActive,
   },
   computed: {
-    ...mapGetters("torrents", ["getTorrents"]),
+    ...mapGetters('torrents', ['getTorrents']),
   },
   methods: {
     retryTorrent(torrentID) {
-      if (confirm("do you want to retry this?")) {
-        store.dispatch("torrents/doRetryOne", torrentID);
+      if (confirm('do you want to retry this?')) {
+        store.dispatch('torrents/doRetryOne', torrentID)
         this.$router.push({
-          name: "modal console",
+          name: 'modal console',
           params: { torrentID },
-        });
+        })
       }
     },
     deleteTorrent(torrentID) {
-      if (confirm("do you want to remove this from betanin?")) {
-        store.dispatch("torrents/doDeleteOne", torrentID);
+      if (confirm('do you want to remove this from betanin?')) {
+        store.dispatch('torrents/doDeleteOne', torrentID)
       }
     },
     statusStyle(status) {
-      return statusMap[status];
+      return statusMap[status]
     },
   },
   data() {
     return {
       openedDetails: [],
-    };
+    }
   },
   mounted() {
-    store.dispatch("torrents/doFetchAll");
+    store.dispatch('torrents/doFetchAll')
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -131,7 +124,7 @@ export default {
   cursor: pointer;
 }
 .status-group ~ .status-group::before {
-  content: "\00a0";
+  content: '\00a0';
   display: inline-block;
   margin: 0 0.1rem;
   opacity: 0.15;

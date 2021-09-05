@@ -1,6 +1,6 @@
 <template lang="pug">
 #banner
-  #disconnected(v-show="!getConnected")
+  #disconnected(v-show='!getConnected')
     p disconnected
   #version
     p {{ getSystemInfo.betaninVersion }}
@@ -10,24 +10,24 @@
 
 <script>
 // import
-import store from "@/store/main";
-import { mapGetters } from "vuex";
+import store from '@/store/main'
+import { mapGetters } from 'vuex'
 // export
 export default {
   computed: mapGetters({
-    getConnected: "status/getConnected",
-    getSystemInfo: "status/getSystemInfo",
-    getActivityCount: "torrents/getActivityCount",
-    getHistoryCount: "torrents/getHistoryCount",
+    getConnected: 'status/getConnected',
+    getSystemInfo: 'status/getSystemInfo',
+    getActivityCount: 'torrents/getActivityCount',
+    getHistoryCount: 'torrents/getHistoryCount',
   }),
   mounted() {
-    store.dispatch("status/doFetchSystemInfo");
+    store.dispatch('status/doFetchSystemInfo')
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-@import "~bulma";
+@import '~bulma';
 #banner {
   width: 100%;
   color: black;

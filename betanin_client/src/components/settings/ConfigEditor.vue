@@ -1,64 +1,60 @@
 <template lang="pug">
 div
   h5.title.is-5 config.yaml
-  .control(:class="{ 'is-loading': isLoading }")
-    textarea.textarea.is-small.is-info.has-fixed-size(
-      placeholder="hello",
-      v-model="text",
-      :disabled="wasError"
-    )
-  p(v-if="!wasError")
+  .control(:class='{ "is-loading": isLoading }')
+    textarea.textarea.is-small.is-info.has-fixed-size(placeholder='hello', v-model='text', :disabled='wasError')
+  p(v-if='!wasError')
     | last read from disk at
     b {{ readAt | formatTimestamp }}
-  b-field#buttons(grouped, group-multiline, position="is-right")
+  b-field#buttons(grouped, group-multiline, position='is-right')
     p.control
-      button.button.is-light(@click="getConfig") reload
+      button.button.is-light(@click='getConfig') reload
     p.control
-      button.button.is-primary(@click="setConfig", :disabled="wasError") save
+      button.button.is-primary(@click='setConfig', :disabled='wasError') save
 </template>
 
 <script>
 // import
-import backend from "@/backend";
+import backend from '@/backend'
 // help
-const endpointPath = "/beets/config";
+const endpointPath = '/beets/config'
 // export
 export default {
   data() {
     return {
-      text: "",
-      readAt: "",
+      text: '',
+      readAt: '',
       isLoading: null,
-    };
+    }
   },
   methods: {
     setConfig() {
-      backend.secureAxios.put(endpointPath, { config: this.text });
+      backend.secureAxios.put(endpointPath, { config: this.text })
     },
     async getConfig() {
-      this.isLoading = true;
+      this.isLoading = true
       try {
-        const response = await backend.secureAxios.get(endpointPath);
-        this.text = response.data.config;
-        this.readAt = response.data.time_read;
+        const response = await backend.secureAxios.get(endpointPath)
+        this.text = response.data.config
+        this.readAt = response.data.time_read
       } catch (error) {
         this.text = `\
 could not load config from backend.
-reason: '${error.response.data.message}'`;
-        this.readAt = null;
+reason: '${error.response.data.message}'`
+        this.readAt = null
       }
-      this.isLoading = false;
+      this.isLoading = false
     },
   },
   mounted() {
-    this.getConfig();
+    this.getConfig()
   },
   computed: {
     wasError() {
-      return this.readAt === null;
+      return this.readAt === null
     },
   },
-};
+}
 </script>
 
 <style scoped>

@@ -1,56 +1,50 @@
 <template lang="pug">
 nav.navbar
   .navbar-brand
-    router-link#brand-link.navbar-item(to="/")
-      img#logo(:src="getLogoPath()", height="100%")
-    a.navbar-burger(
-      role="button",
-      @click="toggleShow",
-      v-bind:class="{ 'is-active': show }"
-    )
+    router-link#brand-link.navbar-item(to='/')
+      img#logo(:src='getLogoPath()', height='100%')
+    a.navbar-burger(role='button', @click='toggleShow', v-bind:class='{ "is-active": show }')
       span
       span
       span
-  .navbar-menu(:class="{ 'is-active': show }")
+  .navbar-menu(:class='{ "is-active": show }')
     .navbar-end
-      router-link.navbar-item(to="/torrents")
+      router-link.navbar-item(to='/torrents')
         | Torrents
-        span#activity-count(v-show="getActivityCount > 0") {{ getActivityCount }}
-      router-link.navbar-item(to="/settings")
+        span#activity-count(v-show='getActivityCount > 0') {{ getActivityCount }}
+      router-link.navbar-item(to='/settings')
         | Settings
-      a.navbar-item(@click="logout")
+      a.navbar-item(@click='logout')
         span Logout
-        b-icon(size="is-small", icon="logout-variant")
+        b-icon(size='is-small', icon='logout-variant')
 </template>
 
 <script>
 // import
-import { mapGetters } from "vuex";
-import auth from "@/authentication";
+import { mapGetters } from 'vuex'
+import auth from '@/authentication'
 // export
 export default {
   data() {
     return {
       show: false,
-    };
+    }
   },
   computed: {
-    ...mapGetters("torrents", ["getActivityCount"]),
+    ...mapGetters('torrents', ['getActivityCount']),
   },
   methods: {
     toggleShow() {
-      this.show = !this.show;
+      this.show = !this.show
     },
     getLogoPath() {
-      return process.env.NODE_ENV === "production"
-        ? require("../assets/logo.png")
-        : require("../assets/logo_dev.png");
+      return process.env.NODE_ENV === 'production' ? require('../assets/logo.png') : require('../assets/logo_dev.png')
     },
     logout() {
-      auth.logout();
+      auth.logout()
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

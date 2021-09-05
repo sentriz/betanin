@@ -1,63 +1,57 @@
-import Vue from "vue";
-import backend from "@/backend";
-import keyBy from "lodash.keyby";
-import {
-  TORRENTS_ALL_CREATE,
-  TORRENTS_ONE_UPDATE,
-  TORRENTS_ONE_DELETE,
-} from "../mutation-types";
+import Vue from 'vue'
+import backend from '@/backend'
+import keyBy from 'lodash.keyby'
+import { TORRENTS_ALL_CREATE, TORRENTS_ONE_UPDATE, TORRENTS_ONE_DELETE } from '../mutation-types'
 
 const state = {
   torrents: [],
-};
+}
 
 const getters = {
   getTorrents: (state) => state.torrents,
-  getActivity: (state) =>
-    state.torrents.filter((item) => item.status !== "COMPLETED"),
-  getHistory: (state) =>
-    state.torrents.filter((item) => item.status === "COMPLETED"),
+  getActivity: (state) => state.torrents.filter((item) => item.status !== 'COMPLETED'),
+  getHistory: (state) => state.torrents.filter((item) => item.status === 'COMPLETED'),
   getActivityCount: (state, getters) => getters.getActivity.length,
   getHistoryCount: (state, getters) => getters.getHistory.length,
-  getByID: (state) => keyBy(state.torrents, "id"),
-};
+  getByID: (state) => keyBy(state.torrents, 'id'),
+}
 
 const actions = {
   async doFetchAll({ commit }) {
-    const result = await backend.secureAxios.get("torrents/");
-    commit(TORRENTS_ALL_CREATE, result.data);
+    const result = await backend.secureAxios.get('torrents/')
+    commit(TORRENTS_ALL_CREATE, result.data)
   },
   doDeleteOne({ commit }, torrentID) {
-    backend.secureAxios.delete(`torrents/${torrentID}`);
-    commit(TORRENTS_ONE_DELETE, torrentID);
+    backend.secureAxios.delete(`torrents/${torrentID}`)
+    commit(TORRENTS_ONE_DELETE, torrentID)
   },
   doRetryOne(context, torrentID) {
-    backend.secureAxios.put(`torrents/${torrentID}`);
+    backend.secureAxios.put(`torrents/${torrentID}`)
   },
   doSocket__newTorrent: ({ commit }, torrent) => {
-    commit(TORRENTS_ONE_UPDATE, torrent);
+    commit(TORRENTS_ONE_UPDATE, torrent)
   },
-};
+}
 
 const mutations = {
   [TORRENTS_ALL_CREATE](state, torrents) {
-    Vue.set(state, "torrents", torrents);
+    Vue.set(state, 'torrents', torrents)
   },
   [TORRENTS_ONE_UPDATE](state, torrent) {
-    const i = state.torrents.findIndex((item) => item.id === torrent.id);
+    const i = state.torrents.findIndex((item) => item.id === torrent.id)
     if (i > -1) {
-      Vue.set(state.torrents, i, torrent);
-      return;
+      Vue.set(state.torrents, i, torrent)
+      return
     }
-    state.torrents.unshift(torrent);
+    state.torrents.unshift(torrent)
   },
   [TORRENTS_ONE_DELETE](state, torrentID) {
     state.torrents.splice(
       state.torrents.findIndex((torrent) => torrent.id === torrentID),
-      1
-    );
+      1,
+    )
   },
-};
+}
 
 export default {
   state,
@@ -65,4 +59,4 @@ export default {
   actions,
   mutations,
   namespaced: true,
-};
+}

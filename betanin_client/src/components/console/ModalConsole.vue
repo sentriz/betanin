@@ -1,82 +1,77 @@
 <template lang="pug">
-b-modal(
-  :width="640",
-  scroll="keep",
-  :active="$route.meta.modalIsOpen",
-  :onCancel="openModalClose"
-)
+b-modal(:width='640', scroll='keep', :active='$route.meta.modalIsOpen', :onCancel='openModalClose')
   .modal-card
     header.modal-card-head
       p.modal-card-title {{ torrent.name }}
     #console
-      base-console.modal-card-body(:torrentID="torrentID", :isLive="isLive")
-      #live-box(v-show="isLive")
+      base-console.modal-card-body(:torrentID='torrentID', :isLive='isLive')
+      #live-box(v-show='isLive')
         span#fade &#x25A0
         span#text live
     footer.modal-card-foot
       #send-input
         input.input.is-small(
-          @keyup.enter="sendStdin",
-          type="text",
-          :disabled="!isLive",
-          :placeholder="isLive ? 'send to beets' : 'beets has quit'",
-          v-model="stdin",
+          @keyup.enter='sendStdin',
+          type='text',
+          :disabled='!isLive',
+          :placeholder='isLive ? "send to beets" : "beets has quit"',
+          v-model='stdin',
           v-focus
         )
       #send-button
-        button.button.is-small(@click="sendStdin", :disabled="!isLive") send
+        button.button.is-small(@click='sendStdin', :disabled='!isLive') send
 </template>
 
 <script>
 // imports
-import BaseConsole from "@/components/console/BaseConsole.vue";
-import backend from "@/backend";
-import store from "@/store/main";
+import BaseConsole from '@/components/console/BaseConsole.vue'
+import backend from '@/backend'
+import store from '@/store/main'
 // export
 export default {
   data() {
     return {
-      stdin: "",
-    };
+      stdin: '',
+    }
   },
   components: {
     BaseConsole,
   },
   computed: {
     torrentID() {
-      return this.$route.params.torrentID;
+      return this.$route.params.torrentID
     },
     torrent() {
-      const torrents = store.getters["torrents/getByID"];
-      return torrents[this.torrentID] || {};
+      const torrents = store.getters['torrents/getByID']
+      return torrents[this.torrentID] || {}
     },
     isLive() {
-      const { status } = this.torrent;
-      return ["PROCESSING", "NEEDS_INPUT"].includes(status);
+      const { status } = this.torrent
+      return ['PROCESSING', 'NEEDS_INPUT'].includes(status)
     },
   },
   methods: {
     openModalClose() {
       // not using .go(-1) here just in case there is no history
       this.$router.push({
-        name: "torrents",
-      });
+        name: 'torrents',
+      })
     },
     sendStdin() {
       backend.secureAxios.post(`torrents/${this.torrentID}/console/stdin`, {
         text: this.stdin,
-      });
-      this.stdin = "";
+      })
+      this.stdin = ''
     },
   },
   directives: {
     focus: {
       inserted(el) {
-        el.focus();
+        el.focus()
       },
     },
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>

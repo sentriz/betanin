@@ -2,15 +2,15 @@
 
 export default {
   clearToken() {
-    delete localStorage.token;
+    delete localStorage.token
   },
   setToken(token) {
-    localStorage.token = token;
+    localStorage.token = token
   },
   getToken() {
-    return localStorage.token;
+    return localStorage.token
   },
   isLoggedIn() {
-    return localStorage.token !== undefined;
+    return localStorage.token !== undefined
   },
-};
+}

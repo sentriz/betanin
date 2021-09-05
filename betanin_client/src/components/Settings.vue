@@ -2,20 +2,20 @@
 div
   nav.tabs
     ul
-      router-link(to="/settings/clients", custom, v-slot='{ href, isActive }')
-        li(:class="[isActive && 'is-active']")
+      router-link(to='/settings/clients', custom, v-slot='{ href, isActive }')
+        li(:class='[isActive && "is-active"]')
           a(:href='href')
-            b-icon(icon="download")
+            b-icon(icon='download')
             | torrent clients
-      router-link(to="/settings/notifications", custom, v-slot='{ href, isActive }')
-        li(:class="[isActive && 'is-active']")
+      router-link(to='/settings/notifications', custom, v-slot='{ href, isActive }')
+        li(:class='[isActive && "is-active"]')
           a(:href='href')
-            b-icon(icon="alert-circle")
+            b-icon(icon='alert-circle')
             | notifications
-      router-link(to="/settings/beets", custom, v-slot='{ href, isActive }')
-        li(:class="[isActive && 'is-active']")
+      router-link(to='/settings/beets', custom, v-slot='{ href, isActive }')
+        li(:class='[isActive && "is-active"]')
           a(:href='href')
-            b-icon(icon="note")
+            b-icon(icon='note')
             | beets config
   router-view
 </template>
