@@ -1,0 +1,44 @@
+name: Lint and test
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+jobs:
+  test-frontend:
+    name: Lint and test frontend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm install
+        working-directory: betanin_client
+      - name: Lint
+        run: npm run lint
+        working-directory: betanin_client
+      - name: Check formatting
+        run: npm run check-formatting
+        working-directory: betanin_client
+  test-backend:
+    name: Lint and test backend
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.9.x
+      - name: Install dependencies
+        run: pip install --user . --requirement requirements-dev.txt
+      - name: Check imports
+        run: isort --check-only $(git ls-files "*.py")
+      - name: Check formatting
+        run: black --check $(git ls-files "*.py")
+      - name: Check types
+        run: pyright .

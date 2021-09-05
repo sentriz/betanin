@@ -21,7 +21,7 @@ class _EnumField(fields.String):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         enum_obj = kwargs.pop("enum", None)
-        self.enum = enum_obj._member_names_
+        self.enum = enum_obj._member_names_  # type: ignore
 
     @staticmethod
     def format(enum):
