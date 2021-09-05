@@ -13,10 +13,9 @@ nav.navbar
       span
   .navbar-menu(:class="{ 'is-active': show }")
     .navbar-end
-      router-link.navbar-item(to="/torrents/active")
-        | Activity
+      router-link.navbar-item(to="/torrents")
+        | Torrents
         span#activity-count(v-show="getActivityCount > 0") {{ getActivityCount }}
-      router-link.navbar-item(to="/torrents/complete") History
       router-link.navbar-item(to="/settings") Settings
       a.navbar-item(@click="logout")
         span Logout

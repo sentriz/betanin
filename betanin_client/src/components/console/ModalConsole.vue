@@ -60,7 +60,6 @@ export default {
       // not using .go(-1) here just in case there is no history
       this.$router.push({
         name: "torrents",
-        params: { listType: this.$route.params.listType },
       });
     },
     sendStdin(event) {

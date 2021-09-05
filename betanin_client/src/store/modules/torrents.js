@@ -12,6 +12,7 @@ const state = {
 };
 
 const getters = {
+  getTorrents: (state) => state.torrents,
   getActivity: (state) =>
     state.torrents.filter((item) => item.status !== "COMPLETED"),
   getHistory: (state) =>

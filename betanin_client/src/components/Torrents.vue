@@ -1,12 +1,12 @@
 <template lang="pug">
 div
-  #manual-search(v-show="isActivity()")
+  #manual-search
     manual-import
     br
-  component(:is="emptyTorrentsComponent", v-if="torrents.length == 0")
+  no-active(v-if="getTorrents.length == 0")
   b-table#torrents(
     v-else,
-    :data="torrents",
+    :data="getTorrents",
     :opened-detailed="openedDetails",
     detailed,
     detail-key="id",
@@ -56,9 +56,9 @@ div
 <script>
 // imports
 import NoActive from "@/components/tips/NoActive.vue";
-import NoHistory from "@/components/tips/NoHistory.vue";
 import ManualImport from "@/components/ManualImport.vue";
 import store from "@/store/main";
+import { mapGetters } from "vuex";
 
 // help
 const statusMap = {
@@ -85,21 +85,12 @@ const statusMap = {
 export default {
   components: {
     ManualImport,
+    NoActive,
   },
   computed: {
-    emptyTorrentsComponent() {
-      return this.isActivity() ? NoActive : NoHistory;
-    },
-    torrents() {
-      return this.isActivity()
-        ? store.getters["torrents/getActivity"]
-        : store.getters["torrents/getHistory"];
-    },
+    ...mapGetters("torrents", ["getTorrents"]),
   },
   methods: {
-    isActivity() {
-      return this.$route.params.listType === "active";
-    },
     retryTorrent(torrentID) {
       if (confirm("do you want to retry this?")) {
         store.dispatch("torrents/doRetryOne", torrentID);

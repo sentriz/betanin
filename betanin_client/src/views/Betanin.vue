@@ -14,7 +14,7 @@
 import ConnectionBanner from "@/components/ConnectionBanner.vue";
 import NavBar from "@/components/NavBar.vue";
 export default {
-  name: "activity",
+  name: "betanin",
   components: {
     NavBar,
     ConnectionBanner,

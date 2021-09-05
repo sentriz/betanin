@@ -107,14 +107,11 @@ def update_strings(strings):
 def send(torrent):
     config = conf_betanin.read()
     templates = _make_templates(config)
-    torrents_path = (
-        "complete" if torrent.status == Status.COMPLETED else "active"
-    )
     variables = {
         "name": torrent.name,
         "id": torrent.id,
         "time": torrent.updated,
-        "console_path": f"#/torrents/{torrents_path}/console/{torrent.id}",
+        "console_path": f"#/torrents/console/{torrent.id}",
         "status": STATUS_LONG.get(
             torrent.status,  # custom
             f"has status {torrent.status.name.lower()}",  # default

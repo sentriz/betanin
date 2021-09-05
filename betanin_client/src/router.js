@@ -27,7 +27,7 @@ const requireAuth = (to, from, next) => {
 
 const pages = [
   {
-    path: "torrents/:listType",
+    path: "torrents",
     name: "torrents",
     component: Torrents,
     beforeEnter: requireAuth,
@@ -77,7 +77,6 @@ const screens = [
     path: "/",
     redirect: {
       name: "torrents",
-      params: { listType: "active" },
     },
     component: Betanin,
     children: pages,
