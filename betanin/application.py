@@ -40,7 +40,9 @@ def register_extensions(app):
     DB.init_app(app)
     CORS.init_app(app)
     MIGRATE.init_app(app, DB)
-    SOCKETIO.init_app(app)
+    SOCKETIO.init_app(
+        app, cors_allowed_origins=conf_flask.CORS_ORIGIN_WHITELIST
+    )
     JWT.init_app(app)
     JWT._set_error_handler_callbacks(REST)
 

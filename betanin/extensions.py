@@ -32,6 +32,6 @@ REST = Api(
 SOCKETIO = SocketIO(
     # engineio_logger=True,
     # logger=True,
-    async_mode="gevent"
+    async_mode="gevent",
 )
 JWT = JWTManager()

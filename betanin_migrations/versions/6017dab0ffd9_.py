@@ -48,7 +48,10 @@ def upgrade():
         sa.Column("index", sa.Integer(), nullable=True),
         sa.Column("data", sa.String(), nullable=True),
         sa.Column("torrent_id", sa.Integer(), nullable=True),
-        sa.ForeignKeyConstraint(["torrent_id"], ["torrents.id"],),
+        sa.ForeignKeyConstraint(
+            ["torrent_id"],
+            ["torrents.id"],
+        ),
         sa.PrimaryKeyConstraint("id"),
     )
     # ### end Alembic commands ###
