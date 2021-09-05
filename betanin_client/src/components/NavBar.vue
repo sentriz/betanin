@@ -16,7 +16,8 @@ nav.navbar
       router-link.navbar-item(to="/torrents")
         | Torrents
         span#activity-count(v-show="getActivityCount > 0") {{ getActivityCount }}
-      router-link.navbar-item(to="/settings") Settings
+      router-link.navbar-item(to="/settings")
+        | Settings
       a.navbar-item(@click="logout")
         span Logout
         b-icon(size="is-small", icon="logout-variant")

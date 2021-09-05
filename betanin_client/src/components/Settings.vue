@@ -2,21 +2,21 @@
 div
   nav.tabs
     ul
-      //- b-tabs doesnt't support router, so try make it match
-      //- also using:
-      //- https://router.vuejs.org/api/#applying-active-class-to-outer-element
-      router-link(tag="li", to="/settings/clients")
-        a
-          b-icon(icon="download")
-          | torrent clients
-      router-link(tag="li", to="/settings/notifications")
-        a
-          b-icon(icon="alert-circle")
-          | notifications
-      router-link(tag="li", to="/settings/beets")
-        a
-          b-icon(icon="note")
-          | beets config
+      router-link(to="/settings/clients", custom, v-slot='{ href, isActive }')
+        li(:class="[isActive && 'is-active']")
+          a(:href='href')
+            b-icon(icon="download")
+            | torrent clients
+      router-link(to="/settings/notifications", custom, v-slot='{ href, isActive }')
+        li(:class="[isActive && 'is-active']")
+          a(:href='href')
+            b-icon(icon="alert-circle")
+            | notifications
+      router-link(to="/settings/beets", custom, v-slot='{ href, isActive }')
+        li(:class="[isActive && 'is-active']")
+          a(:href='href')
+            b-icon(icon="note")
+            | beets config
   router-view
 </template>
 
