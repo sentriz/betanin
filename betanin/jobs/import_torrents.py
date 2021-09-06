@@ -8,6 +8,7 @@ from ptyprocess import PtyProcessUnicode
 from gevent.queue import Queue
 
 # betanin
+import betanin.config.betanin as conf_betanin
 from betanin import events
 from betanin import notifications
 from betanin.models import Line
@@ -130,4 +131,7 @@ def start(flask_app):
         with flask_app.app_context():
             _start()
 
-    return gevent.spawn(with_context)
+    num_parallel_jobs = conf_betanin.get_num_parallel_jobs()
+    return gevent.joinall(
+        [gevent.spawn(with_context) for _ in range(num_parallel_jobs)]
+    )

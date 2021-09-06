@@ -22,6 +22,7 @@ _DEFAULT_CONFIG = {
         },
     },
     "clients": {"api_key": ""},
+    "server": {"num_parallel_jobs": 1},
 }
 _NEEDED_CONFIG_PATHS = (
     # (path, ) reason
@@ -83,6 +84,10 @@ def api_key_correct(api_key):
 
 def get_api_key():
     return read()["clients"]["api_key"]
+
+
+def get_num_parallel_jobs():
+    return read().get("server", {}).get("num_parallel_jobs", 1)
 
 
 def ensure():
