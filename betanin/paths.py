@@ -37,7 +37,7 @@ DB_PATH = os.path.join(DATA_DIR, "betanin.db")
 SECRET_KEY_PATH = os.path.join(DATA_DIR, "secret_key")
 CONFIG_PATH = os.path.join(CONFIG_DIR, "config.toml")
 VERSION_PATH = _first_existing(
-    os.path.join(os.getcwd(), "version.txt"),
-    os.path.join(site.getusersitepackages(), "version.txt"),
-    os.path.join(site.getsitepackages()[0], "version.txt"),
+    os.path.join(os.getcwd(), "betanin/version.txt"),
+    os.path.join(site.getusersitepackages(), "betanin", "version.txt"),
+    os.path.join(site.getsitepackages()[0], "betanin", "version.txt"),
 )
