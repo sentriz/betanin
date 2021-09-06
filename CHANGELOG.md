@@ -1,5 +1,18 @@
 # Changelog
 
+### [0.3.27](https://www.github.com/sentriz/betanin/compare/v0.3.26...v0.3.27) (2021-09-06)
+
+
+### Features
+
+* **server:** add support for parallel imports ([fc23ad0](https://www.github.com/sentriz/betanin/commit/fc23ad054574fd1ef8cdd57af9e6968f6ff579a7))
+
+
+### Bug Fixes
+
+* **ci:** install wheel for pypa ([82bb9ea](https://www.github.com/sentriz/betanin/commit/82bb9ea41d8dfc33b84b973c58070d64806cb48b))
+* **ui:** don't assume x86_64 for apks ([d832ed7](https://www.github.com/sentriz/betanin/commit/d832ed7579b75841b3d160746131c6c3e2a2a271))
+
 ### [0.3.26](https://www.github.com/sentriz/betanin/compare/v1.3.22...v0.3.26) (2021-09-06)
 
 
