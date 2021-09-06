@@ -27,7 +27,7 @@ const getters = {
   getIsTesting: (state) => state.isTesting,
   getServiceByID: (state) => keyBy(state.services, 'id'),
   getPossibility: (state) => (serviceName) => state.possible.find((possibility) => possibility.service_name === serviceName),
-  getPossibleInfo: (state, getters) => (serviceName) => getters.getPossibility(serviceName).setup_url,
+  getPossibleInfo: (state, getters) => (serviceName) => getters.getPossibility(serviceName)?.setup_url,
   getPossibleProtocols: (state, getters) => (serviceName) => {
     const service = getters.getPossibility(serviceName)
     return [...new Set([...(service.protocols || []), ...(service.secure_protocols || [])])]
