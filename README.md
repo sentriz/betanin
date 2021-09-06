@@ -7,7 +7,6 @@ torrent client and music player
 </h4>
 <p align="center">
 <a href="http://hub.docker.com/r/sentriz/betanin"><img src="https://img.shields.io/docker/pulls/sentriz/betanin.svg"></a>
-<img src="https://api.codacy.com/project/badge/Grade/db7d1db9dd404f8fa31febc8a2d52d00">
 <img src="https://img.shields.io/github/issues/sentriz/betanin.svg">
 <img src="https://img.shields.io/github/issues-pr/sentriz/betanin.svg">
 </p>
