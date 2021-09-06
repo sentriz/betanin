@@ -29,8 +29,8 @@ FROM alpine:3.14.2
 WORKDIR /src
 COPY . .
 COPY --from=builder-frontend /src/dist/ /src/betanin_client/dist/
-COPY --from=builder-mp3gain /tmp/out/x86_64/*.apk /pkgs/
-COPY --from=builder-mp3val /tmp/out/x86_64/*.apk /pkgs/
+COPY --from=builder-mp3gain /tmp/out/*/*.apk /pkgs/
+COPY --from=builder-mp3val /tmp/out/*/*.apk /pkgs/
 
 ENV UID=1000
 ENV GID=1000
