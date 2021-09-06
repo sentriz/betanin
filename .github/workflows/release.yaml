@@ -120,7 +120,7 @@ jobs:
       - name: Push to PyPA
         run: |
           set -e
-          pip install --user twine
+          pip install --user twine wheel
           python setup.py sdist bdist_wheel
           twine \
               upload \
