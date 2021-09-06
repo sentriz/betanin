@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.3.29](https://www.github.com/sentriz/betanin/compare/v0.3.27...v0.3.29) (2021-09-06)
+
+
+### Bug Fixes
+
+* **docs:** remove old codacy badge ([75704d9](https://www.github.com/sentriz/betanin/commit/75704d995a2001a919a5ad1ea483d9187e091caa))
+* move version file to betanin package to that it's installed with site-packages ([8a64998](https://www.github.com/sentriz/betanin/commit/8a649980022095391936d284268cbab8cd7db1d7))
+
 ### [0.3.27](https://www.github.com/sentriz/betanin/compare/v0.3.26...v0.3.27) (2021-09-06)
 
 
