@@ -1,20 +1,19 @@
-'
 <template lang="pug">
-#line
-  b-switch#enabled-switch(v-model='enabled') {{ ["disabled", "enabled"][Number(service.enabled)] }}
-  #url
+.line
+  b-switch.enabled-switch(v-model='enabled') {{ ["disabled", "enabled"][Number(service.enabled)] }}
+  .url
     validation-provider(name='protocol', rules='required', v-slot='{ errors }')
       b-field(:type='{ "is-primary": errors.length }', :message='errors[0]')
-        b-select#protocol-selector(v-model='protocol')
+        b-select.protocol-selector(v-model='protocol')
           option(disabled, value='') please select
           option(v-for='service in getPossibleProtocols(service.type)', :key='service', :value='service') {{ service }}
-    p#protocol-helper ://
+    p.protocol-helper ://
     validation-provider(name='notProtocol', rules='required', v-slot='{ errors }')
       b-field(:type='{ "is-primary": errors.length }', :message='errors[0]')
-        b-input#not-protocol-box(icon='earth', placeholder='see info button for help', v-model='notProtocol')
-    a#info-link(:href='getPossibleInfo(service.type)', target='_blank')
+        b-input.not-protocol-box(icon='earth', placeholder='see info button for help', v-model='notProtocol')
+    a.info-link(:href='getPossibleInfo(service.type)', target='_blank')
       b-icon(icon='information', type='is-info')
-  p#delete-button.control
+  p.delete-button.control
     button.button.left-button(@click='NOTI_SERVICE_DELETE(service.id)') remove
 </template>
 
@@ -53,20 +52,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#url {
+.url {
   display: flex;
   align-items: flex-start;
   > * {
     margin: 0 5px;
   }
-  ::v-deep #not-protocol-box {
+  ::v-deep .not-protocol-box {
     width: 500px;
   }
-  #protocol-helper {
+  .protocol-helper {
     font-family: monospace;
   }
 }
-#line {
+.line {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -75,10 +74,10 @@ export default {
   padding: 0.5rem;
   margin: 0.5rem 0;
 }
-#protocol-helper,
-#info-link,
-#delete-button,
-#enabled-switch {
+.protocol-helper,
+.info-link,
+.delete-button,
+.enabled-switch {
   height: 40px;
   line-height: 40px;
 }

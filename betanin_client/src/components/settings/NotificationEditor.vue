@@ -1,13 +1,13 @@
 <template lang="pug">
 div
   h5.title.is-5 notification format
-  #strings-editor
-    #strings-inputs
+  .strings-editor
+    .strings-inputs
       b-field(label='title')
         b-input(v-model='stringsTitle')
       b-field(label='body')
         b-input(type='textarea', v-model='stringsBody')
-    #variables-help
+    .variables-help
       label.label available variables
       ul
         li <code>$id</code> the unique id or hash of the torrent
@@ -16,16 +16,16 @@ div
         li <code>$status</code> the current betanin status of the torrent. eg. '<b>needs input</b>'
         li <code>$console_path</code> the relative path to the console modal
   .field.is-pulled-right.controls
-    button#format-save-button.button.is-primary.is-right(@click='doPutStrings()') save
+    button.format-save-button.button.is-primary.is-right(@click='doPutStrings()') save
   hr
   h5.title.is-5 services
-  validation-observer#service-editor(v-slot='{ handleSubmit }')
+  validation-observer.service-editor(v-slot='{ handleSubmit }')
     h6(v-show='getServices.length === 0')
       b-icon(icon='alert')
       | &nbsp; no services here yet, add one below
     notification-service(v-for='service in getServices', :serviceID='service.id', :key='service.id')
-    #service-controls.controls
-      #service-type-selector.field.has-addons
+    .service-controls.controls
+      .service-type-selector.field.has-addons
         .control
           .select.is-fullwidth
             select(v-model='newServiceType')
@@ -79,14 +79,14 @@ hr {
 .controls {
   margin-top: 24px;
 }
-#strings-save-button {
+.strings-save-button {
   margin-top: 24px;
 }
-#strings-editor {
+.strings-editor {
   width: 100%;
   display: flex;
   align-items: stretch;
-  #variables-help {
+  .variables-help {
     margin-left: 2rem;
     @media only screen and (max-width: 768px) {
       display: none;
@@ -96,14 +96,14 @@ hr {
     flex: 1 100%;
   }
 }
-#service-controls {
+.service-controls {
   display: flex;
   justify-content: flex-end;
-  #service-type-selector {
+  .service-type-selector {
     margin-right: 1rem;
   }
 }
-#strings-inputs ::v-deep {
+.strings-inputs ::v-deep {
   textarea,
   input {
     padding: 5px;

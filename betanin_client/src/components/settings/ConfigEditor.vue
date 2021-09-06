@@ -6,7 +6,7 @@ div
   p(v-if='!wasError')
     | last read from disk at
     b {{ readAt | formatTimestamp }}
-  b-field#buttons(grouped, group-multiline, position='is-right')
+  b-field.buttons(grouped, group-multiline, position='is-right')
     p.control
       button.button.is-light(@click='getConfig') reload
     p.control
@@ -58,7 +58,7 @@ reason: '${error.response.data.message}'`
 </script>
 
 <style scoped>
-#buttons {
+.buttons {
   margin-top: 0.75rem;
 }
 textarea {

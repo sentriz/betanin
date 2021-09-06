@@ -1,6 +1,6 @@
 <template lang="pug">
-#search
-  b-field#import-label(label='manually import')
+.search
+  b-field.import-label(label='manually import')
   b-field
     b-autocomplete(
       v-model='selection',
@@ -13,7 +13,7 @@
         p no results found
     p.control
       button.button(@click='doImport')
-        b-icon#import-button(icon='folder-multiple-plus')
+        b-icon.import-button(icon='folder-multiple-plus')
 </template>
 
 <script>
@@ -63,11 +63,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#search {
-  #import-button {
+.search {
+  .import-button {
     margin: 0 0.5rem;
   }
-  #import-label {
+  .import-label {
     margin-bottom: 8px;
   }
 }

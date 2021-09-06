@@ -1,10 +1,10 @@
 <template lang="pug">
 div
-  #manual-search
+  .manual-search
     manual-import
     br
   no-active(v-if='getTorrents.length == 0')
-  b-table#torrents(
+  b-table.torrents(
     v-else,
     :data='getTorrents',
     :opened-detailed='openedDetails',
@@ -34,7 +34,7 @@ div
         span.link(title='retry import', @click='retryTorrent(props.row.id)')
           b-icon.link(title='retry import', icon='refresh', size='is-small')
     template(#detail='props')
-      #row-status
+      .row-status
         p
           <strong>id</strong> {{ props.row.id }}
         p
@@ -113,10 +113,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#torrents ::v-deep td {
+.torrents ::v-deep td {
   vertical-align: middle;
 }
-#row-status {
+.row-status {
   text-align: right;
   word-break: break-all;
 }

@@ -3,13 +3,13 @@ b-modal(:width='640', scroll='keep', :active='$route.meta.modalIsOpen', :onCance
   .modal-card
     header.modal-card-head
       p.modal-card-title {{ torrent.name }}
-    #console
+    .console
       base-console.modal-card-body(:torrentID='torrentID', :isLive='isLive')
-      #live-box(v-show='isLive')
-        span#fade &#x25A0
-        span#text live
+      .live-box(v-show='isLive')
+        span.fade &#x25A0
+        span.text live
     footer.modal-card-foot
-      #send-input
+      .send-input
         input.input.is-small(
           @keyup.enter='sendStdin',
           type='text',
@@ -18,7 +18,7 @@ b-modal(:width='640', scroll='keep', :active='$route.meta.modalIsOpen', :onCance
           v-model='stdin',
           v-focus
         )
-      #send-button
+      .send-button
         button.button.is-small(@click='sendStdin', :disabled='!isLive') send
 </template>
 
@@ -82,21 +82,21 @@ export default {
 .modal-card-foot {
   padding: 0.75rem 0.75rem;
 }
-#send-input {
+.send-input {
   flex-grow: 1;
   margin-right: 0.75rem;
 }
-#send-button {
+.send-button {
   flex-basis: 4rem;
   flex-shrink: 0;
   button {
     width: 100%;
   }
 }
-#console {
+.console {
   position: relative;
 }
-#live-box {
+.live-box {
   position: absolute;
   top: 0px;
   right: 0px;
@@ -107,14 +107,14 @@ export default {
   padding: 0 0.5rem;
   border-radius: 2px;
   background-color: rgba(255, 255, 255, 0.1);
-  #fade {
+  .fade {
     color: red;
     animation: fadeinout 2s;
     animation-iteration-count: infinite;
     margin-right: 4px;
     font-size: 18px;
   }
-  #text {
+  .text {
     color: white;
   }
 }
