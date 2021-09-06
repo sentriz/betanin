@@ -59,6 +59,7 @@ jobs:
           release-type: simple
           changelog-path: CHANGELOG.md
           package-name: betanin
+          version-file: betanin/version.txt
   build-release:
     name: Build, tag, and publish Docker image
     runs-on: ubuntu-latest

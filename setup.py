@@ -83,7 +83,7 @@ CLASSIFIERS = [
 
 
 def get_version():
-    with open("version.txt") as version_file:
+    with open("betanin/version.txt") as version_file:
         return f"v{version_file.read()}"
 
 
