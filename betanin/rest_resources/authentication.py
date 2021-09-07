@@ -20,8 +20,9 @@ class LoginResource(BaseResource):
     def post():
         "generates a json web token for the given username / password"
         args = req_models.CREDENTIALS.parse_args()
-        if not conf_betanin.credentials_correct(
-            args["username"], args["password"]
+        conf = conf_betanin.read()
+        if not conf_betanin.find_creds_correct(
+            conf, args["username"], args["password"]
         ):
             return abort(422, "invalid username / password")
         return {"token": create_access_token(args["username"])}

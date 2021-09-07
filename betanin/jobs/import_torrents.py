@@ -131,7 +131,4 @@ def start(flask_app):
         with flask_app.app_context():
             _start()
 
-    num_parallel_jobs = conf_betanin.get_num_parallel_jobs()
-    return gevent.joinall(
-        [gevent.spawn(with_context) for _ in range(num_parallel_jobs)]
-    )
+    return gevent.spawn(with_context)

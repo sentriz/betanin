@@ -18,7 +18,8 @@ def auth_required(func):
         if not api_key:
             verify_jwt_in_request()
             return func(*args, **kwargs)
-        if conf_betanin.api_key_correct(api_key):
+        conf = conf_betanin.read()
+        if conf_betanin.find_api_key_correct(conf, api_key):
             return func(*args, **kwargs)
         return abort(422, "no valid auth provided")
 

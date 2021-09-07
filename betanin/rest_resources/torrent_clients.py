@@ -11,4 +11,5 @@ class LoginResource(SecureResource):
     @CLIENTS_NS.marshal_with(resp_models.API_KEY)
     def get():
         "fetches the clients api key"
-        return {"api_key": conf_betanin.get_api_key()}
+        conf = conf_betanin.read()
+        return {"api_key": conf_betanin.find_api_key(conf)}

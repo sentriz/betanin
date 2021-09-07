@@ -1,18 +1,15 @@
 # standard library
 import os
-import sys
 from contextlib import contextmanager
 
 # 3rd party
 import toml
-from loguru import logger
 
 # betanin
 from betanin import paths
 
 
-_API_KEY_LENGTH = 16
-_DEFAULT_CONFIG = {
+DEFAULT_CONFIG = {
     "frontend": {"username": "", "password": ""},
     "notifications": {
         "services": {},
@@ -24,33 +21,10 @@ _DEFAULT_CONFIG = {
     "clients": {"api_key": ""},
     "server": {"num_parallel_jobs": 1},
 }
-_NEEDED_CONFIG_PATHS = (
-    # (path, ) reason
-    (("frontend", "username"), "please provide a frontend username"),
-    (("frontend", "password"), "please provide a frontend password"),
-    (("clients", "api_key"), "please provide a client api key"),
-)
 
 
-def _gen_api_key():
-    return os.urandom(_API_KEY_LENGTH).hex()
-
-
-def _file_exists():
-    return os.path.exists(paths.CONFIG_PATH)
-
-
-def _path_exist(dict_, *path):
-    _dict = dict_
-    for key in path:
-        try:
-            _dict = _dict[key]
-        except KeyError:
-            return False
-        else:
-            if not _dict:
-                return False
-    return True
+def gen_api_key(length=16):
+    return os.urandom(length).hex()
 
 
 def read():
@@ -70,39 +44,20 @@ def mutate():
     write(config)
 
 
-def credentials_correct(username, password):
-    config = read()
+def find_creds_correct(conf, username, password):
     return (
-        username == config["frontend"]["username"]
-        and password == config["frontend"]["password"]
+        username == conf["frontend"]["username"]
+        and password == conf["frontend"]["password"]
     )
 
 
-def api_key_correct(api_key):
-    return api_key == read()["clients"]["api_key"]
+def find_api_key(conf):
+    return conf["clients"]["api_key"]
 
 
-def get_api_key():
-    return read()["clients"]["api_key"]
+def find_api_key_correct(conf, api_key):
+    return conf["clients"]["api_key"] == api_key
 
 
-def get_num_parallel_jobs():
-    return read().get("server", {}).get("num_parallel_jobs", 1)
-
-
-def ensure():
-    if not _file_exists():
-        logger.error(
-            f"config `{paths.CONFIG_PATH}`: does not exist - creating and exiting"
-        )
-        _DEFAULT_CONFIG["clients"]["api_key"] = _gen_api_key()
-        write(_DEFAULT_CONFIG)
-        sys.exit(1)
-    else:
-        config = read()
-        for path, reason in _NEEDED_CONFIG_PATHS:
-            if _path_exist(config, *path):
-                continue
-            logger.error(f"config `{paths.CONFIG_PATH}`: {reason}")
-            sys.exit(1)
-    logger.info(f"using config `{paths.CONFIG_PATH}`")
+def find_num_parallel_jobs(conf):
+    return conf.get("server", {}).get("num_parallel_jobs", 1)
