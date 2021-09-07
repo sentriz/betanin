@@ -4,3 +4,4 @@ pyproject
 black
 autoflake
 pyright
+pylint
