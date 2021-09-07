@@ -29,3 +29,9 @@ disable = """\
 	unused-import,\
 	wrong-import-position\
 """
+
+[tool.pyright]
+include = ["betanin"]
+venv = "betanin"
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
