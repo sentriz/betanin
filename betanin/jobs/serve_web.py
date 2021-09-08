@@ -1,6 +1,5 @@
 # 3rd party
 import gevent
-from loguru import logger
 from gevent.pywsgi import WSGIServer
 
 

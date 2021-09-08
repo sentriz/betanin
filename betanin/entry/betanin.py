@@ -123,11 +123,11 @@ def main(host, port):
         _register_notifications()
 
     conf = conf_betanin.read()
-    num_import = conf_betanin.find_num_parallel_jobs(conf)
+    num_imports = conf_betanin.find_num_parallel_jobs(conf)
     gevent.joinall(
         (
+            *(_start_job(app, import_torrents) for _ in range(num_imports)),
             _start_job(app, serve_web, host, port),
-            *(_start_job(app, import_torrents) for _ in range(num_import)),
         )
     )
 

@@ -8,7 +8,6 @@ from ptyprocess import PtyProcessUnicode
 from gevent.queue import Queue
 
 # betanin
-import betanin.config.betanin as conf_betanin
 from betanin import events
 from betanin import notifications
 from betanin.models import Line
