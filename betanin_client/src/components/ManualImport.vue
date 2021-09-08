@@ -12,8 +12,8 @@
       template(slot='empty')
         p no results found
     p.control
-      button.button(@click='doImport')
-        b-icon.import-button(icon='folder-multiple-plus')
+      button.button.import-button(@click='doImport')
+        b-icon(icon='folder-multiple-plus')
 </template>
 
 <script>
@@ -65,7 +65,7 @@ export default {
 <style lang="scss" scoped>
 .search {
   .import-button {
-    margin: 0 0.5rem;
+    padding: 0 2rem;
   }
   .import-label {
     margin-bottom: 8px;
