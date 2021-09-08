@@ -88,7 +88,7 @@ def _ensure_secret_key():
 
 
 def _start_job(flask_app, module, *args, **kwargs):
-    logger.info(f"starting job {module.__name__}")
+    logger.info(f"starting job {module.__name__} {args}")
     return module.start(flask_app, *args, **kwargs)
 
 
