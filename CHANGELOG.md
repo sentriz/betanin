@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.30](https://www.github.com/sentriz/betanin/compare/v0.3.29...v0.3.30) (2021-09-08)
+
+
+### Bug Fixes
+
+* start import_torrents before web ([daa8e80](https://www.github.com/sentriz/betanin/commit/daa8e8024d77828dd5ac34fa9867d32756a720e4))
+
 ### [0.3.29](https://www.github.com/sentriz/betanin/compare/v0.3.27...v0.3.29) (2021-09-06)
 
 
