@@ -5,7 +5,7 @@
   .version
     p {{ getSystemInfo.betaninVersion }}
   .status
-    p <b>{{ getHistoryCount }}</b> imports, {{ getActivityCount }} active
+    p <b>{{ getTotal }}</b> imports, {{ getActiveCount }} active
 </template>
 
 <script>
@@ -17,8 +17,8 @@ export default {
   computed: mapGetters({
     getConnected: 'status/getConnected',
     getSystemInfo: 'status/getSystemInfo',
-    getActivityCount: 'torrents/getActivityCount',
-    getHistoryCount: 'torrents/getHistoryCount',
+    getActiveCount: 'torrents/getActiveCount',
+    getTotal: 'torrents/getTotal',
   }),
   mounted() {
     store.dispatch('status/doFetchSystemInfo')

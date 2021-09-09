@@ -3,7 +3,7 @@
 // torrents module
 export const TORRENTS_ONE_UPDATE = 'TORRENTS_ONE_UPDATE'
 export const TORRENTS_ONE_DELETE = 'TORRENTS_ONE_DELETE'
-export const TORRENTS_ALL_CREATE = 'TORRENTS_ALL_CREATE'
+export const TORRENTS_ALL_APPEND = 'TORRENTS_ALL_APPEND'
 
 // lines module
 export const LINES_CREATE = 'LINES_CREATE'

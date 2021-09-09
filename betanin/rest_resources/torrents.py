@@ -38,19 +38,28 @@ class TorrentsResource(SecureResource):
 
     @staticmethod
     @TORRENTS_NS.doc(parser=req_models.TORRENTS)
-    @TORRENTS_NS.marshal_list_with(resp_models.TORRENT)
+    @TORRENTS_NS.marshal_list_with(resp_models.TORRENTS)
     def get():
         "gets the list of all torrents"
         args = req_models.TORRENTS.parse_args()
         torrents = Torrent.query.order_by(Torrent.updated.desc())
-        if args["page"] and args["per_page"]:
-            page = torrents.paginate(**args, error_out=False)
-            return page.items
-        return torrents.all()
+        results = torrents.paginate(**args, error_out=False)
+        return {
+            "total": results.total,
+            "torrents": results.items,
+        }
 
 
 @TORRENTS_NS.route("/<int:torrent_id>")
 class TorrentResource(SecureResource):
+    @staticmethod
+    @TORRENTS_NS.marshal_with(resp_models.TORRENT)
+    def get(torrent_id):
+        "gets a single torrent"
+        query = Torrent.query.filter_by(id=torrent_id)
+        torrent = query.first_or_404()
+        return torrent
+
     @staticmethod
     def put(torrent_id):
         "trys to import a torrent again"

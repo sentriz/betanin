@@ -23,11 +23,11 @@ b-modal(:width='640', scroll='keep', :active='$route.meta.modalIsOpen', :onCance
 </template>
 
 <script>
-// imports
+import store from '@/store/main'
 import BaseConsole from '@/components/console/BaseConsole.vue'
 import backend from '@/backend'
-import store from '@/store/main'
-// export
+import { mapGetters } from 'vuex'
+
 export default {
   data() {
     return {
@@ -38,12 +38,12 @@ export default {
     BaseConsole,
   },
   computed: {
+    ...mapGetters('torrents', ['getTorrent']),
     torrentID() {
       return this.$route.params.torrentID
     },
     torrent() {
-      const torrents = store.getters['torrents/getByID']
-      return torrents[this.torrentID] || {}
+      return this.getTorrent(this.torrentID) || {}
     },
     isLive() {
       const { status } = this.torrent
@@ -63,6 +63,9 @@ export default {
       })
       this.stdin = ''
     },
+  },
+  mounted() {
+    store.dispatch('torrents/doFetchOne', this.torrentID)
   },
   directives: {
     focus: {
