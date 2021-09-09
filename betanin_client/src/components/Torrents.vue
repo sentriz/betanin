@@ -121,6 +121,9 @@ export default {
 .torrents ::v-deep td {
   vertical-align: middle;
 }
+.torrents ::v-deep .table-wrapper {
+  overflow-x: hidden;
+}
 .link {
   cursor: pointer;
 }
