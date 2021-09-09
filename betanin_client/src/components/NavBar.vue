@@ -15,7 +15,7 @@ nav.navbar
       router-link.navbar-item(to='/settings')
         | Settings
       a.navbar-item(@click='logout')
-        span Logout
+        span Logout&nbsp;
         b-icon(size='is-small', icon='logout-variant')
 </template>
 
