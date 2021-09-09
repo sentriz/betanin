@@ -1,15 +1,14 @@
 /* eslint-disable no-multi-spaces, key-spacing, complexity */
-export const binaryInsert = (array, item, startVal, endVal) => {
-  const value = Number(item.index)
-  const length = array.length
-  const start = typeof startVal !== 'undefined' ? startVal : 0
-  const end = typeof endVal !== 'undefined' ? endVal : length - 1
+export const binaryInsert = (array, item, start, end) => {
+  start ??= 0
+  end ??= array.length - 1
+
   const middle = start + Math.floor((end - start) / 2)
-  if (length === 0) array.push(item)
-  else if (value > array[end].index) array.splice(end + 1, 0, item)
-  else if (value < array[start].index) array.splice(start, 0, item)
-  else if (value < array[middle].index) binaryInsert(array, item, start, middle - 1)
-  else if (value > array[middle].index) binaryInsert(array, item, middle + 1, end)
+  if (array.length === 0) array.push(item)
+  else if (item.index > array[end].index) array.splice(end + 1, 0, item)
+  else if (item.index < array[start].index) array.splice(start, 0, item)
+  else if (item.index < array[middle].index) binaryInsert(array, item, start, middle - 1)
+  else if (item.index > array[middle].index) binaryInsert(array, item, middle + 1, end)
 }
 
 export const cleanObject = (object) => {
