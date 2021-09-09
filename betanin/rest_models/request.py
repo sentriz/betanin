@@ -35,12 +35,14 @@ TORRENTS.add_argument(
     "page",
     type=int,
     location="args",
+    required=True,
     help="`the page number to request (when paginating)`",
 )
 TORRENTS.add_argument(
     "per_page",
     type=int,
     location="args",
+    required=True,
     help="`the number of results per page (when paginating)`",
 )
 
