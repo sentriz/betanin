@@ -1,5 +1,24 @@
 # Changelog
 
+### [0.3.31](https://www.github.com/sentriz/betanin/compare/v0.3.30...v0.3.31) (2021-09-09)
+
+
+### Features
+
+* support backend pagination ([9bd539a](https://www.github.com/sentriz/betanin/commit/9bd539a129c054cb3a1c79d5c44871296c3ae3b2))
+
+
+### Bug Fixes
+
+* **ui:** add manual import padding ([a4331c6](https://www.github.com/sentriz/betanin/commit/a4331c65e5d80eeea7939024906b77f63c001153))
+* **ui:** add space next to logout button ([bd4250a](https://www.github.com/sentriz/betanin/commit/bd4250a766b1683629dabccaed2712bb689aef3c))
+* **ui:** remove overflowing x on small torrents list ([fa7fefa](https://www.github.com/sentriz/betanin/commit/fa7fefaa0ed650879609b8aaaf19a0893eaea076))
+
+
+### Code Refactoring
+
+* **ui:** clean up binaryInsert ([e644803](https://www.github.com/sentriz/betanin/commit/e64480377ef0abb977282a14390a787c33585e3f))
+
 ### [0.3.30](https://www.github.com/sentriz/betanin/compare/v0.3.29...v0.3.30) (2021-09-08)
 
 
