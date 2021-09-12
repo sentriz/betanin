@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.32](https://www.github.com/sentriz/betanin/compare/v0.3.31...v0.3.32) (2021-09-12)
+
+
+### Bug Fixes
+
+* use SECRET_KEY_PATH when initing secret file ([e55140f](https://www.github.com/sentriz/betanin/commit/e55140fac16c771637bf7a391fff29074c2c7836))
+
 ### [0.3.31](https://www.github.com/sentriz/betanin/compare/v0.3.30...v0.3.31) (2021-09-09)
 
 
