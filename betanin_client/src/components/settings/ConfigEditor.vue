@@ -4,7 +4,7 @@ div
   .control(:class='{ "is-loading": isLoading }')
     textarea.textarea.is-small.is-info.has-fixed-size(placeholder='hello', v-model='text', :disabled='wasError')
   p(v-if='!wasError')
-    | last read from disk at
+    | last read from disk at&nbsp;
     b {{ readAt | formatTimestamp }}
   b-field.buttons(grouped, group-multiline, position='is-right')
     p.control
