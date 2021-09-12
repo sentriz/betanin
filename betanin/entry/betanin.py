@@ -81,10 +81,10 @@ def _ensure_config():
 
 def _ensure_secret_key():
     logger.info(f"using secret key `{paths.SECRET_KEY_PATH}`")
-    if os.path.exists(paths.CONFIG_PATH):
+    if os.path.exists(paths.SECRET_KEY_PATH):
         return
+    logger.info(f"`{paths.SECRET_KEY_PATH}`: doesn't exist. creating")
     conf_secret_key.write(conf_secret_key.gen())
-    logger.error(f"`{paths.SECRET_KEY_PATH}`: doesn't exist. creating")
 
 
 def _start_job(flask_app, module, *args, **kwargs):
