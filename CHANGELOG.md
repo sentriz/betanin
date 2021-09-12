@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.33](https://www.github.com/sentriz/betanin/compare/v0.3.32...v0.3.33) (2021-09-12)
+
+
+### Bug Fixes
+
+* **ui:** add last read at spacing ([b9cbf6f](https://www.github.com/sentriz/betanin/commit/b9cbf6fb5d8608da0114a3f521918b1a107f547b))
+
 ### [0.3.32](https://www.github.com/sentriz/betanin/compare/v0.3.31...v0.3.32) (2021-09-12)
 
 
