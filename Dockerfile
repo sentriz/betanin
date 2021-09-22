@@ -26,6 +26,7 @@ RUN apk update && \
 
 
 FROM alpine:3.14.2
+LABEL org.opencontainers.image.source https://github.com/sentriz/betanin
 WORKDIR /src
 COPY . .
 COPY --from=builder-frontend /src/dist/ /src/betanin_client/dist/
