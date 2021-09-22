@@ -40,8 +40,7 @@ RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base libffi-
     python3 -m ensurepip && \
     pip3 install --no-cache-dir . --requirement requirements-docker.txt && \
     apk del --purge build-dependencies && \
-    rm -r /pkgs /tmp/* ~/.cache && \
-    adduser -D -h /b -u "$UID" -g "$GID" betanin
+    rm -r /pkgs /tmp/* ~/.cache
 
 VOLUME /b/.local/share/betanin/
 VOLUME /b/.config/betanin/

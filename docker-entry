@@ -18,5 +18,6 @@ echo "!! thanks!"
 
 [ "$UID" -eq 0 ] && exec betanin
 
-chown -R betanin:betanin /b
+adduser -D -h "$HOME" -u "$UID" -g "$GID" betanin 2>/dev/null
+chown -R betanin:betanin "$HOME"
 exec sudo -u betanin -g betanin betanin
