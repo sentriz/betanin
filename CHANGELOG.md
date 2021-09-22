@@ -1,5 +1,17 @@
 # Changelog
 
+### [0.3.34](https://www.github.com/sentriz/betanin/compare/v0.3.33...v0.3.34) (2021-09-22)
+
+
+### Features
+
+* **image:** add ffmpeg ([4ef84c7](https://www.github.com/sentriz/betanin/commit/4ef84c7b3ecc8fae04717500d46885c43c0c4282)), closes [#54](https://www.github.com/sentriz/betanin/issues/54)
+
+
+### Bug Fixes
+
+* **image:** chown $HOME at runtime ([ee1d5bf](https://www.github.com/sentriz/betanin/commit/ee1d5bf67cefc50233af2da9fe75b9c922696d4c))
+
 ### [0.3.33](https://www.github.com/sentriz/betanin/compare/v0.3.32...v0.3.33) (2021-09-12)
 
 
