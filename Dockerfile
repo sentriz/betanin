@@ -35,7 +35,7 @@ COPY --from=builder-mp3val /tmp/out/*/*.apk /pkgs/
 ENV UID=1000
 ENV GID=1000
 RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev && \
-    apk add --no-cache --upgrade sudo python3 libev chromaprint ffmpeg && \
+    apk add --no-cache --upgrade sudo python3 libev chromaprint ffmpeg gstreamer && \
     apk add --no-cache --allow-untrusted /pkgs/* && \
     python3 -m ensurepip && \
     pip3 install --no-cache-dir . --requirement requirements-docker.txt && \
