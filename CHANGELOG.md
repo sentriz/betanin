@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/sentriz/betanin/compare/v0.3.34...v0.4.0) (2021-09-22)
+
+
+### Features
+
+* **image:** add gstreamer for chroma plugin ([#56](https://www.github.com/sentriz/betanin/issues/56)) ([7273c65](https://www.github.com/sentriz/betanin/commit/7273c659a2cd3796d78325b377fbe37ed21f86c1))
+
 ### [0.3.34](https://www.github.com/sentriz/betanin/compare/v0.3.33...v0.3.34) (2021-09-22)
 
 
