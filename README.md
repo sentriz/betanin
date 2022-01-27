@@ -33,29 +33,29 @@ notifications. so anything supported there will work. but some include
 
 ### installation
 
-``` shell
-$ pip install --user betanin
+```shell
+pip install --user betanin
 ```
 
 <hr>
 
 ### usage
 
-``` shell
-$ # start server
-$ betanin
-$ # a config file will be created, add your credentials to it
-$ # start again
-$ betanin [--host=<host>] [--port=<port>]
-$ # ui will be available at port
-$ # you may also use env vars instead, eg
-$ BETANIN_HOST=0.0.0.0 betanin
-$ BETANIN_PORT=4030 betanin
+```shell
+# start server
+betanin
+# a config file will be created, add your credentials to it
+# start again
+betanin [--host=<host>] [--port=<port>]
+# ui will be available at port
+# you may also use env vars instead, eg
+BETANIN_HOST=0.0.0.0 betanin
+BETANIN_PORT=4030 betanin
 
-$ # optionally start cli (for db operations, debugging)
-$ betanin-shell
-$ # or if docker
-$ docker exec -it <container_id> betanin-shell
+# optionally start cli (for db operations, debugging)
+betanin-shell
+# or if docker
+docker exec -it <container_id> betanin-shell
 ```
 
 <hr>
@@ -80,25 +80,28 @@ $ docker exec -it <container_id> betanin-shell
 
 ###### image
 
-`docker pull sentriz/betanin`  
-###### volumes `/b/.local/share/betanin/` for a persistent database  
+`docker pull sentriz/betanin`
+
+###### volumes `/b/.local/share/betanin/` for a persistent database
+
 `/b/.config/betanin/` for a persistent betanin config  
 `/b/.config/beets/` for a persistent beets home (point this to your
 current beets home if you have one)  
 `/music/` so beets can access your music  
-`/downloads/` so beets can access your downloads  
+`/downloads/` so beets can access your downloads
+
 ###### compose
 
-``` yml
+```yml
 betanin:
-    image: sentriz/betanin
-    ports:
+  image: sentriz/betanin
+  ports:
     - 9393:9393
-    restart: unless-stopped
-    environment:
+  restart: unless-stopped
+  environment:
     - UID=1000 # (optionally) set user id
     - GID=1000 # (optionally) set group id
-    volumes:
+  volumes:
     - ${DATA}/betanin/data:/b/.local/share/betanin/
     - ${DATA}/betanin/config:/b/.config/betanin/
     - ${DATA}/betanin/beets:/b/.config/beets/
@@ -116,7 +119,7 @@ executable:
 
 ###### settings.json (example excerpt)
 
-``` json
+```json
 ...
 "script-torrent-done-enabled": true,
 "script-torrent-done-filename": "/scripts/done.sh",
@@ -125,7 +128,7 @@ executable:
 
 ###### done script
 
-``` bash
+```bash
 #!/bin/sh
 
 curl \
@@ -138,11 +141,11 @@ curl \
 
 ###### transmission docker compose (excerpt)
 
-``` yaml
+```yaml
 volumes:
-- ${DATA}/transmission/config:/config
-- ${DATA}/transmission/scripts:/scripts
-- ${MEDIA}/download:/downloads
+  - ${DATA}/transmission/config:/config
+  - ${DATA}/transmission/scripts:/scripts
+  - ${MEDIA}/download:/downloads
 ```
 
 <hr>
@@ -158,7 +161,7 @@ set to the `Torrent Complete` event
 
 ###### done script
 
-``` bash
+```bash
 #!/bin/sh
 
 curl \
@@ -171,13 +174,48 @@ curl \
 
 <hr>
 
+### qbittorrent
+
+create a script named `done.sh` or anything you like, and make it
+executable:  
+`chmod +x done.sh`
+
+open qbittorrent `Tools` > `Options` > check `Run external program on torrent completion`
+
+set the path to the above `done.sh` and arguments such as
+
+```
+/path/to/done.sh "%L" "%R"
+```
+
+###### done script
+
+```bash
+#!/bin/sh
+
+echo "category: $1"
+echo "path: $2"
+
+[ "$1" != "music" ] && exit
+
+curl \
+    --request POST \
+    --data-urlencode "both=$2" \
+    --header "X-API-Key: <your_api_key>" \
+    "https://betanin.example.com/api/torrents"
+```
+
+now any music downloaded to the **music** category will be imported by betanin
+
+<hr>
+
 ### developing
 
 ###### working on the backend
 
 there is not much else to do, write your code,
 `python -m betanin.entry.betanin`, kill it, write your code, etc. the
-webserver will be available at *http://localhost:9393/*. the static
+webserver will be available at _<http://localhost:9393/>_. the static
 frontend is served at `/`, and the api is served at `/api`. (there is a
 swagger ui there too) also see `python -m betanin.entry.shell`.  
 if you need to do a manual migration do
@@ -187,9 +225,9 @@ if you need to do a manual migration do
 ###### working on the frontend
 
 start the backend with `python -m betanin.entry.betanin`, but don’t use
-the static frontend served at *http://localhost:9393/*. Instead, in a
+the static frontend served at _<http://localhost:9393/>_. Instead, in a
 new shell, do `npm --prefix betanin_client/ run serve` and use the
-frontend served at *http://localhost:8081/*. it will look for a backend
+frontend served at _<http://localhost:8081/>_. it will look for a backend
 listening on port 9393 locally. after that you can edit anything in
 `betanin_client/src`, it will be linted and automatically reflected in
 your web browser.
