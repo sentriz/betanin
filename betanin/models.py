@@ -1,3 +1,5 @@
+# type: ignore
+
 # betanin
 from betanin.status import Status
 from betanin.extensions import DB
