@@ -1,6 +1,6 @@
 <template lang="pug">
 .line
-  b-switch.enabled-switch(v-model='enabled') {{ ["disabled", "enabled"][Number(service.enabled)] }}
+  b-switch.enabled-switch(v-model='enabled') {{ ['disabled', 'enabled'][Number(service.enabled)] }}
   .url
     validation-provider(name='protocol', rules='required', v-slot='{ errors }')
       b-field(:type='{ "is-primary": errors.length }', :message='errors[0]')
