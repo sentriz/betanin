@@ -1,4 +1,5 @@
 # standard library
+import shutil
 import os.path
 
 # 3rd party
@@ -15,6 +16,8 @@ from betanin.models import Torrent
 from betanin.status import Status
 from betanin.extensions import DB
 
+
+BEET_NAME = "beet"
 
 PROCESSES = {}
 QUEUE = Queue()
@@ -55,9 +58,13 @@ def _read_and_send_pty_out(proc, torrent):
 
 
 def _import_torrent(torrent):
+    if not shutil.which(BEET_NAME):
+        _add_line(torrent, f"program {BEET_NAME} is not in $PATH")
+        return
+
     proc = PtyProcessUnicode.spawn(
         [
-            "beet",
+            BEET_NAME,
             "import",
             "--noresume",
             _calculate_import_path(torrent),
