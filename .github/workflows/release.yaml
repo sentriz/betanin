@@ -124,7 +124,7 @@ jobs:
           python setup.py sdist bdist_wheel
           twine \
               upload \
-              --username "${{ secrets.TWINE_USERNAME }}" \
-              --password "${{ secrets.TWINE_PASSWORD }}" \
+              --username "__token__" \
+              --password "${{ secrets.PYPI_TOKEN }}" \
               --disable-progress-bar \
               dist/*
