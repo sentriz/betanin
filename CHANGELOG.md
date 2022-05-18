@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.36](https://www.github.com/sentriz/betanin/compare/v0.3.35...v0.3.36) (2022-05-18)
+
+
+### Bug Fixes
+
+* log an error if beet not in $PATH ([7c33591](https://www.github.com/sentriz/betanin/commit/7c33591a5ef6bdc29bac8cbc4b59dd4d82a4acaa)), closes [#65](https://www.github.com/sentriz/betanin/issues/65)
+
 ### [0.3.35](https://www.github.com/sentriz/betanin/compare/v0.3.34...v0.3.35) (2021-09-22)
 
 
