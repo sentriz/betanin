@@ -1,3 +1,6 @@
+# standard library
+import json
+
 # betanin
 from betanin import notifications
 from betanin.rest.base import SecureResource
@@ -51,7 +54,7 @@ class PossibleServicesResource(SecureResource):
     @staticmethod
     def get():
         "gets all possible notification services"
-        return notifications.get_possible_services()
+        return prune_non_serialisable(notifications.get_possible_services())
 
 
 @NOTIFICATIONS_NS.route("/strings")
@@ -68,3 +71,7 @@ class StringsResource(SecureResource):
         "updates a notification service"
         args = req_models.NOTIFICATION_STRINGS.parse_args()
         notifications.update_strings(args)
+
+
+def prune_non_serialisable(obj):
+    return json.loads(json.dumps(obj, default=lambda _: "<not serialisable>"))
