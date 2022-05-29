@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.37](https://www.github.com/sentriz/betanin/compare/v0.3.36...v0.3.37) (2022-05-29)
+
+
+### Bug Fixes
+
+* prune non serialisable fields from apprise details ([61ca4af](https://www.github.com/sentriz/betanin/commit/61ca4af2b2254f359be46440ee181ad3b1fb927d)), closes [#68](https://www.github.com/sentriz/betanin/issues/68)
+
 ### [0.3.36](https://www.github.com/sentriz/betanin/compare/v0.3.35...v0.3.36) (2022-05-18)
 
 
