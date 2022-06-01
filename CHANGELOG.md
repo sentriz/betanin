@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.38](https://www.github.com/sentriz/betanin/compare/v0.3.37...v0.3.38) (2022-06-01)
+
+
+### Bug Fixes
+
+* **ci:** retrigger release-please ([6e27b36](https://www.github.com/sentriz/betanin/commit/6e27b365f841767c044986f62f35890ec63b40f7))
+
 ### [0.3.37](https://www.github.com/sentriz/betanin/compare/v0.3.36...v0.3.37) (2022-05-29)
 
 
