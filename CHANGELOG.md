@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.39](https://www.github.com/sentriz/betanin/compare/v0.3.38...v0.3.39) (2022-09-13)
+
+
+### Bug Fixes
+
+* sort lines ([427fac2](https://www.github.com/sentriz/betanin/commit/427fac20a36acb8c5d82de4d5fe86a42f02fa65e))
+
 ### [0.3.38](https://www.github.com/sentriz/betanin/compare/v0.3.37...v0.3.38) (2022-06-01)
 
 
