@@ -15,8 +15,8 @@ const getters = {
 }
 
 const actions = {
-  doFetchOne({ commit }, torrentID) {
-    const result = backend.secureAxios.get(`torrents/${torrentID}`)
+  async doFetchOne({ commit }, torrentID) {
+    const result = await backend.secureAxios.get(`torrents/${torrentID}`)
     commit(TORRENTS_ONE_UPDATE, result.data)
   },
   doDeleteOne({ commit }, torrentID) {

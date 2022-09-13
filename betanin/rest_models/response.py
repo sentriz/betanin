@@ -31,7 +31,7 @@ class _EnumField(fields.String):
 LINE = TORRENTS_NS.model(
     "Line",
     {
-        "index": fields.String(
+        "index": fields.Integer(
             description="the index of the line", example="4"
         ),
         "data": fields.String(
