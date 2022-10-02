@@ -68,7 +68,7 @@ REQUIREMENTS = [
     "toml==0.10.2",
     "typing-extensions==3.10.0.0",
     "tzlocal==2.1",
-    "Unidecode==1.1.2",
+    "Unidecode>=1.3.6",
     "urllib3==1.26.2",
     "Werkzeug==0.16.1",
     "zipp==3.4.0",
