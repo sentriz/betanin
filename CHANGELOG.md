@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.41](https://www.github.com/sentriz/betanin/compare/v0.3.39...v0.3.41) (2022-10-05)
+
+
+### Miscellaneous Chores
+
+* **deps:** bump eventsource from 1.1.0 to 1.1.1 in /betanin_client ([#71](https://www.github.com/sentriz/betanin/issues/71)) ([de5f7b6](https://www.github.com/sentriz/betanin/commit/de5f7b69322d8127cfa16424c06cf20cb2bd43fd))
+
 ### [0.3.39](https://www.github.com/sentriz/betanin/compare/v0.3.38...v0.3.39) (2022-09-13)
 
 
