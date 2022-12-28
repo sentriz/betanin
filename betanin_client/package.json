@@ -17,7 +17,7 @@
     "core-js": "^3.6.5",
     "lodash.debounce": "^4.0.8",
     "lodash.keyby": "^4.6.0",
-    "socket.io-client": "^4.2.0",
+    "socket.io-client": "^4.5.4",
     "vee-validate": "^3.4.12",
     "vue": "^2.6.11",
     "vue-chat-scroll": "^1.4.0",
