@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://www.github.com/sentriz/betanin/compare/v0.3.41...v0.4.0) (2023-03-31)
+
+
+### Features
+
+* add `flac` package to docker  image ([84b433e](https://www.github.com/sentriz/betanin/commit/84b433ed2c63762ecfd3ae5554e44150cb4191c2))
+
 ### [0.3.41](https://www.github.com/sentriz/betanin/compare/v0.3.39...v0.3.41) (2022-10-05)
 
 
