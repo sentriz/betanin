@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.1](https://www.github.com/sentriz/betanin/compare/v0.4.0...v0.4.1) (2023-07-27)
+
+
+### Bug Fixes
+
+* **ci:** disable pyright ([f1aa8c0](https://www.github.com/sentriz/betanin/commit/f1aa8c0981ca0ec3509c77eb2d60f2a2f09d6388))
+
 ## [0.4.0](https://www.github.com/sentriz/betanin/compare/v0.3.41...v0.4.0) (2023-03-31)
 
 
