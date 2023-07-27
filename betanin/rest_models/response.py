@@ -1,5 +1,5 @@
 # 3rd party
-from flask_restplus import fields
+from flask_restx import fields
 
 # betanin
 from betanin.status import Status

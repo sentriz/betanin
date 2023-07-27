@@ -1,13 +1,11 @@
-FROM node:16.8.0-stretch-slim AS builder-frontend
-RUN apt-get update -qq && \
-    apt-get install -y -qq --no-install-recommends build-essential
+FROM node:16-alpine3.17 AS builder-frontend
 WORKDIR /src
 COPY betanin_client/ .
 RUN npm install && \
     PRODUCTION=true npm run-script build
 
 
-FROM alpine:3.14.2 AS builder-mp3gain
+FROM alpine:3.18 AS builder-mp3gain
 WORKDIR /tmp
 COPY alpine/mp3gain/APKBUILD .
 RUN apk update && \
@@ -16,7 +14,7 @@ RUN apk update && \
     REPODEST=/tmp/out abuild -F -r
 
 
-FROM alpine:3.14.2 AS builder-mp3val
+FROM alpine:3.18 AS builder-mp3val
 WORKDIR /tmp
 COPY alpine/mp3val/APKBUILD .
 RUN apk update && \
@@ -25,7 +23,7 @@ RUN apk update && \
     REPODEST=/tmp/out abuild -F -r
 
 
-FROM alpine:3.14.2
+FROM alpine:3.18
 LABEL org.opencontainers.image.source https://github.com/sentriz/betanin
 WORKDIR /src
 COPY . .
@@ -41,7 +39,7 @@ RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base libffi-
     python3 -m ensurepip && \
     pip3 install --no-cache-dir . --requirement requirements-docker.txt && \
     apk del --purge build-dependencies && \
-    rm -r /pkgs /tmp/* ~/.cache
+    rm -r /pkgs ~/.cache
 
 VOLUME /b/.local/share/betanin/
 VOLUME /b/.config/betanin/

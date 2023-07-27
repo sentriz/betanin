@@ -35,3 +35,4 @@ include = ["betanin"]
 venv = "betanin"
 pythonVersion = "3.9"
 pythonPlatform = "Linux"
+exclude = ["**/betanin_migrations", "setup.py"]

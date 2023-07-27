@@ -1,8 +1,8 @@
-"""empty message
+"""init
 
 Revision ID: 6017dab0ffd9
 Revises: 
-Create Date: 2019-07-12 17:06:44.486199
+Create Date: 2023-07-27 18:51:56.639492
 
 """
 # 3rd party

@@ -1,5 +1,5 @@
 # 3rd party
-from flask_restplus import abort
+from flask_restx import abort
 from flask_jwt_extended import create_access_token
 
 # betanin

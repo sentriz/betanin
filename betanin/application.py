@@ -2,7 +2,6 @@
 import sqlalchemy_utils
 from flask import Flask
 from flask import render_template
-from werkzeug.contrib.fixers import ProxyFix
 
 # betanin
 import betanin.config.flask as conf_flask
@@ -57,7 +56,7 @@ def register_routes(app):
     render_client = lambda: render_template("index.html")
     blueprints.CLIENT.route("/")(render_client)
     # the api blueprint has many routes which are handled
-    # by flask-restplus
+    # by flask-restx
     REST.init_app(blueprints.API)
 
 
@@ -70,4 +69,3 @@ def register_modifications(app):
     app.config.from_object(conf_flask)
     app.url_map.strict_slashes = False
     app.secret_key = conf_secret_key.read()
-    app.wsgi_app = ProxyFix(app.wsgi_app)

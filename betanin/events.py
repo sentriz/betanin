@@ -1,5 +1,5 @@
 # 3rd party
-from flask_restplus import marshal
+from flask_restx import marshal
 
 # betanin
 from betanin.extensions import SOCKETIO
