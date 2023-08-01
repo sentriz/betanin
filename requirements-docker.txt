@@ -8,3 +8,4 @@ beautifulsoup4
 beets-extrafiles
 pillow
 unidecode
+https://github.com/x1ppy/beets-originquery/archive/master.zip
