@@ -9,3 +9,4 @@ beets-extrafiles
 pillow
 unidecode
 https://github.com/x1ppy/beets-originquery/archive/master.zip
+https://github.com/adamjakab/BeetsPluginBpmAnalyser/archive/devel.zip
