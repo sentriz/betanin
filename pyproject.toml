@@ -1,3 +1,74 @@
+[project]
+name = "betanin"
+authors = [
+    { name="Senan Kelly", email="senan@senan.xyz" },
+]
+description = "beets based mitm of your torrent client and music player"
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dynamic = ["version"]
+dependencies = [
+    "beets",
+    "apprise",
+    "alembic",
+    "click",
+    "Flask",
+    "Flask-Cors",
+    "Flask-JWT-Extended",
+    "Flask-Migrate",
+    "flask-restx @ https://github.com/Ryu-CZ/flask-restx-565/archive/refs/heads/flask-scaffold_567.zip",
+    "Flask-SocketIO",
+    "Flask-SQLAlchemy",
+    "gevent",
+    "pyxdg",
+    "loguru",
+    "ptyprocess",
+    "python-engineio",
+    "python-socketio",
+    "SQLAlchemy",
+    "SQLAlchemy-Utils",
+    "toml",
+]
+
+[project.optional-dependencies]
+dev = [
+    "isort >= 4.3.1",
+    "toml",
+    "pyproject",
+    "black",
+    "autoflake",
+    "pyright",
+    "pylint",
+]
+docker = [
+    "beets @ https://github.com/beetbox/beets/archive/master.zip",
+    "discogs-client",
+    "beets-noimport",
+    "pyacoustid",
+    "pylast",
+    "requests",
+    "beautifulsoup4",
+    "beets-extrafiles",
+    "pillow",
+    "unidecode",
+    "jsonpath-rw",
+    "pyyaml",
+    "beets-bpmanalyser @ https://github.com/adamjakab/BeetsPluginBpmAnalyser/archive/devel.zip",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/sentriz/betanin"
+"Bug Tracker" = "https://github.com/sentriz/betanin/issues"
+
+[project.scripts]
+betanin = "betanin.entry.betanin:main"
+betanin-shell = "betanin.entry.shell:main"
+
 [tool.isort]
 force_single_line = true
 import_heading_firstparty = "betanin"
@@ -36,3 +107,12 @@ venv = "betanin"
 pythonVersion = "3.9"
 pythonPlatform = "Linux"
 exclude = ["**/betanin_migrations", "setup.py"]
+
+[tool.setuptools.dynamic]
+version = {file = "version.txt"}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["betanin*"]
+exclude = []
+namespaces = false

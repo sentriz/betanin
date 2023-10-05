@@ -50,7 +50,7 @@ jobs:
         with:
           python-version: 3.9.x
       - name: Install dependencies
-        run: pip install --user . --requirement requirements-dev.txt
+        run: pip install --user . .[dev]
       - name: Check imports
         run: isort --check-only $(git ls-files "*.py")
       - name: Check formatting

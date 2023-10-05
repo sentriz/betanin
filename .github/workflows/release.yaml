@@ -34,7 +34,7 @@ jobs:
         with:
           python-version: 3.9.x
       - name: Install dependencies
-        run: pip install --user . --requirement requirements-dev.txt
+        run: pip install --user . .[dev]
       - name: Check imports
         run: isort --check-only $(git ls-files "*.py")
       - name: Check formatting
@@ -121,11 +121,6 @@ jobs:
       - name: Push to PyPA
         run: |
           set -e
-          pip install --user twine wheel
-          python setup.py sdist bdist_wheel
-          twine \
-              upload \
-              --username "__token__" \
-              --password "${{ secrets.PYPI_TOKEN }}" \
-              --disable-progress-bar \
-              dist/*
+          pip install --no-cache --upgrade build twine
+          python -m build
+          python -m twine upload --username "__token__" --password "${{ secrets.PYPI_TOKEN }}" --disable-progress-bar dist/*
