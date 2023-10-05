@@ -19,7 +19,11 @@ secureAxios.interceptors.request.use((config) => {
   return config
 }, undefined)
 secureAxios.interceptors.response.use(undefined, (error) => {
-  if (error.response !== undefined && error.response.status === 401 && router.currentRoute.path !== '/login') {
+  if (
+    error.response !== undefined &&
+    (error.response.status === 401 || error.response.status === 422) &&
+    router.currentRoute.path !== '/login'
+  ) {
     // the token has expired. get a new one
     auth.logout(router.currentRoute.fullPath)
   }

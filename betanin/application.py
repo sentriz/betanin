@@ -41,7 +41,6 @@ def register_extensions(app):
     MIGRATE.init_app(app, DB)
     SOCKETIO.init_app(app)
     JWT.init_app(app)
-    JWT._set_error_handler_callbacks(REST)
 
 
 def register_cors(app):
