@@ -16,6 +16,7 @@ dependencies = [
     "beets",
     "apprise",
     "alembic",
+    "beets-lidarr-fields",
     "click",
     "Flask",
     "Flask-Cors",
