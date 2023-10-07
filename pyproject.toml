@@ -59,6 +59,7 @@ docker = [
     "jsonpath-rw",
     "pyyaml",
     "beets-bpmanalyser @ https://github.com/adamjakab/BeetsPluginBpmAnalyser/archive/devel.zip",
+    "librosa",
 ]
 
 [project.urls]
