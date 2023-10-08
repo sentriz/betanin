@@ -16,7 +16,6 @@ dependencies = [
     "beets",
     "apprise",
     "alembic",
-    "beets-lidarr-fields",
     "click",
     "Flask",
     "Flask-Cors",
@@ -48,6 +47,7 @@ dev = [
 ]
 docker = [
     "beets @ https://github.com/beetbox/beets/archive/master.zip",
+    "beets-lidarr-fields",
     "discogs-client",
     "beets-noimport",
     "pyacoustid",
