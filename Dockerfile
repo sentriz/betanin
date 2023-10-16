@@ -34,11 +34,10 @@ COPY --from=builder-mp3val /tmp/out/*/*.apk /pkgs/
 ENV UID=1000
 ENV GID=1000
 
-RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev cargo && \
-    apk add --no-cache --upgrade sudo python3 libev chromaprint ffmpeg gstreamer flac keyfinder-cli libsndfile && \
+RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev cargo llvm14-dev && \
+    apk add --no-cache --upgrade sudo python3 py-pip libev chromaprint ffmpeg gstreamer flac keyfinder-cli libsndfile && \
     apk add --no-cache --allow-untrusted /pkgs/* && \
-    python3 -m ensurepip && \
-    pip3 install --no-cache-dir . .[docker] && \
+    env LLVM_CONFIG="$(which llvm14-config)" pip install --no-cache-dir . .[docker] && \
     apk del --purge build-dependencies && \
     rm -r /pkgs ~/.cache
 
