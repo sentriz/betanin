@@ -1,5 +1,25 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/sentriz/betanin/compare/v0.4.0...v0.5.0) (2023-10-17)
+
+
+### Features
+
+* **build:** allow custom URL to install beets ([d6e945e](https://www.github.com/sentriz/betanin/commit/d6e945eace0d61e9ac46b89dba4346f35c7017cd))
+* **docker:** add beets-bpmanalyser plugin ([#95](https://www.github.com/sentriz/betanin/issues/95)) ([104d394](https://www.github.com/sentriz/betanin/commit/104d394c8871bd5f3a5792c3796d422a3c490bd9))
+* **docker:** add beets-lidarr-fields plugin ([#97](https://www.github.com/sentriz/betanin/issues/97)) ([e74bc2f](https://www.github.com/sentriz/betanin/commit/e74bc2f60cc762467f535a0f4271344dbec9a7c5))
+* **docker:** add beets-originquery ([1eb6a56](https://www.github.com/sentriz/betanin/commit/1eb6a563f5a6c236309b298aa2746f12d84f7068))
+* **docker:** add keyfinder package ([#94](https://www.github.com/sentriz/betanin/issues/94)) ([6153ed8](https://www.github.com/sentriz/betanin/commit/6153ed8843da2132129bd4f852bab0f01a4f18e7))
+* **docker:** add support for autobpm plugin ([#98](https://www.github.com/sentriz/betanin/issues/98)) ([4e651fd](https://www.github.com/sentriz/betanin/commit/4e651fd5d67a3511746853d3332548229d1d08aa))
+
+
+### Bug Fixes
+
+* **ci:** disable pyright ([f1aa8c0](https://www.github.com/sentriz/betanin/commit/f1aa8c0981ca0ec3509c77eb2d60f2a2f09d6388))
+* **ci:** fix arm build ([d64200c](https://www.github.com/sentriz/betanin/commit/d64200cbfc37272dee4f1cc2ba9338818c6cb942))
+* **docker:** add llvm14-dev to image for librosa build ([22be0ea](https://www.github.com/sentriz/betanin/commit/22be0ea88dadcb54b4e48fe32023fca8c6abef26))
+* send to login on 401 ([d2bd050](https://www.github.com/sentriz/betanin/commit/d2bd050d6345e4d9be8c582c77aa904e020b0b00))
+
 ## [0.4.0](https://www.github.com/sentriz/betanin/compare/v0.3.41...v0.4.0) (2023-03-31)
 
 
