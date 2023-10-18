@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.1](https://www.github.com/sentriz/betanin/compare/v0.5.0...v0.5.1) (2023-10-18)
+
+
+### Bug Fixes
+
+* **docker:** add blas ([#100](https://www.github.com/sentriz/betanin/issues/100)) ([d1c6797](https://www.github.com/sentriz/betanin/commit/d1c67975e4eb2de9654ef300d122e417424ce3a5))
+
 ## [0.5.0](https://www.github.com/sentriz/betanin/compare/v0.4.0...v0.5.0) (2023-10-17)
 
 
