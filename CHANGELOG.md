@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.2](https://www.github.com/sentriz/betanin/compare/v0.5.1...v0.5.2) (2023-10-18)
+
+
+### Bug Fixes
+
+* **docker:** add cmake ([fa588cf](https://www.github.com/sentriz/betanin/commit/fa588cf325d5c99c923aa236efeb28c59e3abdfa))
+
 ### [0.5.1](https://www.github.com/sentriz/betanin/compare/v0.5.0...v0.5.1) (2023-10-18)
 
 
