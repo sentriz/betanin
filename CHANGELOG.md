@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.5.3](https://www.github.com/sentriz/betanin/compare/v0.5.2...v0.5.3) (2023-11-07)
+
+
+### Bug Fixes
+
+* **ci:** only build linux/amd64 for now ([7004071](https://www.github.com/sentriz/betanin/commit/70040715dfdc4d01f6d785c232b50ed6e472a903)), closes [#98](https://www.github.com/sentriz/betanin/issues/98)
+
 ### [0.5.2](https://www.github.com/sentriz/betanin/compare/v0.5.1...v0.5.2) (2023-10-18)
 
 
