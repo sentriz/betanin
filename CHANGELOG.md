@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.5.4](https://www.github.com/sentriz/betanin/compare/v0.5.3...v0.5.4) (2023-11-07)
+
+
+### Bug Fixes
+
+* **build:** require flask <3 ([085ca4b](https://www.github.com/sentriz/betanin/commit/085ca4b9ef532cf461b83b167316c960ec8b9e86))
+* **ci:** build for linux/amd64 linux/arm64 ([f781037](https://www.github.com/sentriz/betanin/commit/f78103712673d1810d99312947f0071144f3bca4))
+
 ### [0.5.3](https://www.github.com/sentriz/betanin/compare/v0.5.2...v0.5.3) (2023-11-07)
 
 
