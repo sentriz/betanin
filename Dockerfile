@@ -37,7 +37,7 @@ ENV GID=1000
 RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base cmake libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev jpeg-dev cargo llvm14-dev openblas openblas-dev && \
     apk add --no-cache --upgrade sudo python3 py-pip libev chromaprint ffmpeg gstreamer flac keyfinder-cli libsndfile && \
     apk add --no-cache --allow-untrusted /pkgs/* && \
-    env LLVM_CONFIG="$(which llvm14-config)" pip install --no-cache-dir . .[docker] && \
+    env LLVM_CONFIG="$(which llvm14-config)" pip install --no-cache-dir . --requirement requirements-docker.txt  && \
     apk del --purge build-dependencies && \
     rm -r /pkgs ~/.cache
 

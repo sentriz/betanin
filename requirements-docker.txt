@@ -1,0 +1,15 @@
+beets @ https://github.com/beetbox/beets/archive/master.zip
+beets-lidarr-fields
+discogs-client
+beets-noimport
+pyacoustid
+pylast
+requests
+beautifulsoup4
+beets-extrafiles
+pillow
+unidecode
+jsonpath-rw
+pyyaml
+beets-bpmanalyser @ https://github.com/adamjakab/BeetsPluginBpmAnalyser/archive/devel.zip
+librosa
