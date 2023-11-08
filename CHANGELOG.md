@@ -1,5 +1,23 @@
 # Changelog
 
+### [0.5.5](https://www.github.com/sentriz/betanin/compare/v0.5.4...v0.5.5) (2023-11-08)
+
+
+### ⚠ BREAKING CHANGES
+
+* **ci:** delete librosa for now
+
+### Features
+
+* **ci:** add debug release action ([f04d4c4](https://www.github.com/sentriz/betanin/commit/f04d4c4ed2f33c8bbe0a440808380c5f00ed0082))
+
+
+### Bug Fixes
+
+* **ci:** delete librosa for now ([29e3956](https://www.github.com/sentriz/betanin/commit/29e395603bde56083c170f78637df0d94686b8bd))
+* **ci:** move docker requirements to txt ([a4a358d](https://www.github.com/sentriz/betanin/commit/a4a358d611cde755fe40b4d4497b533bd79c8de4))
+* **ci:** re-enable linux/arm builds ([38721d0](https://www.github.com/sentriz/betanin/commit/38721d04e9975ff2677329868c26da2d299574f2))
+
 ### [0.5.4](https://www.github.com/sentriz/betanin/compare/v0.5.3...v0.5.4) (2023-11-07)
 
 
