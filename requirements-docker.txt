@@ -1,6 +1,6 @@
 beets @ https://github.com/beetbox/beets/archive/master.zip
 beets-lidarr-fields
-discogs-client
+python3-discogs-client
 beets-noimport
 pyacoustid
 pylast
