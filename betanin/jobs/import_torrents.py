@@ -23,9 +23,13 @@ PROCESSES = {}
 QUEUE = Queue()
 NEEDS_INPUT_SNIPPETS = (
     "[A]pply",
-    "kip new, ",
-    "ter search, ente",
+    "kip new",
+    "ter search",
     "it, edit ",
+    "# selection (default",
+    "ore candidates",
+    "nter search, enter",
+    "This album is already in the library!",
 )
 
 
