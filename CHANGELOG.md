@@ -1,5 +1,14 @@
 # Changelog
 
+### [0.5.6](https://www.github.com/sentriz/betanin/compare/v0.5.5...v0.5.6) (2023-12-07)
+
+
+### Bug Fixes
+
+* **beets:** update NEEDS_INPUT_SNIPPETS ([0bfa2b2](https://www.github.com/sentriz/betanin/commit/0bfa2b25a251a3c09ffb64d30c152ac767d4c1d0)), closes [#114](https://www.github.com/sentriz/betanin/issues/114)
+* **docker:** use new discogs-client library ([7fceb52](https://www.github.com/sentriz/betanin/commit/7fceb52a78ee424eeef3b81917695dcf3f987f62)), closes [#109](https://www.github.com/sentriz/betanin/issues/109)
+* **ui:** fix manual import ([05a5584](https://www.github.com/sentriz/betanin/commit/05a558420cb0a3af73246c4217644f338ea0bced))
+
 ### [0.5.5](https://www.github.com/sentriz/betanin/compare/v0.5.4...v0.5.5) (2023-11-08)
 
 
