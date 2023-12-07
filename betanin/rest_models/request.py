@@ -18,7 +18,7 @@ TORRENT.add_argument(
     "path",
     type=str,
     location="form",
-    help="`the download folder of torrent client (relative to betanin) "
+    help="`the download folder of torrent client (relative to betanin)`"
     "for this import`",
 )
 TORRENT.add_argument(
