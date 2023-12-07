@@ -35,7 +35,7 @@ export default {
       const formData = new FormData()
       formData.append('both', this.selection)
       try {
-        await backend.secureAxios.post(fetchUrl, formData)
+        await backend.secureAxios.post(fetchUrl, formData, { headers: { 'Content-Type': '' } })
       } catch (error) {
         Toast.open({
           message: `error importing: ${error.response.data.message}`,
