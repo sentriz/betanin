@@ -127,6 +127,9 @@ export default {
 .link {
   cursor: pointer;
 }
+.controls {
+  white-space: nowrap;
+}
 .controls > * + * {
   margin-left: 0.75rem;
   display: inline-block;
