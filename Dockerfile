@@ -28,7 +28,7 @@ RUN mkdir -p /tmp/out && \
 
 
 FROM alpine:3.18
-LABEL org.opencontainers.image.source https://github.com/sentriz/betanin
+LABEL org.opencontainers.image.source=https://github.com/sentriz/betanin
 WORKDIR /src
 COPY . .
 COPY --from=builder-frontend /src/dist/ /src/betanin_client/dist/
