@@ -11,6 +11,7 @@ COPY alpine/mp3gain/APKBUILD .
 RUN apk update && \
     apk add --no-cache abuild && \
     abuild-keygen -a -n && \
+    cp /root/.abuild/*.rsa.pub /etc/apk/keys/ && \
     REPODEST=/tmp/out abuild -F -r
 
 
@@ -20,6 +21,7 @@ COPY alpine/mp3val/APKBUILD .
 RUN apk update && \
     apk add --no-cache abuild && \
     abuild-keygen -a -n && \
+    cp /root/.abuild/*.rsa.pub /etc/apk/keys/ && \
     REPODEST=/tmp/out abuild -F -r
 
 
