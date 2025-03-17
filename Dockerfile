@@ -8,7 +8,8 @@ RUN npm install && \
 FROM alpine:3.18 AS builder-mp3gain
 WORKDIR /tmp
 COPY alpine/mp3gain/APKBUILD .
-RUN apk update && \
+RUN mkdir -p /tmp/out && \
+    apk update && \
     apk add --no-cache abuild && \
     abuild-keygen -a -n && \
     cp /root/.abuild/*.rsa.pub /etc/apk/keys/ && \
@@ -18,7 +19,8 @@ RUN apk update && \
 FROM alpine:3.18 AS builder-mp3val
 WORKDIR /tmp
 COPY alpine/mp3val/APKBUILD .
-RUN apk update && \
+RUN mkdir -p /tmp/out && \
+    apk update && \
     apk add --no-cache abuild && \
     abuild-keygen -a -n && \
     cp /root/.abuild/*.rsa.pub /etc/apk/keys/ && \
