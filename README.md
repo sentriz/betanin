@@ -101,6 +101,8 @@ betanin:
   environment:
     - UID=1000 # (optionally) set user id
     - GID=1000 # (optionally) set group id
+    - PIP_EXTRA_PACKAGES=beetstream # (optional) comma separated values of additional plugins to install
+    - EXTRA_COMMANDS="beet beetstream &" # (optional) extra commands to run at start (note the `&` at the end to run it in the background)
   volumes:
     - ${DATA}/betanin/data:/b/.local/share/betanin/
     - ${DATA}/betanin/config:/b/.config/betanin/
