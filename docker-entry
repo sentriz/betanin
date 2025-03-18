@@ -16,8 +16,40 @@ echo "!! https://github.com/sentriz/betanin"
 echo "!!"
 echo "!! thanks!"
 
-[ "$UID" -eq 0 ] && exec betanin
+if [ "$(id -u)" -eq 0 ]; then
+    # Running as root: install additional plugins
+    if [ -n "$PIP_EXTRA_PACKAGES" ]; then
+        echo "Installing additional pip packages: $PIP_EXTRA_PACKAGES"
+        pip install $(echo "$PIP_EXTRA_PACKAGES" | tr ',' ' ')
+        echo "Finished installing additional pip packages."
+    fi
 
-adduser -D -h "$HOME" -u "$UID" -g "$GID" betanin 2>/dev/null
-chown -R betanin:betanin "$HOME"
-exec sudo -u betanin -g betanin betanin
+    # and drop to an unpriviledged user
+    CURRENT_UID=${UID:-1000}
+    CURRENT_GID=${GID:-1000}
+
+    adduser -D -h "$HOME" -u "$UID" -g "$GID" betanin 2>/dev/null
+    chown -R betanin:betanin "$HOME"
+    echo "Switching to betanin user (UID: $CURRENT_UID, GID: $CURRENT_GID)"
+    exec su betanin -c "/bin/sh -c '$0'"
+else
+    # Not running as root: warn about unsupported features
+    echo " "
+    echo " "
+    echo "/!\ WARNING: Running this container using docker's `user` feature comes with some caveats:"
+    echo "- You need to have the proper volumes mounted, with the right permissions"
+    echo "- You won't be able to use additional plugins (they need to be installed by root for beets to see them)"
+    echo " "
+    echo " "
+fi
+
+if [ -n "$EXTRA_COMMANDS" ]; then
+    echo "Launching extra commands: $EXTRA_COMMANDS"
+    echo "$EXTRA_COMMANDS" | awk -v RS=',' '{print}' | while read -r cmd; do
+        if [ -n "$cmd" ]; then
+            sh -c "$cmd"
+        fi
+    done
+fi
+
+exec betanin
