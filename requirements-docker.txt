@@ -11,4 +11,4 @@ pillow
 unidecode
 jsonpath-rw
 pyyaml
-beets-bpmanalyser @ https://github.com/adamjakab/BeetsPluginBpmAnalyser/archive/devel.zip
+beets-bpmanalyser @ https://github.com/adamjakab/BeetsPluginBpmAnalyser/archive/master.zip
