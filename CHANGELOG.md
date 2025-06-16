@@ -1,5 +1,13 @@
 # Changelog
 
+### [0.5.7](https://www.github.com/sentriz/betanin/compare/v0.5.6...v0.5.7) (2025-06-16)
+
+
+### Bug Fixes
+
+* **ci:** copy sign keys and change dependency branch to repair build ([#141](https://www.github.com/sentriz/betanin/issues/141)) ([5bc384f](https://www.github.com/sentriz/betanin/commit/5bc384fbb832cc504d177affa544b76208a4d4c0))
+* **ui:** set nowrap on torrent controls ([b11f7a9](https://www.github.com/sentriz/betanin/commit/b11f7a916455e3da40b5e13574aa6450af89a2a2))
+
 ### [0.5.6](https://www.github.com/sentriz/betanin/compare/v0.5.5...v0.5.6) (2023-12-07)
 
 
