@@ -1,3 +1,6 @@
+> [!WARNING]  
+> No more new features. While betanin will still be maintained in its current state, effort has shifted to [wrtag](https://github.com/sentriz/wrtag)
+
 <p align="center">
 <img width="300" src="https://github.com/sentriz/betanin/raw/master/.github/logo.png">
 </p>
