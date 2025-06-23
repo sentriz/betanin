@@ -212,6 +212,40 @@ now any music downloaded to the **music** category will be imported by betanin
 
 <hr>
 
+### slskd
+
+create a script named `done.sh` or anything you like, and make it
+executable:  
+`chmod +x done.sh`
+
+modify the slskd configuration and add the following :
+
+```yml
+integration:
+  scripts:
+    notify_betanin:
+      on:
+        - DownloadDirectoryComplete
+      run: /path/to/done.sh $DATA
+```
+
+###### done script
+
+```bash
+#!/bin/bash
+
+read -t5 -r line
+path=$(echo "$line" | awk -F'"localDirectoryName":"' '{print $2}' | awk -F'"' '{print $1}' | awk '{printf "%s", $0}')
+
+wget --quiet \
+    --header="X-API-Key: <betanin api key>" \
+    --header="User-Agent: slskd-to-betanin" \
+    --post-data="both=${path}" \
+    "<betanin url>/api/torrents" -O -
+
+```
+now betanin will be notified whenever a directory download is complete
+
 ### developing
 
 ###### working on the backend
