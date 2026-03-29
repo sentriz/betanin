@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.2](https://github.com/sentriz/betanin/compare/v0.6.1...v0.6.2) (2026-03-29)
+
+
+### Bug Fixes
+
+* **ci:** update deprecated GitHub Actions ([85eaefa](https://github.com/sentriz/betanin/commit/85eaefa12c4914167e895a67e4a661cf39f4f20f))
+
 ## [0.6.1](https://github.com/sentriz/betanin/compare/v0.6.0...v0.6.1) (2026-03-29)
 
 
