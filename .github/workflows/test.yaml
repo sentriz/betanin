@@ -10,11 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
-          node-version: 16
+          node-version: 22
       - name: Install dependencies
         run: npm install
         working-directory: betanin_client
@@ -29,17 +29,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.9.x
+        uses: actions/checkout@v6
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
       - name: Install dependencies
-        run: pip install --user . .[dev]
-      - name: Check imports
-        run: isort --check-only $(git ls-files "*.py")
-      - name: Check formatting
-        run: black --check $(git ls-files "*.py")
-      - name: Check types
-        if: ${{ false }} # do not have the energy for python right now
-        run: pyright .
+        run: uv sync --all-extras
+      - name: Lint and check formatting
+        run: uv run ruff check $(git ls-files "*.py") && uv run ruff format --check $(git ls-files "*.py")

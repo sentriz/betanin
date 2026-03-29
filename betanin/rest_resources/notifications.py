@@ -4,9 +4,9 @@ import json
 # betanin
 from betanin import notifications
 from betanin.rest.base import SecureResource
+from betanin.rest.namespaces import NOTIFICATIONS_NS
 from betanin.rest_models import request as req_models
 from betanin.rest_models import response as resp_models
-from betanin.rest.namespaces import NOTIFICATIONS_NS
 
 
 @NOTIFICATIONS_NS.route("/services")

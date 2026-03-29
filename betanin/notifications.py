@@ -41,7 +41,7 @@ def register_all():
     APPRISE.clear()
     APPRISE.add(
         [
-            f'{service["protocol"]}://{service["not_protocol"]}'
+            f"{service['protocol']}://{service['not_protocol']}"
             for service in config["notifications"]["services"].values()
             if all(
                 service[key] for key in ("enabled", "protocol", "not_protocol")

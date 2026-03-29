@@ -1,14 +1,15 @@
 # 3rd party
 from flask_restx import fields
 
-# betanin
-from betanin.status import Status
-from betanin.rest.namespaces import META_NS
+from betanin.rest.namespaces import AUTHENTICATION_NS
 from betanin.rest.namespaces import BEETS_NS
 from betanin.rest.namespaces import CLIENTS_NS
-from betanin.rest.namespaces import TORRENTS_NS
+from betanin.rest.namespaces import META_NS
 from betanin.rest.namespaces import NOTIFICATIONS_NS
-from betanin.rest.namespaces import AUTHENTICATION_NS
+from betanin.rest.namespaces import TORRENTS_NS
+
+# betanin
+from betanin.status import Status
 
 
 _torrent_id_field = fields.String(
@@ -49,7 +50,8 @@ TORRENT = TORRENTS_NS.model(
         "id": _torrent_id_field,
         "path": fields.String(
             description="the path of the torrent",
-            example="downloads/music/The Fall - Live at the Witch Trials (1979) [FLAC]",
+            example="downloads/music/The Fall"
+            " - Live at the Witch Trials (1979) [FLAC]",
         ),
         "status": _EnumField(
             description="the current status of the torrent",

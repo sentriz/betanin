@@ -7,20 +7,20 @@ from flask import render_template
 import betanin.config.flask as conf_flask
 import betanin.config.secret_key as conf_secret_key
 from betanin import blueprints
-from betanin.models import Line  # noqa
-from betanin.models import Torrent  # noqa
+from betanin.extensions import CORS
 from betanin.extensions import DB
 from betanin.extensions import JWT
-from betanin.extensions import CORS
-from betanin.extensions import REST
 from betanin.extensions import MIGRATE
+from betanin.extensions import REST
 from betanin.extensions import SOCKETIO
-from betanin.rest_resources import meta  # noqa
-from betanin.rest_resources import beets  # noqa
-from betanin.rest_resources import torrents  # noqa
-from betanin.rest_resources import notifications  # noqa
+from betanin.models import Line  # noqa
+from betanin.models import Torrent  # noqa
 from betanin.rest_resources import authentication  # noqa
+from betanin.rest_resources import beets  # noqa
+from betanin.rest_resources import meta  # noqa
+from betanin.rest_resources import notifications  # noqa
 from betanin.rest_resources import torrent_clients  # noqa
+from betanin.rest_resources import torrents  # noqa
 
 
 def create():
@@ -50,10 +50,10 @@ def register_cors(app):
 
 
 def register_routes(app):
-    # the client blueprint has one route which is the
-    # the built frontend
-    render_client = lambda: render_template("index.html")
-    blueprints.CLIENT.route("/")(render_client)
+    @blueprints.CLIENT.route("/")
+    def render_client():
+        return render_template("index.html")
+
     # the api blueprint has many routes which are handled
     # by flask-restx
     REST.init_app(blueprints.API)

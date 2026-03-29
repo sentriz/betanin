@@ -4,8 +4,8 @@ from functools import wraps
 # 3rd party
 from flask import abort
 from flask import request
-from flask_restx import Resource
 from flask_jwt_extended import verify_jwt_in_request
+from flask_restx import Resource
 
 # betanin
 import betanin.config.betanin as conf_betanin

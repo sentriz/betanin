@@ -9,7 +9,7 @@ import status from './modules/status'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  strict: process.env.NODE_ENV !== 'production',
+  strict: import.meta.env.DEV,
   modules: {
     torrents,
     lines,

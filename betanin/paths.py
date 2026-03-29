@@ -9,7 +9,7 @@ import xdg.BaseDirectory
 
 def _first_existing(*paths: str):
     with suppress(StopIteration):
-        return next((path for path in paths if os.path.exists(path)))
+        return next(path for path in paths if os.path.exists(path))
     return ""
 
 

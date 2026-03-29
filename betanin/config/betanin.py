@@ -1,9 +1,10 @@
 # standard library
 import os
+import tomllib
 from contextlib import contextmanager
 
 # 3rd party
-import toml
+import tomli_w
 
 # betanin
 from betanin import paths
@@ -28,13 +29,13 @@ def gen_api_key(length=16):
 
 
 def read():
-    with open(paths.CONFIG_PATH, "r") as file:
-        return toml.load(file)
+    with open(paths.CONFIG_PATH, "rb") as file:
+        return tomllib.load(file)
 
 
 def write(config):
-    with open(paths.CONFIG_PATH, "w") as file:
-        toml.dump(config, file)
+    with open(paths.CONFIG_PATH, "wb") as file:
+        tomli_w.dump(config, file)
 
 
 @contextmanager

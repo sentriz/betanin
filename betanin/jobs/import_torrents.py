@@ -1,20 +1,28 @@
 # standard library
-import shutil
+import os
 import os.path
+import shutil
 
 # 3rd party
 import gevent
+import gevent.monkey
+from gevent.queue import Queue
 from loguru import logger
 from ptyprocess import PtyProcessUnicode
-from gevent.queue import Queue
+
+# gevent's monkey-patched os.close causes PtyProcessUnicode.spawn() to hang.
+# we temporarily restore the real os.close during spawn, protected by a lock
+# for concurrent imports. see pexpect/ptyprocess#48
+_real_close = gevent.monkey.get_original("os", "close")
+_spawn_lock = gevent.lock.BoundedSemaphore()
 
 # betanin
 from betanin import events
 from betanin import notifications
+from betanin.extensions import DB
 from betanin.models import Line
 from betanin.models import Torrent
 from betanin.status import Status
-from betanin.extensions import DB
 
 
 BEET_NAME = "beet"
@@ -66,14 +74,20 @@ def _import_torrent(torrent):
         _add_line(torrent, f"program {BEET_NAME} is not in $PATH")
         return
 
-    proc = PtyProcessUnicode.spawn(
-        [
-            BEET_NAME,
-            "import",
-            "--noresume",
-            _calculate_import_path(torrent),
-        ]
-    )
+    with _spawn_lock:
+        patched_close = os.close
+        os.close = _real_close
+        try:
+            proc = PtyProcessUnicode.spawn(
+                [
+                    BEET_NAME,
+                    "import",
+                    "--noresume",
+                    _calculate_import_path(torrent),
+                ]
+            )
+        finally:
+            os.close = patched_close
     PROCESSES[torrent.id] = proc
     _read_and_send_pty_out(proc, torrent)
     exit_status = _right_exit_status(proc.exitstatus)
@@ -106,8 +120,7 @@ def retry(torrent_id):
     DB.session.commit()
     _add_line(
         torrent,
-        "[betanin] retrying... "
-        f"(there are {len(QUEUE)} items in the queue)",
+        f"[betanin] retrying... (there are {len(QUEUE)} items in the queue)",
     )
     events.send_torrent(torrent)
     QUEUE.put_nowait(torrent.id)

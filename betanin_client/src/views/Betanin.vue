@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import '~bulma/sass/utilities/_all';
+@import 'bulma/sass/utilities/_all';
 $primary: #d1536a;
 $primary-invert: findColorInvert($primary);
 $info: #1f94ff;
@@ -58,6 +58,6 @@ $colors: (
     display: none;
   }
 }
-@import '~bulma';
-@import '~buefy/src/scss/buefy';
+@import 'bulma/bulma.sass';
+@import 'buefy/src/scss/buefy';
 </style>
