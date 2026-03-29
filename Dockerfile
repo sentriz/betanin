@@ -39,7 +39,8 @@ ENV UV_SYSTEM_PYTHON=1
 ENV UV_BREAK_SYSTEM_PACKAGES=1
 ENV UV_COMPILE_BYTECODE=1
 
-COPY --from=ghcr.io/astral-sh/uv:0.11.2 /uv /usr/local/bin/uv
+ADD https://astral.sh/uv/0.11.2/install.sh /uv-installer.sh
+RUN UV_UNMANAGED_INSTALL=/usr/local/bin sh /uv-installer.sh && rm /uv-installer.sh
 
 RUN apk add --no-cache --upgrade --virtual=build-dependencies build-base cmake libffi-dev openssl-dev python3-dev jpeg-dev libpng-dev zlib-dev cargo llvm-dev openblas openblas-dev && \
     apk add --no-cache --upgrade sudo python3 libev chromaprint ffmpeg gstreamer flac keyfinder-cli libsndfile && \
