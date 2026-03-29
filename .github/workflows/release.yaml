@@ -30,7 +30,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
       - name: Install dependencies
         run: uv sync --all-extras
       - name: Lint and check formatting
@@ -46,13 +46,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Setup Release Please
-        uses: google-github-actions/release-please-action@v4
+        uses: googleapis/release-please-action@v4
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           release-type: simple
-          changelog-path: CHANGELOG.md
-          package-name: betanin
   build-release:
     name: Build, tag, and publish Docker image
     runs-on: ubuntu-latest
@@ -107,7 +105,7 @@ jobs:
         run: npm run build
         working-directory: betanin_client
       - name: Install uv
-        uses: astral-sh/setup-uv@v5
+        uses: astral-sh/setup-uv@v7
       - name: Push to PyPA
         run: |
           set -e
