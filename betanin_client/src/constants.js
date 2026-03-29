@@ -1,4 +1,4 @@
-const IS_PRODUCTION = process.env.NODE_ENV === 'production'
+const IS_PRODUCTION = import.meta.env.PROD
 const LOCAL_PROTOCOL = 'http://'
 const LOCAL_HOSTNAME = 'localhost'
 const LOCAL_PORT = 9393

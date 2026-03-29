@@ -1,15 +1,15 @@
 # standard library
-import sys
 import code
+import sys
 
 # 3rd party
 import click
 
 # betanin
 from betanin import application
+from betanin.extensions import DB  # noqa
 from betanin.models import Line  # noqa
 from betanin.models import Torrent  # noqa
-from betanin.extensions import DB  # noqa
 
 
 WELCOME_MESSAGE = """\

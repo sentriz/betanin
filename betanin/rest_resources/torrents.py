@@ -5,13 +5,13 @@ import os.path
 from flask import abort
 
 # betanin
+from betanin.extensions import DB
 from betanin.jobs import import_torrents
 from betanin.models import Torrent
 from betanin.rest.base import SecureResource
-from betanin.extensions import DB
+from betanin.rest.namespaces import TORRENTS_NS
 from betanin.rest_models import request as req_models
 from betanin.rest_models import response as resp_models
-from betanin.rest.namespaces import TORRENTS_NS
 
 
 @TORRENTS_NS.route("/")

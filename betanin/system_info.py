@@ -6,7 +6,7 @@ from betanin import paths
 
 
 VERSION = ""
-with open(paths.VERSION_PATH, "r") as version_file:
+with open(paths.VERSION_PATH) as version_file:
     VERSION = f"v{version_file.read()}"
 
 

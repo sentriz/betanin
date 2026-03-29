@@ -1,8 +1,8 @@
 # type: ignore
 
 # betanin
-from betanin.status import Status
 from betanin.extensions import DB
+from betanin.status import Status
 
 
 class Line(DB.Model):

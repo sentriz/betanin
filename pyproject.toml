@@ -1,3 +1,7 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "betanin"
 authors = [
@@ -5,7 +9,7 @@ authors = [
 ]
 description = "beets based mitm of your torrent client and music player"
 readme = "README.md"
-requires-python = ">=3.8"
+requires-python = ">=3.12"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
@@ -17,7 +21,7 @@ dependencies = [
     "apprise",
     "alembic",
     "click",
-    "Flask <3.0.0",
+    "Flask",
     "Flask-Cors",
     "Flask-JWT-Extended",
     "Flask-Migrate",
@@ -32,18 +36,13 @@ dependencies = [
     "python-socketio",
     "SQLAlchemy",
     "SQLAlchemy-Utils",
-    "toml",
+    "tomli-w",
 ]
 
 [project.optional-dependencies]
 dev = [
-    "isort >= 4.3.1",
-    "toml",
-    "pyproject",
-    "black",
-    "autoflake",
+    "ruff",
     "pyright",
-    "pylint",
 ]
 
 [project.urls]
@@ -54,44 +53,28 @@ dev = [
 betanin = "betanin.entry.betanin:main"
 betanin-shell = "betanin.entry.shell:main"
 
-[tool.isort]
-force_single_line = true
-import_heading_firstparty = "betanin"
-import_heading_stdlib = "standard library"
-import_heading_thirdparty = "3rd party"
-known_first_party = "betanin"
-length_sort = true
-lines_after_imports = 2
-multi_line_output = 3
-sections = "STDLIB,THIRDPARTY,FIRSTPARTY"
-
-[tool.black]
+[tool.ruff]
 line-length = 79
-target_version = ['py39']
+target-version = "py312"
 
-[tool.pylint.'messages control']
-# `no-member` because: https://github.com/PyCQA/pylint/issues/2917
-# `*-docstring` because lazy (at the moment)
-# `unused-import` because the isort/autoflake is doing this already the exception comment differs
-# `wrong-import-position` for the same reason
-enable = "all"
-disable = """\
-	missing-module-docstring,\
-	missing-class-docstring,\
-	missing-function-docstring,\
-	no-member,\
-	fixme,\
-	too-few-public-methods,\
-	unused-import,\
-	wrong-import-position\
-"""
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.ruff.lint.per-file-ignores]
+"betanin/entry/betanin.py" = ["E402"]
+"betanin/jobs/import_torrents.py" = ["E402", "I001"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
+known-first-party = ["betanin"]
+lines-after-imports = 2
 
 [tool.pyright]
 include = ["betanin"]
 venv = "betanin"
-pythonVersion = "3.9"
+pythonVersion = "3.12"
 pythonPlatform = "Linux"
-exclude = ["**/betanin_migrations", "setup.py"]
+exclude = ["**/betanin_migrations"]
 
 [tool.setuptools.dynamic]
 version = {file = "version.txt"}

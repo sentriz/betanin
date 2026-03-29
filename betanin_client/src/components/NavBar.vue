@@ -23,6 +23,8 @@ nav.navbar
 // import
 import { mapGetters } from 'vuex'
 import auth from '@/authentication'
+import logoProd from '@/assets/logo.png'
+import logoDev from '@/assets/logo_dev.png'
 // export
 export default {
   data() {
@@ -38,7 +40,7 @@ export default {
       this.show = !this.show
     },
     getLogoPath() {
-      return process.env.NODE_ENV === 'production' ? require('../assets/logo.png') : require('../assets/logo_dev.png')
+      return import.meta.env.PROD ? logoProd : logoDev
     },
     logout() {
       auth.logout()

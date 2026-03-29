@@ -1,2 +1,2 @@
-# this file is here because MANIFEST.in won't let you
-# include a directory which is not a python package
+# this file makes betanin_migrations a python package so that
+# setuptools can include it in the distribution

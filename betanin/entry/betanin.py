@@ -1,32 +1,30 @@
-# doing this ugly import thing seems to be the
-# only thing i can do where isort/autoflake8/black don't
-# freak out
-gevent = __import__("gevent.monkey")
+# gevent monkey-patch must happen before all other imports
+gevent = __import__("gevent.monkey")  # noqa: E402
 gevent.monkey.patch_all()
 
 # standard library
 import os
-import sys
 import signal
+import sys
 
 # 3rd party
 import click
 import gevent
-from loguru import logger
 from flask_migrate import upgrade
+from loguru import logger
 
 # betanin
 import betanin.config.betanin as conf_betanin
 import betanin.config.secret_key as conf_secret_key
-from betanin import paths
 from betanin import application
-from betanin import system_info
 from betanin import notifications
-from betanin.jobs import serve_web
+from betanin import paths
+from betanin import system_info
 from betanin.jobs import import_torrents
+from betanin.jobs import serve_web
+from betanin.jobs.import_torrents import retry
 from betanin.models import Torrent
 from betanin.status import Status
-from betanin.jobs.import_torrents import retry
 
 
 def _print_meta_info():

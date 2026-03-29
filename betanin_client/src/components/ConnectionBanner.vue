@@ -27,7 +27,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import '~bulma';
+@import 'bulma/bulma.sass';
 .banner {
   width: 100%;
   color: black;

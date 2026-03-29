@@ -15,5 +15,5 @@ def write(key):
 
 
 def read():
-    with open(paths.SECRET_KEY_PATH, "r") as file:
+    with open(paths.SECRET_KEY_PATH) as file:
         return file.read()

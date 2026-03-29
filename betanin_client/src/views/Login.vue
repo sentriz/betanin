@@ -1,7 +1,7 @@
 <template lang="pug">
 .container
   .card
-    img#logo(:src='require("../assets/logo.png")')
+    img#logo(:src='logoPath')
     validation-observer#form(v-slot='{ handleSubmit }')
       validation-provider(name='username', rules='required', v-slot='{ errors }', slim)
         b-field(:type='{ "is-primary": errors.length }', :message='errors[0]')
@@ -23,12 +23,14 @@
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { ToastProgrammatic as Toast } from 'buefy'
 import auth from '@/authentication'
+import logoPath from '@/assets/logo.png'
 export default {
   components: { ValidationProvider, ValidationObserver },
   data() {
     return {
       username: '',
       password: '',
+      logoPath,
     }
   },
   methods: {

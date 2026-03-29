@@ -1,13 +1,13 @@
 # 3rd party
-from flask_restx import abort
 from flask_jwt_extended import create_access_token
+from flask_restx import abort
 
 # betanin
 import betanin.config.betanin as conf_betanin
 from betanin.rest.base import BaseResource
+from betanin.rest.namespaces import AUTHENTICATION_NS
 from betanin.rest_models import request as req_models
 from betanin.rest_models import response as resp_models
-from betanin.rest.namespaces import AUTHENTICATION_NS
 
 
 @AUTHENTICATION_NS.route("/login")

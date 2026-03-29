@@ -5,9 +5,9 @@ from glob import glob
 # betanin
 from betanin import system_info
 from betanin.rest.base import SecureResource
+from betanin.rest.namespaces import META_NS
 from betanin.rest_models import request as req_models
 from betanin.rest_models import response as resp_models
-from betanin.rest.namespaces import META_NS
 
 
 @META_NS.route("/system_info")

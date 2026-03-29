@@ -1,8 +1,8 @@
 # betanin
 import betanin.config.betanin as conf_betanin
 from betanin.rest.base import SecureResource
-from betanin.rest_models import response as resp_models
 from betanin.rest.namespaces import CLIENTS_NS
+from betanin.rest_models import response as resp_models
 
 
 @CLIENTS_NS.route("/api_key")

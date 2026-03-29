@@ -2,9 +2,10 @@
 import logging
 from logging.config import fileConfig
 
+from alembic import context
+
 # 3rd party
 from flask import current_app
-from alembic import context
 
 
 # this is the Alembic Config object, which provides
