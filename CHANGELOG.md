@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.1](https://github.com/sentriz/betanin/compare/v0.6.0...v0.6.1) (2026-03-29)
+
+
+### Bug Fixes
+
+* **docker:** use uv installer script for arm/v7 support ([8fc357d](https://github.com/sentriz/betanin/commit/8fc357decaacb0e87d7ab0d30ed8859346b87fbe))
+
 ## [0.6.0](https://github.com/sentriz/betanin/compare/v0.5.6...v0.6.0) (2026-03-29)
 
 
