@@ -2,6 +2,7 @@
 import random
 import string
 from string import Template
+from types import SimpleNamespace
 
 # 3rd party
 import gevent
@@ -124,4 +125,12 @@ def send(torrent):
 
 
 def send_async(torrent):
-    gevent.spawn(send, torrent)
+    gevent.spawn(
+        send,
+        SimpleNamespace(
+            id=torrent.id,
+            name=torrent.name,
+            updated=torrent.updated,
+            status=torrent.status,
+        ),
+    )
