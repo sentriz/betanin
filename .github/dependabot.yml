@@ -1,0 +1,22 @@
+version: 2
+multi-ecosystem-groups:
+  all:
+    schedule:
+      interval: weekly
+updates:
+  - package-ecosystem: docker
+    directory: /
+    multi-ecosystem-group: all
+    patterns: ["*"]
+  - package-ecosystem: github-actions
+    directory: /
+    multi-ecosystem-group: all
+    patterns: ["*"]
+  - package-ecosystem: npm
+    directory: /betanin_client
+    multi-ecosystem-group: all
+    patterns: ["*"]
+  - package-ecosystem: uv
+    directory: /
+    multi-ecosystem-group: all
+    patterns: ["*"]
