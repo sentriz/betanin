@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.6.3](https://github.com/sentriz/betanin/compare/v0.6.2...v0.6.3) (2026-05-06)
+
+
+### Bug Fixes
+
+* broken import for shell ([4ab729b](https://github.com/sentriz/betanin/commit/4ab729bd5ae3f7f35fc8f26c0c32795c08479d04)), closes [#157](https://github.com/sentriz/betanin/issues/157)
+* eagerly read torrent attributes before spawning greenlet ([#151](https://github.com/sentriz/betanin/issues/151)) ([b3f652b](https://github.com/sentriz/betanin/commit/b3f652be6a12a2b4c740fe4c6a143851b19042e2)), closes [#150](https://github.com/sentriz/betanin/issues/150)
+
 ## [0.6.2](https://github.com/sentriz/betanin/compare/v0.6.1...v0.6.2) (2026-03-29)
 
 
