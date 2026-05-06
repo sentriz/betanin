@@ -5,6 +5,7 @@ import shutil
 
 # 3rd party
 import gevent
+import gevent.lock
 import gevent.monkey
 from gevent.queue import Queue
 from loguru import logger
