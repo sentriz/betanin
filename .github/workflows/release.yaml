@@ -46,7 +46,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Setup Release Please
-        uses: googleapis/release-please-action@v4
+        uses: googleapis/release-please-action@v5
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
