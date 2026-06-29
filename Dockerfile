@@ -1,11 +1,11 @@
-FROM node:22-alpine3.23 AS builder-frontend
+FROM node:26-alpine3.23 AS builder-frontend
 WORKDIR /src
 COPY betanin_client/ .
 RUN npm install && \
     npm run build
 
 
-FROM alpine:3.23 AS builder-mp3gain
+FROM alpine:3.24 AS builder-mp3gain
 WORKDIR /tmp
 COPY alpine/mp3gain/APKBUILD .
 RUN apk update && \
@@ -15,7 +15,7 @@ RUN apk update && \
     REPODEST=/tmp/out abuild -F -r
 
 
-FROM alpine:3.23 AS builder-mp3val
+FROM alpine:3.24 AS builder-mp3val
 WORKDIR /tmp
 COPY alpine/mp3val/APKBUILD .
 RUN apk update && \
@@ -25,7 +25,7 @@ RUN apk update && \
     REPODEST=/tmp/out abuild -F -r
 
 
-FROM alpine:3.23
+FROM alpine:3.24
 LABEL org.opencontainers.image.source=https://github.com/sentriz/betanin
 WORKDIR /src
 COPY . .
